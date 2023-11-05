@@ -1,6 +1,4 @@
-# PWA | ReactJS | Starter App
-
-A Template Repository for creating ReactJS based PWAs.
+# PWA | ReactJS
 
 It has support for:
 
@@ -15,5 +13,3 @@ It has support for:
 - Pre-commit hooks ✅
 - `shx` for OS agnostic CLI ✅
 - Unit testing via Jest and `ts-jest`.
-
-This template repository is to be used for creating any new Manufac's ReactJS based project.

@@ -1,5 +1,4 @@
-### Manufac CLI Scripts:
-
+### CLI Scripts:
 
 1. `yarn:compile`: Compiles the TS source code into JS using `tsc`.
 2. `yarn:start`: Deploys the bundled code in a demo app on localhost.
