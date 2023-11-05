@@ -1,0 +1,43 @@
+{
+  "prettier.prettierPath": "./.prettierrc",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "command-runner.commands": {
+    "deleteBranches": "git branch --merged | grep -v \\* | xargs git branch -D"
+  },
+  "conventionalCommits.gitmoji": false,
+  "conventionalCommits.promptBody": false,
+  "conventionalCommits.promptFooter": false,
+  "conventionalCommits.promptScopes": false,
+  "actionButtons": {
+    "loadNpmCommands": false,
+    "commands": [
+      {
+        "name": "Compile",
+        "singleInstance": true,
+        "command": "yarn compile" // This is executed in the terminal.
+      },
+      {
+        "name": "Lint",
+        "singleInstance": true,
+        "command": "yarn lint" // This is executed in the terminal.
+      },
+      {
+        "name": "Prettify",
+        "singleInstance": true,
+        "command": "yarn pretty" // This is executed in the terminal.
+      },
+      {
+        "name": "Stories",
+        "singleInstance": true,
+        "command": "yarn start:sb" // This is executed in the terminal.
+      },
+      {
+        "name": "Demo",
+        "singleInstance": true,
+        "command": "yarn start" // This is executed in the terminal.
+      }
+    ]
+  }
+}

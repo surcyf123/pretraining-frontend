@@ -1,0 +1,109 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": true, // Ref: https://typescript-eslint.io/blog/announcing-typescript-eslint-v6/#reworked-configuration-names
+    "jsx": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:import/recommended", // Ref: https://github.com/import-js/eslint-plugin-import#typescript
+    "plugin:import/typescript",
+    "airbnb",
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:react/jsx-runtime", // Ref: https://github.com/jsx-eslint/eslint-plugin-react#configuration
+    "plugin:@typescript-eslint/recommended-type-checked", // Ref: https://typescript-eslint.io/blog/announcing-typescript-eslint-v6/#reworked-configuration-names
+    "plugin:@typescript-eslint/stylistic-type-checked",
+    "prettier"
+  ],
+  "rules": {
+    // Adopted from "app" repo. Ref: https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/order.md#importorder-enforce-a-convention-in-module-import-order
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "object", "type"],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "import/no-unused-modules": [
+      // Ref: https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-unused-modules.md#options
+      "error",
+      {
+        "unusedExports": true
+      }
+    ],
+    "import/extensions": [
+      "error",
+      {
+        "ts": "never",
+        "tsx": "never",
+        "json": "always"
+      }
+    ], // To allow use of extensions in import statements.
+    "react/require-default-props": "off", // This rule aims to ensure that any non-required prop types of a component has a corresponding defaultProps value.
+    "import/prefer-default-export": "off", // To turn off airbnb default export rule.
+    "react/jsx-props-no-spreading": "off",
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": ["function-declaration", "arrow-function"],
+        "unnamedComponents": "arrow-function"
+      }
+    ], // Component definiton for named and unnamed components.
+    "react/jsx-no-bind": [
+      "error",
+      {
+        "allowFunctions": true,
+        "allowArrowFunctions": true
+      }
+    ],
+    "no-redeclare": "off", // Ref: https://typescript-eslint.io/rules/no-redeclare/#how-to-use
+    "@typescript-eslint/no-redeclare": [
+      "error",
+      {
+        "ignoreDeclarationMerge": true
+      }
+    ], // Ref: https://typescript-eslint.io/rules/no-redeclare/#ignoredeclarationmerge
+    "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/strict-boolean-expressions": "error",
+    "no-restricted-syntax": [
+      // Ref: https://github.com/typescript-eslint/typescript-eslint/issues/561#issuecomment-496664453
+      "error",
+      {
+        "selector": "TSEnumDeclaration",
+        "message": "Don't declare enums"
+      }
+    ]
+  },
+  // Ref: https://github.com/import-js/eslint-plugin-import#typescript
+  "settings": {
+    // Ref: https://github.com/alexgorbatchev/eslint-import-resolver-typescript#configuration
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"] // Ref: https://github.com/benmosher/eslint-plugin-import#importparsers
+      // Idealy the abpve shouldn't be needed because the configured parser is already @typescript-eslint/parser
+      // But adding it because otherwise, import/no-unused-modules, is not working as expected.
+    },
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
+  "overrides": [
+    {
+      "files": ["*.stories.tsx", "*.d.ts", "*.js", "index.tsx"],
+      "rules": {
+        "import/no-unused-modules": "off"
+      }
+    },
+    {
+      "files": ["*.stories.tsx"],
+      "rules": {
+        "import/no-extraneous-dependencies": "off"
+      }
+    }
+  ]
+}
