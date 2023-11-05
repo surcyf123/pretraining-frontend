@@ -2,7 +2,7 @@
   "name": "pwa",
   "version": "1.0.0",
   "private": true,
-  "repository": "https://github.com/manufac-analytics/pwa.git",
+  "repository": "https://github.com/surcyf123/pretraining-frontend.git",
   "license": "UNLICENSED",
   "scripts": {
     "build": "webpack --env production",
