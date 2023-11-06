@@ -22,7 +22,7 @@ export function StatisticsTable({ data }: { data: StatisticsWithID[] }): JSX.Ele
     return [
       columnHelper.accessor((row) => row.id, {
         cell: (info) => info.getValue(),
-        id: "ID",
+        id: "UID",
       }),
       columnHelper.accessor((row) => row.loss, {
         cell: (info) => info.getValue(),
@@ -31,14 +31,6 @@ export function StatisticsTable({ data }: { data: StatisticsWithID[] }): JSX.Ele
       columnHelper.accessor((row) => row.timestamp, {
         cell: (info) => info.getValue(),
         id: "Timestamp",
-      }),
-      columnHelper.accessor((row) => row.run_id, {
-        cell: (info) => info.getValue(),
-        id: "Run ID",
-      }),
-      columnHelper.accessor((row) => row.hotkey, {
-        cell: (info) => info.getValue(),
-        id: "Hotkey",
       }),
     ];
   }, []);
