@@ -13,3 +13,9 @@ It has support for:
 - Pre-commit hooks ✅
 - `shx` for OS agnostic CLI ✅
 - Unit testing via Jest and `ts-jest`.
+
+---
+
+Notes:
+
+The sample data is present inside `src/sample-data`. Instructions to run/compile the code is present inside `CLI.md`.
