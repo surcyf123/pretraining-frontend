@@ -11,6 +11,7 @@ import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useRef, useEffect } from "react";
 import type { CompleteStatistics } from "../../sample-data/state";
+import type { InternMap } from "d3-array";
 import type { LineSeriesOption } from "echarts/charts";
 import type {
   TitleComponentOption,
@@ -45,7 +46,7 @@ use([
 export interface LineChartProps {
   theme?: "light" | "dark";
   chartType: "category" | "time" | "value";
-  data: CompleteStatistics[];
+  data: InternMap<string, CompleteStatistics[]>;
   xAxis: string;
   yAxis: string;
   xAxisTitle: string;
@@ -112,17 +113,21 @@ export function LineChart({
           nameGap: 50,
           axisLine: { show: true },
         },
-        dataset: { dimensions: [xAxis, yAxis], source: data },
-        series: [
-          {
-            type: "line",
-            symbolSize: 1,
-            encode: {
-              x: xAxis,
-              y: yAxis,
-            },
+        dataset: [...data.entries()].map(([key, value]) => ({
+          dimensions: [xAxis, yAxis],
+          source: value,
+          id: key,
+        })),
+        series: [...data.keys()].map((ele) => ({
+          type: "line",
+          symbolSize: 5,
+          encode: {
+            x: xAxis,
+            y: yAxis,
           },
-        ],
+          datasetId: ele,
+          name: `UID: ${ele}`,
+        })),
         legend: {
           align: "auto",
           bottom: "1%",
