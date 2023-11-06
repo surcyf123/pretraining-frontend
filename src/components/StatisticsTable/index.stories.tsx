@@ -1,12 +1,19 @@
-import { DummyData } from "../../sample-data/state";
+import { Data } from "../../sample-data/state";
 import { StatisticsTable } from ".";
+import type { CompleteStatistics} from "../../sample-data/state";
 import type { Meta, StoryObj } from "@storybook/react";
 
 export default {
   title: "StatisticsTable",
   component: StatisticsTable,
   args: {
-    data: Object.entries(DummyData).map(([key, value]) => ({ id: key, ...value })),
+    data: Data.flatMap(({ data, timestamp }) =>
+    Object.entries(data).map<CompleteStatistics>(([key, value]) => ({
+      id: key,
+      timestamp,
+      ...value,
+    })),
+  )
   },
 } as Meta<typeof StatisticsTable>;
 

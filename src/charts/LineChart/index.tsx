@@ -10,7 +10,7 @@ import {
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useRef, useEffect } from "react";
-import type { Statistics } from "../../sample-data/state";
+import type { CompleteStatistics } from "../../sample-data/state";
 import type { LineSeriesOption } from "echarts/charts";
 import type {
   TitleComponentOption,
@@ -45,7 +45,7 @@ use([
 export interface LineChartProps {
   theme?: "light" | "dark";
   chartType: "category" | "time" | "value";
-  data: Statistics[];
+  data: CompleteStatistics[];
   xAxis: string;
   yAxis: string;
   xAxisTitle: string;
@@ -112,7 +112,6 @@ export function LineChart({
           nameGap: 50,
           axisLine: { show: true },
         },
-        // @ts-expect-error bad types
         dataset: { dimensions: [xAxis, yAxis], source: data },
         series: [
           {

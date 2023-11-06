@@ -1,17 +1,25 @@
 import { Card, Group, Stack, useMantineColorScheme } from "@mantine/core";
 import { LineChart } from "../../charts/LineChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
-import { DummyData } from "../../sample-data/state";
+import { Data } from "../../sample-data/state";
+import type { CompleteStatistics } from "../../sample-data/state";
 
 export function Dashboard() {
   const { colorScheme } = useMantineColorScheme();
+  const processedData = Data.flatMap(({ data, timestamp }) =>
+    Object.entries(data).map<CompleteStatistics>(([key, value]) => ({
+      id: key,
+      timestamp,
+      ...value,
+    })),
+  );
   return (
     <Stack>
       <Group grow>
         <Card shadow="md">
           <LineChart
             chartType="time"
-            data={Object.values(DummyData)}
+            data={processedData}
             yAxis="loss"
             xAxis="timestamp"
             yAxisTitle="Loss"
@@ -23,7 +31,7 @@ export function Dashboard() {
         <Card shadow="md">
           <LineChart
             chartType="time"
-            data={Object.values(DummyData)}
+            data={processedData}
             yAxis="loss"
             xAxis="timestamp"
             yAxisTitle="Loss"
@@ -35,7 +43,7 @@ export function Dashboard() {
         <Card shadow="md">
           <LineChart
             chartType="time"
-            data={Object.values(DummyData)}
+            data={processedData}
             yAxis="loss"
             xAxis="timestamp"
             yAxisTitle="Loss"
@@ -46,9 +54,7 @@ export function Dashboard() {
         </Card>
       </Group>
       <Card shadow="md">
-        <StatisticsTable
-          data={Object.entries(DummyData).map(([key, value]) => ({ id: key, ...value }))}
-        />
+        <StatisticsTable data={processedData} />
       </Card>
     </Stack>
   );

@@ -13,24 +13,28 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
-import type { StatisticsWithID } from "../../sample-data/state";
+import type { CompleteStatistics } from "../../sample-data/state";
 import type { SortingState, PaginationState } from "@tanstack/react-table";
 
-export function StatisticsTable({ data }: { data: StatisticsWithID[] }): JSX.Element {
+export function StatisticsTable({ data }: { data: CompleteStatistics[] }): JSX.Element {
   const columns = useMemo(() => {
-    const columnHelper = createColumnHelper<StatisticsWithID>();
+    const columnHelper = createColumnHelper<CompleteStatistics>();
     return [
       columnHelper.accessor((row) => row.id, {
         cell: (info) => info.getValue(),
         id: "UID",
       }),
+      columnHelper.accessor((row) => row.timestamp, {
+        cell: (info) => info.getValue(),
+        id: "Timestamp",
+      }),
       columnHelper.accessor((row) => row.loss, {
         cell: (info) => info.getValue(),
         id: "Loss",
       }),
-      columnHelper.accessor((row) => row.timestamp, {
+      columnHelper.accessor((row) => row["Win Percentage"], {
         cell: (info) => info.getValue(),
-        id: "Timestamp",
+        id: "Win Percentage",
       }),
     ];
   }, []);
