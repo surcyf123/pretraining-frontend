@@ -19,17 +19,6 @@ export function Dashboard() {
       ),
     [],
   );
-  const tableData = useMemo(
-    () =>
-      [
-        ...rollup(
-          processedData,
-          (arr) => sort(arr, (a, b) => ascending(a.timestamp, b.timestamp)).pop(),
-          (d) => d.id,
-        ).values(),
-      ].filter((ele): ele is CompleteStatistics => ele !== undefined),
-    [processedData],
-  );
   const chartData = useMemo(
     () =>
       rollup(
@@ -39,6 +28,16 @@ export function Dashboard() {
       ),
     [processedData],
   );
+  const tableData = useMemo(() => {
+    const output: CompleteStatistics[] = [];
+    chartData.forEach((ele) => {
+      const last = ele.pop();
+      if (last !== undefined) {
+        output.push(last);
+      }
+    });
+    return output;
+  }, [chartData]);
   return (
     <Stack>
       <Card shadow="md">
