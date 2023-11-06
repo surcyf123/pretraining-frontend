@@ -112,7 +112,7 @@ export function LineChart({
           nameLocation: "middle",
           nameGap: 50,
           axisLine: { show: true },
-          scale: true
+          scale: true,
         },
         dataset: [...data.entries()].map(([key, value]) => ({
           dimensions: [xAxis, yAxis],
