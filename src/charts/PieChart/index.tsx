@@ -9,6 +9,7 @@ import {
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useRef, useEffect } from "react";
+import type { CompleteStatistics } from "../../sample-data/state";
 import type { PieSeriesOption } from "echarts/charts";
 import type {
   TitleComponentOption,
@@ -39,7 +40,7 @@ use([
 
 export interface PieChartProps {
   theme?: "light" | "dark";
-  data: { value: number; name: string }[];
+  data: CompleteStatistics[];
   isLoading?: boolean;
   title?: string;
   style?: CSSProperties;
@@ -79,7 +80,10 @@ export function PieChart({ theme, data, isLoading, title, style }: PieChartProps
           {
             type: "pie",
             radius: "70%",
-            data,
+            data: data.map((ele) => ({
+              value: ele["Win Percentage"] ?? 0,
+              name: `UID: ${ele.id}`,
+            })),
             name: "Pie",
             minAngle: 2,
           },

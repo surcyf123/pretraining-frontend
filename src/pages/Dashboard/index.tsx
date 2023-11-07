@@ -39,10 +39,6 @@ export function Dashboard() {
     });
     return output;
   }, [chartData]);
-  const pieData = useMemo(
-    () => tableData.map((ele) => ({ value: ele["Win Percentage"] ?? 0, name: `UID: ${ele.id}` })),
-    [tableData],
-  );
   return (
     <Stack>
       <Group grow>
@@ -60,7 +56,7 @@ export function Dashboard() {
         </Card>
         <Card shadow="md">
           <PieChart
-            data={pieData}
+            data={tableData}
             style={{ height: "40vh" }}
             theme={colorScheme === "auto" ? "dark" : colorScheme}
           />
