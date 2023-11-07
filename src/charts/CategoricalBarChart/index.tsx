@@ -3,6 +3,7 @@ import {
   GridComponent,
   TitleComponent,
   DatasetComponent,
+  TransformComponent,
   DataZoomComponent,
   TooltipComponent,
   LegendComponent,
@@ -36,6 +37,7 @@ use([
   TitleComponent,
   BarGraph,
   DatasetComponent,
+  TransformComponent,
   DataZoomComponent,
   TooltipComponent,
   LegendComponent,
@@ -111,10 +113,18 @@ export function CategoricalBarChart({
           axisLine: { show: true },
           scale: true,
         },
-        dataset: {
-          dimensions: [xAxis, yAxis],
-          source: data,
-        },
+        dataset: [
+          {
+            dimensions: [xAxis, yAxis],
+            source: data,
+          },
+          {
+            transform: {
+              type: "sort",
+              config: { dimension: yAxis, order: "asc" },
+            },
+          },
+        ],
         series: [
           {
             type: "bar",
@@ -122,6 +132,7 @@ export function CategoricalBarChart({
               x: xAxis,
               y: yAxis,
             },
+            datasetIndex: 1,
           },
         ],
         legend: {

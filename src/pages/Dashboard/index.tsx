@@ -1,6 +1,7 @@
 import { Card, Stack, useMantineColorScheme, Group } from "@mantine/core";
 import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
+import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { LineChart } from "../../charts/LineChart";
 import { PieChart } from "../../charts/PieChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
@@ -59,6 +60,17 @@ export function Dashboard() {
             data={tableData}
             style={{ height: "40vh" }}
             theme={colorScheme === "auto" ? "dark" : colorScheme}
+          />
+        </Card>
+        <Card shadow="md">
+          <CategoricalBarChart
+            data={tableData}
+            style={{ height: "40vh" }}
+            theme={colorScheme === "auto" ? "dark" : colorScheme}
+            xAxis="id"
+            yAxis="loss"
+            xAxisTitle="UID"
+            yAxisTitle="Loss"
           />
         </Card>
       </Group>
