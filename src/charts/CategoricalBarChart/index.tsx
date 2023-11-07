@@ -44,7 +44,7 @@ use([
   CanvasRenderer, // If you only need to use the canvas rendering mode, the bundle will not include the SVGRenderer module, which is not needed.
 ]);
 
-export interface LineChartProps {
+export interface CategoricalBarChartProps {
   theme?: "light" | "dark";
   data: CompleteStatistics[];
   xAxis: string;
@@ -66,7 +66,7 @@ export function CategoricalBarChart({
   isLoading,
   title,
   style,
-}: LineChartProps): JSX.Element {
+}: CategoricalBarChartProps): JSX.Element {
   const chartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
