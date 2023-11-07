@@ -40,7 +40,7 @@ export function Dashboard() {
     return output;
   }, [chartData]);
   const pieData = useMemo(
-    () => tableData.map((ele) => ({ value: ele["Win Percentage"] ?? 0, name: ele.id })),
+    () => tableData.map((ele) => ({ value: ele["Win Percentage"] ?? 0, name: `UID: ${ele.id}` })),
     [tableData],
   );
   return (
