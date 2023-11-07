@@ -81,7 +81,7 @@ export function PieChart({ theme, data, isLoading, title, style }: PieChartProps
             radius: "70%",
             data,
             name: "Pie",
-            minAngle: 2
+            minAngle: 2,
           },
         ],
         legend: {
