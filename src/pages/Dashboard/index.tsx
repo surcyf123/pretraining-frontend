@@ -1,7 +1,8 @@
-import { Card, Stack, useMantineColorScheme } from "@mantine/core";
+import { Card, Stack, useMantineColorScheme, Group } from "@mantine/core";
 import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
 import { LineChart } from "../../charts/LineChart";
+import { PieChart } from "../../charts/PieChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
 import { Data } from "../../sample-data/state";
 import type { CompleteStatistics } from "../../sample-data/state";
@@ -40,18 +41,27 @@ export function Dashboard() {
   }, [chartData]);
   return (
     <Stack>
-      <Card shadow="md">
-        <LineChart
-          chartType="time"
-          data={chartData}
-          yAxis="loss"
-          xAxis="timestamp"
-          yAxisTitle="Loss"
-          xAxisTitle="Time"
-          style={{ height: "40vh" }}
-          theme={colorScheme === "auto" ? "dark" : colorScheme}
-        />
-      </Card>
+      <Group grow>
+        <Card shadow="md">
+          <LineChart
+            chartType="time"
+            data={chartData}
+            yAxis="loss"
+            xAxis="timestamp"
+            yAxisTitle="Loss"
+            xAxisTitle="Time"
+            style={{ height: "40vh" }}
+            theme={colorScheme === "auto" ? "dark" : colorScheme}
+          />
+        </Card>
+        <Card shadow="md">
+          <PieChart
+            data={[]}
+            style={{ height: "40vh" }}
+            theme={colorScheme === "auto" ? "dark" : colorScheme}
+          />
+        </Card>
+      </Group>
       <Card shadow="md">
         <StatisticsTable data={tableData} />
       </Card>
