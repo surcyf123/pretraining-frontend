@@ -42,30 +42,30 @@ export function Dashboard() {
   }, [chartData]);
   return (
     <Stack>
+      <Card shadow="md">
+        <LineChart
+          chartType="time"
+          data={chartData}
+          yAxis="loss"
+          xAxis="timestamp"
+          yAxisTitle="Loss"
+          xAxisTitle="Time"
+          style={{ height: "30vh" }}
+          theme={colorScheme === "auto" ? "dark" : colorScheme}
+        />
+      </Card>
       <Group grow>
-        <Card shadow="md">
-          <LineChart
-            chartType="time"
-            data={chartData}
-            yAxis="loss"
-            xAxis="timestamp"
-            yAxisTitle="Loss"
-            xAxisTitle="Time"
-            style={{ height: "40vh" }}
-            theme={colorScheme === "auto" ? "dark" : colorScheme}
-          />
-        </Card>
         <Card shadow="md">
           <PieChart
             data={tableData}
-            style={{ height: "40vh" }}
+            style={{ height: "30vh" }}
             theme={colorScheme === "auto" ? "dark" : colorScheme}
           />
         </Card>
         <Card shadow="md">
           <CategoricalBarChart
             data={tableData}
-            style={{ height: "40vh" }}
+            style={{ height: "30vh" }}
             theme={colorScheme === "auto" ? "dark" : colorScheme}
             xAxis="id"
             yAxis="loss"
