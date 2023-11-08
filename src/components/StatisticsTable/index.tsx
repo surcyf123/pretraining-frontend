@@ -29,7 +29,7 @@ export function StatisticsTable({ data }: { data: CompleteStatistics[] }): JSX.E
         id: "Timestamp",
       }),
       columnHelper.accessor((row) => row.loss, {
-        cell: (info) => info.getValue(),
+        cell: (info) => (info.getValue() ?? 0).toFixed(4),
         id: "Loss",
       }),
       columnHelper.accessor((row) => row["Win Percentage"], {
