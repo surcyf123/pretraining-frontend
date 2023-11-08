@@ -102,6 +102,16 @@ export function LineChart({
           nameLocation: "middle",
           nameGap: 30,
           axisLine: { show: true },
+          axisLabel: {
+            formatter: (value: unknown) =>
+              typeof value === "number"
+                ? new Date(value).toLocaleString(undefined, {
+                    dateStyle: "short",
+                    timeStyle: "short",
+                    hour12: true,
+                  })
+                : "",
+          },
         },
         yAxis: {
           type: "value",
