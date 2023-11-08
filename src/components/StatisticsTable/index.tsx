@@ -33,7 +33,11 @@ export function StatisticsTable({ data }: { data: CompleteStatistics[] }): JSX.E
         id: "Loss",
       }),
       columnHelper.accessor((row) => row["Win Percentage"], {
-        cell: (info) => info.getValue(),
+        cell: (info) =>
+          (info.getValue() ?? 0).toLocaleString(undefined, {
+            style: "percent",
+            maximumFractionDigits: 2,
+          }),
         id: "Win Percentage",
       }),
     ];
