@@ -45,7 +45,6 @@ use([
 
 export interface LineChartProps {
   theme?: "light" | "dark";
-  chartType: "category" | "time" | "value";
   data: InternMap<string, CompleteStatistics[]>;
   xAxis: string;
   yAxis: string;
@@ -63,7 +62,6 @@ export function LineChart({
   yAxis,
   xAxisTitle,
   yAxisTitle,
-  chartType,
   isLoading,
   title,
   style,
@@ -98,7 +96,7 @@ export function LineChart({
         },
         grid: { bottom: "25%", top: "15%", right: "5%", left: "5%" },
         xAxis: {
-          type: chartType,
+          type: "time",
           name: xAxisTitle ?? xAxis,
           position: "bottom",
           nameLocation: "middle",
@@ -142,30 +140,10 @@ export function LineChart({
             xAxisIndex: 0,
           },
         ],
-        tooltip: {
-          trigger: "item",
-          formatter: (params) => {
-            let output: string;
-            if (Array.isArray(params)) {
-              output = "";
-            } else {
-              const tooltipData = params.data as Record<string, string | number>;
-              output = `
-              <b>${xAxis}: </b>${
-                chartType === "time"
-                  ? new Date(tooltipData[xAxis]).toLocaleDateString()
-                  : tooltipData[xAxis]
-              }<br />
-              <b>${yAxis}: </b>${tooltipData[yAxis]}<br />
-              `;
-            }
-            return output;
-          },
-        },
       };
       chart?.setOption(option, true);
     }
-  }, [chartType, data, theme, xAxis, xAxisTitle, yAxis, yAxisTitle, title]);
+  }, [data, theme, xAxis, xAxisTitle, yAxis, yAxisTitle, title]);
 
   useEffect(() => {
     if (chartRef.current !== null) {

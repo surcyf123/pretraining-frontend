@@ -44,7 +44,6 @@ export function Dashboard() {
     <Stack>
       <Card shadow="md">
         <LineChart
-          chartType="time"
           data={chartData}
           yAxis="loss"
           xAxis="timestamp"
