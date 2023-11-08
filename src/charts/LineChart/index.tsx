@@ -96,7 +96,7 @@ export function LineChart({
           text: title,
           left: "center",
         },
-        grid: { bottom: "20%", top: "15%", right: "15%", left: "15%" },
+        grid: { bottom: "25%", top: "15%", right: "5%", left: "5%" },
         xAxis: {
           type: chartType,
           name: xAxisTitle ?? xAxis,
