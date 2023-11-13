@@ -46,5 +46,6 @@ for run in runs:
             converted_data = [json.loads(i) for i in original_format_json_data.to_list()] if isinstance(original_format_json_data, pd.Series) else original_format_json_data
 
             # Save the extracted data to a JSON file
-            with open(f"{os.path.dirname(__file__)}/wandb_original_format_data_{run.name}.json", 'w') as f:
+            output_path = os.path.dirname(__file__).join(f"wandb_original_format_data_{run.name}.json")
+            with open(output_path, 'w') as f:
                 json.dump(converted_data, f)
