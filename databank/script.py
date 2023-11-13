@@ -43,7 +43,10 @@ for run in runs:
             original_format_json_data = run_data['original_format_json']
 
             # Convert the Pandas Series to a list or dict
-            converted_data = [json.loads(i) for i in original_format_json_data.to_list()] if isinstance(original_format_json_data, pd.Series) else original_format_json_data
+            if (isinstance(original_format_json_data, pd.Series)):
+                converted_data = [json.loads(i) for i in original_format_json_data.to_list()];
+            else:
+                converted_data = original_format_json_data
 
             # Save the extracted data to a JSON file
             output_path = os.path.join(os.path.dirname(__file__), f"wandb_original_format_data_{run.name}.json")
