@@ -1,0 +1,452 @@
+[
+  {
+    "timestamp": 1699747587.964998,
+    "pages": [474088652, 55010983],
+    "uids": [49, 136, 192, 194, 199, 200, 236, 239, 240],
+    "best_average_loss": 10.055045860154287,
+    "best_average_loss_uid": 49,
+    "uid_data": {
+      "49": {
+        "uid": 49,
+        "runid": "dk1cn9ez",
+        "timestamp": 1699640909,
+        "average_losses": [10.051506519317627, 10.058585200990949],
+        "average_loss": 10.055045860154287,
+        "win_rate": 1.0,
+        "win_total": 50
+      },
+      "136": {
+        "uid": 136,
+        "runid": "n21jf2v9",
+        "timestamp": 1699640367,
+        "average_losses": [10.923493211919611, 10.9188312462398],
+        "average_loss": 10.921162229079705,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "192": {
+        "uid": 192,
+        "runid": "61uy2ion",
+        "timestamp": 1699740423,
+        "average_losses": [10.954829562794078, 10.951506205967494],
+        "average_loss": 10.953167884380786,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "194": {
+        "uid": 194,
+        "runid": "194zcwe3",
+        "timestamp": 1699640378,
+        "average_losses": [10.919872370633213, 10.91312745639256],
+        "average_loss": 10.916499913512887,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "199": {
+        "uid": 199,
+        "runid": "cz084o8m",
+        "timestamp": 1699640369,
+        "average_losses": [10.934978008270264, 10.927650349480766],
+        "average_loss": 10.931314178875514,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "200": {
+        "uid": 200,
+        "runid": "avkly0ky",
+        "timestamp": 1699633949,
+        "average_losses": [10.91420875896107, 10.923510108675275],
+        "average_loss": 10.918859433818174,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "236": {
+        "uid": 236,
+        "runid": "2iws57st",
+        "timestamp": 1699578304,
+        "average_losses": [10.309784629128195, 10.316059521266393],
+        "average_loss": 10.312922075197294,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "239": {
+        "uid": 239,
+        "runid": "hjyc4fjc",
+        "timestamp": 1699710989,
+        "average_losses": [10.940423228523947, 10.933381046567645],
+        "average_loss": 10.936902137545797,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "240": {
+        "uid": 240,
+        "runid": "wkrq7qxz",
+        "timestamp": 1699640378,
+        "average_losses": [10.932836315848611, 10.929808378219604],
+        "average_loss": 10.931322347034108,
+        "win_rate": 0.0,
+        "win_total": 0
+      }
+    }
+  },
+  {
+    "timestamp": 1699748027.101851,
+    "pages": [453966214, 769550114],
+    "uids": [49, 136, 192, 194, 199, 200, 236, 239, 240],
+    "best_average_loss": 10.018917976576706,
+    "best_average_loss_uid": 49,
+    "uid_data": {
+      "49": {
+        "uid": 49,
+        "runid": "dk1cn9ez",
+        "timestamp": 1699640909,
+        "average_losses": [9.995291423797607, 10.042544529355805],
+        "average_loss": 10.018917976576706,
+        "win_rate": 1.0,
+        "win_total": 59
+      },
+      "136": {
+        "uid": 136,
+        "runid": "n21jf2v9",
+        "timestamp": 1699640367,
+        "average_losses": [10.919762420654298, 10.919163572377172],
+        "average_loss": 10.919462996515735,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "192": {
+        "uid": 192,
+        "runid": "61uy2ion",
+        "timestamp": 1699740423,
+        "average_losses": [10.950869305928547, 10.949469336147967],
+        "average_loss": 10.950169321038256,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "194": {
+        "uid": 194,
+        "runid": "194zcwe3",
+        "timestamp": 1699640378,
+        "average_losses": [10.916103267669678, 10.913437580240183],
+        "average_loss": 10.91477042395493,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "199": {
+        "uid": 199,
+        "runid": "cz084o8m",
+        "timestamp": 1699640369,
+        "average_losses": [10.929870065053304, 10.930271937929351],
+        "average_loss": 10.930071001491328,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "200": {
+        "uid": 200,
+        "runid": "avkly0ky",
+        "timestamp": 1699633949,
+        "average_losses": [10.925244808197021, 10.930301205865268],
+        "average_loss": 10.927773007031146,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "236": {
+        "uid": 236,
+        "runid": "2iws57st",
+        "timestamp": 1699578304,
+        "average_losses": [10.270286369323731, 10.303353210975384],
+        "average_loss": 10.286819790149558,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "239": {
+        "uid": 239,
+        "runid": "hjyc4fjc",
+        "timestamp": 1699710989,
+        "average_losses": [10.933171526590984, 10.92989572985419],
+        "average_loss": 10.931533628222587,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "240": {
+        "uid": 240,
+        "runid": "wkrq7qxz",
+        "timestamp": 1699640378,
+        "average_losses": [10.934656683603922, 10.930893930895575],
+        "average_loss": 10.932775307249749,
+        "win_rate": 0.0,
+        "win_total": 0
+      }
+    }
+  },
+  {
+    "timestamp": 1699748403.4217532,
+    "pages": [753424567, 415236022],
+    "uids": [49, 136, 192, 194, 199, 200, 236, 239, 240],
+    "best_average_loss": 10.016902534621103,
+    "best_average_loss_uid": 49,
+    "uid_data": {
+      "49": {
+        "uid": 49,
+        "runid": "dk1cn9ez",
+        "timestamp": 1699640909,
+        "average_losses": [10.019484962735858, 10.014320106506348],
+        "average_loss": 10.016902534621103,
+        "win_rate": 1.0,
+        "win_total": 53
+      },
+      "136": {
+        "uid": 136,
+        "runid": "n21jf2v9",
+        "timestamp": 1699640367,
+        "average_losses": [10.919343744005475, 10.92106948852539],
+        "average_loss": 10.920206616265432,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "192": {
+        "uid": 192,
+        "runid": "61uy2ion",
+        "timestamp": 1699740423,
+        "average_losses": [10.94690363747733, 10.95518325805664],
+        "average_loss": 10.951043447766985,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "194": {
+        "uid": 194,
+        "runid": "194zcwe3",
+        "timestamp": 1699640378,
+        "average_losses": [10.9160977772304, 10.91677490234375],
+        "average_loss": 10.916436339787076,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "199": {
+        "uid": 199,
+        "runid": "cz084o8m",
+        "timestamp": 1699640369,
+        "average_losses": [10.927339621952601, 10.929683685302734],
+        "average_loss": 10.928511653627668,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "200": {
+        "uid": 200,
+        "runid": "avkly0ky",
+        "timestamp": 1699633949,
+        "average_losses": [10.928454739706856, 10.92845428466797],
+        "average_loss": 10.928454512187413,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "236": {
+        "uid": 236,
+        "runid": "2iws57st",
+        "timestamp": 1699578304,
+        "average_losses": [10.280721868787493, 10.28316749572754],
+        "average_loss": 10.281944682257517,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "239": {
+        "uid": 239,
+        "runid": "hjyc4fjc",
+        "timestamp": 1699710989,
+        "average_losses": [10.933472497122628, 10.936740798950195],
+        "average_loss": 10.935106648036411,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "240": {
+        "uid": 240,
+        "runid": "wkrq7qxz",
+        "timestamp": 1699640378,
+        "average_losses": [10.939107724598475, 10.938927459716798],
+        "average_loss": 10.939017592157636,
+        "win_rate": 0.0,
+        "win_total": 0
+      }
+    }
+  },
+  {
+    "timestamp": 1699748819.7930784,
+    "pages": [210456702, 964348702],
+    "uids": [49, 136, 192, 194, 199, 200, 236, 239, 240],
+    "best_average_loss": 10.036255570394651,
+    "best_average_loss_uid": 49,
+    "uid_data": {
+      "49": {
+        "uid": 49,
+        "runid": "dk1cn9ez",
+        "timestamp": 1699640909,
+        "average_losses": [10.023123651742935, 10.049387489046369],
+        "average_loss": 10.036255570394651,
+        "win_rate": 1.0,
+        "win_total": 60
+      },
+      "136": {
+        "uid": 136,
+        "runid": "n21jf2v9",
+        "timestamp": 1699640367,
+        "average_losses": [10.922298282384872, 10.918934992381505],
+        "average_loss": 10.920616637383189,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "192": {
+        "uid": 192,
+        "runid": "61uy2ion",
+        "timestamp": 1699740423,
+        "average_losses": [10.942470848560333, 10.94295232636588],
+        "average_loss": 10.942711587463107,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "194": {
+        "uid": 194,
+        "runid": "194zcwe3",
+        "timestamp": 1699640378,
+        "average_losses": [10.911828964948654, 10.910399028233119],
+        "average_loss": 10.911113996590887,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "199": {
+        "uid": 199,
+        "runid": "cz084o8m",
+        "timestamp": 1699640369,
+        "average_losses": [10.926840037107468, 10.928123848778862],
+        "average_loss": 10.927481942943164,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "200": {
+        "uid": 200,
+        "runid": "avkly0ky",
+        "timestamp": 1699633949,
+        "average_losses": [10.93602168560028, 10.93000956944057],
+        "average_loss": 10.933015627520426,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "236": {
+        "uid": 236,
+        "runid": "2iws57st",
+        "timestamp": 1699578304,
+        "average_losses": [10.287715703248978, 10.302888086863927],
+        "average_loss": 10.295301895056452,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "239": {
+        "uid": 239,
+        "runid": "hjyc4fjc",
+        "timestamp": 1699710989,
+        "average_losses": [10.927109271287918, 10.930825233459473],
+        "average_loss": 10.928967252373695,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "240": {
+        "uid": 240,
+        "runid": "wkrq7qxz",
+        "timestamp": 1699640378,
+        "average_losses": [10.934978991746902, 10.934562717165266],
+        "average_loss": 10.934770854456083,
+        "win_rate": 0.0,
+        "win_total": 0
+      }
+    }
+  },
+  {
+    "timestamp": 1699749201.8688304,
+    "pages": [32242356, 816774707],
+    "uids": [49, 136, 192, 194, 199, 200, 236, 239, 240],
+    "best_average_loss": 10.040692164347721,
+    "best_average_loss_uid": 49,
+    "uid_data": {
+      "49": {
+        "uid": 49,
+        "runid": "dk1cn9ez",
+        "timestamp": 1699640909,
+        "average_losses": [10.078495025634766, 10.002889303060678],
+        "average_loss": 10.040692164347721,
+        "win_rate": 1.0,
+        "win_total": 56
+      },
+      "136": {
+        "uid": 136,
+        "runid": "n21jf2v9",
+        "timestamp": 1699640367,
+        "average_losses": [10.918825912475587, 10.916756739983192],
+        "average_loss": 10.91779132622939,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "192": {
+        "uid": 192,
+        "runid": "61uy2ion",
+        "timestamp": 1699740423,
+        "average_losses": [10.952596187591553, 10.946042867807241],
+        "average_loss": 10.949319527699398,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "194": {
+        "uid": 194,
+        "runid": "194zcwe3",
+        "timestamp": 1699640378,
+        "average_losses": [10.918197377522786, 10.91569416339581],
+        "average_loss": 10.916945770459296,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "199": {
+        "uid": 199,
+        "runid": "cz084o8m",
+        "timestamp": 1699640369,
+        "average_losses": [10.932344118754068, 10.934674226320707],
+        "average_loss": 10.933509172537388,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "200": {
+        "uid": 200,
+        "runid": "avkly0ky",
+        "timestamp": 1699633949,
+        "average_losses": [10.921904627482096, 10.931854724884033],
+        "average_loss": 10.926879676183065,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "236": {
+        "uid": 236,
+        "runid": "2iws57st",
+        "timestamp": 1699578304,
+        "average_losses": [10.323557504018147, 10.275512035076435],
+        "average_loss": 10.299534769547291,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "239": {
+        "uid": 239,
+        "runid": "hjyc4fjc",
+        "timestamp": 1699710989,
+        "average_losses": [10.929235617319742, 10.929391787602352],
+        "average_loss": 10.929313702461048,
+        "win_rate": 0.0,
+        "win_total": 0
+      },
+      "240": {
+        "uid": 240,
+        "runid": "wkrq7qxz",
+        "timestamp": 1699640378,
+        "average_losses": [10.932253297170003, 10.9347034234267],
+        "average_loss": 10.933478360298352,
+        "win_rate": 0.0,
+        "win_total": 0
+      }
+    }
+  }
+]

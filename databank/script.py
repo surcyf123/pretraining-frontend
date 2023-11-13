@@ -44,7 +44,13 @@ for run in runs:
 
             # Convert the Pandas Series to a list or dict
             if (isinstance(original_format_json_data, pd.Series)):
-                converted_data = [json.loads(i) for i in original_format_json_data.to_list()];
+                converted_data = []
+                target_list = original_format_json_data.to_list()
+                for ele in target_list:
+                    if isinstance(ele, str):
+                        converted_data.append(json.loads(ele))
+                    else:    
+                        converted_data.append(ele)
             else:
                 converted_data = original_format_json_data
 
