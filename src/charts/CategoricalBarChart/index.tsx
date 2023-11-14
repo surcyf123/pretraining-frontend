@@ -11,7 +11,7 @@ import {
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useRef, useEffect } from "react";
-import type { CompleteStatistics } from "../../sample-data/state";
+import type { UIDDetails } from "../../sample-data/interfaces";
 import type { BarSeriesOption } from "echarts/charts";
 import type {
   TitleComponentOption,
@@ -46,7 +46,7 @@ use([
 
 export interface CategoricalBarChartProps {
   theme?: "light" | "dark";
-  data: CompleteStatistics[];
+  data: UIDDetails[];
   xAxis: string;
   yAxis: string;
   xAxisTitle: string;
@@ -116,6 +116,7 @@ export function CategoricalBarChart({
         dataset: [
           {
             dimensions: [xAxis, yAxis],
+            // @ts-expect-error bad types
             source: data,
           },
           {

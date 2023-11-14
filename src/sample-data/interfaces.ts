@@ -1,4 +1,4 @@
-interface UIDDetails {
+export interface UIDDetails {
   uid: number;
   runid: string;
   timestamp: number;
@@ -8,7 +8,6 @@ interface UIDDetails {
   win_total: number;
 }
 
-// eslint-disable-next-line import/no-unused-modules
 export interface RunDetails {
   uid_data: Record<string, UIDDetails>;
   timestamp: number;

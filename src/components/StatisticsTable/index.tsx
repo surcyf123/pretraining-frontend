@@ -13,33 +13,33 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
-import type { CompleteStatistics } from "../../sample-data/state";
+import type { UIDDetails } from "../../sample-data/interfaces";
 import type { SortingState, PaginationState } from "@tanstack/react-table";
 
-export function StatisticsTable({ data }: { data: CompleteStatistics[] }): JSX.Element {
+export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
   const columns = useMemo(() => {
-    const columnHelper = createColumnHelper<CompleteStatistics>();
+    const columnHelper = createColumnHelper<UIDDetails>();
     return [
-      columnHelper.accessor((row) => row.id, {
+      columnHelper.accessor((row) => row.uid, {
         cell: (info) => info.getValue(),
         id: "UID",
       }),
       columnHelper.accessor((row) => row.timestamp, {
         cell: (info) =>
-          new Date(info.getValue() ?? 0).toLocaleString(undefined, {
+          new Date(info.getValue()).toLocaleString(undefined, {
             dateStyle: "short",
             timeStyle: "medium",
             hour12: true,
           }),
         id: "Timestamp",
       }),
-      columnHelper.accessor((row) => row.loss, {
-        cell: (info) => (info.getValue() ?? 0).toFixed(4),
+      columnHelper.accessor((row) => row.average_loss, {
+        cell: (info) => info.getValue().toFixed(4),
         id: "Loss",
       }),
-      columnHelper.accessor((row) => row["Win Percentage"], {
+      columnHelper.accessor((row) => row.win_rate, {
         cell: (info) =>
-          (info.getValue() ?? 0).toLocaleString(undefined, {
+          info.getValue().toLocaleString(undefined, {
             style: "percent",
             maximumFractionDigits: 2,
           }),

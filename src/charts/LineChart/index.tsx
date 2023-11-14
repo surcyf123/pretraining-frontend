@@ -10,7 +10,7 @@ import {
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useRef, useEffect } from "react";
-import type { CompleteStatistics } from "../../sample-data/state";
+import type { UIDDetails } from "../../sample-data/interfaces";
 import type { InternMap } from "d3-array";
 import type { LineSeriesOption } from "echarts/charts";
 import type {
@@ -45,7 +45,7 @@ use([
 
 export interface LineChartProps {
   theme?: "light" | "dark";
-  data: InternMap<string, CompleteStatistics[]>;
+  data: InternMap<string, UIDDetails[]>;
   xAxis: string;
   yAxis: string;
   xAxisTitle: string;
@@ -122,6 +122,7 @@ export function LineChart({
           axisLine: { show: true },
           scale: true,
         },
+        // @ts-expect-error bad types
         dataset: [...data.entries()].map(([key, value]) => ({
           dimensions: [xAxis, yAxis],
           source: value,

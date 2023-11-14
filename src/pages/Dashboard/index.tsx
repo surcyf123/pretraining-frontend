@@ -6,19 +6,12 @@ import { LineChart } from "../../charts/LineChart";
 import { PieChart } from "../../charts/PieChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
 import { Data } from "../../sample-data/state";
-import type { CompleteStatistics } from "../../sample-data/state";
+import type { UIDDetails } from "../../sample-data/interfaces";
 
 export function Dashboard() {
   const { colorScheme } = useMantineColorScheme();
-  const processedData = useMemo(
-    () =>
-      Data.flatMap(({ data, timestamp }) =>
-        Object.entries(data).map<CompleteStatistics>(([key, value]) => ({
-          id: key,
-          timestamp,
-          ...value,
-        })),
-      ),
+  const processedData = useMemo<UIDDetails[]>(
+    () => Data.flatMap((ele) => Object.values(ele.uid_data)),
     [],
   );
   const chartData = useMemo(
@@ -26,12 +19,12 @@ export function Dashboard() {
       rollup(
         processedData,
         (arr) => sort(arr, (a, b) => ascending(a.timestamp, b.timestamp)),
-        (d) => d.id,
+        (d) => d.uid.toString(),
       ),
     [processedData],
   );
   const tableData = useMemo(() => {
-    const output: CompleteStatistics[] = [];
+    const output: UIDDetails[] = [];
     chartData.forEach((ele) => {
       const last = ele.pop();
       if (last !== undefined) {
