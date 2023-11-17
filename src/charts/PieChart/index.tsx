@@ -75,6 +75,13 @@ export function PieChart({ theme, data, isLoading, title, style }: PieChartProps
           text: title,
           left: "center",
         },
+        tooltip: {
+          trigger: "item",
+          formatter: `<div>
+          <p>{b}</p>
+          <p>value:{c}</p>
+          </div>`, // Ref: https://echarts.apache.org/en/option.html#grid.tooltip.formatter
+        },
         grid: { bottom: "20%", top: "15%", right: "15%", left: "15%" },
         series: [
           {
