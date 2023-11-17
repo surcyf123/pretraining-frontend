@@ -137,7 +137,7 @@ export function LineChart({
                 timeStyle: "short",
                 hour12: true,
               })}</span></br>
-              <span>${yAxisTitle}: ${averageLoss.toFixed(4)}</span></br>
+              <span>${yAxisTitle}: ${averageLoss.toFixed(4)}</span>
               </div>`;
             }
             return output;
