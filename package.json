@@ -23,7 +23,7 @@
   },
   "resolutions": {
     "@types/react": "18.2.33",
-    "@types/trusted-types":"2.0.4"
+    "@types/trusted-types": "2.0.4"
   },
   "dependencies": {
     "@fontsource/ruda": "^5.0.17",
