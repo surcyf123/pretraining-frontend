@@ -77,11 +77,13 @@ export function PieChart({ theme, data, isLoading, title, style }: PieChartProps
         },
         tooltip: {
           trigger: "item",
-          formatter: `<div>
-          <span>{b}</span>
-          <br/>
-          <span>Win Rate:{c}</span>
-          </div>`, // Ref: https://echarts.apache.org/en/option.html#grid.tooltip.formatter
+          formatter: `
+          <div>
+            <span>{b}</span>
+            <br/>
+            <span>Win Rate: {c}</span>
+          </div>
+          `, // Ref: https://echarts.apache.org/en/option.html#grid.tooltip.formatter
         },
         grid: { bottom: "20%", top: "15%", right: "15%", left: "15%" },
         series: [
