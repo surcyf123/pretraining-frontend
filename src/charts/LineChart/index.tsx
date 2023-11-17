@@ -125,20 +125,24 @@ export function LineChart({
         tooltip: {
           trigger: "item",
           formatter: (params) => {
-            let output: string | undefined;
+            let output = "";
             if (Array.isArray(params)) {
               output = "";
             } else {
               const { uid, timestamp, average_loss: averageLoss } = params.data as UIDDetails;
-              output = `<div>
-              <span>UID: ${uid}</span></br>
-              <span>${xAxisTitle}: ${new Date(timestamp).toLocaleString(undefined, {
-                dateStyle: "short",
-                timeStyle: "short",
-                hour12: true,
-              })}</span></br>
-              <span>${yAxisTitle}: ${averageLoss.toFixed(4)}</span>
-              </div>`;
+              output = `
+              <div>
+                <span>UID: ${uid}</span>
+                <br>
+                <span>${xAxisTitle}: ${new Date(timestamp).toLocaleString(undefined, {
+                  dateStyle: "short",
+                  timeStyle: "short",
+                  hour12: true,
+                })}</span>
+                <br/>
+                <span>${yAxisTitle}: ${averageLoss.toFixed(4)}</span>
+              </div>
+              `;
             }
             return output;
           },
