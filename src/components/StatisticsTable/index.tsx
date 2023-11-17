@@ -26,7 +26,8 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
       }),
       columnHelper.accessor((row) => row.timestamp, {
         cell: (info) =>
-          new Date(info.getValue()).toLocaleString(undefined, {
+          // timestamp provided is in seconds.
+          new Date(info.getValue() * 1000).toLocaleString(undefined, {
             dateStyle: "short",
             timeStyle: "medium",
             hour12: true,
