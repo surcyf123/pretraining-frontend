@@ -14,7 +14,7 @@ export function Dashboard() {
     () =>
       Data.flatMap((ele) => Object.values(ele.uid_data)).map((ele) => ({
         ...ele,
-        timestamp: ele.timestamp * 1000, // timestamp provided is in seconds and Date excepts milliseconds.
+        timestamp: ele.timestamp * 1000, // timestamp provided is in seconds and javascript Date api expects milliseconds.
       })),
     [],
   );
