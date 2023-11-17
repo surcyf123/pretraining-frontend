@@ -92,5 +92,8 @@
   },
   "engines": {
     "node": ">=18.18.2"
+  },
+  "@comments": {
+    "@types/trusted-types": "workbox-webpack-plugin depends on it (@types/trusted-types) and workbox-webpack-plugin is used to generate a service worker for caching and offline functionality in web applications. Also @types/trusted-types provides TypeScript type definitions for the trusted-types library, enabling developers to write type-safe code when using trusted-types in TypeScript projects. "
   }
 }
