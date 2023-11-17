@@ -48,7 +48,12 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
     ];
   }, []);
 
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>([
+    {
+      desc: true,
+      id: "Loss",
+    },
+  ]);
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
