@@ -18,6 +18,7 @@ export function Dashboard() {
       })),
     [],
   );
+  // All data
   const chartData = useMemo(
     () =>
       rollup(
@@ -27,6 +28,8 @@ export function Dashboard() {
       ),
     [processedData],
   );
+
+  // Most recent data
   const tableData = useMemo(() => {
     const output: UIDDetails[] = [];
     chartData.forEach((ele) => {
