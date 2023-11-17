@@ -98,7 +98,7 @@ export function CategoricalBarChart({
         tooltip: {
           trigger: "item",
           formatter: (params) => {
-            let output: string | undefined;
+            let output = "";
             if (Array.isArray(params)) {
               output = "";
             } else {
