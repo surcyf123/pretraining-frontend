@@ -38,7 +38,7 @@ export function Dashboard() {
       <Card shadow="md">
         <LineChart
           data={chartData}
-          yAxis="loss"
+          yAxis="average_loss"
           xAxis="timestamp"
           yAxisTitle="Loss"
           xAxisTitle="Time"
@@ -60,7 +60,7 @@ export function Dashboard() {
             style={{ height: "30vh" }}
             theme={colorScheme === "auto" ? "dark" : colorScheme}
             xAxis="id"
-            yAxis="loss"
+            yAxis="average_loss"
             xAxisTitle="UID"
             yAxisTitle="Loss"
           />
