@@ -11,7 +11,11 @@ import type { UIDDetails } from "../../sample-data/interfaces";
 export function Dashboard() {
   const { colorScheme } = useMantineColorScheme();
   const processedData = useMemo<UIDDetails[]>(
-    () => Data.flatMap((ele) => Object.values(ele.uid_data)),
+    () =>
+      Data.flatMap((ele) => Object.values(ele.uid_data)).map((ele) => ({
+        ...ele,
+        timestamp: ele.timestamp * 1000, // timestamp provided is in seconds and Date excepts milliseconds.
+      })),
     [],
   );
   const chartData = useMemo(
