@@ -63,7 +63,7 @@ export function Dashboard() {
             data={tableData}
             style={{ height: "30vh" }}
             theme={colorScheme === "auto" ? "dark" : colorScheme}
-            xAxis="id"
+            xAxis="uid"
             yAxis="average_loss"
             xAxisTitle="UID"
             yAxisTitle="Loss"
