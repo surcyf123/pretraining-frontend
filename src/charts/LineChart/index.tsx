@@ -122,6 +122,27 @@ export function LineChart({
           axisLine: { show: true },
           scale: true,
         },
+        tooltip: {
+          trigger: "item",
+          formatter: (params) => {
+            let output: string | undefined;
+            if (Array.isArray(params)) {
+              output = "";
+            } else {
+              const { uid, timestamp, average_loss: averageLoss } = params.data as UIDDetails;
+              output = `<div>
+              <span>UID: ${uid}</span></br>
+              <span>${xAxisTitle}: ${new Date(timestamp).toLocaleString(undefined, {
+                dateStyle: "short",
+                timeStyle: "short",
+                hour12: true,
+              })}</span></br>
+              <span>${yAxisTitle}: ${averageLoss.toFixed(3)}</span></br>
+              </div>`;
+            }
+            return output;
+          },
+        },
         // @ts-expect-error bad types
         dataset: [...data.entries()].map(([key, value]) => ({
           dimensions: [xAxis, yAxis],
