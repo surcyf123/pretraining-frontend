@@ -18,7 +18,7 @@ export function Dashboard() {
       })),
     [],
   );
-  // All data
+  // complete chart data
   const chartData = useMemo(
     () =>
       rollup(
@@ -29,7 +29,7 @@ export function Dashboard() {
     [processedData],
   );
 
-  // Most recent data
+  // latest data for each UID 
   const tableData = useMemo(() => {
     const output: UIDDetails[] = [];
     chartData.forEach((ele) => {
