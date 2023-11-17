@@ -133,7 +133,7 @@ export function LineChart({
               output = `
               <div>
                 <span>UID: ${uid}</span>
-                <br>
+                <br/>
                 <span>${xAxisTitle}: ${new Date(timestamp).toLocaleString(undefined, {
                   dateStyle: "short",
                   timeStyle: "short",
