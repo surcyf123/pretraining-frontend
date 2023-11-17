@@ -95,6 +95,22 @@ export function CategoricalBarChart({
           text: title,
           left: "center",
         },
+        tooltip: {
+          trigger: "item",
+          formatter: (params) => {
+            let output: string | undefined;
+            if (Array.isArray(params)) {
+              output = "";
+            } else {
+              const { uid, average_loss: averageLoss } = params.data as UIDDetails;
+              output = `<div>
+              <span>${xAxisTitle}: ${uid}</span></br>
+              <span>${yAxisTitle}: ${averageLoss.toFixed(3)}</span></br>
+              </div>`;
+            }
+            return output;
+          },
+        },
         grid: { bottom: "20%", top: "15%", right: "15%", left: "15%" },
         xAxis: {
           type: "category",
