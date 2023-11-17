@@ -29,7 +29,7 @@ export function Dashboard() {
     [processedData],
   );
 
-  // latest data for each UID 
+  // latest data for each UID
   const tableData = useMemo(() => {
     const output: UIDDetails[] = [];
     chartData.forEach((ele) => {
