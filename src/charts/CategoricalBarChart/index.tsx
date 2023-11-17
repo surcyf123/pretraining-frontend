@@ -103,10 +103,13 @@ export function CategoricalBarChart({
               output = "";
             } else {
               const { uid, average_loss: averageLoss } = params.data as UIDDetails;
-              output = `<div>
-              <span>${xAxisTitle}: ${uid}</span></br>
-              <span>${yAxisTitle}: ${averageLoss.toFixed(4)}</span>
-              </div>`;
+              output = `
+              <div>
+                <span>${xAxisTitle}: ${uid}</span>
+                </br>
+                <span>${yAxisTitle}: ${averageLoss.toFixed(4)}</span>
+              </div>
+              `;
             }
             return output;
           },
