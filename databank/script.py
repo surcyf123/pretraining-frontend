@@ -8,7 +8,7 @@ import pandas as pd
 api = wandb.Api()
 
 # Define the project and entity
-project_name = "openpretraining"
+project_name = "pretraining-subnet"
 entity_name = "opentensor-dev"
 
 # Retrieve all runs from the specified project
