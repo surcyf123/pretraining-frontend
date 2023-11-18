@@ -90,10 +90,12 @@ export function PieChart({ theme, data, isLoading, title, style }: PieChartProps
           {
             type: "pie",
             radius: "70%",
-            data: data.map((ele) => ({
-              value: ele.win_rate ?? 0,
-              name: `UID: ${ele.uid}`,
-            })),
+            data: data
+              .filter((ele) => ele.win_rate > 0)
+              .map((ele) => ({
+                value: ele.win_rate,
+                name: `UID: ${ele.uid}`,
+              })),
             name: "Pie",
             minAngle: 2,
           },
