@@ -20,6 +20,16 @@ now = datetime.datetime.now()
 # Initialize a dictionary to hold the original_format_json data for all runs
 all_run_data = {}
 
+def replace_inf_nan(obj):
+    if isinstance(obj, list):
+        return [replace_inf_nan(item) for item in obj]
+    elif isinstance(obj, dict):
+        return {key: replace_inf_nan(value) for key, value in obj.items()}
+    elif isinstance(obj, float) and (obj == float('inf') or obj != obj):  # Check for NaN
+        return None
+    else:
+        return obj
+
 for run in runs:
     # Parse the created_at time
     try:
@@ -53,6 +63,9 @@ for run in runs:
                         converted_data.append(ele)
             else:
                 converted_data = original_format_json_data
+
+            # Replace NaN value and infinity values with null
+            converted_data=replace_inf_nan(converted_data)
 
             # Save the extracted data to a JSON file
             output_path = os.path.join(os.path.dirname(__file__), f"wandb_original_format_data_{run.name}.json")
