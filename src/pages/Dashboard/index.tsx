@@ -30,25 +30,6 @@ export function Dashboard() {
     [processedData],
   );
 
-  // const processedMultiJSON = useMemo<InternMap<string, RunDetails[]>>(() => {
-  //   const runDetails = Object.entries(MultiJSON)
-  //     .flatMap(([key, values]) =>
-  //       values
-  //         .filter((ele): ele is RunDetails => ele !== null)
-  //         .map((ele) => ({ ...ele, series: key })),
-  //     )
-  //     .map((ele) => ({
-  //       ...ele,
-  //       timestamp: ele.timestamp * 1000, // timestamp provided is in seconds and javascript Date api expects milliseconds.
-  //     }));
-  //   const output = rollup(
-  //     runDetails,
-  //     (ele) => ele,
-  //     ({ series }) => series,
-  //   );
-  //   return output;
-  // }, []);
-
   // latest data for each UID
   const tableData = useMemo(() => {
     const output: UIDDetails[] = [];
