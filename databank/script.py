@@ -28,7 +28,7 @@ def replace_inf_nan(obj):
         return {key: replace_inf_nan(value) for key, value in obj.items()}
     # in python 'inf' (positive infinity) is instance of float. Ref: https://www.geeksforgeeks.org/python-infinity/
     # obj == float('inf') checks if obj is positive infinity.
-    elif isinstance(obj, float) and (obj == float('inf') or math.isnan(obj)):
+    elif isinstance(obj, float) and (math.isinf(obj) or math.isnan(obj)):
         return None
     else:
         return obj
