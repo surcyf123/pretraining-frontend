@@ -45,6 +45,10 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
           }),
         id: "Win Percentage",
       }),
+      columnHelper.accessor((row) => row.weight, {
+        cell: (info) => (info.getValue() ?? NaN).toFixed(4),
+        id: "Weight",
+      }),
     ];
   }, []);
 
