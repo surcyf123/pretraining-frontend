@@ -69,8 +69,8 @@ for run in runs:
 
             # Replace NaN value and infinity values with null
             converted_data=replace_inf_nan(converted_data)
-
-            # Save the extracted data to a JSON file
-            output_path = os.path.join(os.path.dirname(__file__), f"wandb_original_format_data_{run.name}.json")
-            with open(output_path, 'w') as f:
-                json.dump(converted_data, f)
+            all_run_data.update({run.name: converted_data})
+# Save the extracted data to a JSON file
+output_path = os.path.join(os.path.dirname(__file__), "multi.json")
+with open(output_path, 'w') as f:
+    json.dump(all_run_data, f, indent=2)
