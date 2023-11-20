@@ -14,8 +14,7 @@ export function Dashboard() {
   const processedData = useMemo<UIDDetails[]>(
     () =>
       Data.flatMap((ele) => Object.values(ele.uid_data))
-        .filter((ele): ele is UIDDetails => ele !== undefined)
-        .filter(({ average_loss, win_rate }) => average_loss !== null && win_rate > 0)
+        .filter((ele): ele is UIDDetails => ele?.average_loss !== undefined && ele?.average_loss !== null && ele?.win_rate > 0)
         .map((ele) => ({
           ...ele,
           timestamp: ele.timestamp * 1000, // timestamp provided is in seconds and javascript Date api expects milliseconds.
