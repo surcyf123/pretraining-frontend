@@ -8,3 +8,4 @@ node_modules
 dist
 .eslintcache
 storybook-static
+databank/wandb_original_format_data_multi.json
