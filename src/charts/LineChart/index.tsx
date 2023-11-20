@@ -140,7 +140,7 @@ export function LineChart({
                   hour12: true,
                 })}</span>
                 <br/>
-                <span>${yAxisTitle}: ${averageLoss.toFixed(4)}</span>
+                <span>${yAxisTitle}: ${(averageLoss ?? NaN).toFixed(4)}</span>
               </div>
               `;
             }

@@ -34,7 +34,7 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
         id: "Timestamp",
       }),
       columnHelper.accessor((row) => row.average_loss, {
-        cell: (info) => info.getValue().toFixed(4),
+        cell: (info) => (info.getValue() ?? NaN).toFixed(4),
         id: "Loss",
       }),
       columnHelper.accessor((row) => row.win_rate, {
