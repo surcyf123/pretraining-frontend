@@ -7,8 +7,7 @@ import { LineChart } from "../../charts/LineChart";
 import { PieChart } from "../../charts/PieChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
 import { Data, MultiJSON } from "../../sample-data/state";
-import type { RunDetails, UIDDetails } from "../../sample-data/interfaces";
-import type { InternMap } from "d3-array";
+import type { UIDDetails } from "../../sample-data/interfaces";
 
 export function Dashboard() {
   const { colorScheme } = useMantineColorScheme();
@@ -31,24 +30,24 @@ export function Dashboard() {
     [processedData],
   );
 
-  const processedMultiJSON = useMemo<InternMap<string, RunDetails[]>>(() => {
-    const runDetails = Object.entries(MultiJSON)
-      .flatMap(([key, values]) =>
-        values
-          .filter((ele): ele is RunDetails => ele !== null)
-          .map((ele) => ({ ...ele, series: key })),
-      )
-      .map((ele) => ({
-        ...ele,
-        timestamp: ele.timestamp * 1000, // timestamp provided is in seconds and javascript Date api expects milliseconds.
-      }));
-    const output = rollup(
-      runDetails,
-      (ele) => ele,
-      ({ series }) => series,
-    );
-    return output;
-  }, []);
+  // const processedMultiJSON = useMemo<InternMap<string, RunDetails[]>>(() => {
+  //   const runDetails = Object.entries(MultiJSON)
+  //     .flatMap(([key, values]) =>
+  //       values
+  //         .filter((ele): ele is RunDetails => ele !== null)
+  //         .map((ele) => ({ ...ele, series: key })),
+  //     )
+  //     .map((ele) => ({
+  //       ...ele,
+  //       timestamp: ele.timestamp * 1000, // timestamp provided is in seconds and javascript Date api expects milliseconds.
+  //     }));
+  //   const output = rollup(
+  //     runDetails,
+  //     (ele) => ele,
+  //     ({ series }) => series,
+  //   );
+  //   return output;
+  // }, []);
 
   // latest data for each UID
   const tableData = useMemo(() => {
@@ -77,7 +76,7 @@ export function Dashboard() {
       </Card>
       <Card>
         <BestLossChart
-          data={processedMultiJSON}
+          data={MultiJSON}
           yAxis="best_average_loss"
           xAxis="timestamp"
           yAxisTitle="Best average loss"

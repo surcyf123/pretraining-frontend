@@ -11,7 +11,6 @@ import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useRef, useEffect } from "react";
 import type { RunDetails } from "../../sample-data/interfaces";
-import type { InternMap } from "d3-array";
 import type { LineSeriesOption } from "echarts/charts";
 import type {
   TitleComponentOption,
@@ -45,7 +44,7 @@ use([
 
 export interface BestLossChartProps {
   theme?: "light" | "dark";
-  data: InternMap<string, RunDetails[]>;
+  data: Record<string, RunDetails[]>;
   xAxis: string;
   yAxis: string;
   xAxisTitle: string;
@@ -146,12 +145,12 @@ export function BestLossChart({
           },
         },
         // @ts-expect-error bad types
-        dataset: [...data.entries()].map(([key, value]) => ({
+        dataset: Object.entries(data).map(([key, value]) => ({
           dimensions: [xAxis, yAxis],
           source: value,
           id: key,
         })),
-        series: [...data.keys()].map((ele) => ({
+        series: Object.keys(data).map((ele) => ({
           type: "line",
           symbolSize: 5,
           encode: {
