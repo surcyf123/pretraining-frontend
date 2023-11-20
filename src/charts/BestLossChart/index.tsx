@@ -129,7 +129,7 @@ export function BestLossChart({
             if (Array.isArray(params)) {
               output = "";
             } else {
-              const { timestamp, best_average_loss:bestAverageLoss } = params.data as RunDetails;
+              const { timestamp, best_average_loss: bestAverageLoss } = params.data as RunDetails;
               output = `
               <div>
                 <span>${xAxisTitle}: ${new Date(timestamp).toLocaleString(undefined, {
