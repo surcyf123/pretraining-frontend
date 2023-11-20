@@ -55,7 +55,7 @@ export function Dashboard() {
           theme={colorScheme === "auto" ? "dark" : colorScheme}
         />
       </Card>
-      <Card>
+      <Card shadow="md">
         <BestLossChart
           data={MultiJSON}
           yAxis="best_average_loss"
