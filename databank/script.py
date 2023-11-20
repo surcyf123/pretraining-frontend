@@ -69,7 +69,7 @@ for run in runs:
 
             # Replace NaN value and infinity values with null
             converted_data=replace_inf_nan(converted_data)
-            all_run_data.update({run.name:converted_data})
+            all_run_data.update({run.name: converted_data})
 # Save the extracted data to a JSON file
 output_path = os.path.join(os.path.dirname(__file__), "multi.json")
 with open(output_path, 'w') as f:
