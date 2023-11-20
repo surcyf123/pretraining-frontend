@@ -71,6 +71,6 @@ for run in runs:
             converted_data=replace_inf_nan(converted_data)
             all_run_data.update({run.name:converted_data})
 # Save the extracted data to a JSON file
-output_path = os.path.join(os.path.dirname(__file__), f"wandb_original_format_data_multi.json")
+output_path = os.path.join(os.path.dirname(__file__), "multi.json")
 with open(output_path, 'w') as f:
-    json.dump(all_run_data, f,indent=2)
+    json.dump(all_run_data, f, indent=2)
