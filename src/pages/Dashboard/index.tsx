@@ -7,7 +7,7 @@ import { LineChart } from "../../charts/LineChart";
 import { PieChart } from "../../charts/PieChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
 import { Data, MultiJSON } from "../../sample-data/state";
-import type { UIDDetails } from "../../sample-data/interfaces";
+import type { RunDetails, UIDDetails } from "../../sample-data/interfaces";
 
 export function Dashboard() {
   const { colorScheme } = useMantineColorScheme();
@@ -42,6 +42,18 @@ export function Dashboard() {
     return output;
   }, [chartData]);
 
+  const processedMultiJSON = useMemo<Record<string, RunDetails[]>>(
+    () =>
+      Object.entries(MultiJSON).reduce(
+        (acc, [key, value]) => ({
+          ...acc,
+          [key]: value.map((ele) => ({ ...ele, timestamp: ele.timestamp * 1000 })),
+        }),
+        {},
+      ),
+    [],
+  );
+
   return (
     <Stack>
       <Card shadow="md">
@@ -57,7 +69,7 @@ export function Dashboard() {
       </Card>
       <Card shadow="md">
         <BestLossChart
-          data={MultiJSON}
+          data={processedMultiJSON}
           yAxis="best_average_loss"
           xAxis="timestamp"
           yAxisTitle="Best average loss"
