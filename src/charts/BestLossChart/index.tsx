@@ -158,7 +158,7 @@ export function BestLossChart({
             y: yAxis,
           },
           datasetId: ele,
-          name: `validator-${ele}`,
+          name: ele,
         })),
         legend: {
           align: "auto",
