@@ -100,6 +100,17 @@ export function Dashboard() {
             style={{ height: "30vh" }}
             theme={colorScheme === "auto" ? "dark" : colorScheme}
             xAxis="uid"
+            yAxis="win_rate"
+            xAxisTitle="UID"
+            yAxisTitle="Win Rate"
+          />
+        </Card>
+        <Card shadow="md">
+          <CategoricalBarChart
+            data={tableData}
+            style={{ height: "30vh" }}
+            theme={colorScheme === "auto" ? "dark" : colorScheme}
+            xAxis="uid"
             yAxis="average_loss"
             xAxisTitle="UID"
             yAxisTitle="Loss"

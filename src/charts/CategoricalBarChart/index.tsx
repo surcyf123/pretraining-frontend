@@ -47,8 +47,8 @@ use([
 export interface CategoricalBarChartProps {
   theme?: "light" | "dark";
   data: UIDDetails[];
-  xAxis: string;
-  yAxis: string;
+  xAxis: keyof UIDDetails;
+  yAxis: keyof UIDDetails;
   xAxisTitle: string;
   yAxisTitle: string;
   isLoading?: boolean;
@@ -102,12 +102,23 @@ export function CategoricalBarChart({
             if (Array.isArray(params)) {
               output = "";
             } else {
-              const { uid, average_loss: averageLoss } = params.data as UIDDetails;
+              const paramsData = params.data as UIDDetails;
+              const xAxisData = paramsData[xAxis];
+              const yAxisData = paramsData[yAxis];
               output = `
               <div>
-                <span>${xAxisTitle}: ${uid}</span>
+                ${
+                  typeof xAxisData === "string" || typeof xAxisData === "number"
+                    ? `<span>${xAxisTitle}: ${xAxisData}</span>`
+                    : ""
+                }
                 <br/>
-                <span>${yAxisTitle}: ${(averageLoss ?? NaN).toFixed(4)}</span>
+                  ${
+                    typeof yAxisData === "number"
+                      ? `<span>${yAxisTitle}: ${(yAxisData ?? NaN).toFixed(4)}</span>`
+                      : ""
+                  }
+                  ${typeof yAxisData === "string" ? `<span>${yAxisTitle}: ${yAxisData}</span>` : ""}
               </div>
               `;
             }
