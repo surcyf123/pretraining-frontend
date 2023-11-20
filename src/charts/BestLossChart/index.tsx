@@ -43,7 +43,7 @@ use([
   CanvasRenderer, // If you only need to use the canvas rendering mode, the bundle will not include the SVGRenderer module, which is not needed.
 ]);
 
-export interface LineChartProps {
+export interface BestLossChartProps {
   theme?: "light" | "dark";
   data: InternMap<string, UIDDetails[]>;
   xAxis: string;
@@ -55,7 +55,7 @@ export interface LineChartProps {
   style?: CSSProperties;
 }
 
-export function LineChart({
+export function BestLossChart({
   theme,
   data,
   xAxis,
@@ -65,7 +65,7 @@ export function LineChart({
   isLoading,
   title,
   style,
-}: LineChartProps): JSX.Element {
+}: BestLossChartProps): JSX.Element {
   const chartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -140,7 +140,7 @@ export function LineChart({
                   hour12: true,
                 })}</span>
                 <br/>
-                <span>${yAxisTitle}: ${averageLoss.toFixed(4)}</span>
+                <span>${yAxisTitle}: ${(averageLoss ?? NaN).toFixed(4)}</span>
               </div>
               `;
             }
