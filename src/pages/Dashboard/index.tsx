@@ -1,12 +1,14 @@
 import { Card, Stack, useMantineColorScheme, Group } from "@mantine/core";
 import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
+import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { LineChart } from "../../charts/LineChart";
 import { PieChart } from "../../charts/PieChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
-import { Data } from "../../sample-data/state";
-import type { UIDDetails } from "../../sample-data/interfaces";
+import { Data, MultiJSON } from "../../sample-data/state";
+import type { RunDetails, UIDDetails } from "../../sample-data/interfaces";
+import type { InternMap } from "d3-array";
 
 export function Dashboard() {
   const { colorScheme } = useMantineColorScheme();
@@ -29,6 +31,25 @@ export function Dashboard() {
     [processedData],
   );
 
+  const processedMultiJSON = useMemo<InternMap<string, RunDetails[]>>(() => {
+    const runDetails = Object.entries(MultiJSON)
+      .flatMap(([key, values]) =>
+        values
+          .filter((ele): ele is RunDetails => ele !== null)
+          .map((ele) => ({ ...ele, series: key })),
+      )
+      .map((ele) => ({
+        ...ele,
+        timestamp: ele.timestamp * 1000, // timestamp provided is in seconds and javascript Date api expects milliseconds.
+      }));
+    const output = rollup(
+      runDetails,
+      (ele) => ele,
+      ({ series }) => series,
+    );
+    return output;
+  }, []);
+
   // latest data for each UID
   const tableData = useMemo(() => {
     const output: UIDDetails[] = [];
@@ -40,6 +61,7 @@ export function Dashboard() {
     });
     return output;
   }, [chartData]);
+
   return (
     <Stack>
       <Card shadow="md">
@@ -48,6 +70,17 @@ export function Dashboard() {
           yAxis="average_loss"
           xAxis="timestamp"
           yAxisTitle="Loss"
+          xAxisTitle="Time"
+          style={{ height: "30vh" }}
+          theme={colorScheme === "auto" ? "dark" : colorScheme}
+        />
+      </Card>
+      <Card>
+        <BestLossChart
+          data={processedMultiJSON}
+          yAxis="best_average_loss"
+          xAxis="timestamp"
+          yAxisTitle="Best average loss"
           xAxisTitle="Time"
           style={{ height: "30vh" }}
           theme={colorScheme === "auto" ? "dark" : colorScheme}

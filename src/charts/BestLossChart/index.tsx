@@ -10,7 +10,7 @@ import {
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useRef, useEffect } from "react";
-import type { UIDDetails } from "../../sample-data/interfaces";
+import type { RunDetails } from "../../sample-data/interfaces";
 import type { InternMap } from "d3-array";
 import type { LineSeriesOption } from "echarts/charts";
 import type {
@@ -45,7 +45,7 @@ use([
 
 export interface BestLossChartProps {
   theme?: "light" | "dark";
-  data: InternMap<string, UIDDetails[]>;
+  data: InternMap<string, RunDetails[]>;
   xAxis: string;
   yAxis: string;
   xAxisTitle: string;
@@ -129,18 +129,16 @@ export function BestLossChart({
             if (Array.isArray(params)) {
               output = "";
             } else {
-              const { uid, timestamp, average_loss: averageLoss } = params.data as UIDDetails;
+              const { timestamp, best_average_loss:bestAverageLoss } = params.data as RunDetails;
               output = `
               <div>
-                <span>UID: ${uid}</span>
-                <br/>
                 <span>${xAxisTitle}: ${new Date(timestamp).toLocaleString(undefined, {
                   dateStyle: "short",
                   timeStyle: "short",
                   hour12: true,
                 })}</span>
                 <br/>
-                <span>${yAxisTitle}: ${(averageLoss ?? NaN).toFixed(4)}</span>
+                <span>${yAxisTitle}: ${(bestAverageLoss ?? NaN).toFixed(4)}</span>
               </div>
               `;
             }
@@ -161,7 +159,7 @@ export function BestLossChart({
             y: yAxis,
           },
           datasetId: ele,
-          name: `UID: ${ele}`,
+          name: `validator-${ele}`,
         })),
         legend: {
           align: "auto",
