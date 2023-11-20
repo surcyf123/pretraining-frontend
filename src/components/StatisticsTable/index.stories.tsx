@@ -7,7 +7,11 @@ export default {
   title: "StatisticsTable",
   component: StatisticsTable,
   args: {
-    data: Data.flatMap<UIDDetails>((ele) => Object.values(ele.uid_data)),
+    data: Data.flatMap<UIDDetails>((ele) =>
+      Object.values(ele.uid_data).filter(
+        (uid_details): uid_details is UIDDetails => uid_details !== undefined,
+      ),
+    ),
   },
 } as Meta<typeof StatisticsTable>;
 

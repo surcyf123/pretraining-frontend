@@ -12,7 +12,7 @@ export interface UIDDetails {
 }
 
 export interface RunDetails {
-  uid_data: Record<string, UIDDetails>;
+  uid_data: Record<string, UIDDetails | undefined>;
   timestamp: number;
   pages: number[];
   uids: number[];

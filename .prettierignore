@@ -8,4 +8,4 @@ node_modules
 dist
 .eslintcache
 storybook-static
-databank/multi.json
+multi.json
