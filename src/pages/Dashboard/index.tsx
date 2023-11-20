@@ -42,7 +42,6 @@ export function Dashboard() {
     return output;
   }, [chartData]);
 
-  
   const processedMultiJSON = useMemo<Record<string, RunDetails[]>>(
     () =>
       Object.entries(MultiJSON).reduce(
