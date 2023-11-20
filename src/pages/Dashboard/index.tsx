@@ -15,6 +15,7 @@ export function Dashboard() {
     () =>
       Data.flatMap((ele) => Object.values(ele.uid_data))
         .filter((ele): ele is UIDDetails => ele !== undefined)
+        .filter(({ average_loss, win_rate }) => average_loss !== null && win_rate > 0)
         .map((ele) => ({
           ...ele,
           timestamp: ele.timestamp * 1000, // timestamp provided is in seconds and javascript Date api expects milliseconds.
@@ -50,7 +51,7 @@ export function Dashboard() {
       Object.entries(MultiJSON).reduce(
         (acc, [key, value]) => ({
           ...acc,
-          [key]: value.map((ele) => ({ ...ele, timestamp: ele.timestamp * 1000 })),
+          [key]: value.filter(({best_average_loss})=>best_average_loss!==null).map((ele) => ({ ...ele, timestamp: ele.timestamp * 1000 })),
         }),
         {},
       ),
