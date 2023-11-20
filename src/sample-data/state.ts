@@ -849,4 +849,4 @@ export const Data: RunDetails[] = [
   },
 ];
 
-export const MultiJSON: Record<string, RunDetails[]> = MultiJSONData as Record<string, RunDetails[]>;
+export const MultiJSON = MultiJSONData as Record<string, RunDetails[]>;
