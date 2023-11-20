@@ -102,7 +102,7 @@ export function PieChart({ theme, data, isLoading, title, style }: PieChartProps
         ],
         legend: {
           align: "right",
-          right:"1%",
+          right: "1%",
           type: "scroll",
           orient: "vertical",
         },
