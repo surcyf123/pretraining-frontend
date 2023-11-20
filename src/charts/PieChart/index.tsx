@@ -101,10 +101,10 @@ export function PieChart({ theme, data, isLoading, title, style }: PieChartProps
           },
         ],
         legend: {
-          align: "auto",
-          bottom: "1%",
+          align: "right",
+          right:"1%",
           type: "scroll",
-          orient: "horizontal",
+          orient: "vertical",
         },
       };
       chart?.setOption(option, true);
