@@ -81,7 +81,7 @@ export function PieChart({ theme, data, isLoading, title, style }: PieChartProps
           <div>
             <span>{b}</span>
             <br/>
-            <span>Win Rate: {c}</span>
+            <span>Weight: {c}</span>
           </div>
           `, // Ref: https://echarts.apache.org/en/option.html#grid.tooltip.formatter
         },
@@ -91,9 +91,9 @@ export function PieChart({ theme, data, isLoading, title, style }: PieChartProps
             type: "pie",
             radius: "70%",
             data: data
-              .filter((ele) => ele.win_rate > 0)
+              .filter((ele) => (ele.weight ?? NaN) > 0)
               .map((ele) => ({
-                value: ele.win_rate,
+                value: ele.weight ?? NaN,
                 name: `UID: ${ele.uid}`,
               })),
             name: "Pie",
