@@ -10,7 +10,7 @@ import {
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useRef, useEffect } from "react";
-import type { RunDetails, UIDDetails } from "../../sample-data/interfaces";
+import type { UIDDetails } from "../../sample-data/interfaces";
 import type { InternMap } from "d3-array";
 import type { LineSeriesOption } from "echarts/charts";
 import type {
@@ -43,9 +43,9 @@ use([
   CanvasRenderer, // If you only need to use the canvas rendering mode, the bundle will not include the SVGRenderer module, which is not needed.
 ]);
 
-export interface BestLossChartProps {
+export interface LineChartProps {
   theme?: "light" | "dark";
-  data: InternMap<string, (UIDDetails | RunDetails)[]>;
+  data: InternMap<string, UIDDetails[]>;
   xAxis: string;
   yAxis: string;
   xAxisTitle: string;
@@ -55,7 +55,7 @@ export interface BestLossChartProps {
   style?: CSSProperties;
 }
 
-export function BestLossChart({
+export function LineChart({
   theme,
   data,
   xAxis,
@@ -65,7 +65,7 @@ export function BestLossChart({
   isLoading,
   title,
   style,
-}: BestLossChartProps): JSX.Element {
+}: LineChartProps): JSX.Element {
   const chartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
