@@ -162,6 +162,7 @@ export function LineChart({
           },
           datasetId: ele,
           name: `UID: ${ele}`,
+          showSymbol: false,
         })),
         legend: {
           align: "auto",

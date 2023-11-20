@@ -159,6 +159,7 @@ export function BestLossChart({
           },
           datasetId: ele,
           name: ele,
+          showSymbol: false,
         })),
         legend: {
           align: "auto",
