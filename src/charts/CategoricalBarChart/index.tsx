@@ -107,7 +107,7 @@ export function CategoricalBarChart({
               <div>
                 <span>${xAxisTitle}: ${uid}</span>
                 <br/>
-                <span>${yAxisTitle}: ${averageLoss.toFixed(4)}</span>
+                <span>${yAxisTitle}: ${(averageLoss ?? NaN).toFixed(4)}</span>
               </div>
               `;
             }
