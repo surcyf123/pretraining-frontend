@@ -25,6 +25,9 @@ def replace_inf_nan(obj):
         return [replace_inf_nan(item) for item in obj]
     elif isinstance(obj, dict):
         return {key: replace_inf_nan(value) for key, value in obj.items()}
+    # in python 'inf' (positive infinity) is instance of float.
+    # obj == float('inf') checks if obj is positive infinity.
+    # obj != obj checks if obj is NaN because in python NaN  is not equal to NaN.
     elif isinstance(obj, float) and (obj == float('inf') or obj != obj):  # Check for NaN
         return None
     else:
