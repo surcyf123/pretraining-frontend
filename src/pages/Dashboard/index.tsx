@@ -51,7 +51,9 @@ export function Dashboard() {
       Object.entries(MultiJSON).reduce(
         (acc, [key, value]) => ({
           ...acc,
-          [key]: value.filter(({best_average_loss})=>best_average_loss!==null).map((ele) => ({ ...ele, timestamp: ele.timestamp * 1000 })),
+          [key]: value
+            .filter(({ best_average_loss }) => best_average_loss !== null)
+            .map((ele) => ({ ...ele, timestamp: ele.timestamp * 1000 })),
         }),
         {},
       ),
