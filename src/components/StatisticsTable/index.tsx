@@ -133,10 +133,10 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
           <ActionIcon variant="default" title="Show first" onClick={handleFirstPageClick}>
             <IconChevronsLeft />
           </ActionIcon>
-          <ActionIcon variant="default" title="Show previous" onClick={table.previousPage}>
+          <ActionIcon variant="default" title="Show previous" onClick={table.getCanPreviousPage()===true?table.previousPage:undefined}>
             <IconChevronLeft />
           </ActionIcon>
-          <ActionIcon variant="default" title="Show next" onClick={table.nextPage}>
+          <ActionIcon variant="default" title="Show next" onClick={table.getCanNextPage()===true?table.nextPage:undefined}>
             <IconChevronRight />
           </ActionIcon>
           <ActionIcon variant="default" title="Show last" onClick={handleLastPageClick}>
