@@ -9,12 +9,15 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import type { UIDDetails } from "../../sample-data/interfaces";
+import type { SelectProps} from "@mantine/core";
 import type { SortingState, PaginationState } from "@tanstack/react-table";
+import type { MouseEventHandler} from "react";
 
 export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
   const columns = useMemo(() => {
@@ -66,14 +69,28 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
   const table = useReactTable({
     data,
     columns,
-    pageCount: -1,
     state: { sorting, pagination: { pageIndex, pageSize } },
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    manualPagination: true,
+    getPaginationRowModel: getPaginationRowModel(),
   });
+
+  const handlePageSizeChange: SelectProps["onChange"] = (value) => {
+    const parsedPageSize = Number.parseInt(value ?? "", 10);
+    if (Number.isNaN(parsedPageSize) === false) {
+      setPagination((prev) => ({ ...prev, pageSize: parsedPageSize }));
+    }
+  };
+
+  const  handleFirstPageClick:MouseEventHandler<HTMLButtonElement>=()=>{
+    setPagination((prev)=>({...prev,pageIndex:0}));
+  }
+
+  const  handleLastPageClick:MouseEventHandler<HTMLButtonElement>=()=>{
+    setPagination((prev)=>({...prev,pageIndex:table.getPageCount()}));
+  }
 
   return (
     <Stack>
@@ -113,29 +130,30 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
       </Table>
       <Group justify="flex-end">
         <Group>
-          <ActionIcon variant="default" title="Show first">
-            <IconChevronLeft />
-          </ActionIcon>
-          <ActionIcon variant="default" title="Show previous">
+          <ActionIcon variant="default" title="Show first" onClick={handleFirstPageClick}>
             <IconChevronsLeft />
           </ActionIcon>
-          <ActionIcon variant="default" title="Show next">
+          <ActionIcon variant="default" title="Show previous" onClick={table.previousPage}>
+            <IconChevronLeft />
+          </ActionIcon>
+          <ActionIcon variant="default" title="Show next"onClick={table.nextPage}>
             <IconChevronRight />
           </ActionIcon>
-          <ActionIcon variant="default" title="Show last">
+          <ActionIcon variant="default" title="Show last" onClick={handleLastPageClick}>
             <IconChevronsRight />
           </ActionIcon>
         </Group>
         <Text>{`${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}</Text>
         <Select
           size="sm"
-          placeholder="Page size"
+          clearable={false}
           data={[
             { value: "10", label: "Show 10" },
             { value: "50", label: "Show 50" },
             { value: "100", label: "Show 100" },
           ]}
           value={pageSize.toString()}
+          onChange={handlePageSizeChange}
         />
       </Group>
     </Stack>
