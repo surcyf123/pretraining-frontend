@@ -9,12 +9,15 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import type { UIDDetails } from "../../sample-data/interfaces";
-import type { SortingState, PaginationState } from "@tanstack/react-table";
+import type { SelectProps } from "@mantine/core";
+import type { PaginationState, SortingState } from "@tanstack/react-table";
+import type { MouseEventHandler } from "react";
 
 export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
   const columns = useMemo(() => {
@@ -66,14 +69,28 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
   const table = useReactTable({
     data,
     columns,
-    pageCount: -1,
     state: { sorting, pagination: { pageIndex, pageSize } },
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    manualPagination: true,
+    getPaginationRowModel: getPaginationRowModel(),
   });
+
+  const handlePageSizeChange: SelectProps["onChange"] = (value) => {
+    const parsedPageSize = Number.parseInt(value ?? "", 10);
+    if (Number.isNaN(parsedPageSize) === false) {
+      table.setPageSize(parsedPageSize);
+    }
+  };
+
+  const handleFirstPageClick: MouseEventHandler<HTMLButtonElement> = () => {
+    table.setPageIndex(0);
+  };
+
+  const handleLastPageClick: MouseEventHandler<HTMLButtonElement> = () => {
+    table.setPageIndex(table.getPageCount() - 1);
+  };
 
   return (
     <Stack>
@@ -113,16 +130,24 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
       </Table>
       <Group justify="flex-end">
         <Group>
-          <ActionIcon variant="default" title="Show first">
-            <IconChevronLeft />
-          </ActionIcon>
-          <ActionIcon variant="default" title="Show previous">
+          <ActionIcon variant="default" title="Show first" onClick={handleFirstPageClick}>
             <IconChevronsLeft />
           </ActionIcon>
-          <ActionIcon variant="default" title="Show next">
+          <ActionIcon
+            variant="default"
+            title="Show previous"
+            onClick={table.getCanPreviousPage() === true ? table.previousPage : undefined}
+          >
+            <IconChevronLeft />
+          </ActionIcon>
+          <ActionIcon
+            variant="default"
+            title="Show next"
+            onClick={table.getCanNextPage() === true ? table.nextPage : undefined}
+          >
             <IconChevronRight />
           </ActionIcon>
-          <ActionIcon variant="default" title="Show last">
+          <ActionIcon variant="default" title="Show last" onClick={handleLastPageClick}>
             <IconChevronsRight />
           </ActionIcon>
         </Group>
@@ -136,6 +161,7 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
             { value: "100", label: "Show 100" },
           ]}
           value={pageSize.toString()}
+          onChange={handlePageSizeChange}
         />
       </Group>
     </Stack>
