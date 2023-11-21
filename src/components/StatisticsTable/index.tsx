@@ -154,7 +154,7 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
         <Text>{`${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}</Text>
         <Select
           size="sm"
-          clearable={false}
+          placeholder="Page size"
           data={[
             { value: "10", label: "Show 10" },
             { value: "50", label: "Show 50" },
