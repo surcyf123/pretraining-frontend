@@ -15,9 +15,9 @@ import {
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import type { UIDDetails } from "../../sample-data/interfaces";
-import type { SelectProps} from "@mantine/core";
+import type { SelectProps } from "@mantine/core";
 import type { SortingState, PaginationState } from "@tanstack/react-table";
-import type { MouseEventHandler} from "react";
+import type { MouseEventHandler } from "react";
 
 export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
   const columns = useMemo(() => {
@@ -84,13 +84,13 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
     }
   };
 
-  const  handleFirstPageClick:MouseEventHandler<HTMLButtonElement>=()=>{
-    setPagination((prev)=>({...prev,pageIndex:0}));
-  }
+  const handleFirstPageClick: MouseEventHandler<HTMLButtonElement> = () => {
+    setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+  };
 
-  const  handleLastPageClick:MouseEventHandler<HTMLButtonElement>=()=>{
-    setPagination((prev)=>({...prev,pageIndex:table.getPageCount()}));
-  }
+  const handleLastPageClick: MouseEventHandler<HTMLButtonElement> = () => {
+    setPagination((prev) => ({ ...prev, pageIndex: table.getPageCount() - 1 }));
+  };
 
   return (
     <Stack>
@@ -136,7 +136,7 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
           <ActionIcon variant="default" title="Show previous" onClick={table.previousPage}>
             <IconChevronLeft />
           </ActionIcon>
-          <ActionIcon variant="default" title="Show next"onClick={table.nextPage}>
+          <ActionIcon variant="default" title="Show next" onClick={table.nextPage}>
             <IconChevronRight />
           </ActionIcon>
           <ActionIcon variant="default" title="Show last" onClick={handleLastPageClick}>
