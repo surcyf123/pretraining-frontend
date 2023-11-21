@@ -3,7 +3,6 @@ import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
-import { LineChart } from "../../charts/LineChart";
 import { PieChart } from "../../charts/PieChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
 import { Data, MultiJSON } from "../../sample-data/state";
@@ -64,17 +63,6 @@ export function Dashboard() {
 
   return (
     <Stack>
-      <Card shadow="md">
-        <LineChart
-          data={chartData}
-          yAxis="average_loss"
-          xAxis="timestamp"
-          yAxisTitle="Loss"
-          xAxisTitle="Time"
-          style={{ height: "30vh" }}
-          theme={colorScheme === "auto" ? "dark" : colorScheme}
-        />
-      </Card>
       <Card shadow="md">
         <BestLossChart
           data={processedMultiJSON}
