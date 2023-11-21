@@ -80,16 +80,16 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
   const handlePageSizeChange: SelectProps["onChange"] = (value) => {
     const parsedPageSize = Number.parseInt(value ?? "", 10);
     if (Number.isNaN(parsedPageSize) === false) {
-      table.setPageSize(parsedPageSize)
+      table.setPageSize(parsedPageSize);
     }
   };
 
   const handleFirstPageClick: MouseEventHandler<HTMLButtonElement> = () => {
-    table.setPageIndex(0)
+    table.setPageIndex(0);
   };
 
   const handleLastPageClick: MouseEventHandler<HTMLButtonElement> = () => {
-    table.setPageIndex(table.getPageCount() - 1)
+    table.setPageIndex(table.getPageCount() - 1);
   };
 
   return (
