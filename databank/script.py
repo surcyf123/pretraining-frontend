@@ -33,6 +33,33 @@ def replace_inf_nan(obj):
     else:
         return obj
 
+def group_run_ids(data):
+    grouped_run_ids = {}
+
+    if isinstance(data, dict):
+        for run_id in data.keys():
+            if isinstance(run_id, str):
+                validator_number = run_id.split("-")[1]
+                grouped_run_ids.setdefault(validator_number, []).append(run_id)
+    return grouped_run_ids 
+
+
+def merge_data(data):
+    merged_data = {}
+
+    grouped_run_ids = group_run_ids(data)
+    for key, value in grouped_run_ids.items():
+        if len(value) == 1:
+            merged_data[value[0]] = data[value[0]]
+        else:
+            concatenated_list = []
+            for run_id in value:
+                concatenated_list.extend(data[run_id])
+            merged_data[f"validator-{key}"] = concatenated_list
+    
+    return merged_data
+
+
 for run in runs:
     # Parse the created_at time
     try:
@@ -68,9 +95,11 @@ for run in runs:
                 converted_data = original_format_json_data
 
             # Replace NaN value and infinity values with null
-            converted_data=replace_inf_nan(converted_data)
-            all_run_data.update({run.name: converted_data})
+            converted_data = replace_inf_nan(converted_data)
+            all_run_data[run.name] = converted_data
+
+combined_data=merge_data(all_run_data)
 # Save the extracted data to a JSON file
 output_path = os.path.join(os.path.dirname(__file__), "multi.json")
 with open(output_path, 'w') as f:
-    json.dump(all_run_data, f, indent=2)
+    json.dump(combined_data, f, indent=2)
