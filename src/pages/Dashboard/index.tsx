@@ -70,7 +70,7 @@ export function Dashboard() {
           xAxis="timestamp"
           yAxisTitle="Best average loss"
           xAxisTitle="Time"
-          style={{ height: "30vh" }}
+          style={{ height: "40vh" }}
           theme={colorScheme === "auto" ? "dark" : colorScheme}
         />
       </Card>
