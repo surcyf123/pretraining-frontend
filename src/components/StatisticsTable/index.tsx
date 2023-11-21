@@ -16,7 +16,7 @@ import {
 import { useMemo, useState } from "react";
 import type { UIDDetails } from "../../sample-data/interfaces";
 import type { SelectProps } from "@mantine/core";
-import type { SortingState, PaginationState } from "@tanstack/react-table";
+import type { PaginationState, SortingState } from "@tanstack/react-table";
 import type { MouseEventHandler } from "react";
 
 export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
@@ -80,16 +80,16 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
   const handlePageSizeChange: SelectProps["onChange"] = (value) => {
     const parsedPageSize = Number.parseInt(value ?? "", 10);
     if (Number.isNaN(parsedPageSize) === false) {
-      setPagination((prev) => ({ ...prev, pageSize: parsedPageSize }));
+      table.setPageSize(parsedPageSize)
     }
   };
 
   const handleFirstPageClick: MouseEventHandler<HTMLButtonElement> = () => {
-    setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+    table.setPageIndex(0)
   };
 
   const handleLastPageClick: MouseEventHandler<HTMLButtonElement> = () => {
-    setPagination((prev) => ({ ...prev, pageIndex: table.getPageCount() - 1 }));
+    table.setPageIndex(table.getPageCount() - 1)
   };
 
   return (
