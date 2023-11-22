@@ -9,6 +9,7 @@ verify_ssl = true
 src = {editable = true, path = "./src"}
 pandas = "==2.0.3"
 wandb = "==0.16.0"
+boto3 = "==1.29.5"
 
 [requires]
 python_version = "3.8"
