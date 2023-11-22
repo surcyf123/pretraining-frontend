@@ -1,10 +1,7 @@
 import json
 
 def handler(event, context):
-  print('received event:')
-  print(event)
-  
-  return {
+    return {
       'statusCode': 200,
       'headers': {
           'Access-Control-Allow-Headers': '*',
