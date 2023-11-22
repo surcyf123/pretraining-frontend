@@ -1,10 +1,5 @@
-import { ActionIcon, Group, Select, Stack, Table, Text } from "@mantine/core";
-import {
-  IconChevronLeft,
-  IconChevronsLeft,
-  IconChevronRight,
-  IconChevronsRight,
-} from "@tabler/icons-react";
+import { Group, Pagination, Select, Stack, Table, Text } from "@mantine/core";
+
 import {
   createColumnHelper,
   flexRender,
@@ -15,9 +10,8 @@ import {
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import type { UIDDetails } from "../../sample-data/interfaces";
-import type { SelectProps } from "@mantine/core";
+import type { PaginationProps, SelectProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
-import type { MouseEventHandler } from "react";
 
 export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
   const columns = useMemo(() => {
@@ -84,12 +78,8 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
     }
   };
 
-  const handleFirstPageClick: MouseEventHandler<HTMLButtonElement> = () => {
-    table.setPageIndex(0);
-  };
-
-  const handleLastPageClick: MouseEventHandler<HTMLButtonElement> = () => {
-    table.setPageIndex(table.getPageCount() - 1);
+  const handlePageChange: PaginationProps["onChange"] = (page) => {
+    table.setPageIndex(page - 1);
   };
 
   return (
@@ -129,28 +119,11 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
         </Table.Tbody>
       </Table>
       <Group justify="flex-end">
-        <Group>
-          <ActionIcon variant="default" title="Show first" onClick={handleFirstPageClick}>
-            <IconChevronsLeft />
-          </ActionIcon>
-          <ActionIcon
-            variant="default"
-            title="Show previous"
-            onClick={table.getCanPreviousPage() === true ? table.previousPage : undefined}
-          >
-            <IconChevronLeft />
-          </ActionIcon>
-          <ActionIcon
-            variant="default"
-            title="Show next"
-            onClick={table.getCanNextPage() === true ? table.nextPage : undefined}
-          >
-            <IconChevronRight />
-          </ActionIcon>
-          <ActionIcon variant="default" title="Show last" onClick={handleLastPageClick}>
-            <IconChevronsRight />
-          </ActionIcon>
-        </Group>
+        <Pagination
+          value={table.getState().pagination.pageIndex + 1}
+          total={table.getPageCount()}
+          onChange={handlePageChange}
+        />
         <Text>{`${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}</Text>
         <Select
           size="sm"
