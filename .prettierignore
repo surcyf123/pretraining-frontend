@@ -9,3 +9,4 @@ dist
 .eslintcache
 storybook-static
 multi.json
+amplify
