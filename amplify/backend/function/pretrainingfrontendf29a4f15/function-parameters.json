@@ -1,3 +1,13 @@
 {
-  "lambdaLayers": []
+  "lambdaLayers": [],
+  "permissions": {
+    "storage": {
+      "s32500fdf3": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  }
 }
