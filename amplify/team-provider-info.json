@@ -14,6 +14,12 @@
     "categories": {
       "hosting": {
         "S3AndCloudFront": {}
+      },
+      "auth": {
+        "pretraining7718ac24": {}
+      },
+      "storage": {
+        "s30be13b91": {}
       }
     }
   }

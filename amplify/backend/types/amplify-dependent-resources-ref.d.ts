@@ -1,4 +1,15 @@
 export type AmplifyDependentResourcesAttributes = {
+  "auth": {
+    "pretraining7718ac24": {
+      "AppClientID": "string",
+      "AppClientIDWeb": "string",
+      "IdentityPoolId": "string",
+      "IdentityPoolName": "string",
+      "UserPoolArn": "string",
+      "UserPoolId": "string",
+      "UserPoolName": "string"
+    }
+  },
   "hosting": {
     "S3AndCloudFront": {
       "CloudFrontDistributionID": "string",
@@ -9,6 +20,12 @@ export type AmplifyDependentResourcesAttributes = {
       "Region": "string",
       "S3BucketSecureURL": "string",
       "WebsiteURL": "string"
+    }
+  },
+  "storage": {
+    "s30be13b91": {
+      "BucketName": "string",
+      "Region": "string"
     }
   }
 }
