@@ -10,6 +10,11 @@
       "StackName": "amplify-pretrainingfrontend-prod-110935",
       "StackId": "arn:aws:cloudformation:us-east-1:446842533084:stack/amplify-pretrainingfrontend-prod-110935/8797c990-88f9-11ee-ab6c-12727b072531",
       "AmplifyAppId": "d1mh498lmas3b6"
+    },
+    "categories": {
+      "function": {
+        "pretrainingfrontendf29a4f15": {}
+      }
     }
   }
 }
