@@ -1,0 +1,14 @@
+{
+  "resourceName": "s32500fdf3",
+  "policyUUID": "2500fdf3",
+  "bucketName": "pretrainingfrontend6e880e6aa270480f91a83484a49a",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
