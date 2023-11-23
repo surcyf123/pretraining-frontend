@@ -1,8 +1,7 @@
 import json
-
+from utils.script import test_wandb_initialization
 def handler(event, context):
-  print('received event:')
-  print(event)
+  test_wandb_initialization()
   
   return {
       'statusCode': 200,
