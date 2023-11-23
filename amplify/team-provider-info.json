@@ -20,6 +20,12 @@
       },
       "storage": {
         "s30be13b91": {}
+      },
+      "function": {
+        "wandb": {
+          "deploymentBucketName": "amplify-pretraining-prod-203335-deployment",
+          "s3Key": "amplify-builds/wandb-5038756b4c4b77354464-build.zip"
+        }
       }
     }
   }

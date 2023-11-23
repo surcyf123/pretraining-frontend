@@ -27,10 +27,36 @@
       "service": "Cognito"
     }
   },
+  "function": {
+    "wandb": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
   "hosting": {
     "S3AndCloudFront": {
       "providerPlugin": "awscloudformation",
       "service": "S3AndCloudFront"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_wandb_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "wandb"
+        }
+      ]
+    },
+    "AMPLIFY_function_wandb_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "wandb"
+        }
+      ]
     }
   },
   "storage": {
