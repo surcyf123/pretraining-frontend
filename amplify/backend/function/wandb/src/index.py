@@ -1,7 +1,7 @@
 import json
-from utils.script import fetch_wandb_data
+from utils.script import initialize_wan_db
 def handler(event, context):
-  fetch_wandb_data()
+  initialize_wan_db()
   
   return {
       'statusCode': 200,
