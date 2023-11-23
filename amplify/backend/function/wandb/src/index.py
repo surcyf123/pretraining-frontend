@@ -1,7 +1,7 @@
 import json
-from utils.script import initialize_wan_db
+from utils.script import test_wandb_initialization
 def handler(event, context):
-  initialize_wan_db()
+  test_wandb_initialization()
   
   return {
       'statusCode': 200,
