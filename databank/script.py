@@ -56,7 +56,7 @@ def merge_data(data):
             for run_id in value:
                 concatenated_list.extend(data[run_id])
             merged_data[f"validator-{key}"] = concatenated_list
-
+    return merged_data
 
 for run in runs:
     # Parse the created_at time
