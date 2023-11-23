@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 src = {editable = true, path = "./src"}
 wandb = "==0.16.0"
+urllib3 = "<2" # Ref: https://stackoverflow.com/a/76192376
 
 [requires]
 python_version = "3.8"
