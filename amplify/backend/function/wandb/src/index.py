@@ -1,8 +1,7 @@
 import json
-
+from utils.script import fetch_wandb_data
 def handler(event, context):
-  print('received event:')
-  print(event)
+  fetch_wandb_data()
   
   return {
       'statusCode': 200,
