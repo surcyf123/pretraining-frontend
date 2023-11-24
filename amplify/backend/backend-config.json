@@ -1,1 +1,28 @@
-{}
+{
+  "function": {
+    "wandb": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_wandb_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "wandb"
+        }
+      ]
+    },
+    "AMPLIFY_function_wandb_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "wandb"
+        }
+      ]
+    }
+  }
+}
