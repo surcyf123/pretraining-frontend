@@ -33,14 +33,14 @@ const FormFields: ComponentProps<typeof Authenticator>["formFields"] = {
 export function Login() {
   const mantineTheme = useMantineTheme();
   const { colorScheme } = useMantineColorScheme();
-  const { authStatus, signOut } = useAuthenticator((context) => [context.authStatus]);
+  const { authStatus } = useAuthenticator((context) => [context.authStatus]);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (authStatus === "authenticated") {
       navigate("/dashboard");
     }
-  }, [authStatus, navigate, signOut]);
+  }, [authStatus, navigate]);
 
   const theme: Theme = useMemo(
     () => ({
