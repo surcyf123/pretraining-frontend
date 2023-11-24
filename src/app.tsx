@@ -1,3 +1,4 @@
+import { Authenticator } from "@aws-amplify/ui-react";
 import { AppShell, useMantineColorScheme } from "@mantine/core";
 import { Amplify } from "aws-amplify";
 import { Outlet } from "react-router-dom";
@@ -9,15 +10,19 @@ Amplify.configure(config);
 
 export function App() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+
   return (
-    <AppShell
-      padding="md" // It is important to use it instead of setting padding on the AppShell.Main directly because padding of the AppShell.Main is also used to offset AppShell.Header, AppShell.Navbar, AppShell.Aside and AppShell.Footer components. Ref: https://mantine.dev/core/app-shell/#padding-prop
-      header={{ height: 60 }}
-    >
-      <Header colorScheme={colorScheme} onToggleColorScheme={toggleColorScheme} />
-      <AppShell.Main>
-        <Outlet />
-      </AppShell.Main>
-    </AppShell>
+    // Ref: https://ui.docs.amplify.aws/react/connected-components/authenticator/advanced
+    <Authenticator.Provider>
+      <AppShell
+        padding="md" // It is important to use it instead of setting padding on the AppShell.Main directly because padding of the AppShell.Main is also used to offset AppShell.Header, AppShell.Navbar, AppShell.Aside and AppShell.Footer components. Ref: https://mantine.dev/core/app-shell/#padding-prop
+        header={{ height: 60 }}
+      >
+        <Header colorScheme={colorScheme} onToggleColorScheme={toggleColorScheme} />
+        <AppShell.Main>
+          <Outlet />
+        </AppShell.Main>
+      </AppShell>
+    </Authenticator.Provider>
   );
 }
