@@ -1,6 +1,6 @@
 {
   "auth": {
-    "pretraining7718ac24": {
+    "pretraining21707104": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -60,7 +60,7 @@
     }
   },
   "storage": {
-    "s30be13b91": {
+    "s3486d4c80": {
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "S3"
