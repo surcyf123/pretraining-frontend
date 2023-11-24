@@ -1,6 +1,6 @@
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { AppShell, ActionIcon, Group, NavLink as MantineNavLink, Title } from "@mantine/core";
-import { IconMoonStars, IconSun } from "@tabler/icons-react";
+import { IconLogout, IconMoonStars, IconSun } from "@tabler/icons-react";
 import { useEffect } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import type { MantineColorScheme } from "@mantine/core";
@@ -23,7 +23,7 @@ const NavLinks: { path: string; label: string }[] = [
 
 export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.Element {
   const location = useLocation();
-  const { authStatus } = useAuthenticator((context) => [context.authStatus]);
+  const { authStatus, signOut } = useAuthenticator((context) => [context.authStatus]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,9 +47,14 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
             />
           ))}
         </Group>
-        <ActionIcon onClick={onToggleColorScheme} variant="default">
-          {colorScheme === "dark" ? <IconSun /> : <IconMoonStars />}
-        </ActionIcon>
+        <Group>
+          <ActionIcon onClick={onToggleColorScheme} variant="default">
+            {colorScheme === "dark" ? <IconSun /> : <IconMoonStars />}
+          </ActionIcon>
+          <ActionIcon onClick={signOut} variant="default">
+            <IconLogout />
+          </ActionIcon>
+        </Group>
       </Group>
     </AppShell.Header>
   );
