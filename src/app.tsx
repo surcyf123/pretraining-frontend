@@ -1,4 +1,3 @@
-import { Authenticator } from "@aws-amplify/ui-react";
 import { AppShell, useMantineColorScheme } from "@mantine/core";
 import { Amplify } from "aws-amplify";
 import { Outlet } from "react-router-dom";
@@ -17,9 +16,7 @@ export function App() {
     >
       <Header colorScheme={colorScheme} onToggleColorScheme={toggleColorScheme} />
       <AppShell.Main>
-        <Authenticator.Provider>
-          <Outlet />
-        </Authenticator.Provider>
+        <Outlet />
       </AppShell.Main>
     </AppShell>
   );
