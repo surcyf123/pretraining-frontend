@@ -3,6 +3,7 @@ import { App } from "./app";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { Dashboard } from "./pages/Dashboard";
 import { ErrorPage } from "./pages/ErrorPage";
+import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 
 export const Routers = createBrowserRouter([
@@ -11,6 +12,14 @@ export const Routers = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: "/",
+        element: (
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        ),
+      },
       {
         path: "dashboard",
         element: (
