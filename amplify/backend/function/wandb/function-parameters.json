@@ -1,3 +1,10 @@
 {
-  "lambdaLayers": []
+  "lambdaLayers": [],
+  "permissions": {
+    "storage": {
+      "s3486d4c80": [
+        "create"
+      ]
+    }
+  }
 }
