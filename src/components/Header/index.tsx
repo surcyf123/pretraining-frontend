@@ -45,7 +45,7 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
               to={path}
               label={label}
             />
-          ))}
+          ))} 
         </Group>
         <Group>
           <ActionIcon onClick={onToggleColorScheme} variant="default">
