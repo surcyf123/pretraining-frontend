@@ -51,9 +51,11 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
           <ActionIcon onClick={onToggleColorScheme} variant="default">
             {colorScheme === "dark" ? <IconSun /> : <IconMoonStars />}
           </ActionIcon>
-          <ActionIcon onClick={signOut} variant="default">
-            <IconLogout />
-          </ActionIcon>
+          {authStatus === "authenticated" ? (
+            <ActionIcon onClick={signOut} variant="default">
+              <IconLogout />
+            </ActionIcon>
+          ) : null}
         </Group>
       </Group>
     </AppShell.Header>
