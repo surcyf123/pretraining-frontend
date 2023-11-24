@@ -1,14 +1,17 @@
 import json
-from utils.script import test_wandb_initialization
+import os
+from utils.s3_upload import upload
+
 def handler(event, context):
-  test_wandb_initialization()
-  
-  return {
-      'statusCode': 200,
-      'headers': {
-          'Access-Control-Allow-Headers': '*',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-      },
-      'body': json.dumps('Hello from your new Amplify Python lambda!')
-  }
+    path=os.path.join(os.getcwd(),"src","utils","multi.json")
+    upload(path)
+
+    return {
+        'statusCode': 200,
+        'headers': {
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+            },
+            'body': json.dumps('Hello from your new Amplify Python lambda!')
+        }
