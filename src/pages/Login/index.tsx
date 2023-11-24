@@ -1,6 +1,7 @@
-import { Authenticator, ThemeProvider } from "@aws-amplify/ui-react";
+import { Authenticator, ThemeProvider, useAuthenticator } from "@aws-amplify/ui-react";
 import { useMantineColorScheme, useMantineTheme } from "@mantine/core";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import type { Theme } from "@aws-amplify/ui-react";
 import type { ComponentProps } from "react";
 import "@aws-amplify/ui-react/styles.css";
@@ -32,6 +33,14 @@ const FormFields: ComponentProps<typeof Authenticator>["formFields"] = {
 export function Login() {
   const mantineTheme = useMantineTheme();
   const { colorScheme } = useMantineColorScheme();
+  const { authStatus } = useAuthenticator((context) => [context.authStatus]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authStatus === "authenticated") {
+      navigate("/dashboard");
+    }
+  }, [authStatus, navigate]);
 
   const theme: Theme = useMemo(
     () => ({
