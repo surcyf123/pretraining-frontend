@@ -3,7 +3,7 @@ import os
 from utils.s3_upload import upload
 
 def handler(event, context):
-    path=os.path.join(os.getcwd(),"src","utils","multi.json")
+    path=os.path.join(os.getcwd(),"utils","multi.json")
     upload(path)
 
     return {
