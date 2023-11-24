@@ -3,7 +3,8 @@ import os
 from utils.upload import upload
 
 def handler(event, context):
-   path=os.path.join(os.getcwd(),"multi.json")
+   current_directory = os.path.dirname(__file__)
+   path=os.path.join(current_directory,"multi.json")
    upload(path)  
    return {
       'statusCode': 200,
