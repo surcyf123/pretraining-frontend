@@ -43,24 +43,6 @@
       "service": "Lambda"
     }
   },
-  "parameters": {
-    "AMPLIFY_function_wandb_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "wandb"
-        }
-      ]
-    },
-    "AMPLIFY_function_wandb_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "wandb"
-        }
-      ]
-    }
-  },
   "storage": {
     "s359bce836": {
       "dependsOn": [],
