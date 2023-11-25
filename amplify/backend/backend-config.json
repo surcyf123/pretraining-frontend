@@ -65,6 +65,14 @@
           "resourceName": "wandb"
         }
       ]
+    },
+    "AMPLIFY_function_wandb_wandbApiKey": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "wandb"
+        }
+      ]
     }
   },
   "storage": {

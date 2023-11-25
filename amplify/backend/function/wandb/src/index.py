@@ -1,11 +1,14 @@
 import json
 import os
 from utils.upload import upload
+from utils.script import init_wandb
 
 def handler(event, context):
     current_directory = os.path.dirname(__file__)
     path = os.path.join(current_directory, "multi.json")
     upload(path)
+    init_wandb()
+
     return {
         "statusCode": 200,
         "headers": {

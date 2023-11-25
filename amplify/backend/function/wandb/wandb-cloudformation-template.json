@@ -19,6 +19,9 @@
     "storages359bce836BucketName": {
       "Type": "String",
       "Default": "storages359bce836BucketName"
+    },
+    "wandbApiKey": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -76,6 +79,9 @@
             },
             "STORAGE_S359BCE836_BUCKETNAME": {
               "Ref": "storages359bce836BucketName"
+            },
+            "WANDB_API_KEY": {
+              "Ref": "wandbApiKey"
             }
           }
         },

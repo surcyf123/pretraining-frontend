@@ -14,5 +14,11 @@
         "delete"
       ]
     }
-  }
+  },
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "wandbApiKey",
+      "environmentVariableName": "WANDB_API_KEY"
+    }
+  ]
 }
