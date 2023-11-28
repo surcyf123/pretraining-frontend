@@ -92,10 +92,11 @@
           ]
         },
         "Runtime": "python3.8",
+        "MemorySize": 2890,
         "Layers": [
           "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-p38-numpy:13"
         ],
-        "Timeout": 120
+        "Timeout": 200
       }
     },
     "LambdaExecutionRole": {
