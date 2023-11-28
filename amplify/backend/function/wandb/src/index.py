@@ -1,20 +1,14 @@
 import json
 import os
 from utils.upload import upload
-from utils.script import init_wandb
+from utils.script import init_wandb, create_multi_JSON
 
 def handler(event, context):
-    current_directory = os.path.dirname(__file__)
-    path = os.path.join(current_directory, "multi.json")
-    upload(path)
     init_wandb()
-
+    output_path=create_multi_JSON()
+    upload(output_path)
+    
     return {
         "statusCode": 200,
-        "headers": {
-            "Access-Control-Allow-Headers": "*",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
-        },
-        "body": json.dumps("Hello from your new Amplify Python lambda!"),
+        "body": json.dumps("Multi.json file updated successfully."),
     }
