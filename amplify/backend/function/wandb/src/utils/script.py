@@ -94,7 +94,7 @@ def init_wandb():
 def create_multi_JSON():
     combined_data = merge_data(all_run_data)
     # Save the extracted data to a JSON file
-    output_path = os.path.join(os.path.dirname(__file__), "multi.json")
+    output_path = os.path.join("/tmp", "multi.json")
     with open(output_path, 'w') as f:
         json.dump(combined_data, f, indent=2)
     return output_path
