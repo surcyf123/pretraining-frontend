@@ -21,8 +21,7 @@ export function Dashboard() {
     if (isLoading === false && multiJSON !== undefined) {
       output = Object.values(multiJSON)
         .flat()
-        .filter((ele): ele is RunDetails => ele !== null)
-        .flatMap((ele) => Object.values(ele.uid_data))
+        .flatMap((ele) => (ele === null ? [] : Object.values(ele.uid_data)))
         .filter(
           (ele): ele is UIDDetails =>
             ele?.average_loss !== undefined && ele?.average_loss !== null && ele?.win_rate > 0,
