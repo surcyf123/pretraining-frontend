@@ -1,4 +1,4 @@
-import { Card, Stack, useMantineColorScheme, Group } from "@mantine/core";
+import { Card, Stack, useMantineColorScheme, Group, Loader } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
@@ -10,7 +10,11 @@ import { StatisticsTable } from "../../components/StatisticsTable";
 import type { RunDetails, UIDDetails } from "../../sample-data/interfaces";
 
 export function Dashboard() {
-  const { data: multiJSON, isLoading } = useQuery({
+  const {
+    data: multiJSON,
+    isLoading,
+    isRefetching,
+  } = useQuery({
     queryKey: ["multiJSON"],
     queryFn: fetchMulitJSON,
     refetchInterval: 10 * 60 * 1000,
@@ -126,6 +130,7 @@ export function Dashboard() {
       <Card shadow="md">
         <StatisticsTable data={tableData} />
       </Card>
+      {isRefetching === true ? <Loader color="blue" type="bars" pos="absolute" left="20px" bottom="20px" /> : null}
     </Stack>
   );
 }
