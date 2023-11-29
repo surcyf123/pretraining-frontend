@@ -7,7 +7,6 @@ import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { PieChart } from "../../charts/PieChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
-import { Data } from "../../sample-data/state";
 import type { RunDetails, UIDDetails } from "../../sample-data/interfaces";
 
 export function Dashboard() {
@@ -17,9 +16,12 @@ export function Dashboard() {
   });
 
   const { colorScheme } = useMantineColorScheme();
-  const processedData = useMemo<UIDDetails[]>(
-    () =>
-      Data.flatMap((ele) => Object.values(ele.uid_data))
+  const processedData = useMemo<UIDDetails[]>(() => {
+    let output: UIDDetails[] = [];
+    if (isLoading === false && multiJSON !== undefined) {
+      output = Object.values(multiJSON)
+        .flat()
+        .flatMap((ele) => Object.values(ele.uid_data))
         .filter(
           (ele): ele is UIDDetails =>
             ele?.average_loss !== undefined && ele?.average_loss !== null && ele?.win_rate > 0,
@@ -27,9 +29,10 @@ export function Dashboard() {
         .map((ele) => ({
           ...ele,
           timestamp: ele.timestamp * 1000, // timestamp provided is in seconds and javascript Date api expects milliseconds.
-        })),
-    [],
-  );
+        }));
+    }
+    return output;
+  }, [isLoading, multiJSON]);
 
   // complete chart data
   const chartData = useMemo(
