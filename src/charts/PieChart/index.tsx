@@ -77,13 +77,22 @@ export function PieChart({ theme, data, isLoading, title, style }: PieChartProps
         },
         tooltip: {
           trigger: "item",
-          formatter: `
-          <div>
-            <span>{b}</span>
-            <br/>
-            <span>Weight: {c}</span>
-          </div>
-          `, // Ref: https://echarts.apache.org/en/option.html#grid.tooltip.formatter
+          formatter: (params) => {
+            let output = "";
+            if (Array.isArray(params)) {
+              output = "";
+            } else {
+              const { value, name } = params.data as { name: string; value: number };
+              output = `
+              <div>
+                <span>Weight: ${(value ?? NaN).toFixed(4)}</span>
+                <br/>
+                <span>UID: ${name}</span>
+              </div>
+              `;
+            }
+            return output;
+          },
         },
         grid: { bottom: "20%", top: "15%", right: "15%", left: "15%" },
         series: [
