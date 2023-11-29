@@ -1,7 +1,7 @@
 import { Card, Stack, useMantineColorScheme, Group } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { ascending, rollup, sort } from "d3-array";
-import { useMemo } from "react";
+import {  useMemo } from "react";
 import { fetchMulitJSON } from "../../api";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
@@ -10,9 +10,14 @@ import { StatisticsTable } from "../../components/StatisticsTable";
 import type { RunDetails, UIDDetails } from "../../sample-data/interfaces";
 
 export function Dashboard() {
-  const { data: multiJSON, isLoading } = useQuery({
+  const {
+    data: multiJSON,
+    isLoading,
+  } = useQuery({
     queryKey: ["multiJSON"],
     queryFn: fetchMulitJSON,
+    refetchInterval:60*1000*10,
+    staleTime:60*1000*10
   });
 
   const { colorScheme } = useMantineColorScheme();
