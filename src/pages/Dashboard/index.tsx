@@ -1,14 +1,21 @@
 import { Card, Stack, useMantineColorScheme, Group } from "@mantine/core";
+import { useQuery } from "@tanstack/react-query";
 import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
+import { fetchMulitJSON } from "../../api";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { PieChart } from "../../charts/PieChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
-import { Data, MultiJSON } from "../../sample-data/state";
+import { Data } from "../../sample-data/state";
 import type { RunDetails, UIDDetails } from "../../sample-data/interfaces";
 
 export function Dashboard() {
+  const { data: multiJSON, isLoading } = useQuery({
+    queryKey: ["multiJSON"],
+    queryFn: fetchMulitJSON,
+  });
+
   const { colorScheme } = useMantineColorScheme();
   const processedData = useMemo<UIDDetails[]>(
     () =>
@@ -23,7 +30,6 @@ export function Dashboard() {
         })),
     [],
   );
-
   // complete chart data
   const chartData = useMemo(
     () =>
@@ -47,19 +53,22 @@ export function Dashboard() {
     return output;
   }, [chartData]);
 
-  const processedMultiJSON = useMemo<Record<string, RunDetails[]>>(
-    () =>
-      Object.entries(MultiJSON).reduce(
+  const processedMultiJSON = useMemo<Record<string, RunDetails[]>>(() => {
+    let output = {};
+    if (isLoading === false && multiJSON !== undefined) {
+      output = Object.entries(multiJSON).reduce(
         (acc, [key, value]) => ({
           ...acc,
           [key]: value
+            .filter((ele) => ele !== null)
             .filter(({ best_average_loss }) => best_average_loss !== null)
             .map((ele) => ({ ...ele, timestamp: ele.timestamp * 1000 })),
         }),
         {},
-      ),
-    [],
-  );
+      );
+    }
+    return output;
+  }, [isLoading, multiJSON]);
 
   return (
     <Stack>
