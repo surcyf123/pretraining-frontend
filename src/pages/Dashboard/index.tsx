@@ -61,7 +61,7 @@ export function Dashboard() {
         (acc, [key, value]) => ({
           ...acc,
           [key]: value
-            .filter((ele) => ele !== null)
+            .filter((ele):ele is RunDetails => ele !== null)
             .filter(({ best_average_loss }) => best_average_loss !== null)
             .map((ele) => ({ ...ele, timestamp: ele.timestamp * 1000 })),
         }),
