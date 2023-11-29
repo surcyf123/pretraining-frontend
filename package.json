@@ -32,6 +32,7 @@
     "@mantine/core": "^7.1.7",
     "@mantine/hooks": "^7.1.7",
     "@tabler/icons-react": "^2.40.0",
+    "@tanstack/react-query": "^5.8.9",
     "@tanstack/react-table": "^8.10.7",
     "aws-amplify": "^6.0.5",
     "d3-array": "^3.2.4",
