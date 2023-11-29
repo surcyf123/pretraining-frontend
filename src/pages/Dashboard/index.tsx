@@ -30,7 +30,7 @@ export function Dashboard() {
         })),
     [],
   );
-  
+
   // complete chart data
   const chartData = useMemo(
     () =>
