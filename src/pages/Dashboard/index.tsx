@@ -106,7 +106,6 @@ export function Dashboard() {
             xAxisTitle="UID"
             yAxisTitle="Win Rate"
             isLoading={isLoading}
-
           />
         </Card>
         <Card shadow="md">
