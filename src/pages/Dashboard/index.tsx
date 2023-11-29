@@ -86,6 +86,7 @@ export function Dashboard() {
           xAxisTitle="Time"
           style={{ height: "40vh" }}
           theme={colorScheme === "auto" ? "dark" : colorScheme}
+          isLoading={isLoading}
         />
       </Card>
       <Group grow>
@@ -94,6 +95,7 @@ export function Dashboard() {
             data={tableData}
             style={{ height: "30vh" }}
             theme={colorScheme === "auto" ? "dark" : colorScheme}
+            isLoading={isLoading}
           />
         </Card>
         <Card shadow="md">
@@ -105,6 +107,7 @@ export function Dashboard() {
             yAxis="win_rate"
             xAxisTitle="UID"
             yAxisTitle="Win Rate"
+            isLoading={isLoading}
           />
         </Card>
         <Card shadow="md">
@@ -116,6 +119,7 @@ export function Dashboard() {
             yAxis="average_loss"
             xAxisTitle="UID"
             yAxisTitle="Loss"
+            isLoading={isLoading}
           />
         </Card>
       </Group>
