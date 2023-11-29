@@ -8,7 +8,7 @@ import { Header } from "./components/Header";
 import "@mantine/core/styles.css"; // Ref: https://mantine.dev/changelog/7-0-0/#global-styles
 
 Amplify.configure(config);
-const queryClient = new QueryClient();
+const ReactQueryClient = new QueryClient();
 
 export function App() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
@@ -22,7 +22,7 @@ export function App() {
       >
         <Header colorScheme={colorScheme} onToggleColorScheme={toggleColorScheme} />
         <AppShell.Main>
-          <QueryClientProvider client={queryClient}>
+          <QueryClientProvider client={ReactQueryClient}>
             <Outlet />
           </QueryClientProvider>
         </AppShell.Main>
