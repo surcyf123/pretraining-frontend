@@ -13,6 +13,8 @@ export function Dashboard() {
   const { data: multiJSON, isLoading } = useQuery({
     queryKey: ["multiJSON"],
     queryFn: fetchMulitJSON,
+    refetchInterval: 10 * 60 * 1000,
+    staleTime: 10 * 60 * 1000,
   });
 
   const { colorScheme } = useMantineColorScheme();
