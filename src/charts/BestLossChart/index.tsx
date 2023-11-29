@@ -122,13 +122,12 @@ export function BestLossChart({
           scale: true,
         },
         tooltip: {
-          trigger: "item",
+          trigger: "axis",
           formatter: (params) => {
             let output = "";
             if (Array.isArray(params)) {
-              output = "";
-            } else {
-              const { timestamp, best_average_loss: bestAverageLoss } = params.data as RunDetails;
+              const { timestamp, best_average_loss: bestAverageLoss } = params[0]
+                .data as RunDetails;
               output = `
               <div>
                 <span>${xAxisTitle}: ${new Date(timestamp).toLocaleString(undefined, {
