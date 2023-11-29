@@ -8,5 +8,5 @@ def upload(path):
     s3_client.upload_file(
         Filename=path,
         Bucket=os.environ.get("STORAGE_S359BCE836_BUCKETNAME"),
-        Key="wandb_data/multi.json",
+        Key="public/multi.json", # Ref: https://docs.amplify.aws/javascript/build-a-backend/storage/configure-access/
     )
