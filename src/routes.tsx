@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import { App } from "./app";import { ProtectedRoute } from "./components/ProtectedRoute";
+import { App } from "./app";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import { Dashboard } from "./pages/Dashboard";
 import { ErrorPage } from "./pages/ErrorPage";
 import { Home } from "./pages/Home";
