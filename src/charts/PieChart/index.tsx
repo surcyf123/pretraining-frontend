@@ -85,9 +85,9 @@ export function PieChart({ theme, data, isLoading, title, style }: PieChartProps
               const { value, name } = params.data as { name: string; value: number };
               output = `
               <div>
-                <span>Weight: ${(value ?? NaN).toFixed(4)}</span>
+                <span>${name}</span>
                 <br/>
-                <span>UID: ${name}</span>
+                <span>Weight: ${(value ?? NaN).toFixed(4)}</span>  
               </div>
               `;
             }
