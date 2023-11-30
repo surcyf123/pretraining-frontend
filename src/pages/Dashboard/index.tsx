@@ -130,7 +130,9 @@ export function Dashboard() {
       <Card shadow="md">
         <StatisticsTable data={tableData} />
       </Card>
-      {isRefetching === true ? <Loader color="blue" type="bars" pos="absolute" left="20px" bottom="20px" /> : null}
+      {isRefetching === true ? (
+        <Loader color="blue" type="bars" pos="absolute" left="20px" bottom="20px" />
+      ) : null}
     </Stack>
   );
 }
