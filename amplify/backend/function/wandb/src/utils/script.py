@@ -52,6 +52,27 @@ def merge_data(data):
             merged_data[f"validator-{key}"] = concatenated_list
     return merged_data
 
+
+def calculate_best_average_loss(data):
+    if(isinstance(data, dict)):
+        for items in data.values():
+            for item in items:
+                if(isinstance(item, dict)):
+                    uids = item.get("uids", [])
+                    uid_data = item.get("uid_data", {})
+                    if(isinstance(uids, list) and isinstance(uid_data, dict)):
+                        average_losses = []
+                        for uid in uids:
+                            current_uid_data = uid_data.get(str(uid), None)
+                            if (isinstance(current_uid_data, dict)):
+                                average_loss = current_uid_data.get("average_loss", None)
+                                if(isinstance(average_loss, float) or isinstance(average_loss, int)):
+                                    average_losses.append(average_loss)
+                        if(len(average_losses) > 0):
+                            best_average_loss = min(average_losses)
+                            item["best_average_loss"] = best_average_loss
+    return data  
+
 def init_wandb():
   for run in runs:
       # Parse the created_at time
@@ -93,8 +114,9 @@ def init_wandb():
 
 def create_multi_JSON():
     combined_data = merge_data(all_run_data)
+    updated_data = calculate_best_average_loss(combined_data)
     # Save the extracted data to a JSON file
     output_path = os.path.join("/tmp", "multi.json")
     with open(output_path, 'w') as f:
-        json.dump(combined_data, f, indent=2)
+        json.dump(updated_data, f, indent=2)
     return output_path
