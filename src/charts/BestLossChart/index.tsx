@@ -125,7 +125,7 @@ export function BestLossChart({
           trigger: "axis",
           formatter: (params) => {
             let output = "";
-            if (Array.isArray(params)) {
+            if (Array.isArray(params) && params.length > 0) {
               const { timestamp, best_average_loss: bestAverageLoss } = params[0]
                 .data as RunDetails;
               output = `
