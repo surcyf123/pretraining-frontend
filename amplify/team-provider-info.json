@@ -24,9 +24,6 @@
       },
       "storage": {
         "s359bce836": {}
-      },
-      "hosting": {
-        "S3AndCloudFront": {}
       }
     }
   }
