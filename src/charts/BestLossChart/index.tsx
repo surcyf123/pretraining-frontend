@@ -110,6 +110,7 @@ export function BestLossChart({
                       timeStyle: "short",
                       hour12: true,
                     })
+                    // Ref: https://echarts.apache.org/examples/en/editor.html?c=mix-timeline-finance
                     .split(",")
                     .join("\n")
                 : "",
