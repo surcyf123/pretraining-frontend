@@ -104,11 +104,14 @@ export function BestLossChart({
           axisLabel: {
             formatter: (value: unknown) =>
               typeof value === "number"
-                ? new Date(value).toLocaleString(undefined, {
-                    dateStyle: "short",
-                    timeStyle: "short",
-                    hour12: true,
-                  })
+                ? new Date(value)
+                    .toLocaleString(undefined, {
+                      dateStyle: "short",
+                      timeStyle: "short",
+                      hour12: true,
+                    })
+                    .split(",")
+                    .join("\n")
                 : "",
           },
         },
