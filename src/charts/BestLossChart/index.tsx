@@ -102,18 +102,15 @@ export function BestLossChart({
           nameGap: 30,
           axisLine: { show: true },
           axisLabel: {
-            formatter: (value: unknown) =>
-              typeof value === "number"
-                ? new Date(value)
-                    .toLocaleString(undefined, {
-                      dateStyle: "short",
-                      timeStyle: "short",
-                      hour12: true,
-                    })
-                    // Ref: https://echarts.apache.org/examples/en/editor.html?c=mix-timeline-finance
-                    .split(",")
-                    .join("\n")
-                : "",
+            formatter: (value: unknown) => {
+              let output = "";
+              if (typeof value === "number") {
+                const date = new Date(value).toLocaleDateString(undefined, {dateStyle: "short"});
+                const time = new Date(value).toLocaleTimeString(undefined, {timeStyle: "short", hour12: true});
+                output = `${time}\n${date}`;
+              }
+              return output;
+            }
           },
         },
         yAxis: {
