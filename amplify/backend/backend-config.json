@@ -27,6 +27,13 @@
       "service": "Cognito"
     }
   },
+  "custom": {
+    "Route53HostedZone": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "customCloudformation"
+    }
+  },
   "function": {
     "wandb": {
       "build": true,

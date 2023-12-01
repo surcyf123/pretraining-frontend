@@ -30,6 +30,9 @@
           "appId": "d1pef9qxfk48fq",
           "type": "manual"
         }
+      },
+      "custom": {
+        "Route53HostedZone": {}
       }
     }
   }
