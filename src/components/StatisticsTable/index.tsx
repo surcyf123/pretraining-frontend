@@ -128,6 +128,7 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
         <Select
           size="sm"
           placeholder="Page size"
+          allowDeselect={false}
           data={[
             { value: "10", label: "Show 10" },
             { value: "50", label: "Show 50" },

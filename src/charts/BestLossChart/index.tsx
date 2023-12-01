@@ -105,12 +105,15 @@ export function BestLossChart({
             formatter: (value: unknown) => {
               let output = "";
               if (typeof value === "number") {
-                const date = new Date(value).toLocaleDateString(undefined, {dateStyle: "short"});
-                const time = new Date(value).toLocaleTimeString(undefined, {timeStyle: "short", hour12: true});
+                const date = new Date(value).toLocaleDateString(undefined, { dateStyle: "short" });
+                const time = new Date(value).toLocaleTimeString(undefined, {
+                  timeStyle: "short",
+                  hour12: true,
+                });
                 output = `${time}\n${date}`;
               }
               return output;
-            }
+            },
           },
         },
         yAxis: {
