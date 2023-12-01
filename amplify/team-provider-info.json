@@ -24,6 +24,12 @@
       },
       "storage": {
         "s359bce836": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1pef9qxfk48fq",
+          "type": "manual"
+        }
       }
     }
   }

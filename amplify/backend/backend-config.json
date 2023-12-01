@@ -43,7 +43,13 @@
       "service": "Lambda"
     }
   },
-  "hosting": {},
+  "hosting": {
+    "amplifyhosting": {
+      "providerPlugin": "awscloudformation",
+      "service": "amplifyhosting",
+      "type": "manual"
+    }
+  },
   "parameters": {
     "AMPLIFY_function_wandb_deploymentBucketName": {
       "usedBy": [
@@ -66,6 +72,22 @@
         {
           "category": "function",
           "resourceName": "wandb"
+        }
+      ]
+    },
+    "AMPLIFY_hosting_amplifyhosting_appId": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
+        }
+      ]
+    },
+    "AMPLIFY_hosting_amplifyhosting_type": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
         }
       ]
     }
