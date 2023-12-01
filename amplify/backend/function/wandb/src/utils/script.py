@@ -28,31 +28,6 @@ def replace_inf_nan(obj):
     else:
         return obj
 
-def group_run_ids(data):
-    grouped_run_ids = {}
-
-    if isinstance(data, dict):
-        for run_id in data.keys():
-            if isinstance(run_id, str):
-                validator_number = run_id.split("-")[1]
-                grouped_run_ids.setdefault(validator_number, []).append(run_id)
-    return grouped_run_ids 
-
-def merge_data(data):
-    merged_data = {}
-
-    grouped_run_ids = group_run_ids(data)
-    for key, value in grouped_run_ids.items():
-        if len(value) == 1:
-            merged_data[value[0]] = data[value[0]]
-        else:
-            concatenated_list = []
-            for run_id in value:
-                concatenated_list.extend(data[run_id])
-            merged_data[f"validator-{key}"] = concatenated_list
-    return merged_data
-
-
 def calculate_best_average_loss(data):
     if(isinstance(data, dict)):
         for items in data.values():
@@ -113,8 +88,7 @@ def init_wandb():
               all_run_data[run.name] = converted_data
 
 def create_multi_JSON():
-    combined_data = merge_data(all_run_data)
-    updated_data = calculate_best_average_loss(combined_data)
+    updated_data = calculate_best_average_loss(all_run_data)
     # Save the extracted data to a JSON file
     output_path = os.path.join("/tmp", "multi.json")
     with open(output_path, 'w') as f:
