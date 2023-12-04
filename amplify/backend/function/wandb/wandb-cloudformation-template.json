@@ -92,8 +92,8 @@
           ]
         },
         "Runtime": "python3.8",
-        "MemorySize": 1024,
-        "Timeout": 180
+        "MemorySize": 2048,
+        "Timeout": 300
       }
     },
     "LambdaExecutionRole": {
