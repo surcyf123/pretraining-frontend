@@ -15,7 +15,7 @@
       "function": {
         "wandb": {
           "deploymentBucketName": "amplify-pretraining-prod-115707-deployment",
-          "s3Key": "amplify-builds/wandb-4f46366d354f77516134-build.zip",
+          "s3Key": "amplify-builds/wandb-54336a2f495a2f747172-build.zip",
           "wandbApiKey": "d99387d278a657c2e12313a7758ac33f3de8fd26"
         }
       },
