@@ -1,7 +1,6 @@
 import wandb
 import datetime
 import json
-import os
 import pandas as pd
 import math
 
@@ -48,6 +47,7 @@ def calculate_best_average_loss(data):
 
 def init_wandb():
   all_run_data = {}
+  recent_run_data={}
 
   for run in runs:
       # Parse the created_at time
@@ -61,7 +61,7 @@ def init_wandb():
       time_diff = now - created_at
 
       # Check if the run was started less than 3 days ago and "validator" is in the run name
-      if time_diff.days < 3 and "validator" in run.name:
+      if time_diff.days < 7 and "validator" in run.name:
           print(f"Processing run: {run.name}")
 
           # Retrieve the run history
@@ -86,4 +86,9 @@ def init_wandb():
               # Replace NaN value and infinity values with null
               converted_data = replace_inf_nan(converted_data)
               all_run_data[run.name] = converted_data
-  return all_run_data
+              if time_diff.days < 3:
+                  recent_run_data[run.name] = converted_data
+  return {
+      "recent": recent_run_data,
+      "history": all_run_data
+  }
