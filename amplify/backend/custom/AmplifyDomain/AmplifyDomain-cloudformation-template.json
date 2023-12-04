@@ -1,0 +1,29 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters": {
+    "env": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "Domain": {
+      "Type": "AWS::Amplify::Domain",
+      "Properties": {
+        "AppId": "d1pef9qxfk48fq",
+        "DomainName": "openpretrain.ai",
+        "SubDomainSettings": [
+          {
+            "BranchName": "prod",
+            "Prefix": ""
+          },
+          {
+            "BranchName": "prod",
+            "Prefix": "www"
+          }
+        ]
+      }
+    }
+  },
+  "Outputs": {},
+  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.8.2\",\"stackType\":\"custom-customCloudformation\",\"metadata\":{}}"
+}
