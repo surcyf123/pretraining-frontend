@@ -87,10 +87,6 @@ def init_wandb():
               converted_data = replace_inf_nan(converted_data)
               all_run_data[run.name] = converted_data
 
-def create_multi_JSON():
+def get_multi_json_data():
     updated_data = calculate_best_average_loss(all_run_data)
-    # Save the extracted data to a JSON file
-    output_path = os.path.join("/tmp", "multi.json")
-    with open(output_path, 'w') as f:
-        json.dump(updated_data, f, indent=2)
-    return output_path
+    return updated_data

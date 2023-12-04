@@ -1,12 +1,12 @@
 import json
 import os
 from utils.upload import upload
-from utils.script import init_wandb, create_multi_JSON
+from utils.script import init_wandb, get_multi_json_data
 
 def handler(event, context):
     init_wandb()
-    output_path=create_multi_JSON()
-    upload(output_path)
+    multi_json_data=get_multi_json_data()
+    upload(multi_json_data)
     
     return {
         "statusCode": 200,
