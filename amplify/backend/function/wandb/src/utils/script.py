@@ -61,7 +61,7 @@ def init_wandb():
       time_diff = now - created_at
 
       # Check if the run was started less than 3 days ago and "validator" is in the run name
-      if  time_diff.days < 7 and "validator" in run.name:
+      if time_diff.days < 7 and "validator" in run.name:
           print(f"Processing run: {run.name}")
 
           # Retrieve the run history
