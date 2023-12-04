@@ -8,3 +8,11 @@ export async function fetchMulitJSON(): Promise<Record<string, (RunDetails | nul
   const json = JSON.parse(text) as Record<string, (RunDetails | null)[]>;
   return json;
 }
+
+export async function fetchHistoryJSON(): Promise<Record<string, (RunDetails | null)[]>> {
+  const downloadResult = await downloadData({ key: "history.json" }).result;
+  // Ref: https://docs.amplify.aws/javascript/build-a-backend/storage/download/#get-the-text-value-of-downloaded-file
+  const text = await downloadResult.body.text(); // Using "downloadResult.body.json()" gives error "Parsing response to json is not implemented."
+  const json = JSON.parse(text) as Record<string, (RunDetails | null)[]>;
+  return json;
+}

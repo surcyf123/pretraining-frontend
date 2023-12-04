@@ -2,7 +2,7 @@ import { Card, Stack, useMantineColorScheme, Group, Loader } from "@mantine/core
 import { useQuery } from "@tanstack/react-query";
 import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
-import { fetchMulitJSON } from "../../api";
+import { fetchHistoryJSON, fetchMulitJSON } from "../../api";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { PieChart } from "../../charts/PieChart";
@@ -17,6 +17,17 @@ export function Dashboard() {
   } = useQuery({
     queryKey: ["multiJSON"],
     queryFn: fetchMulitJSON,
+    refetchInterval: 10 * 60 * 1000,
+    staleTime: 0,
+  });
+
+  const {
+    data: historyJSON,
+    isLoading: isHistoryJSONLoading,
+    isRefetching: isRefetchingHistoryJSON,
+  } = useQuery({
+    queryKey: ["historyJSON"],
+    queryFn: fetchHistoryJSON,
     refetchInterval: 10 * 60 * 1000,
     staleTime: 0,
   });
@@ -79,8 +90,36 @@ export function Dashboard() {
     return output;
   }, [isLoading, multiJSON]);
 
+  const historyProcessedData = useMemo<Record<string, RunDetails[]>>(() => {
+    let output = {};
+    if (isHistoryJSONLoading === false && historyJSON !== undefined) {
+      output = Object.entries(historyJSON).reduce(
+        (acc, [key, value]) => ({
+          ...acc,
+          [key]: value
+            .filter((ele): ele is RunDetails => typeof ele?.best_average_loss === "number")
+            .map((ele) => ({ ...ele, timestamp: ele.timestamp * 1000 })),
+        }),
+        {},
+      );
+    }
+    return output;
+  }, [isHistoryJSONLoading, historyJSON]);
+
   return (
     <Stack>
+      <Card shadow="md">
+        <BestLossChart
+          data={historyProcessedData}
+          yAxis="best_average_loss"
+          xAxis="timestamp"
+          yAxisTitle="Best average loss"
+          xAxisTitle="Time"
+          style={{ height: "40vh" }}
+          theme={colorScheme === "auto" ? "dark" : colorScheme}
+          isLoading={isHistoryJSONLoading}
+        />
+      </Card>
       <Card shadow="md">
         <BestLossChart
           data={processedMultiJSON}
@@ -130,8 +169,8 @@ export function Dashboard() {
       <Card shadow="md">
         <StatisticsTable data={tableData} />
       </Card>
-      {isRefetching === true ? (
-        <Loader color="blue" type="bars" pos="absolute" left="20px" bottom="20px" />
+      {isRefetching === true || isRefetchingHistoryJSON === true ? (
+        <Loader color="blue" type="bars" pos="fixed" left="20px" bottom="20px" />
       ) : null}
     </Stack>
   );
