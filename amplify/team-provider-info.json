@@ -32,8 +32,7 @@
         }
       },
       "custom": {
-        "Route53HostedZone": {},
-        "AmplifyDomain": {}
+        "Route53HostedZone": {}
       }
     }
   }
