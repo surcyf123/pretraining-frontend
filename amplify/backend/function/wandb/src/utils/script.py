@@ -14,8 +14,6 @@ entity_name = "opentensor-dev"
 runs = api.runs(f"{entity_name}/{project_name}")
 now = datetime.datetime.now()
 
-all_run_data = {}
-
 def replace_inf_nan(obj):
     if isinstance(obj, list):
         return [replace_inf_nan(item) for item in obj]
@@ -49,6 +47,8 @@ def calculate_best_average_loss(data):
     return data  
 
 def init_wandb():
+  all_run_data = {}
+
   for run in runs:
       # Parse the created_at time
       try:
@@ -86,7 +86,4 @@ def init_wandb():
               # Replace NaN value and infinity values with null
               converted_data = replace_inf_nan(converted_data)
               all_run_data[run.name] = converted_data
-
-def get_multi_json_data():
-    updated_data = calculate_best_average_loss(all_run_data)
-    return updated_data
+  return all_run_data
