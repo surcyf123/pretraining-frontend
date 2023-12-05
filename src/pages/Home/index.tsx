@@ -356,6 +356,117 @@ export function Home(): JSX.Element {
                   --offline
               `}
         </Code>
+        <Title order={1}>Bittensor API</Title>
+        <Text>
+          The Bittensor repository comes with tooling for interfacing with the Bittensor ecosystem,
+          creating wallets, loading state from the chain, and registering miners and validators into
+          the mechanism. Before continuing make sure you are familiar with the main concepts of
+          Bittensor.
+        </Text>
+        <Code block>
+          {`
+            import bittensor as bt
+
+            # Accesses the incentive mechanism state of the pretraining 'subnet'. A subnet is a self contained consensus engine through which miners and validators agree on value creation and through which 
+            # TAO (bittensor's value holding token) is distributed. The metagraph is a syncable torh object which contains the state of this consensus engine at a particular block. Here we are pulling the state
+            # for subnet 9, which is the subnet network id, associated with this pretraining mechanism.
+            metagraph = bt.metagraph( 9 )
+            print( metagraph )
+
+            # Participants in a Bittensor consensus mechanism are defined by their wallet which contains two cryptographic keypairs, a coldkey and a hotkey. The hotkey has low security and is used to sign messages from a running miner
+            # while the coldkey is encrypted at all times and used to store and move TAO. The following code snippet creates a wallet on your machine with the specified coldkey name and hotkey name.
+            wallet = bt.wallet( name = 'cold', hotkey = 'hot' ).create_if_non_existent()
+            print( wallet )
+            `}
+        </Code>
+        <Title>Pretrain API</Title>
+        <Text>
+          The pretraining repo is for the easily constructing participants (miners / validators)
+          within subnet 9 and loading and evaluating the state of the network. For instance, as a
+          means of pushing models you have trained, or for attaining other participants models as
+          checkpoints for you.
+        </Text>
+        <Text>Creating miners.</Text>
+        <Code block>
+          {`
+              import bittensor as bt
+              import pretrain as pt
+
+              # Create a mining wallet.
+              wallet = bt.wallet().create_if_non_existent()
+
+              # Output your mining directory.
+              print (f'''Wallet: {wallet}
+                  path: {pt.mining.path( wallet )}
+                  model_path: {pt.mining.model_path( wallet )}
+                  runidpath: {pt.mining.runidpath( wallet )}
+              ''')
+
+              # Init or reinit the wandb run associtated with this wallet.
+              wandb_run = pt.mining.init( wallet )
+
+              # Load a specific model based on uid.
+              uid = 200
+              pt.graph.sync( uid, metagraph )
+              model = pt.graph.model( uid, device = config.device )
+
+              # Load the best model on the network based on incentive.
+              best_uid = pt.graph.best_uid( metagraph )
+              pt.graph.sync( best_uid, metagraph )
+              model = pt.graph.model( best_uid, device = config.device )
+
+              # Create a from scratch model.
+              model = pt.model.get_model()
+
+              # Save your model
+              pt.mining.save( wallet, model )
+
+              # Push your saved model to your wandb_run.
+              pt.mining.push( wallet, wandb_run )
+              `}
+        </Code>
+        <Text>
+          The pretrain package also contains the following commands for pulling state from the
+          network and performing validation.
+        </Text>
+        <Code block>
+          {`
+                import pretrain as pt
+                device = 'cuda'
+
+                # Pulls/Downloads model information and stores it onto your harddrive under \`~/.bittensor/miners/netuid9/models/231/*\`
+                pt.graph.sync( 231 )
+                pt.graph.sync( 200 )
+
+                # Print information about the recently synced uid.
+                print (f'''UID 231:
+                    timestamp: {pt.graph.timestamp( 231 )}
+                    run: {pt.graph.run( 231 )} 
+                    runid: {pt.graph.runid( 231 )}
+                    version: {pt.graph.version( 231 )}
+                    model_path: {pt.graph.model_path( 231 )}
+                    hotkey: {pt.graph.hotkey( 231 )}
+                    last_update: {pt.graph.last_update( 231 )}
+                ''')
+
+                # Load downloaded model from harddrive to device.
+                model_231 = pt.graph.model( 231, device = device )
+                model_200 = pt.graph.model( 200, device = device )
+
+                # Attains batches from the Falcon Dataset based on pages 101
+                batches = list(pretrain.dataset.SubsetFalconLoader( batch_size = 2, sequence_length = 1024, pages = [ 101 ] ) )
+
+                # Evaluate the models on these batches.
+                losses_231 = pretrain.validation.compute_losses( model_231, batches, device = device )
+                losses_200 = pretrain.validation.compute_losses( model_200, batches, device = device )
+
+                # Compute wins from losses and batches.
+                timestamp_231 = pretrain.utils.get_timestamp_for_uid( 231 )
+                timestamp_200 = pretrain.utils.get_timestamp_for_uid( 200 )
+                for loss_231, loss_200 in list(zip( losses_231, losses_200 )):
+                    pretrain.validation.iswin( loss_231, loss_200, timestamp_231, timestamp_200 )
+                `}
+        </Code>
       </Stack>
     </Container>
   );
