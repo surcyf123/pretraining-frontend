@@ -2,21 +2,21 @@ import { Card, Stack, useMantineColorScheme, Group, Loader } from "@mantine/core
 import { useQuery } from "@tanstack/react-query";
 import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
-import { fetchHistoryJSON, fetchMulitJSON } from "../../api";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { PieChart } from "../../charts/PieChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
+import { parseRunDetails, fetchJSON } from "./utils";
 import type { RunDetails, UIDDetails } from "../../sample-data/interfaces";
 
 export function Dashboard() {
   const {
-    data: multiJSON,
+    data: recentJSON,
     isLoading,
     isRefetching,
   } = useQuery({
-    queryKey: ["multiJSON"],
-    queryFn: fetchMulitJSON,
+    queryKey: ["recentJSON"],
+    queryFn: () => fetchJSON("recent.json"),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
@@ -27,7 +27,7 @@ export function Dashboard() {
     isRefetching: isRefetchingHistoryJSON,
   } = useQuery({
     queryKey: ["historyJSON"],
-    queryFn: fetchHistoryJSON,
+    queryFn: () => fetchJSON("history.json"),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
@@ -35,8 +35,8 @@ export function Dashboard() {
   const { colorScheme } = useMantineColorScheme();
   const processedData = useMemo<UIDDetails[]>(() => {
     let output: UIDDetails[] = [];
-    if (isLoading === false && multiJSON !== undefined) {
-      output = Object.values(multiJSON)
+    if (isLoading === false && recentJSON !== undefined) {
+      output = Object.values(recentJSON)
         .flat()
         .flatMap((ele) => (ele === null ? [] : Object.values(ele.uid_data)))
         .filter(
@@ -49,7 +49,7 @@ export function Dashboard() {
         }));
     }
     return output;
-  }, [isLoading, multiJSON]);
+  }, [isLoading, recentJSON]);
 
   // complete chart data
   const chartData = useMemo(
@@ -74,34 +74,18 @@ export function Dashboard() {
     return output;
   }, [chartData]);
 
-  const processedMultiJSON = useMemo<Record<string, RunDetails[]>>(() => {
+  const recentProcessedData = useMemo<Record<string, RunDetails[]>>(() => {
     let output = {};
-    if (isLoading === false && multiJSON !== undefined) {
-      output = Object.entries(multiJSON).reduce(
-        (acc, [key, value]) => ({
-          ...acc,
-          [key]: value
-            .filter((ele): ele is RunDetails => typeof ele?.best_average_loss === "number")
-            .map((ele) => ({ ...ele, timestamp: ele.timestamp * 1000 })),
-        }),
-        {},
-      );
+    if (isLoading === false && recentJSON !== undefined) {
+      output = parseRunDetails(recentJSON);
     }
     return output;
-  }, [isLoading, multiJSON]);
+  }, [isLoading, recentJSON]);
 
   const historyProcessedData = useMemo<Record<string, RunDetails[]>>(() => {
     let output = {};
     if (isHistoryJSONLoading === false && historyJSON !== undefined) {
-      output = Object.entries(historyJSON).reduce(
-        (acc, [key, value]) => ({
-          ...acc,
-          [key]: value
-            .filter((ele): ele is RunDetails => typeof ele?.best_average_loss === "number")
-            .map((ele) => ({ ...ele, timestamp: ele.timestamp * 1000 })),
-        }),
-        {},
-      );
+      output = parseRunDetails(historyJSON);
     }
     return output;
   }, [isHistoryJSONLoading, historyJSON]);
@@ -122,7 +106,7 @@ export function Dashboard() {
       </Card>
       <Card shadow="md">
         <BestLossChart
-          data={processedMultiJSON}
+          data={recentProcessedData}
           yAxis="best_average_loss"
           xAxis="timestamp"
           yAxisTitle="Best average loss"
