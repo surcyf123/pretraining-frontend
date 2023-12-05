@@ -3,8 +3,9 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import { Routers } from "./routes";
-import "@fontsource/adlam-display/400.css";
-import "@fontsource/space-mono/400.css";
+import "@fontsource/adlam-display";
+import '@fontsource/space-mono/400.css';
+import '@fontsource/space-mono/700.css';
 
 const MantineTheme = createTheme({
   fontFamily: "Space Mono, sans-serif",
