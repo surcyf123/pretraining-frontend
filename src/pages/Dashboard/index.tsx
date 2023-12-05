@@ -11,11 +11,11 @@ import type { RunDetails, UIDDetails } from "../../sample-data/interfaces";
 
 export function Dashboard() {
   const {
-    data: multiJSON,
+    data: recentJSON,
     isLoading,
     isRefetching,
   } = useQuery({
-    queryKey: ["multiJSON"],
+    queryKey: ["recentJSON"],
     queryFn: () => fetchJSON("recent.json"),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
@@ -35,8 +35,8 @@ export function Dashboard() {
   const { colorScheme } = useMantineColorScheme();
   const processedData = useMemo<UIDDetails[]>(() => {
     let output: UIDDetails[] = [];
-    if (isLoading === false && multiJSON !== undefined) {
-      output = Object.values(multiJSON)
+    if (isLoading === false && recentJSON !== undefined) {
+      output = Object.values(recentJSON)
         .flat()
         .flatMap((ele) => (ele === null ? [] : Object.values(ele.uid_data)))
         .filter(
@@ -49,7 +49,7 @@ export function Dashboard() {
         }));
     }
     return output;
-  }, [isLoading, multiJSON]);
+  }, [isLoading, recentJSON]);
 
   // complete chart data
   const chartData = useMemo(
@@ -74,13 +74,13 @@ export function Dashboard() {
     return output;
   }, [chartData]);
 
-  const processedMultiJSON = useMemo<Record<string, RunDetails[]>>(() => {
+  const recentProcessedData = useMemo<Record<string, RunDetails[]>>(() => {
     let output = {};
-    if (isLoading === false && multiJSON !== undefined) {
-      output = parseRunDetails(multiJSON);
+    if (isLoading === false && recentJSON !== undefined) {
+      output = parseRunDetails(recentJSON);
     }
     return output;
-  }, [isLoading, multiJSON]);
+  }, [isLoading, recentJSON]);
 
   const historyProcessedData = useMemo<Record<string, RunDetails[]>>(() => {
     let output = {};
@@ -106,7 +106,7 @@ export function Dashboard() {
       </Card>
       <Card shadow="md">
         <BestLossChart
-          data={processedMultiJSON}
+          data={recentProcessedData}
           yAxis="best_average_loss"
           xAxis="timestamp"
           yAxisTitle="Best average loss"
