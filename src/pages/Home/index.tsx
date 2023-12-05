@@ -3,15 +3,15 @@ import { Container, List, Stack, Text, Title } from "@mantine/core";
 export function Home(): JSX.Element {
   return (
     <Container>
-      <Stack>
+      <Stack gap="xl">
         <Title order={1}>Bittensor Pretrain Subnet</Title>
-        <Text c="gray.6">
+        <Text>
           Bittensor subnet 9 rewards miners (engineers etc) for producing pretrained
           Foundation-Models on the Falcon Refined Web dataset. It acts like a continuous benchmark
           whereby miners are rewarded for attaining the best losses on randomly sampled pages of
           Falcon given a consistent model architecture. The reward mechanism works as follows:
         </Text>
-        <List mt="lg" spacing="xs" size="sm">
+        <List spacing="xs" size="sm">
           <List.Item>
             Miners train and periodically host trained model weights linked to their miner key as
             exampled by the code in neurons/miner.py.
