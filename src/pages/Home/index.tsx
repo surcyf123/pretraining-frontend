@@ -3,8 +3,7 @@ import { Anchor, Code, Container, List, Pill, Stack, Text, Title } from "@mantin
 export function Home(): JSX.Element {
   return (
     <Container>
-      <Stack gap={40}>
-        <Stack>
+      <Stack gap="xl">
           <Title order={1}>Bittensor Pretrain Subnet</Title>
           <Text c="gray.6">
             Bittensor subnet 9 rewards miners (engineers etc) for producing pretrained
@@ -12,7 +11,7 @@ export function Home(): JSX.Element {
             whereby miners are rewarded for attaining the best losses on randomly sampled pages of
             Falcon given a consistent model architecture. The reward mechanism works as follows:
           </Text>
-          <List mt="lg" spacing="xs" size="sm">
+          <List spacing="xs" size="sm">
             <List.Item>
               Miners train and periodically host trained model weights linked to their miner key as
               exampled by the code in neurons/miner.py.
@@ -112,7 +111,6 @@ export function Home(): JSX.Element {
               `}
           </Code>
         </Stack>
-      </Stack>
     </Container>
   );
 }
