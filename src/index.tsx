@@ -9,9 +9,10 @@ import "@fontsource/ruda/600.css";
 import "@fontsource/ruda/700.css";
 import "@fontsource/ruda/800.css";
 import "@fontsource/ruda/900.css";
+import "@fontsource/adlam-display/400.css";
 
 const MantineTheme = createTheme({
-  fontFamily: "Ruda, san-serif",
+  fontFamily: "ADLaM Display",
 }); // Ref: https://mantine.dev/theming/theme-object/#store-theme-override-object-in-a-variable
 
 const root = createRoot(document.getElementById("root") as HTMLDivElement);
