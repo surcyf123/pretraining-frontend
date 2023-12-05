@@ -284,6 +284,49 @@ export function Home(): JSX.Element {
             </Code>
           </List.Item>
         </List>
+
+        <Title order={1}>Mining</Title>
+        <Text>
+          The mining script uploads a model to wandb which will be evaluated by validators and which
+          can be viewed by visiting this wandb{" "}
+          <Anchor href="https://wandb.ai/opentensor-dev/pretraining-subnet" target="_blank">
+            project
+          </Anchor>
+          .
+        </Text>
+        <Text>Testing the training script. Does not require registration or a wandb account:</Text>
+        <Code block>
+          {`
+            python neurons/miner.py --wallet.name ... --wallet.hotkey ... --offline
+            `}
+        </Code>
+        <Text>
+          Training your model from scratch and posting the model periodically as its loss decreases
+          on Falcon:
+        </Text>
+        <Code block>
+          {`
+            python neurons/miner.py --wallet.name ... --wallet.hotkey ... --num_epochs 10 --pages_per_epoch 5
+            `}
+        </Code>
+        <Text>
+          Scraping a model from an already running miner on the network by passing its uid before
+          training:
+        </Text>
+        <Code block>
+          {`
+            python neurons/miner.py --wallet.name ... --wallet.hotkey ... --num_epochs 10 --pages_per_epoch 5 --load_uid ...
+            `}
+        </Code>
+        <Text>Loading the best model on the network based on its incentive.</Text>
+        <Code block>
+          {`
+            python neurons/miner.py --wallet.name ... --wallet.hotkey ... --num_epochs 10 --pages_per_epoch 5 --load_best
+            `}
+        </Code>
+        <Text>
+          Pass the <Pill>--device</Pill> option to select which GPU to run on.
+        </Text>
       </Stack>
     </Container>
   );
