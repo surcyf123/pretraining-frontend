@@ -68,7 +68,7 @@ export function Home(): JSX.Element {
           Dataset. Finding the best model and delta at the earliest timestamp ensures the most
           incentive.
         </Text>
-        <Text mt="lg">
+        <Text>
           You can view the entire validation system by reading the code in{" "}
           <Pill>neurons/validator.py</Pill>. Pseudocode for the validation system is as follows:
         </Text>
@@ -109,7 +109,7 @@ export function Home(): JSX.Element {
               `}
         </Code>
         <Text>
-          The behaviour of <Pill>iswin( loss_a, loss_b, timestamp_a, timestamp_b)</Pill> function
+          The behaviour of <Pill>iswin(loss_a, loss_b, timestamp_a, timestamp_b)</Pill> function
           intentionally skews the win function to reward models which have been hosted earlier such
           that newer models are only better than others iff their loss is <Pill>epsilon</Pill>{" "}
           percent lower accoring to the following function. Currently <Pill>epsilon</Pill> is set to
