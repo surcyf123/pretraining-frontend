@@ -1,5 +1,5 @@
 import { Container } from "@mantine/core";
-import { Introduction } from "../../components/Home/Introduction";
+import { Introduction } from "../../components/Introduction";
 
 export function Home(): JSX.Element {
   return (
