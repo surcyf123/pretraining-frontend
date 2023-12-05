@@ -3700,6 +3700,11 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.1.6.tgz#22958c042e10b67463997bd6ea7115fe28cbcaf9"
   integrity sha512-OfX7E2oUDYxtBvsuS4e/jSn4Q9Qb6DzgeYtsAdkPZ47znpoNsMgZw0+tVijiv3uGNR6dgNlty6r9rzIzHjtd/A==
 
+"@fontsource/adlam-display@^5.0.3":
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/@fontsource/adlam-display/-/adlam-display-5.0.3.tgz#9636cedc2cb26048079ca67251a66879391dc2cc"
+  integrity sha512-s89yHEUVWBbli0Tcfz2Sv8MWbc5kqqa23ZxvK4UAv+2yeKRQj25RZecV9hfbf5tmhBFlmpEEyz998tZWSsPzjA==
+
 "@fontsource/ruda@^5.0.17":
   version "5.0.17"
   resolved "https://registry.yarnpkg.com/@fontsource/ruda/-/ruda-5.0.17.tgz#35e1c155182e5a97a1406f550972c30b731e1fee"
