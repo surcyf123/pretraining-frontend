@@ -15,7 +15,7 @@ export const Routers = createBrowserRouter([
         path: "/",
         element: (
           <ProtectedRoute>
-            <Home />,
+            <Home />
           </ProtectedRoute>
         ),
       },
