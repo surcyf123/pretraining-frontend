@@ -108,6 +108,23 @@ export function Home(): JSX.Element {
                     set_weights( weight )
               `}
         </Code>
+        <Text>
+            The behaviour of <Pill>iswin( loss_a, loss_b, timestamp_a, timestamp_b)</Pill> function intentionally skews the win function to reward models which have been hosted earlier such that newer models are only better than others iff their loss is <Pill>epsilon</Pill> percent lower accoring to the following function. Currently <Pill>epsilon</Pill> is set to 1% and is a hyper parameter of the mechanism
+          </Text>
+          <Code block>
+            {
+              `
+              def iswin( loss_a, loss_b, timestamp_a, timestamp_b, epsilon ):
+              loss_a = (1 - epsilon) * loss_a if timestamp_a < timestamp_b else loss_a
+              loss_b = (1 - epsilon) * loss_b if timestamp_b < timestamp_a else loss_b
+              if loss_a < loss_b: return True
+              else: return False
+              `
+            }
+          </Code>
+          <Text>
+          It is important to note that this affects the game theoretics of the incentive landscape since miners should only update their model (thus updating their timestamp to a newer date) if they have achieved an <Pill>epsilon</Pill> better loss on average on the Falcon Refined Web dataset than their previous model. This undermines the obvious optimal strategy for miners to copy the publicly available models from other miners. They can and should copy other miners, but they will always obtain fewer wins compared to them until they also decrease their loss by <Pill>epsilon</Pill>.
+          </Text>
       </Stack>
     </Container>
   );
