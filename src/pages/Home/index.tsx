@@ -109,22 +109,68 @@ export function Home(): JSX.Element {
               `}
         </Code>
         <Text>
-            The behaviour of <Pill>iswin( loss_a, loss_b, timestamp_a, timestamp_b)</Pill> function intentionally skews the win function to reward models which have been hosted earlier such that newer models are only better than others iff their loss is <Pill>epsilon</Pill> percent lower accoring to the following function. Currently <Pill>epsilon</Pill> is set to 1% and is a hyper parameter of the mechanism
-          </Text>
-          <Code block>
-            {
-              `
+          The behaviour of <Pill>iswin( loss_a, loss_b, timestamp_a, timestamp_b)</Pill> function
+          intentionally skews the win function to reward models which have been hosted earlier such
+          that newer models are only better than others iff their loss is <Pill>epsilon</Pill>{" "}
+          percent lower accoring to the following function. Currently <Pill>epsilon</Pill> is set to
+          1% and is a hyper parameter of the mechanism
+        </Text>
+        <Code block>
+          {`
               def iswin( loss_a, loss_b, timestamp_a, timestamp_b, epsilon ):
               loss_a = (1 - epsilon) * loss_a if timestamp_a < timestamp_b else loss_a
               loss_b = (1 - epsilon) * loss_b if timestamp_b < timestamp_a else loss_b
               if loss_a < loss_b: return True
               else: return False
-              `
-            }
-          </Code>
-          <Text>
-          It is important to note that this affects the game theoretics of the incentive landscape since miners should only update their model (thus updating their timestamp to a newer date) if they have achieved an <Pill>epsilon</Pill> better loss on average on the Falcon Refined Web dataset than their previous model. This undermines the obvious optimal strategy for miners to copy the publicly available models from other miners. They can and should copy other miners, but they will always obtain fewer wins compared to them until they also decrease their loss by <Pill>epsilon</Pill>.
-          </Text>
+              `}
+        </Code>
+        <Text>
+          It is important to note that this affects the game theoretics of the incentive landscape
+          since miners should only update their model (thus updating their timestamp to a newer
+          date) if they have achieved an <Pill>epsilon</Pill> better loss on average on the Falcon
+          Refined Web dataset than their previous model. This undermines the obvious optimal
+          strategy for miners to copy the publicly available models from other miners. They can and
+          should copy other miners, but they will always obtain fewer wins compared to them until
+          they also decrease their loss by <Pill>epsilon</Pill>.
+        </Text>
+
+        <Title order={1}>Getting Started</Title>
+        <Text>TL;DR:</Text>
+        <List spacing="xs" size="sm">
+          <List.Item>
+            <Anchor href="https://discord.com/invite/bittensor" target="_blank">
+              Chat
+            </Anchor>
+          </List.Item>
+          <List.Item>
+            <Anchor href="https://taostats.io/subnets/netuid-9/" target="_blank">
+              Leaderboard
+            </Anchor>
+          </List.Item>
+          <List.Item>
+            <Anchor href="https://wandb.ai/opentensor-dev/pretraining-subnet" target="_blank">
+              Wandb Runs
+            </Anchor>
+          </List.Item>
+        </List>
+        <Text>
+          This repo{`'`}s main conversation is carried out in the Bittensor{" "}
+          <Anchor href="https://discord.com/invite/bittensor" target="_blank">
+            Discord
+          </Anchor>
+          . Visit the {`'`}pretraining{`'`} channel to ask questions and get real time feedback. You
+          can view the ongoing running of the incentive mechanism, the best miners (see {`'`}
+          incentive{`'`}), the most inconsensus validators (see {`'`}vtrust{`'`}) using this{" "}
+          <Anchor href="https://taostats.io/subnets/netuid-9/" target="_blank">
+            taostats link
+          </Anchor>
+          . The table shows all 256 participant UIDs with corresponding YC stats and earnings. You
+          can also view all current wandb runs for miners and validators{" "}
+          <Anchor href="https://wandb.ai/opentensor-dev/pretraining-subnet" target="_blank">
+            here
+          </Anchor>
+          .
+        </Text>
       </Stack>
     </Container>
   );
