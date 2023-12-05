@@ -201,7 +201,7 @@ export function Home(): JSX.Element {
             `}
         </Code>
         <Title order={1}>Mining Steps</Title>
-        <List spacing="xs" size="sm" listStyleType="decimal">
+        <List spacing="xs" size="sm" type="ordered">
           <List.Item>
             <Title order={4}>Get a Wandb Account:</Title>
             <Text>
