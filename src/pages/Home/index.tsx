@@ -327,6 +327,35 @@ export function Home(): JSX.Element {
         <Text>
           Pass the <Pill>--device</Pill> option to select which GPU to run on.
         </Text>
+        <Title order={1}>Validating</Title>
+        <Text>
+          The validation script pulls runs from the wandb project and evaluates them continuously on
+          Falcon. Note: validation requires you have a working GPU which you pass via{" "}
+          <Pill>--device</Pill>. In this version release/2.0.1 you need a GPU with atleast 20GB of
+          RAM.
+        </Text>
+        <Text>Test running validation:</Text>
+        <Code block>
+          {`
+              python neurons/validator.py 
+                  --wallet.name YOUR_WALLET_NAME
+                  --wallet.hotkey YOUR_WALLET_HOTKEY 
+                  --device YOUR_CUDA DEVICE
+                  --wandb.off
+                  --offline
+              `}
+        </Code>
+        <Text>Running your validator:</Text>
+        <Code block>
+          {`
+              python neurons/validator.py 
+                  --wallet.name YOUR_WALLET_NAME
+                  --wallet.hotkey YOUR_WALLET_HOTKEY 
+                  --device YOUR_CUDA DEVICE
+                  --wandb.off
+                  --offline
+              `}
+        </Code>
       </Stack>
     </Container>
   );
