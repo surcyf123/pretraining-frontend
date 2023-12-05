@@ -133,6 +133,44 @@ export function Home(): JSX.Element {
           should copy other miners, but they will always obtain fewer wins compared to them until
           they also decrease their loss by <Pill>epsilon</Pill>.
         </Text>
+
+        <Title order={1}>Getting Started</Title>
+        <Text>TL;DR:</Text>
+        <List spacing="xs" size="sm">
+          <List.Item>
+            <Anchor href="https://discord.com/invite/bittensor" target="_blank">
+              Chat
+            </Anchor>
+          </List.Item>
+          <List.Item>
+            <Anchor href="https://taostats.io/subnets/netuid-9/" target="_blank">
+              Leaderboard
+            </Anchor>
+          </List.Item>
+          <List.Item>
+            <Anchor href="https://wandb.ai/opentensor-dev/pretraining-subnet" target="_blank">
+              Wandb Runs
+            </Anchor>
+          </List.Item>
+        </List>
+        <Text>
+          This repo{`'`}s main conversation is carried out in the Bittensor{" "}
+          <Anchor href="https://discord.com/invite/bittensor" target="_blank">
+            Discord
+          </Anchor>
+          . Visit the {`'`}pretraining{`'`} channel to ask questions and get real time feedback. You
+          can view the ongoing running of the incentive mechanism, the best miners (see {`'`}
+          incentive{`'`}), the most inconsensus validators (see {`'`}vtrust{`'`}) using this{" "}
+          <Anchor href="https://taostats.io/subnets/netuid-9/" target="_blank">
+            taostats link
+          </Anchor>
+          . The table shows all 256 participant UIDs with corresponding YC stats and earnings. You
+          can also view all current wandb runs for miners and validators{" "}
+          <Anchor href="https://wandb.ai/opentensor-dev/pretraining-subnet" target="_blank">
+            here
+          </Anchor>
+          .
+        </Text>
       </Stack>
     </Container>
   );
