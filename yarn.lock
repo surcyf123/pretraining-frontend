@@ -3705,10 +3705,10 @@
   resolved "https://registry.yarnpkg.com/@fontsource/adlam-display/-/adlam-display-5.0.3.tgz#9636cedc2cb26048079ca67251a66879391dc2cc"
   integrity sha512-s89yHEUVWBbli0Tcfz2Sv8MWbc5kqqa23ZxvK4UAv+2yeKRQj25RZecV9hfbf5tmhBFlmpEEyz998tZWSsPzjA==
 
-"@fontsource/ruda@^5.0.17":
+"@fontsource/space-mono@^5.0.17":
   version "5.0.17"
-  resolved "https://registry.yarnpkg.com/@fontsource/ruda/-/ruda-5.0.17.tgz#35e1c155182e5a97a1406f550972c30b731e1fee"
-  integrity sha512-vqreFPBdo+7hktnT5N6CeKTTpZT+NmU3hsltnvNZdLlUMpTU/rWOp262/RZsv++C3pu9/lNfHgM8Qin6SbUxcA==
+  resolved "https://registry.yarnpkg.com/@fontsource/space-mono/-/space-mono-5.0.17.tgz#ded7b39d3a603df2d001c876f80ea8a21b1c58bf"
+  integrity sha512-AwglnwSQ6DRoAKhrmkTngY2GFjCjONA5vlw+62b6cC7z5FEWeJ+nleUaOQnLxkGKKL68fA30CjnHJvKENck5Fw==
 
 "@hapi/hoek@^9.0.0":
   version "9.3.0"
