@@ -379,7 +379,7 @@ export function Home(): JSX.Element {
             print( wallet )
             `}
         </Code>
-        <Title>Pretrain API</Title>
+        <Title order={1}>Pretrain API</Title>
         <Text>
           The pretraining repo is for the easily constructing participants (miners / validators)
           within subnet 9 and loading and evaluating the state of the network. For instance, as a
