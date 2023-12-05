@@ -2,7 +2,7 @@ import { Card, Stack, useMantineColorScheme, Group, Loader } from "@mantine/core
 import { useQuery } from "@tanstack/react-query";
 import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
-import { fetchMulitJSON } from "../../api";
+import { fetchJSON } from "../../api";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { PieChart } from "../../charts/PieChart";
@@ -16,7 +16,7 @@ export function Dashboard() {
     isRefetching,
   } = useQuery({
     queryKey: ["multiJSON"],
-    queryFn: () => fetchMulitJSON("recent.json"),
+    queryFn: () => fetchJSON("recent.json"),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
@@ -27,7 +27,7 @@ export function Dashboard() {
     isRefetching: isRefetchingHistoryJSON,
   } = useQuery({
     queryKey: ["historyJSON"],
-    queryFn: () => fetchMulitJSON("history.json"),
+    queryFn: () => fetchJSON("history.json"),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
