@@ -2,12 +2,11 @@ import { Card, Stack, useMantineColorScheme, Group, Loader } from "@mantine/core
 import { useQuery } from "@tanstack/react-query";
 import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
-import { fetchJSON } from "../../api";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { PieChart } from "../../charts/PieChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
-import { ParseMultiJSON } from "./utils";
+import { ParseMultiJSON, fetchJSON } from "./utils";
 import type { RunDetails, UIDDetails } from "../../sample-data/interfaces";
 
 export function Dashboard() {
