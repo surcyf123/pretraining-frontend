@@ -8,6 +8,7 @@ import "@fontsource/space-mono/400.css";
 
 const MantineTheme = createTheme({
   fontFamily: "Space Mono, sans-serif",
+  fontFamilyMonospace: 'Space Mono, Courier, monospace', // Ref : https://mantine.dev/theming/typography/#change-fonts
   headings: { fontFamily: "ADLaM Display, sans-serif" }, // Ref : https://mantine.dev/theming/typography/#change-fonts
 }); // Ref: https://mantine.dev/theming/theme-object/#store-theme-override-object-in-a-variable
 
