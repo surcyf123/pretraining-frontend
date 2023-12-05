@@ -171,6 +171,35 @@ export function Home(): JSX.Element {
           </Anchor>
           .
         </Text>
+        <Title order={1}>Installing</Title>
+        <Text>
+          Before beginning you will need to install <Pill>pretrain</Pill> (this repo) and{" "}
+          <Pill>bittensor</Pill>, both require atleast python3.8. We recommend using a package
+          manager like anaconda.
+        </Text>
+        <Code block>
+          {`
+              git clone https://github.com/unconst/pretrain-subnet.git
+              cd pretrain-subnet
+              python -m pip install -e . 
+            `}
+        </Code>
+        <Text>Once installed correctly you can import these packages in python.</Text>
+        <Code block>
+          {`
+              import bittensor as bt
+              import pretrain as pt
+            `}
+        </Code>
+        <Text>
+          And use the Bittensor CLI (for things Bittensor related, liking seeing TAO balance,
+          transfering funds, making wallet, and viewing the network.)
+        </Text>
+        <Code block>
+          {`
+              btcli --help
+            `}
+        </Code>
       </Stack>
     </Container>
   );
