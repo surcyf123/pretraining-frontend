@@ -9,7 +9,7 @@ export async function fetchJSON(key: string): Promise<Record<string, (RunDetails
   return json;
 }
 
-export function ParseMultiJSON(jsonData: Record<string, (RunDetails | null)[]>): Record<string, RunDetails[]> {
+export function parseRunDetails(jsonData: Record<string, (RunDetails | null)[]>): Record<string, RunDetails[]> {
   return Object.entries(jsonData).reduce(
     (acc, [key, value]) => ({
       ...acc,

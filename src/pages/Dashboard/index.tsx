@@ -6,7 +6,7 @@ import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { PieChart } from "../../charts/PieChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
-import { ParseMultiJSON, fetchJSON } from "./utils";
+import { parseRunDetails, fetchJSON } from "./utils";
 import type { RunDetails, UIDDetails } from "../../sample-data/interfaces";
 
 export function Dashboard() {
@@ -77,7 +77,7 @@ export function Dashboard() {
   const processedMultiJSON = useMemo<Record<string, RunDetails[]>>(() => {
     let output = {};
     if (isLoading === false && multiJSON !== undefined) {
-      output = ParseMultiJSON(multiJSON);
+      output = parseRunDetails(multiJSON);
     }
     return output;
   }, [isLoading, multiJSON]);
@@ -85,7 +85,7 @@ export function Dashboard() {
   const historyProcessedData = useMemo<Record<string, RunDetails[]>>(() => {
     let output = {};
     if (isHistoryJSONLoading === false && historyJSON !== undefined) {
-      output = ParseMultiJSON(historyJSON);
+      output = parseRunDetails(historyJSON);
     }
     return output;
   }, [isHistoryJSONLoading, historyJSON]);
