@@ -28,6 +28,7 @@
   "dependencies": {
     "@aws-amplify/storage": "^6.0.5",
     "@aws-amplify/ui-react": "^6.0.3",
+    "@fontsource/adlam-display": "^5.0.3",
     "@fontsource/ruda": "^5.0.17",
     "@mantine/core": "^7.1.7",
     "@mantine/hooks": "^7.1.7",
