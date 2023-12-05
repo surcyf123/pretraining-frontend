@@ -1,5 +1,5 @@
 import { downloadData } from "aws-amplify/storage";
-import type { RunDetails } from "../sample-data/interfaces";
+import type { RunDetails } from "../../sample-data/interfaces";
 
 export async function fetchJSON(key: string): Promise<Record<string, (RunDetails | null)[]>> {
   const downloadResult = await downloadData({ key }).result;
@@ -7,4 +7,16 @@ export async function fetchJSON(key: string): Promise<Record<string, (RunDetails
   const text = await downloadResult.body.text(); // Using "downloadResult.body.json()" gives error "Parsing response to json is not implemented."
   const json = JSON.parse(text) as Record<string, (RunDetails | null)[]>;
   return json;
+}
+
+export function parseRunDetails(jsonData: Record<string, (RunDetails | null)[]>): Record<string, RunDetails[]> {
+  return Object.entries(jsonData).reduce(
+    (acc, [key, value]) => ({
+      ...acc,
+      [key]: value
+        .filter((ele): ele is RunDetails => typeof ele?.best_average_loss === "number")
+        .map((ele) => ({ ...ele, timestamp: ele.timestamp * 1000 })),
+    }),
+    {},
+  );
 }
