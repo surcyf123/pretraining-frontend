@@ -18,7 +18,6 @@ export function Dashboard() {
     queryKey: ["multiJSON"],
     queryFn: fetchMulitJSON,
     refetchInterval: 10 * 60 * 1000,
-    staleTime: 0,
   });
 
   const {
@@ -29,7 +28,6 @@ export function Dashboard() {
     queryKey: ["historyJSON"],
     queryFn: fetchHistoryJSON,
     refetchInterval: 10 * 60 * 1000,
-    staleTime: 0,
   });
 
   const { colorScheme } = useMantineColorScheme();
