@@ -18,7 +18,7 @@ export function Dashboard() {
     queryKey: ["multiJSON"],
     queryFn: fetchMulitJSON,
     refetchInterval: 10 * 60 * 1000,
-    staleTime: 0,
+    // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
 
   const {
@@ -29,7 +29,7 @@ export function Dashboard() {
     queryKey: ["historyJSON"],
     queryFn: fetchHistoryJSON,
     refetchInterval: 10 * 60 * 1000,
-    staleTime: 0,
+    // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
 
   const { colorScheme } = useMantineColorScheme();
