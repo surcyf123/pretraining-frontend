@@ -74,38 +74,50 @@ export function Home(): JSX.Element {
         </Text>
         <Code block>
           {`
-                weights = zeros(256)
-                while True:
-                    # Fetch random sample of batches to evaluate models on
-                    batches = get_random_sample_of_batches_from_falcon()
-                    
-                    # Fetch and or update models.
-                    models = get_and_update_models_from_miners()
+weights = zeros(256)
+while True:
 
-                    # Compute losses for each batch and each model
-                    model_losses = {}
-                    for model in models:
-                        for batch in batches:
-                            loss = get_loss_for_model_on_batch( model, batch )
-                            model_losses[ model ].append( loss )
+    # Fetch random sample of batches to evaluate models on
 
-                    # Compute wins for models.
-                    model_wins = {}
-                    for model_a in models:
-                        for model_b in models:
-                            for i in len( batches )
-                                # Determine if better model loss with timestamp boosting.
-                                if iswin( model_losses[ model_a ][ i ], model_losses[ model_b ][ i ], timestamp_a, timestamp_b ):
-                                    model_wins[ model_a ] += 1
-                                        
-                    # End epoch.
-                    # Weights are computed based on the ratio of wins a model attains during the epoch.
-                    for model_i in models:
-                        weights[ model_i ] += model_wins[ model_i ] / sum( model_wins.values() )
-                    weights = softmax( weights / temperature, dim=0 )
+    batches = get_random_sample_of_batches_from_falcon()
 
-                    # Set weights on the chain.
-                    set_weights( weight )
+    # Fetch and or update models.
+
+    models = get_and_update_models_from_miners()
+
+    # Compute losses for each batch and each model
+
+    model_losses = {}
+    for model in models:
+        for batch in batches:
+            loss = get_loss_for_model_on_batch(model, batch)
+            model_losses[model].append(loss)
+
+    # Compute wins for models.
+
+    model_wins = {}
+    for model_a in models:
+        for model_b in models:
+            for i in len(batches):
+
+                # Determine if better model loss with timestamp boosting.
+
+                if iswin(model_losses[model_a][i],
+                          model_losses[model_b][i], timestamp_a,
+                          timestamp_b):
+                    model_wins[model_a] += 1
+
+    # End epoch.
+    # Weights are computed based on the ratio of wins a model attains during the epoch.
+
+    for model_i in models:
+        weights[model_i] += model_wins[model_i] / sum(model_wins.values())
+    weights = softmax(weights / temperature, dim=0)
+
+    # Set weights on the chain.
+
+    set_weights(weight)
+                
               `}
         </Code>
         <Text>
@@ -117,11 +129,21 @@ export function Home(): JSX.Element {
         </Text>
         <Code block>
           {`
-              def iswin( loss_a, loss_b, timestamp_a, timestamp_b, epsilon ):
-              loss_a = (1 - epsilon) * loss_a if timestamp_a < timestamp_b else loss_a
-              loss_b = (1 - epsilon) * loss_b if timestamp_b < timestamp_a else loss_b
-              if loss_a < loss_b: return True
-              else: return False
+def iswin(
+  loss_a,
+  loss_b,
+  timestamp_a,
+  timestamp_b,
+  epsilon,
+  ):
+  loss_a = ((1 - epsilon) * loss_a if timestamp_a
+            < timestamp_b else loss_a)
+  loss_b = ((1 - epsilon) * loss_b if timestamp_b
+            < timestamp_a else loss_b)
+  if loss_a < loss_b:
+      return True
+  else:
+      return False
               `}
         </Code>
         <Text>
@@ -179,16 +201,16 @@ export function Home(): JSX.Element {
         </Text>
         <Code block>
           {`
-              git clone https://github.com/unconst/pretrain-subnet.git
-              cd pretrain-subnet
-              python -m pip install -e . 
+git clone https://github.com/unconst/pretrain-subnet.git
+cd pretrain-subnet
+python -m pip install -e . 
             `}
         </Code>
         <Text>Once installed correctly you can import these packages in python.</Text>
         <Code block>
           {`
-              import bittensor as bt
-              import pretrain as pt
+import bittensor as bt
+import pretrain as pt
             `}
         </Code>
         <Text>
@@ -197,7 +219,7 @@ export function Home(): JSX.Element {
         </Text>
         <Code block>
           {`
-              btcli --help
+btcli --help
             `}
         </Code>
         <Title order={1}>Mining Steps</Title>
@@ -229,9 +251,9 @@ export function Home(): JSX.Element {
             </Text>
             <Code block>
               {`
-              git clone https://github.com/opentensor/subtensor.git
-              cd subtensor
-              docker compose up --detach
+git clone https://github.com/opentensor/subtensor.git
+cd subtensor
+docker compose up --detach
                 `}
             </Code>
           </List.Item>
@@ -244,16 +266,16 @@ export function Home(): JSX.Element {
             </Text>
             <Code block>
               {`
-                # to create your miner/validator cold + hotkey keys.
-                btcli w create --wallet.name ... --wallet.hotkey ... 
-                btcli w list # to view your created keys.              
+# to create your miner/validator cold + hotkey keys.
+btcli w create --wallet.name ... --wallet.hotkey ... 
+btcli w list # to view your created keys.              
                 `}
             </Code>
             <Text>Or in python</Text>
             <Code block>
               {`
-                import bittensor as bt
-                wallet = bt.wallet().create_if_non_existent()
+import bittensor as bt
+wallet = bt.wallet().create_if_non_existent()
                 `}
             </Code>
           </List.Item>
@@ -268,8 +290,8 @@ export function Home(): JSX.Element {
             </Text>
             <Code block>
               {`
-               # register your cold and associated hotkey to netuid 9 using recycle.
-               btcli s register --wallet.name ... --wallet.hotkey ... --netuid 9       
+# register your cold and associated hotkey to netuid 9 using recycle.
+btcli s register --wallet.name ... --wallet.hotkey ... --netuid 9       
                 `}
             </Code>
             <Text>
@@ -278,8 +300,8 @@ export function Home(): JSX.Element {
             </Text>
             <Code block>
               {`
-              # register your cold and associated hotkey to netuid 9 using POW
-              btcli s pow_register --wallet.name ... --wallet.hotkey ... --netuid 9 
+# register your cold and associated hotkey to netuid 9 using POW
+btcli s pow_register --wallet.name ... --wallet.hotkey ... --netuid 9 
                 `}
             </Code>
           </List.Item>
@@ -297,7 +319,7 @@ export function Home(): JSX.Element {
         <Text>Testing the training script. Does not require registration or a wandb account:</Text>
         <Code block>
           {`
-            python neurons/miner.py --wallet.name ... --wallet.hotkey ... --offline
+python neurons/miner.py --wallet.name ... --wallet.hotkey ... --offline
             `}
         </Code>
         <Text>
@@ -306,7 +328,7 @@ export function Home(): JSX.Element {
         </Text>
         <Code block>
           {`
-            python neurons/miner.py --wallet.name ... --wallet.hotkey ... --num_epochs 10 --pages_per_epoch 5
+python neurons/miner.py --wallet.name ... --wallet.hotkey ... --num_epochs 10 --pages_per_epoch 5
             `}
         </Code>
         <Text>
@@ -315,13 +337,13 @@ export function Home(): JSX.Element {
         </Text>
         <Code block>
           {`
-            python neurons/miner.py --wallet.name ... --wallet.hotkey ... --num_epochs 10 --pages_per_epoch 5 --load_uid ...
+python neurons/miner.py --wallet.name ... --wallet.hotkey ... --num_epochs 10 --pages_per_epoch 5 --load_uid ...
             `}
         </Code>
         <Text>Loading the best model on the network based on its incentive.</Text>
         <Code block>
           {`
-            python neurons/miner.py --wallet.name ... --wallet.hotkey ... --num_epochs 10 --pages_per_epoch 5 --load_best
+python neurons/miner.py --wallet.name ... --wallet.hotkey ... --num_epochs 10 --pages_per_epoch 5 --load_best
             `}
         </Code>
         <Text>
@@ -337,23 +359,23 @@ export function Home(): JSX.Element {
         <Text>Test running validation:</Text>
         <Code block>
           {`
-              python neurons/validator.py 
-                  --wallet.name YOUR_WALLET_NAME
-                  --wallet.hotkey YOUR_WALLET_HOTKEY 
-                  --device YOUR_CUDA DEVICE
-                  --wandb.off
-                  --offline
+python neurons/validator.py 
+    --wallet.name YOUR_WALLET_NAME
+    --wallet.hotkey YOUR_WALLET_HOTKEY 
+    --device YOUR_CUDA DEVICE
+    --wandb.off
+    --offline
               `}
         </Code>
         <Text>Running your validator:</Text>
         <Code block>
           {`
-              python neurons/validator.py 
-                  --wallet.name YOUR_WALLET_NAME
-                  --wallet.hotkey YOUR_WALLET_HOTKEY 
-                  --device YOUR_CUDA DEVICE
-                  --wandb.off
-                  --offline
+python neurons/validator.py 
+    --wallet.name YOUR_WALLET_NAME
+    --wallet.hotkey YOUR_WALLET_HOTKEY 
+    --device YOUR_CUDA DEVICE
+    --wandb.off
+    --offline
               `}
         </Code>
         <Title order={1}>Bittensor API</Title>
@@ -365,18 +387,20 @@ export function Home(): JSX.Element {
         </Text>
         <Code block>
           {`
-            import bittensor as bt
+import bittensor as bt
 
-            # Accesses the incentive mechanism state of the pretraining 'subnet'. A subnet is a self contained consensus engine through which miners and validators agree on value creation and through which 
-            # TAO (bittensor's value holding token) is distributed. The metagraph is a syncable torh object which contains the state of this consensus engine at a particular block. Here we are pulling the state
-            # for subnet 9, which is the subnet network id, associated with this pretraining mechanism.
-            metagraph = bt.metagraph( 9 )
-            print( metagraph )
+# Accesses the incentive mechanism state of the pretraining 'subnet'. A subnet is a self contained consensus engine through which miners and validators agree on value creation and through which
+# TAO (bittensor's value holding token) is distributed. The metagraph is a syncable torh object which contains the state of this consensus engine at a particular block. Here we are pulling the state
+# for subnet 9, which is the subnet network id, associated with this pretraining mechanism.
 
-            # Participants in a Bittensor consensus mechanism are defined by their wallet which contains two cryptographic keypairs, a coldkey and a hotkey. The hotkey has low security and is used to sign messages from a running miner
-            # while the coldkey is encrypted at all times and used to store and move TAO. The following code snippet creates a wallet on your machine with the specified coldkey name and hotkey name.
-            wallet = bt.wallet( name = 'cold', hotkey = 'hot' ).create_if_non_existent()
-            print( wallet )
+metagraph = bt.metagraph(9)
+print metagraph
+
+# Participants in a Bittensor consensus mechanism are defined by their wallet which contains two cryptographic keypairs, a coldkey and a hotkey. The hotkey has low security and is used to sign messages from a running miner
+# while the coldkey is encrypted at all times and used to store and move TAO. The following code snippet creates a wallet on your machine with the specified coldkey name and hotkey name.
+
+wallet = bt.wallet(name='cold', hotkey='hot').create_if_non_existent()
+print wallet
             `}
         </Code>
         <Title order={1}>Pretrain API</Title>
@@ -389,40 +413,42 @@ export function Home(): JSX.Element {
         <Text>Creating miners.</Text>
         <Code block>
           {`
-              import bittensor as bt
-              import pretrain as pt
+import bittensor as bt
+import pretrain as pt
 
-              # Create a mining wallet.
-              wallet = bt.wallet().create_if_non_existent()
+# Create a mining wallet.
+wallet = bt.wallet().create_if_non_existent()
 
-              # Output your mining directory.
-              print (f'''Wallet: {wallet}
-                  path: {pt.mining.path( wallet )}
-                  model_path: {pt.mining.model_path( wallet )}
-                  runidpath: {pt.mining.runidpath( wallet )}
-              ''')
+# Output your mining directory.
+print(
+    f"""Wallet: {wallet}
+    path: {pt.mining.path( wallet )}
+    model_path: {pt.mining.model_path( wallet )}
+    runidpath: {pt.mining.runidpath( wallet )}
+"""
+)
 
-              # Init or reinit the wandb run associtated with this wallet.
-              wandb_run = pt.mining.init( wallet )
+# Init or reinit the wandb run associtated with this wallet.
+wandb_run = pt.mining.init(wallet)
 
-              # Load a specific model based on uid.
-              uid = 200
-              pt.graph.sync( uid, metagraph )
-              model = pt.graph.model( uid, device = config.device )
+# Load a specific model based on uid.
+uid = 200
+pt.graph.sync(uid, metagraph)
+model = pt.graph.model(uid, device=config.device)
 
-              # Load the best model on the network based on incentive.
-              best_uid = pt.graph.best_uid( metagraph )
-              pt.graph.sync( best_uid, metagraph )
-              model = pt.graph.model( best_uid, device = config.device )
+# Load the best model on the network based on incentive.
+best_uid = pt.graph.best_uid(metagraph)
+pt.graph.sync(best_uid, metagraph)
+model = pt.graph.model(best_uid, device=config.device)
 
-              # Create a from scratch model.
-              model = pt.model.get_model()
+# Create a from scratch model.
+model = pt.model.get_model()
 
-              # Save your model
-              pt.mining.save( wallet, model )
+# Save your model
+pt.mining.save(wallet, model)
 
-              # Push your saved model to your wandb_run.
-              pt.mining.push( wallet, wandb_run )
+# Push your saved model to your wandb_run.
+pt.mining.push(wallet, wandb_run)
               `}
         </Code>
         <Text>
@@ -431,40 +457,45 @@ export function Home(): JSX.Element {
         </Text>
         <Code block>
           {`
-                import pretrain as pt
-                device = 'cuda'
+import pretrain as pt
 
-                # Pulls/Downloads model information and stores it onto your harddrive under \`~/.bittensor/miners/netuid9/models/231/*\`
-                pt.graph.sync( 231 )
-                pt.graph.sync( 200 )
+device = "cuda"
 
-                # Print information about the recently synced uid.
-                print (f'''UID 231:
-                    timestamp: {pt.graph.timestamp( 231 )}
-                    run: {pt.graph.run( 231 )} 
-                    runid: {pt.graph.runid( 231 )}
-                    version: {pt.graph.version( 231 )}
-                    model_path: {pt.graph.model_path( 231 )}
-                    hotkey: {pt.graph.hotkey( 231 )}
-                    last_update: {pt.graph.last_update( 231 )}
-                ''')
+# Pulls/Downloads model information and stores it onto your harddrive under \`~/.bittensor/miners/netuid9/models/231/*\`
+pt.graph.sync(231)
+pt.graph.sync(200)
 
-                # Load downloaded model from harddrive to device.
-                model_231 = pt.graph.model( 231, device = device )
-                model_200 = pt.graph.model( 200, device = device )
+# Print information about the recently synced uid.
+print(
+    f"""UID 231:
+    timestamp: {pt.graph.timestamp( 231 )}
+    run: {pt.graph.run( 231 )} 
+    runid: {pt.graph.runid( 231 )}
+    version: {pt.graph.version( 231 )}
+    model_path: {pt.graph.model_path( 231 )}
+    hotkey: {pt.graph.hotkey( 231 )}
+    last_update: {pt.graph.last_update( 231 )}
+"""
+)
 
-                # Attains batches from the Falcon Dataset based on pages 101
-                batches = list(pretrain.dataset.SubsetFalconLoader( batch_size = 2, sequence_length = 1024, pages = [ 101 ] ) )
+# Load downloaded model from harddrive to device.
+model_231 = pt.graph.model(231, device=device)
+model_200 = pt.graph.model(200, device=device)
 
-                # Evaluate the models on these batches.
-                losses_231 = pretrain.validation.compute_losses( model_231, batches, device = device )
-                losses_200 = pretrain.validation.compute_losses( model_200, batches, device = device )
+# Attains batches from the Falcon Dataset based on pages 101
+batches = list(
+    pretrain.dataset.SubsetFalconLoader(batch_size=2, sequence_length=1024, pages=[101])
+)
 
-                # Compute wins from losses and batches.
-                timestamp_231 = pretrain.utils.get_timestamp_for_uid( 231 )
-                timestamp_200 = pretrain.utils.get_timestamp_for_uid( 200 )
-                for loss_231, loss_200 in list(zip( losses_231, losses_200 )):
-                    pretrain.validation.iswin( loss_231, loss_200, timestamp_231, timestamp_200 )
+# Evaluate the models on these batches.
+losses_231 = pretrain.validation.compute_losses(model_231, batches, device=device)
+losses_200 = pretrain.validation.compute_losses(model_200, batches, device=device)
+
+# Compute wins from losses and batches.
+timestamp_231 = pretrain.utils.get_timestamp_for_uid(231)
+timestamp_200 = pretrain.utils.get_timestamp_for_uid(200)
+for loss_231, loss_200 in list(zip(losses_231, losses_200)):
+    pretrain.validation.iswin(loss_231, loss_200, timestamp_231, timestamp_200)
                 `}
         </Code>
         <Title order={1}>License</Title>
