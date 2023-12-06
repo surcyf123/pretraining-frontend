@@ -18,4 +18,4 @@ It has support for:
 
 Notes:
 
-The sample data is present inside `src/sample-data`. Instructions to run/compile the code is present inside `CLI.md`.
+Instructions to run/compile the code is present inside `CLI.md`.
