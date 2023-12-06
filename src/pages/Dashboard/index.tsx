@@ -4,7 +4,6 @@ import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
-import { PieChart } from "../../charts/PieChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
 import { parseRunDetails, fetchJSON } from "./utils";
 import type { RunDetails, UIDDetails } from "../../utils";
@@ -94,6 +93,7 @@ export function Dashboard() {
     <Stack>
       <Card shadow="md">
         <BestLossChart
+          title="All Time"
           data={historyProcessedData}
           yAxis="best_average_loss"
           xAxis="timestamp"
@@ -106,6 +106,7 @@ export function Dashboard() {
       </Card>
       <Card shadow="md">
         <BestLossChart
+          title="Recent"
           data={recentProcessedData}
           yAxis="best_average_loss"
           xAxis="timestamp"
@@ -116,15 +117,8 @@ export function Dashboard() {
           isLoading={isLoading}
         />
       </Card>
+
       <Group grow>
-        <Card shadow="md">
-          <PieChart
-            data={tableData}
-            style={{ height: "30vh" }}
-            theme={colorScheme === "auto" ? "dark" : colorScheme}
-            isLoading={isLoading}
-          />
-        </Card>
         <Card shadow="md">
           <CategoricalBarChart
             data={tableData}
@@ -137,8 +131,6 @@ export function Dashboard() {
             isLoading={isLoading}
           />
         </Card>
-      </Group>
-      <Group grow>
         <Card shadow="md">
           <CategoricalBarChart
             data={tableData}
