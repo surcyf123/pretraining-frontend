@@ -28,6 +28,13 @@
     }
   },
   "custom": {
+    "BittensorDomain": {
+      "dependsOn": [
+        "Route53HostedZone"
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "customCloudformation"
+    },
     "Route53HostedZone": {
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
