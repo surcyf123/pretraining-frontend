@@ -1,8 +1,7 @@
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { AppShell, ActionIcon, Group, NavLink as MantineNavLink, Title } from "@mantine/core";
 import { IconLogout, IconMoonStars, IconSun } from "@tabler/icons-react";
-import { useEffect } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import type { MantineColorScheme } from "@mantine/core";
 
 export interface HeaderProps {
@@ -24,13 +23,6 @@ const NavLinks: { path: string; label: string }[] = [
 export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.Element {
   const location = useLocation();
   const { authStatus, signOut } = useAuthenticator((context) => [context.authStatus]);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (authStatus === "unauthenticated") {
-      navigate("/login");
-    }
-  }, [authStatus, navigate]);
 
   return (
     <AppShell.Header p="xs">
