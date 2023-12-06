@@ -150,42 +150,44 @@ def iswin(loss_a, loss_b, timestamp_a, timestamp_b, epsilon):
           </Text>
         </Stack>
         <Title order={1}>Getting Started</Title>
-        <Text>TL;DR:</Text>
-        <List spacing="xs">
-          <List.Item>
+        <Stack>
+          <Text>TL;DR:</Text>
+          <List spacing="xs">
+            <List.Item>
+              <Anchor href="https://discord.com/invite/bittensor" target="_blank">
+                Chat
+              </Anchor>
+            </List.Item>
+            <List.Item>
+              <Anchor href="https://taostats.io/subnets/netuid-9/" target="_blank">
+                Leaderboard
+              </Anchor>
+            </List.Item>
+            <List.Item>
+              <Anchor href="https://wandb.ai/opentensor-dev/pretraining-subnet" target="_blank">
+                Wandb Runs
+              </Anchor>
+            </List.Item>
+          </List>
+          <Text>
+            This repo{`'`}s main conversation is carried out in the Bittensor{" "}
             <Anchor href="https://discord.com/invite/bittensor" target="_blank">
-              Chat
+              Discord
             </Anchor>
-          </List.Item>
-          <List.Item>
+            . Visit the {`'`}pretraining{`'`} channel to ask questions and get real time feedback.
+            You can view the ongoing running of the incentive mechanism, the best miners (see {`'`}
+            incentive{`'`}), the most inconsensus validators (see {`'`}vtrust{`'`}) using this{" "}
             <Anchor href="https://taostats.io/subnets/netuid-9/" target="_blank">
-              Leaderboard
+              taostats link
             </Anchor>
-          </List.Item>
-          <List.Item>
+            . The table shows all 256 participant UIDs with corresponding YC stats and earnings. You
+            can also view all current wandb runs for miners and validators{" "}
             <Anchor href="https://wandb.ai/opentensor-dev/pretraining-subnet" target="_blank">
-              Wandb Runs
+              here
             </Anchor>
-          </List.Item>
-        </List>
-        <Text>
-          This repo{`'`}s main conversation is carried out in the Bittensor{" "}
-          <Anchor href="https://discord.com/invite/bittensor" target="_blank">
-            Discord
-          </Anchor>
-          . Visit the {`'`}pretraining{`'`} channel to ask questions and get real time feedback. You
-          can view the ongoing running of the incentive mechanism, the best miners (see {`'`}
-          incentive{`'`}), the most inconsensus validators (see {`'`}vtrust{`'`}) using this{" "}
-          <Anchor href="https://taostats.io/subnets/netuid-9/" target="_blank">
-            taostats link
-          </Anchor>
-          . The table shows all 256 participant UIDs with corresponding YC stats and earnings. You
-          can also view all current wandb runs for miners and validators{" "}
-          <Anchor href="https://wandb.ai/opentensor-dev/pretraining-subnet" target="_blank">
-            here
-          </Anchor>
-          .
-        </Text>
+            .
+          </Text>
+        </Stack>
         <Title order={1}>Installing</Title>
         <Stack>
           <Text>
@@ -313,57 +315,62 @@ btcli s pow_register --wallet.name ... --wallet.hotkey ... --netuid 9
           </List.Item>
         </List>
         <Title order={1}>Mining</Title>
-        <Text>
-          The mining script uploads a model to wandb which will be evaluated by validators and which
-          can be viewed by visiting this wandb{" "}
-          <Anchor href="https://wandb.ai/opentensor-dev/pretraining-subnet" target="_blank">
-            project
-          </Anchor>
-          .
-        </Text>
-        <Text>Testing the training script. Does not require registration or a wandb account:</Text>
-        <Code block>
-          {`
+        <Stack>
+          <Text>
+            The mining script uploads a model to wandb which will be evaluated by validators and
+            which can be viewed by visiting this wandb{" "}
+            <Anchor href="https://wandb.ai/opentensor-dev/pretraining-subnet" target="_blank">
+              project
+            </Anchor>
+            .
+          </Text>
+          <Text>
+            Testing the training script. Does not require registration or a wandb account:
+          </Text>
+          <Code block>
+            {`
 python neurons/miner.py --wallet.name ... --wallet.hotkey ... --offline
             `}
-        </Code>
-        <Text>
-          Training your model from scratch and posting the model periodically as its loss decreases
-          on Falcon:
-        </Text>
-        <Code block>
-          {`
+          </Code>
+          <Text>
+            Training your model from scratch and posting the model periodically as its loss
+            decreases on Falcon:
+          </Text>
+          <Code block>
+            {`
 python neurons/miner.py --wallet.name ... --wallet.hotkey ... --num_epochs 10 --pages_per_epoch 5
             `}
-        </Code>
-        <Text>
-          Scraping a model from an already running miner on the network by passing its uid before
-          training:
-        </Text>
-        <Code block>
-          {`
+          </Code>
+          <Text>
+            Scraping a model from an already running miner on the network by passing its uid before
+            training:
+          </Text>
+          <Code block>
+            {`
 python neurons/miner.py --wallet.name ... --wallet.hotkey ... --num_epochs 10 --pages_per_epoch 5 --load_uid ...
             `}
-        </Code>
-        <Text>Loading the best model on the network based on its incentive.</Text>
-        <Code block>
-          {`
+          </Code>
+          <Text>Loading the best model on the network based on its incentive.</Text>
+          <Code block>
+            {`
 python neurons/miner.py --wallet.name ... --wallet.hotkey ... --num_epochs 10 --pages_per_epoch 5 --load_best
             `}
-        </Code>
-        <Text>
-          Pass the <Pill>--device</Pill> option to select which GPU to run on.
-        </Text>
+          </Code>
+          <Text>
+            Pass the <Pill>--device</Pill> option to select which GPU to run on.
+          </Text>
+        </Stack>
         <Title order={1}>Validating</Title>
-        <Text>
-          The validation script pulls runs from the wandb project and evaluates them continuously on
-          Falcon. Note: validation requires you have a working GPU which you pass via{" "}
-          <Pill>--device</Pill>. In this version release/2.0.1 you need a GPU with atleast 20GB of
-          RAM.
-        </Text>
-        <Text>Test running validation:</Text>
-        <Code block>
-          {`
+        <Stack>
+          <Text>
+            The validation script pulls runs from the wandb project and evaluates them continuously
+            on Falcon. Note: validation requires you have a working GPU which you pass via{" "}
+            <Pill>--device</Pill>. In this version release/2.0.1 you need a GPU with atleast 20GB of
+            RAM.
+          </Text>
+          <Text>Test running validation:</Text>
+          <Code block>
+            {`
 python neurons/validator.py 
     --wallet.name YOUR_WALLET_NAME
     --wallet.hotkey YOUR_WALLET_HOTKEY 
@@ -371,10 +378,10 @@ python neurons/validator.py
     --wandb.off
     --offline
               `}
-        </Code>
-        <Text>Running your validator:</Text>
-        <Code block>
-          {`
+          </Code>
+          <Text>Running your validator:</Text>
+          <Code block>
+            {`
 python neurons/validator.py 
     --wallet.name YOUR_WALLET_NAME
     --wallet.hotkey YOUR_WALLET_HOTKEY 
@@ -382,7 +389,8 @@ python neurons/validator.py
     --wandb.off
     --offline
               `}
-        </Code>
+          </Code>
+        </Stack>
         <Title order={1}>Bittensor API</Title>
         <Text>
           The Bittensor repository comes with tooling for interfacing with the Bittensor ecosystem,
