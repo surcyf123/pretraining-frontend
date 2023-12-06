@@ -1,6 +1,6 @@
 import MultiJSONData from "../../sample-data/multi.json";
 import { BestLossChart } from ".";
-import type { RunDetails } from "../../sample-data/interfaces";
+import type { RunDetails } from "../../utils";
 import type { Meta, StoryObj } from "@storybook/react";
 
 export default {

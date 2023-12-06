@@ -7,7 +7,7 @@ import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { PieChart } from "../../charts/PieChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
 import { parseRunDetails, fetchJSON } from "./utils";
-import type { RunDetails, UIDDetails } from "../../sample-data/interfaces";
+import type { RunDetails, UIDDetails } from "../../utils";
 
 export function Dashboard() {
   const {
