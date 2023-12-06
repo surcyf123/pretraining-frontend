@@ -93,6 +93,9 @@ export function BestLossChart({
           text: title,
           left: "center",
         },
+        textStyle: {
+          fontFamily: "var(--mantine-font-family)",
+        },
         grid: { bottom: "25%", top: "15%", right: "5%", left: "5%" },
         xAxis: {
           type: "time",
