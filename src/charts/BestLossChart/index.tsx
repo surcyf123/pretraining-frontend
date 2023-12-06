@@ -10,7 +10,7 @@ import {
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useRef, useEffect } from "react";
-import type { RunDetails } from "../../sample-data/interfaces";
+import type { RunDetails } from "../../utils";
 import type { LineSeriesOption } from "echarts/charts";
 import type {
   TitleComponentOption,

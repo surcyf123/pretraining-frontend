@@ -1,6 +1,6 @@
 import { Data } from "../../sample-data/state";
 import { StatisticsTable } from ".";
-import type { UIDDetails } from "../../sample-data/interfaces";
+import type { UIDDetails } from "../../utils";
 import type { Meta, StoryObj } from "@storybook/react";
 
 export default {

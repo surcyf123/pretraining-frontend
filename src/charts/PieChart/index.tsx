@@ -9,7 +9,7 @@ import {
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useRef, useEffect } from "react";
-import type { UIDDetails } from "../../sample-data/interfaces";
+import type { UIDDetails } from "../../utils";
 import type { PieSeriesOption } from "echarts/charts";
 import type {
   TitleComponentOption,

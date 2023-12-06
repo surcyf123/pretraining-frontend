@@ -1,5 +1,5 @@
 import { downloadData } from "aws-amplify/storage";
-import type { RunDetails } from "../../sample-data/interfaces";
+import type { RunDetails } from "../../utils";
 
 export async function fetchJSON(key: string): Promise<Record<string, (RunDetails | null)[]>> {
   const downloadResult = await downloadData({ key }).result;

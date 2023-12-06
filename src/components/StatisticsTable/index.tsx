@@ -9,7 +9,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
-import type { UIDDetails } from "../../sample-data/interfaces";
+import type { UIDDetails } from "../../utils";
 import type { PaginationProps, SelectProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 
