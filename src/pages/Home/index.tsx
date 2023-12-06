@@ -11,7 +11,7 @@ export function Home(): JSX.Element {
           whereby miners are rewarded for attaining the best losses on randomly sampled pages of
           Falcon given a consistent model architecture. The reward mechanism works as follows:
         </Text>
-        <List spacing="xs" size="sm">
+        <List spacing="xs">
           <List.Item>
             Miners train and periodically host trained model weights linked to their miner key as
             exampled by the code in neurons/miner.py.
@@ -158,7 +158,7 @@ def iswin(
 
         <Title order={1}>Getting Started</Title>
         <Text>TL;DR:</Text>
-        <List spacing="xs" size="sm">
+        <List spacing="xs">
           <List.Item>
             <Anchor href="https://discord.com/invite/bittensor" target="_blank">
               Chat
@@ -223,7 +223,7 @@ btcli --help
             `}
         </Code>
         <Title order={1}>Mining Steps</Title>
-        <List spacing="xs" size="sm" type="ordered">
+        <List spacing="xs" type="ordered">
           <List.Item>
             <Title order={4}>Get a Wandb Account:</Title>
             <Text>
