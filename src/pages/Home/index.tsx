@@ -392,14 +392,15 @@ python neurons/validator.py
           </Code>
         </Stack>
         <Title order={1}>Bittensor API</Title>
-        <Text>
-          The Bittensor repository comes with tooling for interfacing with the Bittensor ecosystem,
-          creating wallets, loading state from the chain, and registering miners and validators into
-          the mechanism. Before continuing make sure you are familiar with the main concepts of
-          Bittensor.
-        </Text>
-        <Code block>
-          {`
+        <Stack>
+          <Text>
+            The Bittensor repository comes with tooling for interfacing with the Bittensor
+            ecosystem, creating wallets, loading state from the chain, and registering miners and
+            validators into the mechanism. Before continuing make sure you are familiar with the
+            main concepts of Bittensor.
+          </Text>
+          <Code block>
+            {`
 import bittensor as bt
 
 # Accesses the incentive mechanism state of the pretraining 'subnet'. A subnet is a self contained consensus engine through which miners and validators agree on value creation and through which
@@ -415,17 +416,19 @@ print metagraph
 wallet = bt.wallet(name='cold', hotkey='hot').create_if_non_existent()
 print wallet
             `}
-        </Code>
+          </Code>
+        </Stack>
         <Title order={1}>Pretrain API</Title>
-        <Text>
-          The pretraining repo is for the easily constructing participants (miners / validators)
-          within subnet 9 and loading and evaluating the state of the network. For instance, as a
-          means of pushing models you have trained, or for attaining other participants models as
-          checkpoints for you.
-        </Text>
-        <Text>Creating miners.</Text>
-        <Code block>
-          {`
+        <Stack>
+          <Text>
+            The pretraining repo is for the easily constructing participants (miners / validators)
+            within subnet 9 and loading and evaluating the state of the network. For instance, as a
+            means of pushing models you have trained, or for attaining other participants models as
+            checkpoints for you.
+          </Text>
+          <Text>Creating miners.</Text>
+          <Code block>
+            {`
 import bittensor as bt
 import pretrain as pt
 
@@ -463,13 +466,13 @@ pt.mining.save(wallet, model)
 # Push your saved model to your wandb_run.
 pt.mining.push(wallet, wandb_run)
               `}
-        </Code>
-        <Text>
-          The pretrain package also contains the following commands for pulling state from the
-          network and performing validation.
-        </Text>
-        <Code block>
-          {`
+          </Code>
+          <Text>
+            The pretrain package also contains the following commands for pulling state from the
+            network and performing validation.
+          </Text>
+          <Code block>
+            {`
 import pretrain as pt
 
 device = "cuda"
@@ -510,11 +513,13 @@ timestamp_200 = pretrain.utils.get_timestamp_for_uid(200)
 for loss_231, loss_200 in list(zip(losses_231, losses_200)):
     pretrain.validation.iswin(loss_231, loss_200, timestamp_231, timestamp_200)
                 `}
-        </Code>
+          </Code>
+        </Stack>
         <Title order={1}>License</Title>
-        <Text>This repository is licensed under the MIT License.</Text>
-        <Code block>
-          {`
+        <Stack>
+          <Text>This repository is licensed under the MIT License.</Text>
+          <Code block>
+            {`
   # The MIT License (MIT)
   # Copyright © 2023 Yuma Rao
 
@@ -532,7 +537,8 @@ for loss_231, loss_200 in list(zip(losses_231, losses_200)):
   # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
   # DEALINGS IN THE SOFTWARE.
             `}
-        </Code>
+          </Code>
+        </Stack>
       </Stack>
     </Container>
   );
