@@ -190,10 +190,5 @@ export function BestLossChart({
     }
   }, [theme, isLoading]);
 
-  return (
-    <div
-      ref={chartRef}
-      style={{ height: "100%", width: "100%", borderWidth: "1px", borderStyle: "solid", ...style }}
-    />
-  );
+  return <div ref={chartRef} style={{ height: "100%", width: "100%", ...style }} />;
 }
