@@ -76,7 +76,7 @@ export function PieChart({ theme, data, isLoading, title, style }: PieChartProps
           left: "center",
         },
         textStyle: {
-          fontFamily: "var(--mantine-font-family)",
+          fontFamily: "Space Mono, Courier, monospace",
         },
         tooltip: {
           trigger: "item",

@@ -94,7 +94,7 @@ export function BestLossChart({
           left: "center",
         },
         textStyle: {
-          fontFamily: "var(--mantine-font-family)",
+          fontFamily: "Space Mono, Courier, monospace",
         },
         grid: { bottom: "25%", top: "15%", right: "5%", left: "5%" },
         xAxis: {
