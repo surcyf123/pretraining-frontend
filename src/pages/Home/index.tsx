@@ -186,119 +186,131 @@ def iswin(loss_a, loss_b, timestamp_a, timestamp_b, epsilon):
           .
         </Text>
         <Title order={1}>Installing</Title>
-        <Text>
-          Before beginning you will need to install <Pill>pretrain</Pill> (this repo) and{" "}
-          <Pill>bittensor</Pill>, both require atleast python3.8. We recommend using a package
-          manager like anaconda.
-        </Text>
-        <Code block>
-          {`
+        <Stack>
+          <Text>
+            Before beginning you will need to install <Pill>pretrain</Pill> (this repo) and{" "}
+            <Pill>bittensor</Pill>, both require atleast python3.8. We recommend using a package
+            manager like anaconda.
+          </Text>
+          <Code block>
+            {`
 git clone https://github.com/unconst/pretrain-subnet.git
 cd pretrain-subnet
 python -m pip install -e . 
             `}
-        </Code>
-        <Text>Once installed correctly you can import these packages in python.</Text>
-        <Code block>
-          {`
+          </Code>
+          <Text>Once installed correctly you can import these packages in python.</Text>
+          <Code block>
+            {`
 import bittensor as bt
 import pretrain as pt
             `}
-        </Code>
-        <Text>
-          And use the Bittensor CLI (for things Bittensor related, liking seeing TAO balance,
-          transfering funds, making wallet, and viewing the network.)
-        </Text>
-        <Code block>
-          {`
+          </Code>
+          <Text>
+            And use the Bittensor CLI (for things Bittensor related, liking seeing TAO balance,
+            transfering funds, making wallet, and viewing the network.)
+          </Text>
+          <Code block>
+            {`
 btcli --help
             `}
-        </Code>
+          </Code>
+        </Stack>
         <Title order={1}>Mining Steps</Title>
         <List spacing="xs" type="ordered">
           <List.Item>
-            <Title order={4}>Get a Wandb Account:</Title>
-            <Text>
-              Miner and validators make heavy use of weights and biases in order to share model
-              state and validation information. Both miners and validators must attain a wandb
-              account from{" "}
-              <Anchor href="https://wandb.ai/home" target="_blank">
-                wandb
-              </Anchor>{" "}
-              along with their wandb api key which can be found by following the instructions{" "}
-              <Anchor href="https://docs.wandb.ai/quickstart" target="_blank">
-                here
-              </Anchor>
-              .
-            </Text>
+            <Stack>
+              <Text>Get a Wandb Account:</Text>
+              <Text>
+                Miner and validators make heavy use of weights and biases in order to share model
+                state and validation information. Both miners and validators must attain a wandb
+                account from{" "}
+                <Anchor href="https://wandb.ai/home" target="_blank">
+                  wandb
+                </Anchor>{" "}
+                along with their wandb api key which can be found by following the instructions{" "}
+                <Anchor href="https://docs.wandb.ai/quickstart" target="_blank">
+                  here
+                </Anchor>
+                .
+              </Text>
+            </Stack>
           </List.Item>
           <List.Item>
-            <Title order={4}>(Optional) Run a Subtensor instance:</Title>
-            <Text>
-              Your node will run better if you are connecting to a local Bittensor chain entrypoint
-              node rather than using Opentensor{`'`}s. We recommend running a local node as follows
-              and passing the <Pill>--subtensor.network local</Pill> flag to your running
-              miners/validators. To install and run a local subtensor node follow the commands below
-              with Docker and Docker-Compose previously installed.
-            </Text>
-            <Code block>
-              {`
+            <Stack>
+              <Text>(Optional) Run a Subtensor instance:</Text>
+              <Text>
+                Your node will run better if you are connecting to a local Bittensor chain
+                entrypoint node rather than using Opentensor{`'`}s. We recommend running a local
+                node as follows and passing the <Pill>--subtensor.network local</Pill> flag to your
+                running miners/validators. To install and run a local subtensor node follow the
+                commands below with Docker and Docker-Compose previously installed.
+              </Text>
+              <Code block>
+                {`
 git clone https://github.com/opentensor/subtensor.git
 cd subtensor
 docker compose up --detach
                 `}
-            </Code>
+              </Code>
+            </Stack>
           </List.Item>
           <List.Item>
-            <Title order={4}>Create your Bittensor wallet.</Title>
-            <Text>
-              Each miners and validator requires a Bittensor coldkey and hotkey pair. To create a
-              wallet for either your validator or miner run the following command in your terminal.
-              Make sure to save the mnemonic for both keys and store them in a safe place.
-            </Text>
-            <Code block>
-              {`
+            <Stack>
+              <Text>Create your Bittensor wallet.</Text>
+              <Text>
+                Each miners and validator requires a Bittensor coldkey and hotkey pair. To create a
+                wallet for either your validator or miner run the following command in your
+                terminal. Make sure to save the mnemonic for both keys and store them in a safe
+                place.
+              </Text>
+              <Code block>
+                {`
 # to create your miner/validator cold + hotkey keys.
 btcli w create --wallet.name ... --wallet.hotkey ... 
 btcli w list # to view your created keys.              
                 `}
-            </Code>
-            <Text>Or in python</Text>
-            <Code block>
-              {`
+              </Code>
+              <Text>Or in python</Text>
+              <Code block>
+                {`
 import bittensor as bt
 wallet = bt.wallet().create_if_non_existent()
                 `}
-            </Code>
+              </Code>
+            </Stack>
           </List.Item>
           <List.Item>
-            <Title order={4}>Register your wallet to Subnet 9</Title>
-            <Text>
-              Miner and validator wallets must be registered to the subnet 9 mechanism before they
-              are considered active in the network and be considered avaialble for mining TAO. There
-              are two options. #1 Registering your walelt by recycling TAO to pay for entrance. To
-              register your key run the following command. If you don{`'`}t have any TAO message
-              const [t,t] on Discord for a faucet to try things out, please don{`'`}t scam me.
-            </Text>
-            <Code block>
-              {`
+            <Stack>
+              <Text>Register your wallet to Subnet 9</Text>
+              <Text>
+                Miner and validator wallets must be registered to the subnet 9 mechanism before they
+                are considered active in the network and be considered avaialble for mining TAO.
+                There are two options. #1 Registering your walelt by recycling TAO to pay for
+                entrance. To register your key run the following command. If you don{`'`}t have any
+                TAO message const [t,t] on Discord for a faucet to try things out, please don{`'`}t
+                scam me.
+              </Text>
+              <Code block>
+                {`
 # register your cold and associated hotkey to netuid 9 using recycle.
 btcli s register --wallet.name ... --wallet.hotkey ... --netuid 9       
                 `}
-            </Code>
-            <Text>
-              The second option is to run a prolonged proof of work or POW to pay for entrance into
-              the network. You can registed your wallet using a POW using the following command:
-            </Text>
-            <Code block>
-              {`
+              </Code>
+              <Text>
+                The second option is to run a prolonged proof of work or POW to pay for entrance
+                into the network. You can registed your wallet using a POW using the following
+                command:
+              </Text>
+              <Code block>
+                {`
 # register your cold and associated hotkey to netuid 9 using POW
 btcli s pow_register --wallet.name ... --wallet.hotkey ... --netuid 9 
                 `}
-            </Code>
+              </Code>
+            </Stack>
           </List.Item>
         </List>
-
         <Title order={1}>Mining</Title>
         <Text>
           The mining script uploads a model to wandb which will be evaluated by validators and which
