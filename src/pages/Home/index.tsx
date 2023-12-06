@@ -129,17 +129,9 @@ while True:
         </Text>
         <Code block>
           {`
-def iswin(
-  loss_a,
-  loss_b,
-  timestamp_a,
-  timestamp_b,
-  epsilon,
-  ):
-  loss_a = ((1 - epsilon) * loss_a if timestamp_a
-            < timestamp_b else loss_a)
-  loss_b = ((1 - epsilon) * loss_b if timestamp_b
-            < timestamp_a else loss_b)
+def iswin(loss_a, loss_b, timestamp_a, timestamp_b, epsilon):
+  loss_a = ((1 - epsilon) * loss_a if timestamp_a < timestamp_b else loss_a)
+  loss_b = ((1 - epsilon) * loss_b if timestamp_b < timestamp_a else loss_b)
   if loss_a < loss_b:
       return True
   else:
