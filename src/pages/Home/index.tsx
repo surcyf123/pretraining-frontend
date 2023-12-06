@@ -38,9 +38,12 @@ export function Home(): JSX.Element {
             >
               blockchain
             </Anchor>
-            . Each incentive mechanism in Bittensor is called a {`'`}subnet{`'`} and has an
-            identifier (This particular mechanism has subnet uid 9). Weights and the amount of TAO
-            held by the validators become inputs to Bittensor{`'`}s consensus mechanism called{" "}
+            .
+          </Text>
+          <Text>
+            Each incentive mechanism in Bittensor is called a {`'`}subnet{`'`} and has an identifier
+            (This particular mechanism has subnet uid 9). Weights and the amount of TAO held by the
+            validators become inputs to Bittensor{`'`}s consensus mechanism called{" "}
             <Anchor
               href="https://github.com/opentensor/subtensor/blob/feature/consensus-readme/docs/consensus.md"
               target="_blank"
@@ -59,8 +62,10 @@ export function Home(): JSX.Element {
             Miners within this subnet are evaluated based on the number of times the model they have
             hosted has a lower loss than another model on the network when randomly sampling from
             the near infinite Falcon Refined Web pretraining dataset. To perform well, miners must
-            attain the lowest loss on the largest number of random batches. All models are open and
-            accessible via a{" "}
+            attain the lowest loss on the largest number of random batches.
+          </Text>
+          <Text>
+            All models are open and accessible via a{" "}
             <Anchor href="https://wandb.ai/opentensor-dev/pretraining-subnet" target="_blank">
               wandb project
             </Anchor>{" "}
