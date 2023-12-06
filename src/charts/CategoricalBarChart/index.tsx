@@ -95,6 +95,9 @@ export function CategoricalBarChart({
           text: title,
           left: "center",
         },
+        textStyle: {
+          fontFamily: "var(--mantine-font-family)",
+        },
         tooltip: {
           trigger: "item",
           formatter: (params) => {
