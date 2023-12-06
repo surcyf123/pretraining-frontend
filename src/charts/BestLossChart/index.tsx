@@ -151,12 +151,12 @@ export function BestLossChart({
           },
         },
         // @ts-expect-error bad types
-        dataset: Object.entries(data).map(([key, value]) => ({
+        dataset: Object.entries(data ?? {}).map(([key, value]) => ({
           dimensions: [xAxis, yAxis],
           source: value,
           id: key,
         })),
-        series: Object.keys(data).map((ele) => ({
+        series: Object.keys(data ?? {}).map((ele) => ({
           type: "line",
           symbolSize: 5,
           encode: {
