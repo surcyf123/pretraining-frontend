@@ -12,7 +12,7 @@ It has support for:
 - PWA/Service Workers ✅
 - Pre-commit hooks ✅
 - `shx` for OS agnostic CLI ✅
-- Unit testing via Jest and `ts-jest`.
+- Unit testing via Jest and `ts-jest`. ✅
 
 ---
 
