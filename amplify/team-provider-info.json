@@ -18,7 +18,9 @@
           "s3Key": "amplify-builds/wandb-4b6a4434586c35343230-build.zip",
           "wandbApiKey": "d99387d278a657c2e12313a7758ac33f3de8fd26"
         },
-        "wandbhistory": {}
+        "wandbHistory": {
+          "wandbApiKey": "d99387d278a657c2e12313a7758ac33f3de8fd26"
+        }
       },
       "auth": {
         "pretraining44239c45": {}

@@ -56,7 +56,7 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "wandbhistory": {
+    "wandbHistory": {
       "build": true,
       "dependsOn": [
         {
@@ -79,6 +79,14 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_wandbHistory_wandbApiKey": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "wandbHistory"
+        }
+      ]
+    },
     "AMPLIFY_function_wandb_deploymentBucketName": {
       "usedBy": [
         {

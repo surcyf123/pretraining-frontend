@@ -16,6 +16,13 @@
         "s3Key": {
             "Type": "String"
         }
+        
+        ,
+        "wandbApiKey": {
+            "Type": "String"
+        }
+        
+        
         ,
     
     
@@ -59,13 +66,13 @@
             "FunctionName": {
                 "Fn::If": [
                     "ShouldNotCreateEnvResources",
-                    "wandbhistory",
+                    "wandbHistory",
                     {
 
                         "Fn::Join": [
                             "",
                             [
-                                "wandbhistory",
+                                "wandbHistory",
                                 "-",
                                 {
                                     "Ref": "env"
@@ -76,7 +83,7 @@
                 ]
             },
             "Environment": {
-                "Variables" : {"ENV":{"Ref":"env"},"REGION":{"Ref":"AWS::Region"},"STORAGE_S359BCE836_BUCKETNAME":{"Ref":"storages359bce836BucketName"}}
+                "Variables" : {"ENV":{"Ref":"env"},"REGION":{"Ref":"AWS::Region"},"STORAGE_S359BCE836_BUCKETNAME":{"Ref":"storages359bce836BucketName"},"WANDB_API_KEY":{"Ref":"wandbApiKey"}}
             },
             "Role": { "Fn::GetAtt": ["LambdaExecutionRole", "Arn"] },
             "Runtime": "python3.8",
@@ -90,13 +97,13 @@
                 "RoleName": {
                     "Fn::If": [
                         "ShouldNotCreateEnvResources",
-                        "pretrainingLambdaRole82f5f2dd",
+                        "pretrainingLambdaRole64f7bfed",
                         {
 
                             "Fn::Join": [
                                 "",
                                 [
-                                    "pretrainingLambdaRole82f5f2dd",
+                                    "pretrainingLambdaRole64f7bfed",
                                     "-",
                                     {
                                         "Ref": "env"
