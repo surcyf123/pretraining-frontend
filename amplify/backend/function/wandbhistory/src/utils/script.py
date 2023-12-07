@@ -52,19 +52,8 @@ def calculate_best_average_loss(data):
                             item["best_average_loss"] = best_average_loss
     return data  
 
-def calculate_time_diff(run):
-  try:
-    created_at = datetime.datetime.strptime(run.created_at, "%Y-%m-%dT%H:%M:%S")
-  except ValueError:
-    # Handle possible different time formats
-    created_at = datetime.datetime.strptime(run.created_at, "%Y-%m-%dT%H:%M:%S.%fZ")
-    # Calculate the time difference in days
-  time_diff = now - created_at
-  return time_diff.days
-
 def init_wandb():
   all_run_data = {}
-  recent_run_data={}
 
   for run in runs:
       # Check if "validator" is in the run name
@@ -91,10 +80,4 @@ def init_wandb():
               # Replace NaN value and infinity values with null
               converted_data = replace_inf_nan(converted_data)
               all_run_data[run.name] = converted_data
-
-              if calculate_time_diff(run) < 3:
-                  recent_run_data[run.name] = converted_data
-  return {
-      "recent": recent_run_data,
-      "history": all_run_data
-  }
+  return all_run_data
