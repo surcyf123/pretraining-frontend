@@ -59,8 +59,8 @@ def calculate_time_diff(run):
     # Handle possible different time formats
     created_at = datetime.datetime.strptime(run.created_at, "%Y-%m-%dT%H:%M:%S.%fZ")
     # Calculate the time difference in days
-    time_diff = now - created_at
-    return time_diff
+  time_diff = now - created_at
+  return time_diff.days
 
 def init_wandb():
   all_run_data = {}
