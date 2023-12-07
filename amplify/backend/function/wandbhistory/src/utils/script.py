@@ -15,7 +15,7 @@ now = datetime.datetime.now()
 runs = api.runs(f"{entity_name}/{project_name}",
   filters={
     "created_at":{
-    "$gte":(now  - datetime.timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%S")
+    "$gte":(now  - datetime.timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%S")  # fetch data for previous 7 days
   },
   # TODO: add  name filter
   })
