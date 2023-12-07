@@ -14,8 +14,8 @@ now = datetime.datetime.now()
 # Ref: https://docs.wandb.ai/ref/python/public-api/api#examples-2
 runs = api.runs(f"{entity_name}/{project_name}",
   filters={
-    "created_at":{
-    "$gte":(now  - datetime.timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%S") # fetch data for previous 7 days
+    "created_at": {
+    "$gte": (now  - datetime.timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%S") # fetch data for previous 7 days
   },
   # TODO: add  name filter
   })
