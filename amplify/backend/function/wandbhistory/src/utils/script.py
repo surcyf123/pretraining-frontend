@@ -56,7 +56,6 @@ def calculate_best_average_loss(data):
                                 "timestamp": timestamp,
                                 "key":key
                             })
-                            item["best_average_loss"] = best_average_loss
     return output  
 
 def init_wandb():
