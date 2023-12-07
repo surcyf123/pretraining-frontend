@@ -9,9 +9,16 @@ api = wandb.Api()
 
 project_name = "pretraining-subnet"
 entity_name = "opentensor-dev"
-
-runs = api.runs(f"{entity_name}/{project_name}")
 now = datetime.datetime.now()
+
+
+runs = api.runs(f"{entity_name}/{project_name}",
+  filters={
+    "created_at":{
+    "$gte":(now  - datetime.timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%S")
+  },
+  # TODO: add  name filter
+  })
 
 def replace_inf_nan(obj):
     if isinstance(obj, list):
@@ -45,25 +52,23 @@ def calculate_best_average_loss(data):
                             item["best_average_loss"] = best_average_loss
     return data  
 
+def calculate_time_diff(run):
+  try:
+    created_at = datetime.datetime.strptime(run.created_at, "%Y-%m-%dT%H:%M:%S")
+  except ValueError:
+    # Handle possible different time formats
+    created_at = datetime.datetime.strptime(run.created_at, "%Y-%m-%dT%H:%M:%S.%fZ")
+    # Calculate the time difference in days
+    time_diff = now - created_at
+    return time_diff
+
 def init_wandb():
   all_run_data = {}
   recent_run_data={}
 
   for run in runs:
-      # Parse the created_at time
-      try:
-          created_at = datetime.datetime.strptime(run.created_at, "%Y-%m-%dT%H:%M:%S")
-      except ValueError:
-          # Handle possible different time formats
-          created_at = datetime.datetime.strptime(run.created_at, "%Y-%m-%dT%H:%M:%S.%fZ")
-
-      # Calculate the time difference in days
-      time_diff = now - created_at
-
-      # Check if the run was started less than 3 days ago and "validator" is in the run name
-      if  time_diff.days < 7 and "validator" in run.name:
-          print(f"Processing run: {run.name}")
-
+      # Check if "validator" is in the run name
+      if "validator" in run.name:
           # Retrieve the run history
           run_data = run.history()
 
@@ -86,7 +91,8 @@ def init_wandb():
               # Replace NaN value and infinity values with null
               converted_data = replace_inf_nan(converted_data)
               all_run_data[run.name] = converted_data
-              if time_diff.days < 3:
+              
+              if calculate_time_diff(run) < 3:
                   recent_run_data[run.name] = converted_data
   return {
       "recent": recent_run_data,
