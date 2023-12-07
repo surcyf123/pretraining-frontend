@@ -9,9 +9,16 @@ api = wandb.Api()
 
 project_name = "pretraining-subnet"
 entity_name = "opentensor-dev"
-
-runs = api.runs(f"{entity_name}/{project_name}")
 now = datetime.datetime.now()
+
+# Ref: https://docs.wandb.ai/ref/python/public-api/api#examples-2
+runs = api.runs(f"{entity_name}/{project_name}",
+  filters={
+    "created_at": {
+    "$gte": (now  - datetime.timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%S") # fetch data for previous 7 days
+  },
+  # TODO: add  name filter
+  })
 
 def replace_inf_nan(obj):
     if isinstance(obj, list):
@@ -26,12 +33,14 @@ def replace_inf_nan(obj):
         return obj
 
 def calculate_best_average_loss(data):
+    output=[]
     if(isinstance(data, dict)):
-        for items in data.values():
+        for key, items in data.items():
             for item in items:
                 if(isinstance(item, dict)):
                     uids = item.get("uids", [])
                     uid_data = item.get("uid_data", {})
+                    timestamp=item.get("timestamp",None)
                     if(isinstance(uids, list) and isinstance(uid_data, dict)):
                         average_losses = []
                         for uid in uids:
@@ -42,28 +51,19 @@ def calculate_best_average_loss(data):
                                     average_losses.append(average_loss)
                         if(len(average_losses) > 0):
                             best_average_loss = min(average_losses)
-                            item["best_average_loss"] = best_average_loss
-    return data  
+                            output.append({
+                                "best_average_loss": best_average_loss,
+                                "timestamp": timestamp,
+                                "key":key
+                            })
+    return output  
 
 def init_wandb():
   all_run_data = {}
-  recent_run_data={}
 
   for run in runs:
-      # Parse the created_at time
-      try:
-          created_at = datetime.datetime.strptime(run.created_at, "%Y-%m-%dT%H:%M:%S")
-      except ValueError:
-          # Handle possible different time formats
-          created_at = datetime.datetime.strptime(run.created_at, "%Y-%m-%dT%H:%M:%S.%fZ")
-
-      # Calculate the time difference in days
-      time_diff = now - created_at
-
-      # Check if the run was started less than 3 days ago and "validator" is in the run name
-      if  time_diff.days < 7 and "validator" in run.name:
-          print(f"Processing run: {run.name}")
-
+      # Check if "validator" is in the run name
+      if "validator" in run.name:
           # Retrieve the run history
           run_data = run.history()
 
@@ -86,9 +86,4 @@ def init_wandb():
               # Replace NaN value and infinity values with null
               converted_data = replace_inf_nan(converted_data)
               all_run_data[run.name] = converted_data
-              if time_diff.days < 3:
-                  recent_run_data[run.name] = converted_data
-  return {
-      "recent": recent_run_data,
-      "history": all_run_data
-  }
+  return all_run_data
