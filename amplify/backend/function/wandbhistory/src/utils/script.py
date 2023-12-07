@@ -11,7 +11,7 @@ project_name = "pretraining-subnet"
 entity_name = "opentensor-dev"
 now = datetime.datetime.now()
 
-
+# Ref: https://docs.wandb.ai/ref/python/public-api/api#examples-2
 runs = api.runs(f"{entity_name}/{project_name}",
   filters={
     "created_at":{
@@ -91,7 +91,7 @@ def init_wandb():
               # Replace NaN value and infinity values with null
               converted_data = replace_inf_nan(converted_data)
               all_run_data[run.name] = converted_data
-              
+
               if calculate_time_diff(run) < 3:
                   recent_run_data[run.name] = converted_data
   return {
