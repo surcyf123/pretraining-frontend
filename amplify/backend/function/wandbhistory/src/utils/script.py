@@ -33,12 +33,14 @@ def replace_inf_nan(obj):
         return obj
 
 def calculate_best_average_loss(data):
+    output=[]
     if(isinstance(data, dict)):
-        for items in data.values():
+        for key, items in data.items():
             for item in items:
                 if(isinstance(item, dict)):
                     uids = item.get("uids", [])
                     uid_data = item.get("uid_data", {})
+                    timestamp=item.get("timestamp",None)
                     if(isinstance(uids, list) and isinstance(uid_data, dict)):
                         average_losses = []
                         for uid in uids:
@@ -49,8 +51,12 @@ def calculate_best_average_loss(data):
                                     average_losses.append(average_loss)
                         if(len(average_losses) > 0):
                             best_average_loss = min(average_losses)
-                            item["best_average_loss"] = best_average_loss
-    return data  
+                            output.append({
+                                "best_average_loss": best_average_loss,
+                                "timestamp": timestamp,
+                                "key":key
+                            })
+    return output  
 
 def init_wandb():
   all_run_data = {}

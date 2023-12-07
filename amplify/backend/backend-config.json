@@ -79,6 +79,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_wandbHistory_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "wandbHistory"
+        }
+      ]
+    },
+    "AMPLIFY_function_wandbHistory_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "wandbHistory"
+        }
+      ]
+    },
     "AMPLIFY_function_wandbHistory_wandbApiKey": {
       "usedBy": [
         {
