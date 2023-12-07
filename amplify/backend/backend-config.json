@@ -55,6 +55,20 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "wandbHistory": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "BucketName"
+          ],
+          "category": "storage",
+          "resourceName": "s359bce836"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "hosting": {
@@ -65,6 +79,14 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_wandbHistory_wandbApiKey": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "wandbHistory"
+        }
+      ]
+    },
     "AMPLIFY_function_wandb_deploymentBucketName": {
       "usedBy": [
         {

@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "storage": {
+      "s359bce836": [
+        "create",
+        "update"
+      ]
+    }
+  },
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "wandbApiKey",
+      "environmentVariableName": "WANDB_API_KEY"
+    }
+  ]
+}
