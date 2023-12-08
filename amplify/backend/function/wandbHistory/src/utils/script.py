@@ -15,9 +15,11 @@ now = datetime.datetime.now()
 runs = api.runs(f"{entity_name}/{project_name}",
   filters={
     "created_at": {
-    "$gte": (now  - datetime.timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%S") # fetch data for previous 7 days
-  },
-  # TODO: add  name filter
+        "$gte": (now  - datetime.timedelta(days=3)).strftime("%Y-%m-%dT%H:%M:%S") # fetch data for previous 3 days
+    },
+    "display_name": {
+        "$regex":"^validator.*" # Ref: https://stackoverflow.com/a/3483399
+    }
   })
 
 def replace_inf_nan(obj):
@@ -62,28 +64,23 @@ def init_wandb():
   all_run_data = {}
 
   for run in runs:
-      # Check if "validator" is in the run name
-      if "validator" in run.name:
-          # Retrieve the run history
-          run_data = run.history()
-
-          # Extract the 'original_format_json' key
-          if 'original_format_json' in run_data.columns:
-              original_format_json_data = run_data['original_format_json']
-
-              # Convert the Pandas Series to a list or dict
-              if (isinstance(original_format_json_data, pd.Series)):
-                  converted_data = []
-                  target_list = original_format_json_data.to_list()
-                  for ele in target_list:
-                      if isinstance(ele, str):
-                          converted_data.append(json.loads(ele))
-                      else:    
-                          converted_data.append(ele)
-              else:
-                  converted_data = original_format_json_data
-
-              # Replace NaN value and infinity values with null
-              converted_data = replace_inf_nan(converted_data)
-              all_run_data[run.name] = converted_data
+    # Retrieve the run history
+    run_data = run.history()
+    # Extract the 'original_format_json' key
+    if 'original_format_json' in run_data.columns:
+        original_format_json_data = run_data['original_format_json']
+        # Convert the Pandas Series to a list or dict
+        if (isinstance(original_format_json_data, pd.Series)):
+            converted_data = []
+            target_list = original_format_json_data.to_list()
+            for ele in target_list:
+                if isinstance(ele, str):
+                    converted_data.append(json.loads(ele))
+                else:    
+                    converted_data.append(ele)
+        else:
+            converted_data = original_format_json_data
+        # Replace NaN value and infinity values with null
+        converted_data = replace_inf_nan(converted_data)
+        all_run_data[run.name] = converted_data          
   return all_run_data
