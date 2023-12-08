@@ -64,6 +64,7 @@ def init_wandb():
   all_run_data = {}
 
   for run in runs:
+    print(run.name)
     # Retrieve the run history
     run_data = run.history()
     # Extract the 'original_format_json' key
