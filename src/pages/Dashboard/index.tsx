@@ -98,7 +98,7 @@ export function Dashboard() {
           xAxisTitle="Time"
           style={{ height: "40vh" }}
           theme={colorScheme === "auto" ? "dark" : colorScheme}
-          isLoading={isLoading}
+          isLoading={isHistoryJSONLoading}
         />
       </Card>
 
