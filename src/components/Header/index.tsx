@@ -1,7 +1,8 @@
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import { AppShell, ActionIcon, Group, NavLink as MantineNavLink, Title } from "@mantine/core";
+import { AppShell, ActionIcon, Group, NavLink as MantineNavLink, Image } from "@mantine/core";
 import { IconLogout, IconMoonStars, IconSun } from "@tabler/icons-react";
 import { NavLink, useLocation } from "react-router-dom";
+import Logo from "./logo.png";
 import type { MantineColorScheme } from "@mantine/core";
 
 export interface HeaderProps {
@@ -27,7 +28,7 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
   return (
     <AppShell.Header p="xs">
       <Group justify="space-between" align="center">
-        <Title order={3}>[τ, τ]</Title>
+        <Image {...Logo} h={30} />
         <Group wrap="nowrap">
           {NavLinks.map(({ path, label }) => (
             <MantineNavLink
