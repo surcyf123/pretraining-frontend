@@ -10,7 +10,8 @@ import {
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useRef, useEffect } from "react";
-import type { RunDetails } from "../../utils";
+import type { HistoryData } from "../../utils";
+import type { InternMap } from "d3-array";
 import type { LineSeriesOption } from "echarts/charts";
 import type {
   TitleComponentOption,
@@ -44,7 +45,7 @@ use([
 
 export interface BestLossChartProps {
   theme?: "light" | "dark";
-  data: Record<string, RunDetails[]>;
+  data: InternMap<string, HistoryData[]>;
   xAxis: string;
   yAxis: string;
   xAxisTitle: string;
@@ -134,7 +135,7 @@ export function BestLossChart({
             let output = "";
             if (Array.isArray(params) && params.length > 0) {
               const { timestamp, best_average_loss: bestAverageLoss } = params[0]
-                .data as RunDetails;
+                .data as HistoryData;
               output = `
               <div>
                 <span>${xAxisTitle}: ${new Date(timestamp).toLocaleString(undefined, {
@@ -151,12 +152,12 @@ export function BestLossChart({
           },
         },
         // @ts-expect-error bad types
-        dataset: Object.entries(data).map(([key, value]) => ({
+        dataset: [...data.entries()].map(([key, value]) => ({
           dimensions: [xAxis, yAxis],
           source: value,
           id: key,
         })),
-        series: Object.keys(data).map((ele) => ({
+        series: [...data.keys()].map((ele) => ({
           type: "line",
           symbolSize: 5,
           encode: {
