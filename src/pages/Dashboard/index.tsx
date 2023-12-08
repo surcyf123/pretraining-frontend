@@ -1,12 +1,13 @@
 import { Card, Stack, useMantineColorScheme, Group, Loader } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
-import { ascending, rollup, sort } from "d3-array";
+import { ascending, group, rollup, sort } from "d3-array";
 import { useMemo } from "react";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
-import { parseRunDetails, fetchJSON } from "./utils";
-import type { RunDetails, UIDDetails } from "../../utils";
+import { fetchCompleteRecentJSON, fetchHistoryJSON } from "./utils";
+import type { HistoryData, UIDDetails } from "../../utils";
+import type { InternMap } from "d3-array";
 
 export function Dashboard() {
   const {
@@ -15,7 +16,7 @@ export function Dashboard() {
     isRefetching,
   } = useQuery({
     queryKey: ["recentJSON"],
-    queryFn: () => fetchJSON("recent.json"),
+    queryFn: () => fetchCompleteRecentJSON("recent.json"),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
@@ -26,7 +27,7 @@ export function Dashboard() {
     isRefetching: isRefetchingHistoryJSON,
   } = useQuery({
     queryKey: ["historyJSON"],
-    queryFn: () => fetchJSON("history.json"),
+    queryFn: () => fetchHistoryJSON("history.json"),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
@@ -73,21 +74,10 @@ export function Dashboard() {
     return output;
   }, [chartData]);
 
-  const recentProcessedData = useMemo<Record<string, RunDetails[]>>(() => {
-    let output = {};
-    if (isLoading === false && recentJSON !== undefined) {
-      output = parseRunDetails(recentJSON);
-    }
-    return output;
-  }, [isLoading, recentJSON]);
-
-  const historyProcessedData = useMemo<Record<string, RunDetails[]>>(() => {
-    let output = {};
-    if (isHistoryJSONLoading === false && historyJSON !== undefined) {
-      output = parseRunDetails(historyJSON);
-    }
-    return output;
-  }, [isHistoryJSONLoading, historyJSON]);
+  const historyProcessedData = useMemo<InternMap<string, HistoryData[]>>(
+    () => group(historyJSON ?? [], (d) => d.key),
+    [historyJSON],
+  );
 
   return (
     <Stack>
@@ -107,7 +97,7 @@ export function Dashboard() {
       <Card shadow="md">
         <BestLossChart
           title="Recent"
-          data={recentProcessedData}
+          data={historyProcessedData} // TODO: replace with recent data
           yAxis="best_average_loss"
           xAxis="timestamp"
           yAxisTitle="Best average loss"

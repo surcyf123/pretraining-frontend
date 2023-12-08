@@ -1,7 +1,7 @@
 import { downloadData } from "aws-amplify/storage";
-import type { RunDetails } from "../../utils";
+import type { HistoryData, RunDetails } from "../../utils";
 
-export async function fetchJSON(key: string): Promise<Record<string, (RunDetails | null)[]>> {
+export async function fetchCompleteRecentJSON(key: string): Promise<Record<string, (RunDetails | null)[]>> {
   const downloadResult = await downloadData({ key }).result;
   // Ref: https://docs.amplify.aws/javascript/build-a-backend/storage/download/#get-the-text-value-of-downloaded-file
   const text = await downloadResult.body.text(); // Using "downloadResult.body.json()" gives error "Parsing response to json is not implemented."
@@ -9,6 +9,15 @@ export async function fetchJSON(key: string): Promise<Record<string, (RunDetails
   return json;
 }
 
+export async function fetchHistoryJSON(key: string): Promise<HistoryData[]> {
+  const downloadResult = await downloadData({ key }).result;
+  // Ref: https://docs.amplify.aws/javascript/build-a-backend/storage/download/#get-the-text-value-of-downloaded-file
+  const text = await downloadResult.body.text(); // Using "downloadResult.body.json()" gives error "Parsing response to json is not implemented."
+  const json = JSON.parse(text) as HistoryData[];
+  return json;
+}
+
+// eslint-disable-next-line import/no-unused-modules
 export function parseRunDetails(jsonData: Record<string, (RunDetails | null)[]>): Record<string, RunDetails[]> {
   return Object.entries(jsonData).reduce(
     (acc, [key, value]) => ({
