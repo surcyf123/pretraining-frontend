@@ -19,3 +19,9 @@ export interface RunDetails {
   best_average_loss: number | null;
   best_average_loss_uid: number | null;
 }
+
+export interface HistoryData {
+  key: string;
+  best_average_loss: number | null;
+  timestamp: number;
+}
