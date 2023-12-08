@@ -1,3 +1,4 @@
+import { group } from "d3-array";
 import { LineChart as LineGraph } from "echarts/charts";
 import {
   GridComponent,
@@ -9,9 +10,8 @@ import {
 } from "echarts/components";
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import type { HistoryData } from "../../utils";
-import type { InternMap } from "d3-array";
 import type { LineSeriesOption } from "echarts/charts";
 import type {
   TitleComponentOption,
@@ -45,7 +45,7 @@ use([
 
 export interface BestLossChartProps {
   theme?: "light" | "dark";
-  data: InternMap<string, HistoryData[]>;
+  data: HistoryData[];
   xAxis: string;
   yAxis: string;
   xAxisTitle: string;
@@ -67,6 +67,8 @@ export function BestLossChart({
   style,
 }: BestLossChartProps): JSX.Element {
   const chartRef = useRef<HTMLDivElement>(null);
+
+  const processedData = useMemo(() => group(data, (d) => d.key), [data]);
 
   useEffect(() => {
     let chart: ECharts | undefined;
@@ -152,12 +154,12 @@ export function BestLossChart({
           },
         },
         // @ts-expect-error bad types
-        dataset: [...data.entries()].map(([key, value]) => ({
+        dataset: [...processedData.entries()].map(([key, value]) => ({
           dimensions: [xAxis, yAxis],
           source: value,
           id: key,
         })),
-        series: [...data.keys()].map((ele) => ({
+        series: [...processedData.keys()].map((ele) => ({
           type: "line",
           symbolSize: 5,
           encode: {
@@ -184,7 +186,7 @@ export function BestLossChart({
       };
       chart?.setOption(option, true);
     }
-  }, [data, theme, xAxis, xAxisTitle, yAxis, yAxisTitle, title]);
+  }, [processedData, theme, xAxis, xAxisTitle, yAxis, yAxisTitle, title]);
 
   useEffect(() => {
     if (chartRef.current !== null) {

@@ -5,8 +5,8 @@ import { useMemo } from "react";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
-import { parseRunDetails, fetchJSON } from "./utils";
-import type { RunDetails, UIDDetails } from "../../utils";
+import { fetchCompleteRecentJSON, fetchHistoryJSON } from "./utils";
+import type { UIDDetails } from "../../utils";
 
 export function Dashboard() {
   const {
@@ -15,7 +15,7 @@ export function Dashboard() {
     isRefetching,
   } = useQuery({
     queryKey: ["recentJSON"],
-    queryFn: () => fetchJSON("recent.json"),
+    queryFn: () => fetchCompleteRecentJSON(),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
@@ -26,7 +26,7 @@ export function Dashboard() {
     isRefetching: isRefetchingHistoryJSON,
   } = useQuery({
     queryKey: ["historyJSON"],
-    queryFn: () => fetchJSON("history.json"),
+    queryFn: () => fetchHistoryJSON(),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
@@ -73,28 +73,12 @@ export function Dashboard() {
     return output;
   }, [chartData]);
 
-  const recentProcessedData = useMemo<Record<string, RunDetails[]>>(() => {
-    let output = {};
-    if (isLoading === false && recentJSON !== undefined) {
-      output = parseRunDetails(recentJSON);
-    }
-    return output;
-  }, [isLoading, recentJSON]);
-
-  const historyProcessedData = useMemo<Record<string, RunDetails[]>>(() => {
-    let output = {};
-    if (isHistoryJSONLoading === false && historyJSON !== undefined) {
-      output = parseRunDetails(historyJSON);
-    }
-    return output;
-  }, [isHistoryJSONLoading, historyJSON]);
-
   return (
     <Stack>
       <Card shadow="md">
         <BestLossChart
           title="All Time"
-          data={historyProcessedData}
+          data={historyJSON ?? []}
           yAxis="best_average_loss"
           xAxis="timestamp"
           yAxisTitle="Best average loss"
@@ -107,7 +91,7 @@ export function Dashboard() {
       <Card shadow="md">
         <BestLossChart
           title="Recent"
-          data={recentProcessedData}
+          data={historyJSON?.slice(-1000) ?? []} // Get last 1000 elements
           yAxis="best_average_loss"
           xAxis="timestamp"
           yAxisTitle="Best average loss"

@@ -1,4 +1,3 @@
-import { group } from "d3-array";
 import { BestLossChart } from ".";
 import type { HistoryData } from "../../utils";
 import type { Meta, StoryObj } from "@storybook/react";
@@ -45,7 +44,7 @@ export default {
   title: "BestLossChart",
   component: BestLossChart,
   args: {
-    data: group(Data, (d) => d.key),
+    data: Data,
     yAxis: "best_average_loss",
     xAxis: "timestamp",
     yAxisTitle: "Best average loss",
