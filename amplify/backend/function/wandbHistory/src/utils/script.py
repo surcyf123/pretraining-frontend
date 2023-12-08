@@ -53,7 +53,7 @@ def calculate_best_average_loss(data):
                             best_average_loss = min(average_losses)
                             output.append({
                                 "best_average_loss": best_average_loss,
-                                "timestamp": timestamp,
+                                "timestamp": timestamp * 1000, # When data is used in UI, Javascript excepts time in milliseconds. Here timestamp is in seconds.   
                                 "key":key
                             })
     return output  
