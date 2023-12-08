@@ -1,13 +1,12 @@
 import { Card, Stack, useMantineColorScheme, Group, Loader } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
-import { ascending, group, rollup, sort } from "d3-array";
+import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
 import { fetchCompleteRecentJSON, fetchHistoryJSON } from "./utils";
-import type { HistoryData, UIDDetails } from "../../utils";
-import type { InternMap } from "d3-array";
+import type { UIDDetails } from "../../utils";
 
 export function Dashboard() {
   const {
@@ -16,7 +15,7 @@ export function Dashboard() {
     isRefetching,
   } = useQuery({
     queryKey: ["recentJSON"],
-    queryFn: () => fetchCompleteRecentJSON("recent.json"),
+    queryFn: () => fetchCompleteRecentJSON(),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
@@ -27,7 +26,7 @@ export function Dashboard() {
     isRefetching: isRefetchingHistoryJSON,
   } = useQuery({
     queryKey: ["historyJSON"],
-    queryFn: () => fetchHistoryJSON("history.json"),
+    queryFn: () => fetchHistoryJSON(),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
@@ -74,17 +73,12 @@ export function Dashboard() {
     return output;
   }, [chartData]);
 
-  const historyProcessedData = useMemo<InternMap<string, HistoryData[]>>(
-    () => group(historyJSON ?? [], (d) => d.key),
-    [historyJSON],
-  );
-
   return (
     <Stack>
       <Card shadow="md">
         <BestLossChart
           title="All Time"
-          data={historyProcessedData}
+          data={historyJSON ?? []}
           yAxis="best_average_loss"
           xAxis="timestamp"
           yAxisTitle="Best average loss"
@@ -97,7 +91,7 @@ export function Dashboard() {
       <Card shadow="md">
         <BestLossChart
           title="Recent"
-          data={historyProcessedData} // TODO: replace with recent data
+          data={historyJSON?.slice(-1000) ?? []} // Get last 1000 elements
           yAxis="best_average_loss"
           xAxis="timestamp"
           yAxisTitle="Best average loss"
