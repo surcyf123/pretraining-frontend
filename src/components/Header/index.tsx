@@ -28,7 +28,7 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
   return (
     <AppShell.Header p="xs">
       <Group justify="space-between" align="center">
-        <Image {...Logo} h={30} />
+        <Image {...Logo} h={30} alt="Openpretrain logo" />
         <Group wrap="nowrap">
           {NavLinks.map(({ path, label }) => (
             <MantineNavLink
