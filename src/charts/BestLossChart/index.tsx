@@ -68,11 +68,7 @@ export function BestLossChart({
 }: BestLossChartProps): JSX.Element {
   const chartRef = useRef<HTMLDivElement>(null);
 
-  const processedData = useMemo(() => {
-    const formatTimeStamp = data.map((ele) => ({ ...ele, timestamp: ele.timestamp * 1000 }));
-    const output = group(formatTimeStamp, (d) => d.key);
-    return output;
-  }, [data]);
+  const processedData = useMemo(() => group(data, (d) => d.key), [data]);
 
   useEffect(() => {
     let chart: ECharts | undefined;
