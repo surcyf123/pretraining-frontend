@@ -3,6 +3,7 @@ import datetime
 import json
 import pandas as pd
 import math
+import simplejson
 
 wandb.login()
 api = wandb.Api()
@@ -21,18 +22,6 @@ runs = api.runs(f"{entity_name}/{project_name}",
         "$regex":"^validator.*" # Ref: https://stackoverflow.com/a/3483399
     }
   })
-
-def replace_inf_nan(obj):
-    if isinstance(obj, list):
-        return [replace_inf_nan(item) for item in obj]
-    elif isinstance(obj, dict):
-        return {key: replace_inf_nan(value) for key, value in obj.items()}
-    # in python 'inf' (positive infinity) is instance of float. Ref: https://www.geeksforgeeks.org/python-infinity/
-    # obj == float('inf') checks if obj is positive infinity.
-    elif isinstance(obj, float) and (math.isinf(obj) or math.isnan(obj)):
-        return None
-    else:
-        return obj
 
 def calculate_best_average_loss(data):
     output=[]
@@ -81,7 +70,5 @@ def init_wandb():
                     converted_data.append(ele)
         else:
             converted_data = original_format_json_data
-        # Replace NaN value and infinity values with null
-        converted_data = replace_inf_nan(converted_data)
         all_run_data[run.name] = converted_data          
   return all_run_data
