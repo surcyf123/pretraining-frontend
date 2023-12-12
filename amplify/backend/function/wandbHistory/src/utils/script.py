@@ -2,8 +2,6 @@ import wandb
 import datetime
 import json
 import pandas as pd
-import math
-import simplejson
 
 wandb.login()
 api = wandb.Api()
