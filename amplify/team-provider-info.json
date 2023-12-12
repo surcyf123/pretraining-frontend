@@ -15,13 +15,13 @@
       "function": {
         "wandb": {
           "deploymentBucketName": "amplify-pretraining-prod-115707-deployment",
-          "s3Key": "amplify-builds/wandb-6f4b6a503234624c6267-build.zip",
+          "s3Key": "amplify-builds/wandb-4f68575a495a65785046-build.zip",
           "wandbApiKey": "d99387d278a657c2e12313a7758ac33f3de8fd26"
         },
         "wandbHistory": {
           "wandbApiKey": "d99387d278a657c2e12313a7758ac33f3de8fd26",
           "deploymentBucketName": "amplify-pretraining-prod-115707-deployment",
-          "s3Key": "amplify-builds/wandbHistory-516f534773764a2b7176-build.zip"
+          "s3Key": "amplify-builds/wandbHistory-706c536552536d4a3258-build.zip"
         }
       },
       "auth": {
