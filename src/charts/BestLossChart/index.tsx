@@ -92,6 +92,19 @@ export function BestLossChart({
     if (chartRef.current !== null) {
       const chart = getInstanceByDom(chartRef.current);
       const option: LineChartOptions = {
+        color: [
+          "#543005",
+          "#8c510a",
+          "#bf812d",
+          "#dfc27d",
+          "#f6e8c3",
+          "#f5f5f5",
+          "#c7eae5",
+          "#80cdc1",
+          "#35978f",
+          "#01665e",
+          "#003c30",
+        ],
         title: {
           text: title,
           left: "center",
