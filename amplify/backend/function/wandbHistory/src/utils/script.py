@@ -75,6 +75,6 @@ def filter_recent_data(data):
     filtered_data = []
     if(isinstance(data,list)):
         # Ref: https://docs.python.org/3/library/functions.html#filter
-        iterator = filter(lambda ele: (now - datetime.datetime.fromtimestamp((ele["timestamp"]/1000))).days<=3)
-        filtered_data = list(iterator, data)
+        iterator = filter(lambda ele: (now - datetime.datetime.fromtimestamp((ele["timestamp"]/1000))).days<=3, data)
+        filtered_data = list(iterator)
     return filtered_data
