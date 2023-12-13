@@ -11,6 +11,7 @@ import {
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useRef, useEffect, useMemo } from "react";
+import { colorGenerator } from "./utils";
 import type { HistoryData } from "../../utils";
 import type { LineSeriesOption } from "echarts/charts";
 import type {
@@ -88,23 +89,12 @@ export function BestLossChart({
     };
   }, [theme]); // Whenever theme changes we need to dispose the chart to render a fresh one with appropriate styling
 
+  const generator = useMemo(() => colorGenerator(), []);
+
   useEffect(() => {
     if (chartRef.current !== null) {
       const chart = getInstanceByDom(chartRef.current);
       const option: LineChartOptions = {
-        color: [
-          "#543005",
-          "#8c510a",
-          "#bf812d",
-          "#dfc27d",
-          "#f6e8c3",
-          "#f5f5f5",
-          "#c7eae5",
-          "#80cdc1",
-          "#35978f",
-          "#01665e",
-          "#003c30",
-        ], // Ref: https://echarts.apache.org/en/option.html#color
         title: {
           text: title,
           left: "center",
@@ -182,6 +172,7 @@ export function BestLossChart({
           datasetId: ele,
           name: ele,
           showSymbol: false,
+          color: generator(ele),
         })),
         legend: {
           align: "auto",
@@ -199,7 +190,7 @@ export function BestLossChart({
       };
       chart?.setOption(option, true);
     }
-  }, [processedData, theme, xAxis, xAxisTitle, yAxis, yAxisTitle, title]);
+  }, [processedData, theme, xAxis, xAxisTitle, yAxis, yAxisTitle, title, generator]);
 
   useEffect(() => {
     if (chartRef.current !== null) {
