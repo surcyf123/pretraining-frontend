@@ -14,7 +14,7 @@ now = datetime.datetime.now()
 runs = api.runs(f"{entity_name}/{project_name}",
   filters={
     "created_at": {
-        "$gte": (now  - datetime.timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%S") # fetch data for previous 7 days
+        "$gte": (now  - datetime.timedelta(days=30)).strftime("%Y-%m-%dT%H:%M:%S") # fetch data for previous 30 days
     },
     "display_name": {
         "$regex":"^validator.*" # Ref: https://stackoverflow.com/a/3483399
