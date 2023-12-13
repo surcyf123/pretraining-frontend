@@ -5,17 +5,17 @@ import { useMemo } from "react";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
-import { fetchCompleteRecentJSON, fetchHistoryJSON } from "./utils";
+import { fetchTableData, fetchLineChartData } from "./utils";
 import type { UIDDetails } from "../../utils";
 
 export function Dashboard() {
   const {
-    data: recentJSON,
+    data: recentUIDJSON,
     isLoading,
     isRefetching,
   } = useQuery({
-    queryKey: ["recentJSON"],
-    queryFn: () => fetchCompleteRecentJSON(),
+    queryKey: ["recentUIDJSON"],
+    queryFn: () => fetchTableData(),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
@@ -26,7 +26,18 @@ export function Dashboard() {
     isRefetching: isRefetchingHistoryJSON,
   } = useQuery({
     queryKey: ["historyJSON"],
-    queryFn: () => fetchHistoryJSON(),
+    queryFn: () => fetchLineChartData("history.json"),
+    refetchInterval: 10 * 60 * 1000,
+    // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
+  });
+
+  const {
+    data: recentJSON,
+    isLoading: isRecentJSONLoading,
+    isRefetching: isRefetchingRecentJSON,
+  } = useQuery({
+    queryKey: ["recentJSON"],
+    queryFn: () => fetchLineChartData("recent.json"),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
@@ -34,8 +45,8 @@ export function Dashboard() {
   const { colorScheme } = useMantineColorScheme();
   const processedData = useMemo<UIDDetails[]>(() => {
     let output: UIDDetails[] = [];
-    if (isLoading === false && recentJSON !== undefined) {
-      output = Object.values(recentJSON)
+    if (isLoading === false && recentUIDJSON !== undefined) {
+      output = Object.values(recentUIDJSON)
         .flat()
         .flatMap((ele) => (ele === null ? [] : Object.values(ele.uid_data)))
         .filter(
@@ -48,7 +59,7 @@ export function Dashboard() {
         }));
     }
     return output;
-  }, [isLoading, recentJSON]);
+  }, [isLoading, recentUIDJSON]);
 
   // complete chart data
   const chartData = useMemo(
@@ -91,14 +102,14 @@ export function Dashboard() {
       <Card shadow="md">
         <BestLossChart
           title="Recent"
-          data={historyJSON?.slice(-1000) ?? []} // Get last 1000 elements
+          data={recentJSON ?? []} // Get last 1000 elements
           yAxis="best_average_loss"
           xAxis="timestamp"
           yAxisTitle="Best average loss"
           xAxisTitle="Time"
           style={{ height: "40vh" }}
           theme={colorScheme === "auto" ? "dark" : colorScheme}
-          isLoading={isHistoryJSONLoading}
+          isLoading={isRecentJSONLoading}
         />
       </Card>
 
@@ -143,7 +154,9 @@ export function Dashboard() {
       <Card shadow="md">
         <StatisticsTable data={tableData} />
       </Card>
-      {isRefetching === true || isRefetchingHistoryJSON === true ? (
+      {isRefetching === true ||
+      isRefetchingHistoryJSON === true ||
+      isRefetchingRecentJSON === true ? (
         <Loader color="blue" type="bars" pos="fixed" left="20px" bottom="20px" />
       ) : null}
     </Stack>
