@@ -70,3 +70,11 @@ def init_wandb():
             converted_data = original_format_json_data
         all_run_data[run.name] = converted_data          
   return all_run_data
+
+def filter_recent_data(data):
+    filtered_data = []
+    if(isinstance(data,list)):
+        # Ref: https://docs.python.org/3/library/functions.html#filter
+        iterator = filter(lambda ele: (now - datetime.datetime.fromtimestamp((ele["timestamp"]/1000))).days<=3, data)
+        filtered_data = list(iterator)
+    return filtered_data
