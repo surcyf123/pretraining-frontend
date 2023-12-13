@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
-import { fetchCompleteRecentJSON, fetchLineChartData } from "./utils";
+import { fetchTableData, fetchLineChartData } from "./utils";
 import type { UIDDetails } from "../../utils";
 
 export function Dashboard() {
@@ -15,7 +15,7 @@ export function Dashboard() {
     isRefetching,
   } = useQuery({
     queryKey: ["recentUIDJSON"],
-    queryFn: () => fetchCompleteRecentJSON(),
+    queryFn: () => fetchTableData(),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
