@@ -104,7 +104,7 @@ export function BestLossChart({
           "#35978f",
           "#01665e",
           "#003c30",
-        ],
+        ], // Ref: https://echarts.apache.org/en/option.html#color
         title: {
           text: title,
           left: "center",
