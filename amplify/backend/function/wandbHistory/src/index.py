@@ -8,7 +8,7 @@ def handler(event, context):
     sorted_output = sorted(output, key = lambda ele  : ele["timestamp"]) # Ref: https://stackoverflow.com/questions/72899/how-to-sort-a-list-of-dictionaries-by-a-value-of-the-dictionary-in-python
     recent_data = filter_recent_data(sorted_output)
     upload(sorted_output, filename = "history.json")
-    upload(recent_data, filename="recent_history.json")
+    upload(recent_data, filename="recent.json")
 
     return {
         "statusCode": 200,
