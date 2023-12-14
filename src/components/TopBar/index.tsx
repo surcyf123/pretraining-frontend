@@ -8,11 +8,11 @@ export interface Data {
 
 export function TopBar({ properties }: Data): JSX.Element {
   return (
-    <Group justify="space-between">
+    <Group justify="space-between" wrap="nowrap">
       <Image {...Logo} h={30} alt="Openpretrain logo" />
-      <Group align="center">
+      <Group wrap="nowrap">
         {Object.entries(properties).map(([key, value]) => (
-          <Stack key={key}>
+          <Stack key={key} align="center">
             <Text fw="bold">{PropertiesDictionary[key as keyof PropertiesDictionary]}</Text>
             <Text>{value}</Text>
           </Stack>
