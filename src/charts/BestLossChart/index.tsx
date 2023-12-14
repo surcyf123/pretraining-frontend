@@ -1,4 +1,5 @@
 import { group } from "d3-array";
+import { schemeBrBG } from "d3-scale-chromatic";
 import { LineChart as LineGraph } from "echarts/charts";
 import {
   GridComponent,
@@ -92,6 +93,7 @@ export function BestLossChart({
     if (chartRef.current !== null) {
       const chart = getInstanceByDom(chartRef.current);
       const option: LineChartOptions = {
+        color: schemeBrBG[11], // Ref: https://echarts.apache.org/en/option.html#color
         title: {
           text: title,
           left: "center",

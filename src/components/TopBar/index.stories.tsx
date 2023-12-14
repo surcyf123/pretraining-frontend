@@ -1,4 +1,3 @@
-import { AppShell } from "@mantine/core";
 import { TopBar } from ".";
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -16,12 +15,4 @@ export default {
   },
 } as Meta<typeof TopBar>;
 
-export const Template: StoryObj<typeof TopBar> = {
-  render: function Wrapper(args) {
-    return (
-      <AppShell>
-        <TopBar {...args} />
-      </AppShell>
-    );
-  },
-};
+export const Template: StoryObj<typeof TopBar> = {};
