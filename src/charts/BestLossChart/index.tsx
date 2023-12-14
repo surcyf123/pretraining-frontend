@@ -1,4 +1,5 @@
 import { group } from "d3-array";
+import { schemeBrBG } from "d3-scale-chromatic";
 import { LineChart as LineGraph } from "echarts/charts";
 import {
   GridComponent,
@@ -11,7 +12,6 @@ import {
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useRef, useEffect, useMemo } from "react";
-import { colorGenerator } from "./utils";
 import type { HistoryData } from "../../utils";
 import type { LineSeriesOption } from "echarts/charts";
 import type {
@@ -89,12 +89,11 @@ export function BestLossChart({
     };
   }, [theme]); // Whenever theme changes we need to dispose the chart to render a fresh one with appropriate styling
 
-  const generator = useMemo(() => colorGenerator(), []);
-
   useEffect(() => {
     if (chartRef.current !== null) {
       const chart = getInstanceByDom(chartRef.current);
       const option: LineChartOptions = {
+        color: schemeBrBG[11],
         title: {
           text: title,
           left: "center",
@@ -172,7 +171,6 @@ export function BestLossChart({
           datasetId: ele,
           name: ele,
           showSymbol: false,
-          color: generator(ele),
         })),
         legend: {
           align: "auto",
@@ -190,7 +188,7 @@ export function BestLossChart({
       };
       chart?.setOption(option, true);
     }
-  }, [processedData, theme, xAxis, xAxisTitle, yAxis, yAxisTitle, title, generator]);
+  }, [processedData, theme, xAxis, xAxisTitle, yAxis, yAxisTitle, title]);
 
   useEffect(() => {
     if (chartRef.current !== null) {
