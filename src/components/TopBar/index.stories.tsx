@@ -5,7 +5,7 @@ export default {
   title: "Topbar",
   component: TopBar,
   args: {
-    properties: {
+    metrics: {
       averageLoss: 120,
       averageVTrust: 23456,
       bestUID: 123,
