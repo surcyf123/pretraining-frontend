@@ -93,7 +93,7 @@ export function BestLossChart({
     if (chartRef.current !== null) {
       const chart = getInstanceByDom(chartRef.current);
       const option: LineChartOptions = {
-        color: schemeBrBG[11],
+        color: schemeBrBG[11], // Ref: https://echarts.apache.org/en/option.html#color
         title: {
           text: title,
           left: "center",
