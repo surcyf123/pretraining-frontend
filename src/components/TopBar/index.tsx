@@ -1,19 +1,18 @@
 import { Group, Image, Stack, Text } from "@mantine/core";
 import Logo from "../Header/logo.png";
-import { PropertiesDictionary } from "./utils";
 
 export interface TopBarProps {
-  properties: Record<keyof PropertiesDictionary, number>;
+  metrics: Record<string, number>;
 }
 
-export function TopBar({ properties }: TopBarProps): JSX.Element {
+export function TopBar({ metrics }: TopBarProps): JSX.Element {
   return (
     <Group justify="space-between" wrap="nowrap">
       <Image {...Logo} h={30} alt="Openpretrain logo" />
       <Group wrap="nowrap">
-        {Object.entries(properties).map(([key, value]) => (
+        {Object.entries(metrics).map(([key, value]) => (
           <Stack key={key} align="center">
-            <Text fw="bold">{PropertiesDictionary[key as keyof PropertiesDictionary]}</Text>
+            <Text fw="bold">{key}</Text>
             <Text>{value}</Text>
           </Stack>
         ))}
