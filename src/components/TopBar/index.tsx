@@ -2,11 +2,11 @@ import { Group, Image, Stack, Text } from "@mantine/core";
 import Logo from "../Header/logo.png";
 import { PropertiesDictionary } from "./utils";
 
-export interface Data {
+export interface TopBarProps {
   properties: Record<keyof PropertiesDictionary, number>;
 }
 
-export function TopBar({ properties }: Data): JSX.Element {
+export function TopBar({ properties }: TopBarProps): JSX.Element {
   return (
     <Group justify="space-between" wrap="nowrap">
       <Image {...Logo} h={30} alt="Openpretrain logo" />
