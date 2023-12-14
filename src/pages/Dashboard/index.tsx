@@ -85,18 +85,29 @@ export function Dashboard() {
     return output;
   }, [chartData]);
 
-  const bestUID = useMemo(() => {
+  const bestLossData = useMemo(() => {
     const losses = tableData
       .map((ele) => ele.average_loss)
       .filter((ele): ele is number => typeof ele === "number");
 
-    const maximumLoss = Math.max(...losses);
-    return tableData.find((ele) => ele.average_loss === maximumLoss)?.uid;
+    const minimumLoss = Math.min(...losses);
+    return tableData.find((ele) => ele.average_loss === minimumLoss);
   }, [tableData]);
 
   return (
     <Stack>
-      <TopBar metrics={{ "Best UID": bestUID }} />
+      <TopBar
+        metrics={{
+          "Best UID": bestLossData?.uid,
+          "Average Loss": bestLossData?.average_loss?.toFixed(4),
+          "Win Percentage": bestLossData?.win_rate.toLocaleString(undefined, {
+            style: "percent",
+            maximumFractionDigits: 2,
+          }),
+          Weight: bestLossData?.weight?.toFixed(4),
+          "Win Total": bestLossData?.win_total,
+        }}
+      />
       <Card shadow="md">
         <BestLossChart
           title="All Time"
