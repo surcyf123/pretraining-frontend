@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
+import { TopBar } from "../../components/TopBar";
 import { fetchTableData, fetchLineChartData } from "./utils";
 import type { UIDDetails } from "../../utils";
 
@@ -84,8 +85,18 @@ export function Dashboard() {
     return output;
   }, [chartData]);
 
+  const bestUID = useMemo(() => {
+    const losses = tableData
+      .map((ele) => ele.average_loss)
+      .filter((ele): ele is number => typeof ele === "number");
+
+    const maximumLoss = Math.max(...losses);
+    return tableData.find((ele) => ele.average_loss === maximumLoss)?.uid;
+  }, [tableData]);
+
   return (
     <Stack>
+      <TopBar metrics={{ "Best UID": bestUID }} />
       <Card shadow="md">
         <BestLossChart
           title="All Time"

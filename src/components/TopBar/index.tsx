@@ -1,7 +1,7 @@
 import { Group, Stack, Text } from "@mantine/core";
 
 export interface TopBarProps {
-  metrics: Record<string, number>;
+  metrics: Record<string, number | undefined | null>;
 }
 
 export function TopBar({ metrics }: TopBarProps): JSX.Element {
