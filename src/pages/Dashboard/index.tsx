@@ -99,9 +99,12 @@ export function Dashboard() {
       <TopBar
         metrics={{
           "Best UID": bestLossData?.uid,
-          "Average Loss": bestLossData?.average_loss,
-          "Win Percentage": bestLossData?.win_rate,
-          Weight: bestLossData?.weight,
+          "Average Loss": bestLossData?.average_loss?.toFixed(4),
+          "Win Percentage": bestLossData?.win_rate.toLocaleString(undefined, {
+            style: "percent",
+            maximumFractionDigits: 2,
+          }),
+          Weight: bestLossData?.weight?.toFixed(4),
           "Win Total": bestLossData?.win_total,
         }}
       />
