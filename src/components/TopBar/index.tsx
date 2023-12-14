@@ -1,5 +1,4 @@
-import { Group, Image, Stack, Text } from "@mantine/core";
-import Logo from "../Header/logo.png";
+import { Group, Stack, Text } from "@mantine/core";
 
 export interface TopBarProps {
   metrics: Record<string, number>;
@@ -7,16 +6,13 @@ export interface TopBarProps {
 
 export function TopBar({ metrics }: TopBarProps): JSX.Element {
   return (
-    <Group justify="space-between" wrap="nowrap">
-      <Image {...Logo} h={30} alt="Openpretrain logo" />
-      <Group wrap="nowrap">
-        {Object.entries(metrics).map(([key, value]) => (
-          <Stack key={key} align="center">
-            <Text fw="bold">{key}</Text>
-            <Text>{value}</Text>
-          </Stack>
-        ))}
-      </Group>
+    <Group wrap="nowrap" justify="space-between">
+      {Object.entries(metrics).map(([key, value]) => (
+        <Stack key={key} align="center">
+          <Text fw="bold">{key}</Text>
+          <Text>{value}</Text>
+        </Stack>
+      ))}
     </Group>
   );
 }
