@@ -78,3 +78,15 @@ def filter_recent_data(data):
         iterator = filter(lambda ele: (now - datetime.datetime.fromtimestamp((ele["timestamp"]/1000))).days<=3, data)
         filtered_data = list(iterator)
     return filtered_data
+
+def smooth_data(data):
+    df = pd.DataFrame(data)
+    grouped_data=df.groupby('key')
+    # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.rolling.html
+    df['smoothed_best_average_loss'] = grouped_data['best_average_loss'].rolling( 
+        window=40, # Window size.
+        min_periods=10 # Minimum entries required to calculate data.
+    ).mean().reset_index(0, drop = True) # drop the index column
+    output = df.to_dict(orient = "records")
+    return output
+
