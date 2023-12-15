@@ -112,7 +112,7 @@ export function Dashboard() {
         <BestLossChart
           title="All Time"
           data={historyJSON ?? []}
-          yAxis="best_average_loss"
+          yAxis="smoothed_best_average_loss"
           xAxis="timestamp"
           yAxisTitle="Best average loss"
           xAxisTitle="Time"
@@ -124,8 +124,8 @@ export function Dashboard() {
       <Card shadow="md">
         <BestLossChart
           title="Recent"
-          data={recentJSON ?? []} // Get last 1000 elements
-          yAxis="best_average_loss"
+          data={recentJSON ?? []}
+          yAxis="smoothed_best_average_loss"
           xAxis="timestamp"
           yAxisTitle="Best average loss"
           xAxisTitle="Time"
