@@ -81,7 +81,7 @@ def filter_recent_data(data):
 
 def smooth_data(data):
     df = pd.DataFrame(data)
-    grouped_data=df.groupby('key')
+    grouped_data = df.groupby('key')
     # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.rolling.html
     df['smoothed_best_average_loss'] = grouped_data['best_average_loss'].rolling( 
         window=40, # Window size.
