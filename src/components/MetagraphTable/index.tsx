@@ -92,18 +92,10 @@ export function MetagraphTable({ data }: MetagraphTableProps): JSX.Element {
           {table.getHeaderGroups().map((headerGroup) => (
             <Table.Tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <Table.Th
-                  key={header.id}
-                  onClick={header.column.getToggleSortingHandler()}
-                  style={{ cursor: "pointer" }}
-                >
+                <Table.Th key={header.id} style={{ cursor: "pointer" }}>
                   {header.isPlaceholder === true
                     ? null
                     : flexRender(header.column.columnDef.header, header.getContext())}
-                  {{
-                    asc: " 🔼",
-                    desc: " 🔽",
-                  }[header.column.getIsSorted().valueOf().toString()] ?? null}
                 </Table.Th>
               ))}
             </Table.Tr>
