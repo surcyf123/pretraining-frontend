@@ -44,7 +44,15 @@
   "function": {
     "metagraph": {
       "build": true,
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "BucketName"
+          ],
+          "category": "storage",
+          "resourceName": "s359bce836"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
