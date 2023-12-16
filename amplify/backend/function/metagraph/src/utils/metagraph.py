@@ -5,7 +5,7 @@ metagraph = bt.metagraph(netuid=9, sync=True)  # Keeping default network "finey"
 
 def get_metagraph_data():
   metagraph_data={
-  "metaData":metagraph.metaData(),
+  "metaData":metagraph.metadata(),
   "each_neuron_stake":metagraph.S, # Ref: https://docs.bittensor.com/python-api/html/autoapi/bittensor/metagraph/index.html#bittensor.metagraph.metagraph.S
   "each_neuron_ranks":metagraph.R,
   "each_neuron_incentives":metagraph.I,
