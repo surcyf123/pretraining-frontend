@@ -1,6 +1,6 @@
 import boto3
 import os
-import simplejson
+import json
 
 s3_client = boto3.client("s3")
 
@@ -9,7 +9,7 @@ def upload(data,):
     s3_client.put_object(
         Bucket = os.environ.get("STORAGE_S359BCE836_BUCKETNAME"),
         # https://simplejson.readthedocs.io/en/latest/
-        Body = simplejson.dumps(data, indent = 2, ignore_nan=True), # Ref: https://github.com/boto/boto3/issues/477#issuecomment-268341653
+        Body = json.dumps(data, indent = 2), # Ref: https://github.com/boto/boto3/issues/477#issuecomment-268341653
         Key = f"public/metagraph.json", # Ref: https://docs.amplify.aws/javascript/build-a-backend/storage/configure-access/
         # Ref: https://docs.amplify.aws/javascript/build-a-backend/storage/download/#frequently-asked-questions
         # Ref: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
