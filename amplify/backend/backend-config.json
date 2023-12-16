@@ -85,6 +85,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_metagraph_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "metagraph"
+        }
+      ]
+    },
+    "AMPLIFY_function_metagraph_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "metagraph"
+        }
+      ]
+    },
     "AMPLIFY_function_wandbHistory_deploymentBucketName": {
       "usedBy": [
         {
