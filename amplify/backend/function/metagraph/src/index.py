@@ -1,8 +1,11 @@
 import json
+from utils.metagraph import get_metagraph_data
+from utils.upload import upload
 
 def handler(event, context):
-  print('received event:')
-  print(event)
+  metagraph_data=get_metagraph_data()
+  upload(metagraph_data)
+
   
   return {
       'statusCode': 200,
