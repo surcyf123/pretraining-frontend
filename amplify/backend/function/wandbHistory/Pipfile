@@ -11,7 +11,7 @@ boto3 = "==1.29.5"
 wandb = "==0.16.0"
 pandas = "==2.0..3"
 simplejson = "3.19.2"
-bittensor = "*"
+bittensor = "6.4.4"
 
 [requires]
 python_version = "3.8"
