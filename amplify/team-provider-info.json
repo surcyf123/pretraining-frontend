@@ -22,7 +22,8 @@
           "wandbApiKey": "d99387d278a657c2e12313a7758ac33f3de8fd26",
           "deploymentBucketName": "amplify-pretraining-prod-115707-deployment",
           "s3Key": "amplify-builds/wandbHistory-2b4b78356c7a6a776577-build.zip"
-        }
+        },
+        "metagraph": {}
       },
       "auth": {
         "pretraining44239c45": {}

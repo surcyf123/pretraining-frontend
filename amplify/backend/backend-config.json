@@ -42,6 +42,12 @@
     }
   },
   "function": {
+    "metagraph": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "wandb": {
       "build": true,
       "dependsOn": [
