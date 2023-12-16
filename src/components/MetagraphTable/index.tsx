@@ -1,4 +1,10 @@
-import { createColumnHelper } from "@tanstack/react-table";
+import { Table, Stack } from "@mantine/core";
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 
 interface MetagraphDetails {
   neuronID: number;
@@ -68,8 +74,45 @@ const Columns = [
   }),
 ];
 
-console.log(Columns); // remove this
+export interface MetagraphTableProps {
+  data: MetagraphDetails[];
+}
 
-export function MetagraphTable(): JSX.Element {
-  return <>Metagraph</>;
+export function MetagraphTable({ data }: MetagraphTableProps): JSX.Element {
+  const table = useReactTable({
+    data,
+    columns: Columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
+
+  return (
+    <Stack>
+      <Table>
+        <Table.Thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <Table.Tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <Table.Th key={header.id} style={{ cursor: "pointer" }}>
+                  {header.isPlaceholder === true
+                    ? null
+                    : flexRender(header.column.columnDef.header, header.getContext())}
+                </Table.Th>
+              ))}
+            </Table.Tr>
+          ))}
+        </Table.Thead>
+        <Table.Tbody>
+          {table.getRowModel().rows.map((row) => (
+            <Table.Tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <Table.Td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </Table.Td>
+              ))}
+            </Table.Tr>
+          ))}
+        </Table.Tbody>
+      </Table>
+    </Stack>
+  );
 }
