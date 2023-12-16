@@ -7,7 +7,7 @@ verify_ssl = true
 
 [packages]
 src = {editable = true, path = "./src"}
-bittensor = "*"
+bittensor = "6.4.4"
 
 [requires]
 python_version = "3.8"
