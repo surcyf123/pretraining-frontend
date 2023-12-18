@@ -110,7 +110,7 @@ export async function fetchMetagraphData(): Promise<{
 }
 
 // eslint-disable-next-line import/no-unused-modules
-export async function fetchTaoStatisticsJSON(): Promise<TaoStatistics> {
+export async function fetchTaoStatistics(): Promise<TaoStatistics> {
   const rawResponse = await fetch("https://taostats.io/data.json");
   const response = (await rawResponse.json()) as TaoStatistics[];
   return response[0];
