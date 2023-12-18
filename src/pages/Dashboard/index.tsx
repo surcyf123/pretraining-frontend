@@ -4,16 +4,22 @@ import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
+import { MetagraphTable } from "../../components/MetagraphTable";
 import { StatisticsTable } from "../../components/StatisticsTable";
 import { TopBar } from "../../components/TopBar";
-import { fetchTableData, fetchLineChartData, fetchTaoToastsJSON } from "./utils";
+import {
+  fetchTableData,
+  fetchLineChartData,
+  fetchMetagraphData,
+  fetchTaoStatisticsJSON,
+} from "./utils";
 import type { UIDDetails } from "../../utils";
 
 export function Dashboard() {
   const {
     data: recentUIDJSON,
-    isLoading,
-    isRefetching,
+    isLoading: isRecentUIDJSONLoading,
+    isRefetching: isRefetchingRecentUIDJSON,
   } = useQuery({
     queryKey: ["recentUIDJSON"],
     queryFn: () => fetchTableData(),
@@ -44,17 +50,27 @@ export function Dashboard() {
   });
 
   // TODO: handle refetching loading
-  const { data: taoToastsData } = useQuery({
-    queryKey: ["taoToastsData"],
-    queryFn: () => fetchTaoToastsJSON(),
+  const { data: taoStatistics } = useQuery({
+    queryKey: ["taoStatistics"],
+    queryFn: () => fetchTaoStatisticsJSON(),
+  });
+  const { data: metagraphDetails, isRefetching: isRefetchingMetagraphJSON } = useQuery({
+    queryKey: ["metagraphJSON"],
+    queryFn: () => fetchMetagraphData(),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
 
+  const isRefetching =
+    isRefetchingRecentUIDJSON === true ||
+    isRefetchingHistoryJSON === true ||
+    isRefetchingRecentJSON === true ||
+    isRefetchingMetagraphJSON === true;
+
   const { colorScheme } = useMantineColorScheme();
   const processedData = useMemo<UIDDetails[]>(() => {
     let output: UIDDetails[] = [];
-    if (isLoading === false && recentUIDJSON !== undefined) {
+    if (isRecentUIDJSONLoading === false && recentUIDJSON !== undefined) {
       output = Object.values(recentUIDJSON)
         .flat()
         .flatMap((ele) => (ele === null ? [] : Object.values(ele.uid_data)))
@@ -68,7 +84,7 @@ export function Dashboard() {
         }));
     }
     return output;
-  }, [isLoading, recentUIDJSON]);
+  }, [isRecentUIDJSONLoading, recentUIDJSON]);
 
   // complete chart data
   const chartData = useMemo(
@@ -106,12 +122,12 @@ export function Dashboard() {
     <Stack>
       <TopBar
         metrics={{
-          Price: taoToastsData?.price,
-          "Market Cap": taoToastsData?.market_cap,
-          "24h Volume": taoToastsData?.["24h_volume"],
-          "Current Supply": taoToastsData?.current_supply,
-          "Validating APY": taoToastsData?.validating_apy,
-          "Staking APY": taoToastsData?.staking_apy,
+          Price: taoStatistics?.price,
+          "Market Cap": taoStatistics?.market_cap,
+          "24h Volume": taoStatistics?.["24h_volume"],
+          "Current Supply": taoStatistics?.current_supply,
+          "Validating APY": taoStatistics?.validating_apy,
+          "Staking APY": taoStatistics?.staking_apy,
         }}
       />
       <Divider />
@@ -125,6 +141,16 @@ export function Dashboard() {
           }),
           Weight: bestLossData?.weight?.toFixed(4),
           "Win Total": bestLossData?.win_total,
+        }}
+      />
+      <Divider />
+      <TopBar
+        metrics={{
+          "Network UID": metagraphDetails?.metadata.netuid,
+          Neurons: metagraphDetails?.metadata.n,
+          Block: metagraphDetails?.metadata.block,
+          Version: metagraphDetails?.metadata.version,
+          Network: metagraphDetails?.metadata.network,
         }}
       />
       <Card shadow="md">
@@ -164,7 +190,7 @@ export function Dashboard() {
             yAxis="weight"
             xAxisTitle="UID"
             yAxisTitle="Weight"
-            isLoading={isLoading}
+            isLoading={isRecentUIDJSONLoading}
           />
         </Card>
         <Card shadow="md">
@@ -176,7 +202,7 @@ export function Dashboard() {
             yAxis="win_rate"
             xAxisTitle="UID"
             yAxisTitle="Win Rate"
-            isLoading={isLoading}
+            isLoading={isRecentUIDJSONLoading}
           />
         </Card>
         <Card shadow="md">
@@ -188,16 +214,17 @@ export function Dashboard() {
             yAxis="average_loss"
             xAxisTitle="UID"
             yAxisTitle="Loss"
-            isLoading={isLoading}
+            isLoading={isRecentUIDJSONLoading}
           />
         </Card>
       </Group>
       <Card shadow="md">
         <StatisticsTable data={tableData} />
       </Card>
-      {isRefetching === true ||
-      isRefetchingHistoryJSON === true ||
-      isRefetchingRecentJSON === true ? (
+      <Card shadow="md">
+        <MetagraphTable data={metagraphDetails?.neuronData ?? []} />
+      </Card>
+      {isRefetching === true ? (
         <Loader color="blue" type="bars" pos="fixed" left="20px" bottom="20px" />
       ) : null}
     </Stack>
