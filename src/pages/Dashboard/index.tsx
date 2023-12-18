@@ -43,6 +43,7 @@ export function Dashboard() {
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
 
+  // TODO: handle refetching loading
   const { data: taoToastsData } = useQuery({
     queryKey: ["taoToastsData"],
     queryFn: () => fetchTaoToastsJSON(),
