@@ -1,4 +1,4 @@
-import { Card, Stack, useMantineColorScheme, Group, Loader } from "@mantine/core";
+import { Card, Stack, useMantineColorScheme, Group, Loader, Divider } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
@@ -6,7 +6,7 @@ import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { StatisticsTable } from "../../components/StatisticsTable";
 import { TopBar } from "../../components/TopBar";
-import { fetchTableData, fetchLineChartData } from "./utils";
+import { fetchTableData, fetchLineChartData, fetchTaoToastsJSON } from "./utils";
 import type { UIDDetails } from "../../utils";
 
 export function Dashboard() {
@@ -39,6 +39,13 @@ export function Dashboard() {
   } = useQuery({
     queryKey: ["recentJSON"],
     queryFn: () => fetchLineChartData("recent.json"),
+    refetchInterval: 10 * 60 * 1000,
+    // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
+  });
+
+  const { data: taoToastsData } = useQuery({
+    queryKey: ["taoToastsData"],
+    queryFn: () => fetchTaoToastsJSON(),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
@@ -96,6 +103,17 @@ export function Dashboard() {
 
   return (
     <Stack>
+      <TopBar
+        metrics={{
+          Price: taoToastsData?.price,
+          "Market Cap": taoToastsData?.market_cap,
+          "24h Volume": taoToastsData?.["24h_volume"],
+          "Current Supply": taoToastsData?.current_supply,
+          "Validating APY": taoToastsData?.validating_apy,
+          "Staking APY": taoToastsData?.staking_apy,
+        }}
+      />
+      <Divider />
       <TopBar
         metrics={{
           "Best UID": bestLossData?.uid,
