@@ -19,7 +19,7 @@ export interface MetagraphDetails {
   eachNeuronWeight: string;
   eachNeuronHotKeys: string;
   eachNeuronColdKeys: string;
-  eachNeuronStake: string;
+  eachNeuronStake: number;
 }
 
 const ColumnHelper = createColumnHelper<MetagraphDetails>();
@@ -65,6 +65,10 @@ const Columns = [
     cell: (info) => info.getValue(),
     id: "Weight",
   }),
+  ColumnHelper.accessor((row) => row.eachNeuronStake, {
+    cell: (info) => info.getValue(),
+    id: "Stake",
+  }),
   ColumnHelper.accessor((row) => row.eachNeuronHotKeys, {
     cell: (info) => info.getValue(),
     id: "Hotkeys",
@@ -73,10 +77,7 @@ const Columns = [
     cell: (info) => info.getValue(),
     id: "Coldkeys",
   }),
-  ColumnHelper.accessor((row) => row.eachNeuronStake, {
-    cell: (info) => info.getValue(),
-    id: "Stake",
-  }),
+
 ];
 
 export interface MetagraphTableProps {
