@@ -49,9 +49,10 @@ export function Dashboard() {
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
 
-  const { data: taoStatistics } = useQuery({
+  const { data: taoStatistics, isRefetching: isRefetchingTaoStatistics } = useQuery({
     queryKey: ["taoStatistics"],
     queryFn: () => fetchTaoStatistics(),
+    refetchInterval: 5 * 60 * 1000,
   });
 
   const { data: metagraphDetails, isRefetching: isRefetchingMetagraphJSON } = useQuery({
@@ -65,7 +66,8 @@ export function Dashboard() {
     isRefetchingRecentUIDJSON === true ||
     isRefetchingHistoryJSON === true ||
     isRefetchingRecentJSON === true ||
-    isRefetchingMetagraphJSON === true;
+    isRefetchingMetagraphJSON === true ||
+    isRefetchingTaoStatistics === true;
 
   const { colorScheme } = useMantineColorScheme();
   const processedData = useMemo<UIDDetails[]>(() => {
