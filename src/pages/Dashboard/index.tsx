@@ -192,7 +192,7 @@ export function Dashboard() {
             yAxis="weight"
             xAxisTitle="UID"
             yAxisTitle="Weight"
-            isLoading={isRecentUIDJSONLoading}
+            loading={isRecentUIDJSONLoading}
           />
         </Card>
         <Card shadow="md">
@@ -204,7 +204,7 @@ export function Dashboard() {
             yAxis="win_rate"
             xAxisTitle="UID"
             yAxisTitle="Win Rate"
-            isLoading={isRecentUIDJSONLoading}
+            loading={isRecentUIDJSONLoading}
           />
         </Card>
         <Card shadow="md">
@@ -216,7 +216,7 @@ export function Dashboard() {
             yAxis="average_loss"
             xAxisTitle="UID"
             yAxisTitle="Loss"
-            isLoading={isRecentUIDJSONLoading}
+            loading={isRecentUIDJSONLoading}
           />
         </Card>
       </Group>
