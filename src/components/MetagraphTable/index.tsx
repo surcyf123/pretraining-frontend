@@ -6,19 +6,20 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-interface MetagraphDetails {
+export interface MetagraphDetails {
   neuronID: number;
-  eachNeuronRank: string;
-  eachNeuronIncentives: string;
-  eachNeuronEmission: string;
-  eachNeuronConsensus: string;
-  eachNeuronTrust: string;
-  eachNeuronValidatorTrust: string;
-  eachNeuronDividends: string;
+  neuronRank: string;
+  neuronIncentives: string;
+  neuronEmission: string;
+  neuronConsensus: string;
+  neuronTrust: string;
+  neuronValidatorTrust: string;
+  neuronDividends: string;
   bonds: string;
-  eachNeuronWeight: string;
-  eachNeuronHotKeys: string;
-  eachNeuronColdKeys: string;
+  neuronWeight: string;
+  neuronHotKeys: string;
+  neuronColdKeys: string;
+  neuronStake: string;
 }
 
 const ColumnHelper = createColumnHelper<MetagraphDetails>();
@@ -28,31 +29,31 @@ const Columns = [
     cell: (info) => info.getValue(),
     id: "ID",
   }),
-  ColumnHelper.accessor((row) => row.eachNeuronRank, {
+  ColumnHelper.accessor((row) => row.neuronRank, {
     cell: (info) => info.getValue(),
     id: "Rank",
   }),
-  ColumnHelper.accessor((row) => row.eachNeuronIncentives, {
+  ColumnHelper.accessor((row) => row.neuronIncentives, {
     cell: (info) => info.getValue(),
     id: "Incentives",
   }),
-  ColumnHelper.accessor((row) => row.eachNeuronEmission, {
+  ColumnHelper.accessor((row) => row.neuronEmission, {
     cell: (info) => info.getValue(),
     id: "Emission",
   }),
-  ColumnHelper.accessor((row) => row.eachNeuronConsensus, {
+  ColumnHelper.accessor((row) => row.neuronConsensus, {
     cell: (info) => info.getValue(),
     id: "Consensus",
   }),
-  ColumnHelper.accessor((row) => row.eachNeuronTrust, {
+  ColumnHelper.accessor((row) => row.neuronTrust, {
     cell: (info) => info.getValue(),
     id: "Trust",
   }),
-  ColumnHelper.accessor((row) => row.eachNeuronValidatorTrust, {
+  ColumnHelper.accessor((row) => row.neuronValidatorTrust, {
     cell: (info) => info.getValue(),
     id: "Validator Trust",
   }),
-  ColumnHelper.accessor((row) => row.eachNeuronDividends, {
+  ColumnHelper.accessor((row) => row.neuronDividends, {
     cell: (info) => info.getValue(),
     id: "Dividends",
   }),
@@ -60,15 +61,19 @@ const Columns = [
     cell: (info) => info.getValue(),
     id: "Bonds",
   }),
-  ColumnHelper.accessor((row) => row.eachNeuronWeight, {
+  ColumnHelper.accessor((row) => row.neuronWeight, {
     cell: (info) => info.getValue(),
     id: "Weight",
   }),
-  ColumnHelper.accessor((row) => row.eachNeuronHotKeys, {
+  ColumnHelper.accessor((row) => row.neuronStake, {
+    cell: (info) => info.getValue(),
+    id: "Stake",
+  }),
+  ColumnHelper.accessor((row) => row.neuronHotKeys, {
     cell: (info) => info.getValue(),
     id: "Hotkeys",
   }),
-  ColumnHelper.accessor((row) => row.eachNeuronColdKeys, {
+  ColumnHelper.accessor((row) => row.neuronColdKeys, {
     cell: (info) => info.getValue(),
     id: "Coldkeys",
   }),
