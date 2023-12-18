@@ -53,6 +53,7 @@ export function Dashboard() {
     queryKey: ["taoStatistics"],
     queryFn: () => fetchTaoStatistics(),
   });
+
   const { data: metagraphDetails, isRefetching: isRefetchingMetagraphJSON } = useQuery({
     queryKey: ["metagraphJSON"],
     queryFn: () => fetchMetagraphData(),
