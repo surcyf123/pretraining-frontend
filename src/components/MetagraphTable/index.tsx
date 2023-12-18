@@ -17,9 +17,9 @@ export interface MetagraphDetails {
   neuronDividends: number;
   bonds: number;
   neuronWeight: number;
-  neuronHotKeys: number;
-  neuronColdKeys: number;
   neuronStake: number;
+  neuronHotKeys: string;
+  neuronColdKeys: string;
 }
 
 const ColumnHelper = createColumnHelper<MetagraphDetails>();
@@ -30,43 +30,43 @@ const Columns = [
     id: "ID",
   }),
   ColumnHelper.accessor((row) => row.neuronRank, {
-    cell: (info) => info.getValue(),
+    cell: (info) => info.getValue().toFixed(4),
     id: "Rank",
   }),
   ColumnHelper.accessor((row) => row.neuronIncentives, {
-    cell: (info) => info.getValue(),
+    cell: (info) => info.getValue().toFixed(4),
     id: "Incentives",
   }),
   ColumnHelper.accessor((row) => row.neuronEmission, {
-    cell: (info) => info.getValue(),
+    cell: (info) => info.getValue().toFixed(4),
     id: "Emission",
   }),
   ColumnHelper.accessor((row) => row.neuronConsensus, {
-    cell: (info) => info.getValue(),
+    cell: (info) => info.getValue().toFixed(4),
     id: "Consensus",
   }),
   ColumnHelper.accessor((row) => row.neuronTrust, {
-    cell: (info) => info.getValue(),
+    cell: (info) => info.getValue().toFixed(4),
     id: "Trust",
   }),
   ColumnHelper.accessor((row) => row.neuronValidatorTrust, {
-    cell: (info) => info.getValue(),
+    cell: (info) => info.getValue().toFixed(4),
     id: "Validator Trust",
   }),
   ColumnHelper.accessor((row) => row.neuronDividends, {
-    cell: (info) => info.getValue(),
+    cell: (info) => info.getValue().toFixed(4),
     id: "Dividends",
   }),
   ColumnHelper.accessor((row) => row.bonds, {
-    cell: (info) => info.getValue(),
+    cell: (info) => info.getValue().toFixed(4),
     id: "Bonds",
   }),
   ColumnHelper.accessor((row) => row.neuronWeight, {
-    cell: (info) => info.getValue(),
+    cell: (info) => info.getValue().toFixed(4),
     id: "Weight",
   }),
   ColumnHelper.accessor((row) => row.neuronStake, {
-    cell: (info) => info.getValue(),
+    cell: (info) => info.getValue().toFixed(4),
     id: "Stake",
   }),
   ColumnHelper.accessor((row) => row.neuronHotKeys, {
