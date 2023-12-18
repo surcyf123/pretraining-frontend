@@ -12,6 +12,7 @@ import {
   fetchLineChartData,
   fetchMetagraphData,
   fetchTaoStatisticsJSON,
+  fetchTaoStatistics,
 } from "./utils";
 import type { UIDDetails } from "../../utils";
 
@@ -52,7 +53,7 @@ export function Dashboard() {
   // TODO: handle refetching loading
   const { data: taoStatistics } = useQuery({
     queryKey: ["taoStatistics"],
-    queryFn: () => fetchTaoStatisticsJSON(),
+    queryFn: () => fetchTaoStatistics(),
   });
   const { data: metagraphDetails, isRefetching: isRefetchingMetagraphJSON } = useQuery({
     queryKey: ["metagraphJSON"],
