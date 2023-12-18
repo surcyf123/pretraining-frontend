@@ -6,7 +6,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { SelectProps, PaginationProps } from "@mantine/core";
 import type { PaginationState } from "@tanstack/react-table";
 
@@ -26,63 +26,6 @@ export interface MetagraphDetails {
   neuronColdKeys: string;
 }
 
-const ColumnHelper = createColumnHelper<MetagraphDetails>();
-
-const Columns = [
-  ColumnHelper.accessor((row) => row.neuronID, {
-    cell: (info) => info.getValue(),
-    id: "ID",
-  }),
-  ColumnHelper.accessor((row) => row.neuronRank, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Rank",
-  }),
-  ColumnHelper.accessor((row) => row.neuronIncentives, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Incentives",
-  }),
-  ColumnHelper.accessor((row) => row.neuronEmission, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Emission",
-  }),
-  ColumnHelper.accessor((row) => row.neuronConsensus, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Consensus",
-  }),
-  ColumnHelper.accessor((row) => row.neuronTrust, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Trust",
-  }),
-  ColumnHelper.accessor((row) => row.neuronValidatorTrust, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Validator Trust",
-  }),
-  ColumnHelper.accessor((row) => row.neuronDividends, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Dividends",
-  }),
-  ColumnHelper.accessor((row) => row.bonds, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Bonds",
-  }),
-  ColumnHelper.accessor((row) => row.neuronWeight, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Weight",
-  }),
-  ColumnHelper.accessor((row) => row.neuronStake, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Stake",
-  }),
-  ColumnHelper.accessor((row) => row.neuronHotKeys, {
-    cell: (info) => info.getValue(),
-    id: "Hotkeys",
-  }),
-  ColumnHelper.accessor((row) => row.neuronColdKeys, {
-    cell: (info) => info.getValue(),
-    id: "Coldkeys",
-  }),
-];
-
 export interface MetagraphTableProps {
   data: MetagraphDetails[];
 }
@@ -93,10 +36,68 @@ export function MetagraphTable({ data }: MetagraphTableProps): JSX.Element {
     pageSize: 10,
   });
 
+  const columns = useMemo(() => {
+    const columnHelper = createColumnHelper<MetagraphDetails>();
+    return [
+      columnHelper.accessor((row) => row.neuronID, {
+        cell: (info) => info.getValue(),
+        id: "ID",
+      }),
+      columnHelper.accessor((row) => row.neuronRank, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Rank",
+      }),
+      columnHelper.accessor((row) => row.neuronIncentives, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Incentives",
+      }),
+      columnHelper.accessor((row) => row.neuronEmission, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Emission",
+      }),
+      columnHelper.accessor((row) => row.neuronConsensus, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Consensus",
+      }),
+      columnHelper.accessor((row) => row.neuronTrust, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Trust",
+      }),
+      columnHelper.accessor((row) => row.neuronValidatorTrust, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Validator Trust",
+      }),
+      columnHelper.accessor((row) => row.neuronDividends, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Dividends",
+      }),
+      columnHelper.accessor((row) => row.bonds, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Bonds",
+      }),
+      columnHelper.accessor((row) => row.neuronWeight, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Weight",
+      }),
+      columnHelper.accessor((row) => row.neuronStake, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Stake",
+      }),
+      columnHelper.accessor((row) => row.neuronHotKeys, {
+        cell: (info) => info.getValue(),
+        id: "Hotkeys",
+      }),
+      columnHelper.accessor((row) => row.neuronColdKeys, {
+        cell: (info) => info.getValue(),
+        id: "Coldkeys",
+      }),
+    ];
+  }, []);
+
   const table = useReactTable({
     state: { pagination: { pageIndex, pageSize } },
     data,
-    columns: Columns,
+    columns,
     onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
