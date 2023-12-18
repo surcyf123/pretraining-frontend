@@ -3,8 +3,11 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { useState } from "react";
+import type { PaginationState } from "@tanstack/react-table";
 
 export interface MetagraphDetails {
   neuronID: number;
@@ -84,10 +87,18 @@ export interface MetagraphTableProps {
 }
 
 export function MetagraphTable({ data }: MetagraphTableProps): JSX.Element {
+  const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+
   const table = useReactTable({
+    state: { pagination: { pageIndex, pageSize } },
     data,
     columns: Columns,
+    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
