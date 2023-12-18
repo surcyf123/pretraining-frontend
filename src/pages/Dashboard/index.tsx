@@ -11,7 +11,6 @@ import {
   fetchTableData,
   fetchLineChartData,
   fetchMetagraphData,
-  fetchTaoStatisticsJSON,
   fetchTaoStatistics,
 } from "./utils";
 import type { UIDDetails } from "../../utils";
