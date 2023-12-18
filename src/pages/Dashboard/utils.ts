@@ -55,7 +55,7 @@ export async function fetchMetagraphData(): Promise<{
     neuron_data: NeuronDetails[];
   };
 
-  const neuronData = json.neuron_data.map(
+  const neuronData = json.neuron_data.map<MetagraphDetails>(
     ({
       each_neuron_coldkeys,
       each_neuron_weights,
