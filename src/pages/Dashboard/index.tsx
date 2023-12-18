@@ -7,7 +7,12 @@ import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { MetagraphTable } from "../../components/MetagraphTable";
 import { StatisticsTable } from "../../components/StatisticsTable";
 import { TopBar } from "../../components/TopBar";
-import { fetchTableData, fetchLineChartData, fetchMetagraphData } from "./utils";
+import {
+  fetchTableData,
+  fetchLineChartData,
+  fetchMetagraphData,
+  fetchTaoStatistics,
+} from "./utils";
 import type { UIDDetails } from "../../utils";
 
 export function Dashboard() {
@@ -42,6 +47,11 @@ export function Dashboard() {
     queryFn: () => fetchLineChartData("recent.json"),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
+  });
+
+  const { data: taoStatistics } = useQuery({
+    queryKey: ["taoStatistics"],
+    queryFn: () => fetchTaoStatistics(),
   });
 
   const { data: metagraphDetails, isRefetching: isRefetchingMetagraphJSON } = useQuery({
@@ -110,6 +120,17 @@ export function Dashboard() {
 
   return (
     <Stack>
+      <TopBar
+        metrics={{
+          Price: taoStatistics?.price,
+          "Market Cap": taoStatistics?.market_cap,
+          "24h Volume": taoStatistics?.["24h_volume"],
+          "Current Supply": taoStatistics?.current_supply,
+          "Validating APY": taoStatistics?.validating_apy,
+          "Staking APY": taoStatistics?.staking_apy,
+        }}
+      />
+      <Divider />
       <TopBar
         metrics={{
           "Best UID": bestLossData?.uid,
