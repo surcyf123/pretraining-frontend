@@ -165,7 +165,7 @@ export function Dashboard() {
           xAxisTitle="Time"
           style={{ height: "40vh" }}
           theme={colorScheme === "auto" ? "dark" : colorScheme}
-          isLoading={isHistoryJSONLoading}
+          loading={isHistoryJSONLoading}
         />
       </Card>
       <Card shadow="md">
@@ -178,7 +178,7 @@ export function Dashboard() {
           xAxisTitle="Time"
           style={{ height: "40vh" }}
           theme={colorScheme === "auto" ? "dark" : colorScheme}
-          isLoading={isRecentJSONLoading}
+          loading={isRecentJSONLoading}
         />
       </Card>
 
