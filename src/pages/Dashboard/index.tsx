@@ -13,8 +13,8 @@ import type { UIDDetails } from "../../utils";
 export function Dashboard() {
   const {
     data: recentUIDJSON,
-    isLoading,
-    isRefetching,
+    isLoading: isRecentUIDJSONLoading,
+    isRefetching: isRefetchingRecentUIDJSON,
   } = useQuery({
     queryKey: ["recentUIDJSON"],
     queryFn: () => fetchTableData(),
@@ -44,28 +44,23 @@ export function Dashboard() {
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
 
-  const {
-    data: metagraphDetails,
-    isLoading: isMetagraphLoading,
-    isRefetching: isMetagraphRefetching,
-  } = useQuery({
+  const { data: metagraphDetails, isRefetching: isRefetchingMetagraphJSON } = useQuery({
     queryKey: ["metagraphJSON"],
     queryFn: () => fetchMetagraphData(),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
 
-  const isRefetchingData =
-    isRefetching === true ||
+  const isRefetching =
+    isRefetchingRecentUIDJSON === true ||
     isRefetchingHistoryJSON === true ||
     isRefetchingRecentJSON === true ||
-    isMetagraphRefetching === true ||
-    isMetagraphLoading === true;
+    isRefetchingMetagraphJSON === true;
 
   const { colorScheme } = useMantineColorScheme();
   const processedData = useMemo<UIDDetails[]>(() => {
     let output: UIDDetails[] = [];
-    if (isLoading === false && recentUIDJSON !== undefined) {
+    if (isRecentUIDJSONLoading === false && recentUIDJSON !== undefined) {
       output = Object.values(recentUIDJSON)
         .flat()
         .flatMap((ele) => (ele === null ? [] : Object.values(ele.uid_data)))
@@ -79,7 +74,7 @@ export function Dashboard() {
         }));
     }
     return output;
-  }, [isLoading, recentUIDJSON]);
+  }, [isRecentUIDJSONLoading, recentUIDJSON]);
 
   // complete chart data
   const chartData = useMemo(
@@ -164,7 +159,7 @@ export function Dashboard() {
             yAxis="weight"
             xAxisTitle="UID"
             yAxisTitle="Weight"
-            isLoading={isLoading}
+            isLoading={isRecentUIDJSONLoading}
           />
         </Card>
         <Card shadow="md">
@@ -176,7 +171,7 @@ export function Dashboard() {
             yAxis="win_rate"
             xAxisTitle="UID"
             yAxisTitle="Win Rate"
-            isLoading={isLoading}
+            isLoading={isRecentUIDJSONLoading}
           />
         </Card>
         <Card shadow="md">
@@ -188,7 +183,7 @@ export function Dashboard() {
             yAxis="average_loss"
             xAxisTitle="UID"
             yAxisTitle="Loss"
-            isLoading={isLoading}
+            isLoading={isRecentUIDJSONLoading}
           />
         </Card>
       </Group>
@@ -198,7 +193,7 @@ export function Dashboard() {
       <Card shadow="md">
         <MetagraphTable data={metagraphDetails?.neuronData ?? []} />
       </Card>
-      {isRefetchingData ? (
+      {isRefetching === true ? (
         <Loader color="blue" type="bars" pos="fixed" left="20px" bottom="20px" />
       ) : null}
     </Stack>
