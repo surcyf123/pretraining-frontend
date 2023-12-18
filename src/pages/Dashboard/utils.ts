@@ -2,7 +2,7 @@ import { downloadData } from "aws-amplify/storage";
 import type { MetagraphDetails } from "../../components/MetagraphTable";
 import type { HistoryData, RunDetails } from "../../utils";
 
-interface TaoToastsData {
+interface TaoStatistics {
   network: string;
   token: string;
   price: string;
@@ -110,9 +110,9 @@ export async function fetchMetagraphData(): Promise<{
 }
 
 // eslint-disable-next-line import/no-unused-modules
-export async function fetchTaoToastsJSON(): Promise<TaoToastsData> {
+export async function fetchTaoToastsJSON(): Promise<TaoStatistics> {
   const rawResponse = await fetch("https://taostats.io/data.json");
-  const response = (await rawResponse.json()) as TaoToastsData[];
+  const response = (await rawResponse.json()) as TaoStatistics[];
   return response[0];
 }
 
