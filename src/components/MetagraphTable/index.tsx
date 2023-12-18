@@ -1,4 +1,4 @@
-import { Table, Stack } from "@mantine/core";
+import { Table, Stack, Group, Pagination, Text, Select } from "@mantine/core";
 import {
   createColumnHelper,
   flexRender,
@@ -7,6 +7,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useState } from "react";
+import type { SelectProps, PaginationProps } from "@mantine/core";
 import type { PaginationState } from "@tanstack/react-table";
 
 export interface MetagraphDetails {
@@ -101,6 +102,17 @@ export function MetagraphTable({ data }: MetagraphTableProps): JSX.Element {
     getPaginationRowModel: getPaginationRowModel(),
   });
 
+  const handlePageSizeChange: SelectProps["onChange"] = (value) => {
+    const parsedPageSize = Number.parseInt(value ?? "", 10);
+    if (Number.isNaN(parsedPageSize) === false) {
+      table.setPageSize(parsedPageSize);
+    }
+  };
+
+  const handlePageChange: PaginationProps["onChange"] = (page) => {
+    table.setPageIndex(page - 1);
+  };
+
   return (
     <Stack>
       <Table>
@@ -129,6 +141,26 @@ export function MetagraphTable({ data }: MetagraphTableProps): JSX.Element {
           ))}
         </Table.Tbody>
       </Table>
+      <Group justify="flex-end">
+        <Pagination
+          value={table.getState().pagination.pageIndex + 1}
+          total={table.getPageCount()}
+          onChange={handlePageChange}
+        />
+        <Text>{`${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}</Text>
+        <Select
+          size="sm"
+          placeholder="Page size"
+          allowDeselect={false}
+          data={[
+            { value: "10", label: "Show 10" },
+            { value: "50", label: "Show 50" },
+            { value: "100", label: "Show 100" },
+          ]}
+          value={pageSize.toString()}
+          onChange={handlePageSizeChange}
+        />
+      </Group>
     </Stack>
   );
 }
