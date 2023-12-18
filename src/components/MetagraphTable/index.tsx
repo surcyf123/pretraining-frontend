@@ -8,18 +8,18 @@ import {
 
 export interface MetagraphDetails {
   neuronID: number;
-  neuronRank: string;
-  neuronIncentives: string;
-  neuronEmission: string;
-  neuronConsensus: string;
-  neuronTrust: string;
-  neuronValidatorTrust: string;
-  neuronDividends: string;
-  bonds: string;
-  neuronWeight: string;
-  neuronHotKeys: string;
-  neuronColdKeys: string;
-  neuronStake: string;
+  neuronRank: number;
+  neuronIncentives: number;
+  neuronEmission: number;
+  neuronConsensus: number;
+  neuronTrust: number;
+  neuronValidatorTrust: number;
+  neuronDividends: number;
+  bonds: number;
+  neuronWeight: number;
+  neuronHotKeys: number;
+  neuronColdKeys: number;
+  neuronStake: number;
 }
 
 const ColumnHelper = createColumnHelper<MetagraphDetails>();
