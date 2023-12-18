@@ -1,19 +1,20 @@
-import { Card, Stack, useMantineColorScheme, Group, Loader } from "@mantine/core";
+import { Card, Stack, useMantineColorScheme, Group, Loader, Divider } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
+import { MetagraphTable } from "../../components/MetagraphTable";
 import { StatisticsTable } from "../../components/StatisticsTable";
 import { TopBar } from "../../components/TopBar";
-import { fetchTableData, fetchLineChartData } from "./utils";
+import { fetchTableData, fetchLineChartData, fetchMetagraphData } from "./utils";
 import type { UIDDetails } from "../../utils";
 
 export function Dashboard() {
   const {
     data: recentUIDJSON,
-    isLoading,
-    isRefetching,
+    isLoading: isRecentUIDJSONLoading,
+    isRefetching: isRefetchingRecentUIDJSON,
   } = useQuery({
     queryKey: ["recentUIDJSON"],
     queryFn: () => fetchTableData(),
@@ -43,10 +44,23 @@ export function Dashboard() {
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
 
+  const { data: metagraphDetails, isRefetching: isRefetchingMetagraphJSON } = useQuery({
+    queryKey: ["metagraphJSON"],
+    queryFn: () => fetchMetagraphData(),
+    refetchInterval: 10 * 60 * 1000,
+    // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
+  });
+
+  const isRefetching =
+    isRefetchingRecentUIDJSON === true ||
+    isRefetchingHistoryJSON === true ||
+    isRefetchingRecentJSON === true ||
+    isRefetchingMetagraphJSON === true;
+
   const { colorScheme } = useMantineColorScheme();
   const processedData = useMemo<UIDDetails[]>(() => {
     let output: UIDDetails[] = [];
-    if (isLoading === false && recentUIDJSON !== undefined) {
+    if (isRecentUIDJSONLoading === false && recentUIDJSON !== undefined) {
       output = Object.values(recentUIDJSON)
         .flat()
         .flatMap((ele) => (ele === null ? [] : Object.values(ele.uid_data)))
@@ -60,7 +74,7 @@ export function Dashboard() {
         }));
     }
     return output;
-  }, [isLoading, recentUIDJSON]);
+  }, [isRecentUIDJSONLoading, recentUIDJSON]);
 
   // complete chart data
   const chartData = useMemo(
@@ -108,6 +122,16 @@ export function Dashboard() {
           "Win Total": bestLossData?.win_total,
         }}
       />
+      <Divider />
+      <TopBar
+        metrics={{
+          "Network UID": metagraphDetails?.metadata.netuid,
+          Neurons: metagraphDetails?.metadata.n,
+          Block: metagraphDetails?.metadata.block,
+          Version: metagraphDetails?.metadata.version,
+          Network: metagraphDetails?.metadata.network,
+        }}
+      />
       <Card shadow="md">
         <BestLossChart
           title="All Time"
@@ -145,7 +169,7 @@ export function Dashboard() {
             yAxis="weight"
             xAxisTitle="UID"
             yAxisTitle="Weight"
-            isLoading={isLoading}
+            isLoading={isRecentUIDJSONLoading}
           />
         </Card>
         <Card shadow="md">
@@ -157,7 +181,7 @@ export function Dashboard() {
             yAxis="win_rate"
             xAxisTitle="UID"
             yAxisTitle="Win Rate"
-            isLoading={isLoading}
+            isLoading={isRecentUIDJSONLoading}
           />
         </Card>
         <Card shadow="md">
@@ -169,16 +193,17 @@ export function Dashboard() {
             yAxis="average_loss"
             xAxisTitle="UID"
             yAxisTitle="Loss"
-            isLoading={isLoading}
+            isLoading={isRecentUIDJSONLoading}
           />
         </Card>
       </Group>
       <Card shadow="md">
         <StatisticsTable data={tableData} />
       </Card>
-      {isRefetching === true ||
-      isRefetchingHistoryJSON === true ||
-      isRefetchingRecentJSON === true ? (
+      <Card shadow="md">
+        <MetagraphTable data={metagraphDetails?.neuronData ?? []} />
+      </Card>
+      {isRefetching === true ? (
         <Loader color="blue" type="bars" pos="fixed" left="20px" bottom="20px" />
       ) : null}
     </Stack>
