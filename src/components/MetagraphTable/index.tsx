@@ -65,6 +65,10 @@ const Columns = [
     cell: (info) => info.getValue(),
     id: "Weight",
   }),
+  ColumnHelper.accessor((row) => row.neuronStake, {
+    cell: (info) => info.getValue(),
+    id: "Stake",
+  }),
   ColumnHelper.accessor((row) => row.neuronHotKeys, {
     cell: (info) => info.getValue(),
     id: "Hotkeys",
@@ -72,10 +76,6 @@ const Columns = [
   ColumnHelper.accessor((row) => row.neuronColdKeys, {
     cell: (info) => info.getValue(),
     id: "Coldkeys",
-  }),
-  ColumnHelper.accessor((row) => row.neuronStake, {
-    cell: (info) => info.getValue(),
-    id: "Stake",
   }),
 ];
 
