@@ -6,7 +6,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-interface MetagraphDetails {
+export interface MetagraphDetails {
   neuronID: number;
   eachNeuronRank: string;
   eachNeuronIncentives: string;
@@ -19,6 +19,7 @@ interface MetagraphDetails {
   eachNeuronWeight: string;
   eachNeuronHotKeys: string;
   eachNeuronColdKeys: string;
+  eachNeuronStake: string;
 }
 
 const ColumnHelper = createColumnHelper<MetagraphDetails>();
@@ -71,6 +72,10 @@ const Columns = [
   ColumnHelper.accessor((row) => row.eachNeuronColdKeys, {
     cell: (info) => info.getValue(),
     id: "Coldkeys",
+  }),
+  ColumnHelper.accessor((row) => row.eachNeuronStake, {
+    cell: (info) => info.getValue(),
+    id: "Stake",
   }),
 ];
 
