@@ -4,9 +4,10 @@ import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
+import { MetagraphTable } from "../../components/MetagraphTable";
 import { StatisticsTable } from "../../components/StatisticsTable";
 import { TopBar } from "../../components/TopBar";
-import { fetchTableData, fetchLineChartData } from "./utils";
+import { fetchTableData, fetchLineChartData, fetchMetagraphData } from "./utils";
 import type { UIDDetails } from "../../utils";
 
 export function Dashboard() {
@@ -42,6 +43,24 @@ export function Dashboard() {
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
+
+  const {
+    data: metagraphDetails,
+    isLoading: isMetagraphLoading,
+    isRefetching: isMetagraphRefetching,
+  } = useQuery({
+    queryKey: ["metagraphJSON"],
+    queryFn: () => fetchMetagraphData(),
+    refetchInterval: 10 * 60 * 1000,
+    // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
+  });
+
+  const isRefetchingData =
+    isRefetching === true ||
+    isRefetchingHistoryJSON === true ||
+    isRefetchingRecentJSON === true ||
+    isMetagraphRefetching === true ||
+    isMetagraphLoading === true;
 
   const { colorScheme } = useMantineColorScheme();
   const processedData = useMemo<UIDDetails[]>(() => {
@@ -175,10 +194,9 @@ export function Dashboard() {
       </Group>
       <Card shadow="md">
         <StatisticsTable data={tableData} />
+        <MetagraphTable data={metagraphDetails?.neuronData ?? []} />
       </Card>
-      {isRefetching === true ||
-      isRefetchingHistoryJSON === true ||
-      isRefetchingRecentJSON === true ? (
+      {isRefetchingData ? (
         <Loader color="blue" type="bars" pos="fixed" left="20px" bottom="20px" />
       ) : null}
     </Stack>
