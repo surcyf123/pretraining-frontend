@@ -1,4 +1,4 @@
-import { Card, Stack, useMantineColorScheme, Group, Loader } from "@mantine/core";
+import { Card, Stack, useMantineColorScheme, Group, Loader, Divider } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
@@ -120,6 +120,16 @@ export function Dashboard() {
           }),
           Weight: bestLossData?.weight?.toFixed(4),
           "Win Total": bestLossData?.win_total,
+        }}
+      />
+      <Divider />
+      <TopBar
+        metrics={{
+          "Network UID": metagraphDetails?.metadata.netuid,
+          Neurons: metagraphDetails?.metadata.n,
+          Block: metagraphDetails?.metadata.block,
+          Version: metagraphDetails?.metadata.version,
+          Network: metagraphDetails?.metadata.network,
         }}
       />
       <Card shadow="md">
