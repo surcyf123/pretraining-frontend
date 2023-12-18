@@ -1,13 +1,15 @@
-import { Table, Stack } from "@mantine/core";
+import { Table, Stack, Group, Pagination, Text, Select } from "@mantine/core";
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { useState } from "react";
-import type { PaginationState } from "@tanstack/react-table";
+import type { SelectProps, PaginationProps } from "@mantine/core";
+import type { PaginationState, SortingState } from "@tanstack/react-table";
 
 export interface MetagraphDetails {
   neuronID: number;
@@ -92,14 +94,34 @@ export function MetagraphTable({ data }: MetagraphTableProps): JSX.Element {
     pageSize: 10,
   });
 
+  const [sorting, setSorting] = useState<SortingState>([
+    {
+      desc: false,
+      id: "Rank",
+    },
+  ]);
+
   const table = useReactTable({
-    state: { pagination: { pageIndex, pageSize } },
+    state: { sorting, pagination: { pageIndex, pageSize } },
     data,
     columns: Columns,
     onPaginationChange: setPagination,
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
+
+  const handlePageSizeChange: SelectProps["onChange"] = (value) => {
+    const parsedPageSize = Number.parseInt(value ?? "", 10);
+    if (Number.isNaN(parsedPageSize) === false) {
+      table.setPageSize(parsedPageSize);
+    }
+  };
+
+  const handlePageChange: PaginationProps["onChange"] = (page) => {
+    table.setPageIndex(page - 1);
+  };
 
   return (
     <Stack>
@@ -108,10 +130,18 @@ export function MetagraphTable({ data }: MetagraphTableProps): JSX.Element {
           {table.getHeaderGroups().map((headerGroup) => (
             <Table.Tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <Table.Th key={header.id} style={{ cursor: "pointer" }}>
+                <Table.Th
+                  key={header.id}
+                  style={{ cursor: "pointer" }}
+                  onClick={header.column.getToggleSortingHandler()}
+                >
                   {header.isPlaceholder === true
                     ? null
                     : flexRender(header.column.columnDef.header, header.getContext())}
+                  {{
+                    asc: " 🔼",
+                    desc: " 🔽",
+                  }[header.column.getIsSorted().valueOf().toString()] ?? null}
                 </Table.Th>
               ))}
             </Table.Tr>
@@ -129,6 +159,26 @@ export function MetagraphTable({ data }: MetagraphTableProps): JSX.Element {
           ))}
         </Table.Tbody>
       </Table>
+      <Group justify="flex-end">
+        <Pagination
+          value={table.getState().pagination.pageIndex + 1}
+          total={table.getPageCount()}
+          onChange={handlePageChange}
+        />
+        <Text>{`${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}</Text>
+        <Select
+          size="sm"
+          placeholder="Page size"
+          allowDeselect={false}
+          data={[
+            { value: "10", label: "Show 10" },
+            { value: "50", label: "Show 50" },
+            { value: "100", label: "Show 100" },
+          ]}
+          value={pageSize.toString()}
+          onChange={handlePageSizeChange}
+        />
+      </Group>
     </Stack>
   );
 }
