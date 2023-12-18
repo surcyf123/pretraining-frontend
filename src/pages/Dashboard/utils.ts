@@ -2,6 +2,23 @@ import { downloadData } from "aws-amplify/storage";
 import type { MetagraphDetails } from "../../components/MetagraphTable";
 import type { HistoryData, RunDetails } from "../../utils";
 
+interface TaoToastsData {
+  network: string;
+  token: string;
+  price: string;
+  "24h_change": string;
+  "24h_volume": string;
+  current_supply: string;
+  total_supply: string;
+  delegated_supply: string;
+  market_cap: string;
+  next_halvening: string;
+  daily_return_per_1000t: string;
+  validating_apy: string;
+  staking_apy: string;
+  last_updated: string;
+}
+
 interface MetagraphMetadata {
   netuid: number;
   n: number;
@@ -90,6 +107,13 @@ export async function fetchMetagraphData(): Promise<{
     neuronData,
     metadata: json.metadata,
   };
+}
+
+// eslint-disable-next-line import/no-unused-modules
+export async function fetchTaoToastsJSON(): Promise<TaoToastsData> {
+  const rawResponse = await fetch("https://taostats.io/data.json");
+  const response = (await rawResponse.json()) as TaoToastsData[];
+  return response[0];
 }
 
 // eslint-disable-next-line import/no-unused-modules
