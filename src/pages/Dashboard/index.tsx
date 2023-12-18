@@ -194,6 +194,8 @@ export function Dashboard() {
       </Group>
       <Card shadow="md">
         <StatisticsTable data={tableData} />
+      </Card>
+      <Card shadow="md">
         <MetagraphTable data={metagraphDetails?.neuronData ?? []} />
       </Card>
       {isRefetchingData ? (
