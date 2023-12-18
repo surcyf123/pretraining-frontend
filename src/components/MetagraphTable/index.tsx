@@ -77,7 +77,6 @@ const Columns = [
     cell: (info) => info.getValue(),
     id: "Coldkeys",
   }),
-
 ];
 
 export interface MetagraphTableProps {
