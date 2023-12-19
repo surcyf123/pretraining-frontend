@@ -19,6 +19,7 @@ export default {
         neuronWeight: 1234,
         neuronHotKeys: "1234",
         neuronColdKeys: "1234",
+        neuronStake: 1234,
       },
     ],
   },
