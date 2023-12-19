@@ -49,13 +49,21 @@ export function Dashboard() {
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
 
-  const { data: taoStatistics, isRefetching: isRefetchingTaoStatistics } = useQuery({
+  const {
+    data: taoStatistics,
+    isRefetching: isRefetchingTaoStatistics,
+    isLoading: isLoadingTaoStatistics,
+  } = useQuery({
     queryKey: ["taoStatistics"],
     queryFn: () => fetchTaoStatistics(),
     refetchInterval: 5 * 60 * 1000,
   });
 
-  const { data: metagraphDetails, isRefetching: isRefetchingMetagraphJSON } = useQuery({
+  const {
+    data: metagraphDetails,
+    isRefetching: isRefetchingMetagraphJSON,
+    isLoading: isLoadingMetagraphJSON,
+  } = useQuery({
     queryKey: ["metagraphJSON"],
     queryFn: () => fetchMetagraphData(),
     refetchInterval: 10 * 60 * 1000,
@@ -131,6 +139,7 @@ export function Dashboard() {
           "Validating APY": taoStatistics?.validating_apy,
           "Staking APY": taoStatistics?.staking_apy,
         }}
+        loading={isLoadingTaoStatistics}
       />
       <Divider />
       <TopBar
@@ -144,6 +153,7 @@ export function Dashboard() {
           Weight: bestLossData?.weight?.toFixed(4),
           "Win Total": bestLossData?.win_total,
         }}
+        loading={isRecentUIDJSONLoading}
       />
       <Divider />
       <TopBar
@@ -154,6 +164,7 @@ export function Dashboard() {
           Version: metagraphDetails?.metadata.version,
           Network: metagraphDetails?.metadata.network,
         }}
+        loading={isLoadingMetagraphJSON}
       />
       <Card shadow="md">
         <BestLossChart
@@ -165,7 +176,7 @@ export function Dashboard() {
           xAxisTitle="Time"
           style={{ height: "40vh" }}
           theme={colorScheme === "auto" ? "dark" : colorScheme}
-          isLoading={isHistoryJSONLoading}
+          loading={isHistoryJSONLoading}
         />
       </Card>
       <Card shadow="md">
@@ -178,7 +189,7 @@ export function Dashboard() {
           xAxisTitle="Time"
           style={{ height: "40vh" }}
           theme={colorScheme === "auto" ? "dark" : colorScheme}
-          isLoading={isRecentJSONLoading}
+          loading={isRecentJSONLoading}
         />
       </Card>
 
@@ -192,7 +203,7 @@ export function Dashboard() {
             yAxis="weight"
             xAxisTitle="UID"
             yAxisTitle="Weight"
-            isLoading={isRecentUIDJSONLoading}
+            loading={isRecentUIDJSONLoading}
           />
         </Card>
         <Card shadow="md">
@@ -204,7 +215,7 @@ export function Dashboard() {
             yAxis="win_rate"
             xAxisTitle="UID"
             yAxisTitle="Win Rate"
-            isLoading={isRecentUIDJSONLoading}
+            loading={isRecentUIDJSONLoading}
           />
         </Card>
         <Card shadow="md">
@@ -216,7 +227,7 @@ export function Dashboard() {
             yAxis="average_loss"
             xAxisTitle="UID"
             yAxisTitle="Loss"
-            isLoading={isRecentUIDJSONLoading}
+            loading={isRecentUIDJSONLoading}
           />
         </Card>
       </Group>

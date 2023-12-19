@@ -1,4 +1,4 @@
-import { Table, Stack, Group, Pagination, Text, Select } from "@mantine/core";
+import { Table, Group, Pagination, Text, Select, Skeleton, Stack } from "@mantine/core";
 import {
   createColumnHelper,
   flexRender,
@@ -6,7 +6,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { SelectProps, PaginationProps } from "@mantine/core";
 import type { PaginationState } from "@tanstack/react-table";
 
@@ -26,77 +26,79 @@ export interface MetagraphDetails {
   neuronColdKeys: string;
 }
 
-const ColumnHelper = createColumnHelper<MetagraphDetails>();
-
-const Columns = [
-  ColumnHelper.accessor((row) => row.neuronID, {
-    cell: (info) => info.getValue(),
-    id: "ID",
-  }),
-  ColumnHelper.accessor((row) => row.neuronRank, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Rank",
-  }),
-  ColumnHelper.accessor((row) => row.neuronIncentives, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Incentives",
-  }),
-  ColumnHelper.accessor((row) => row.neuronEmission, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Emission",
-  }),
-  ColumnHelper.accessor((row) => row.neuronConsensus, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Consensus",
-  }),
-  ColumnHelper.accessor((row) => row.neuronTrust, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Trust",
-  }),
-  ColumnHelper.accessor((row) => row.neuronValidatorTrust, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Validator Trust",
-  }),
-  ColumnHelper.accessor((row) => row.neuronDividends, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Dividends",
-  }),
-  ColumnHelper.accessor((row) => row.bonds, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Bonds",
-  }),
-  ColumnHelper.accessor((row) => row.neuronWeight, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Weight",
-  }),
-  ColumnHelper.accessor((row) => row.neuronStake, {
-    cell: (info) => info.getValue().toFixed(4),
-    id: "Stake",
-  }),
-  ColumnHelper.accessor((row) => row.neuronHotKeys, {
-    cell: (info) => info.getValue(),
-    id: "Hotkeys",
-  }),
-  ColumnHelper.accessor((row) => row.neuronColdKeys, {
-    cell: (info) => info.getValue(),
-    id: "Coldkeys",
-  }),
-];
-
 export interface MetagraphTableProps {
   data: MetagraphDetails[];
+  loading?: boolean;
 }
 
-export function MetagraphTable({ data }: MetagraphTableProps): JSX.Element {
+export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Element {
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
 
+  const columns = useMemo(() => {
+    const columnHelper = createColumnHelper<MetagraphDetails>();
+    return [
+      columnHelper.accessor((row) => row.neuronID, {
+        cell: (info) => info.getValue(),
+        id: "ID",
+      }),
+      columnHelper.accessor((row) => row.neuronRank, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Rank",
+      }),
+      columnHelper.accessor((row) => row.neuronIncentives, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Incentives",
+      }),
+      columnHelper.accessor((row) => row.neuronEmission, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Emission",
+      }),
+      columnHelper.accessor((row) => row.neuronConsensus, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Consensus",
+      }),
+      columnHelper.accessor((row) => row.neuronTrust, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Trust",
+      }),
+      columnHelper.accessor((row) => row.neuronValidatorTrust, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Validator Trust",
+      }),
+      columnHelper.accessor((row) => row.neuronDividends, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Dividends",
+      }),
+      columnHelper.accessor((row) => row.bonds, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Bonds",
+      }),
+      columnHelper.accessor((row) => row.neuronWeight, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Weight",
+      }),
+      columnHelper.accessor((row) => row.neuronStake, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Stake",
+      }),
+      columnHelper.accessor((row) => row.neuronHotKeys, {
+        cell: (info) => info.getValue(),
+        id: "Hotkeys",
+      }),
+      columnHelper.accessor((row) => row.neuronColdKeys, {
+        cell: (info) => info.getValue(),
+        id: "Coldkeys",
+      }),
+    ];
+  }, []);
+
   const table = useReactTable({
     state: { pagination: { pageIndex, pageSize } },
     data,
-    columns: Columns,
+    columns,
     onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -114,8 +116,8 @@ export function MetagraphTable({ data }: MetagraphTableProps): JSX.Element {
   };
 
   return (
-    <Stack>
-      <Group
+    <Skeleton visible={loading ?? false}>
+      <Stack
         style={{
           overflow: "auto",
         }}
@@ -146,7 +148,7 @@ export function MetagraphTable({ data }: MetagraphTableProps): JSX.Element {
             ))}
           </Table.Tbody>
         </Table>
-      </Group>
+      </Stack>
       <Group justify="flex-end">
         <Pagination
           value={table.getState().pagination.pageIndex + 1}
@@ -167,6 +169,6 @@ export function MetagraphTable({ data }: MetagraphTableProps): JSX.Element {
           onChange={handlePageSizeChange}
         />
       </Group>
-    </Stack>
+    </Skeleton>
   );
 }
