@@ -11,6 +11,14 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
+    "bittensor": {
+      "Arn": "string",
+      "CloudWatchEventRule": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "wandb": {
       "Arn": "string",
       "CloudWatchEventRule": "string",
