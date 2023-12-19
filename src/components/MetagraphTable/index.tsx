@@ -1,4 +1,4 @@
-import { Table, Group, Pagination, Text, Select, Skeleton, Stack } from "@mantine/core";
+import { Table, Stack, Group, Pagination, Text, Select, Skeleton } from "@mantine/core";
 import {
   createColumnHelper,
   flexRender,
