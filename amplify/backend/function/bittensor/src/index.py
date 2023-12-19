@@ -1,7 +1,7 @@
 import json
 
 def handler(event, context):
-  print('received event:')
+  print('received event log:')
   print(event)
   
   return {

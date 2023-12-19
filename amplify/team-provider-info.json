@@ -25,7 +25,7 @@
         },
         "bittensor": {
           "deploymentBucketName": "amplify-pretraining-prod-115707-deployment",
-          "s3Key": "amplify-builds/bittensor-5a715773695858335252-build.zip"
+          "s3Key": "amplify-builds/bittensor-7378577a39505037704a-build.zip"
         }
       },
       "auth": {
