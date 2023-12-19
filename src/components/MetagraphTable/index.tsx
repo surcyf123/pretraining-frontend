@@ -1,4 +1,4 @@
-import { Table, Stack, Group, Pagination, Text, Select, Skeleton } from "@mantine/core";
+import { Table, Stack, Group, Pagination, Text, Select, Skeleton, ScrollArea } from "@mantine/core";
 import {
   createColumnHelper,
   flexRender,
@@ -117,58 +117,56 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
 
   return (
     <Skeleton visible={loading ?? false}>
-      <Stack
-        style={{
-          overflow: "auto",
-        }}
-      >
-        <Table>
-          <Table.Thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <Table.Tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <Table.Th key={header.id} style={{ cursor: "pointer" }}>
-                    {header.isPlaceholder === true
-                      ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
-                  </Table.Th>
-                ))}
-              </Table.Tr>
-            ))}
-          </Table.Thead>
-          <Table.Tbody>
-            {table.getRowModel().rows.map((row) => (
-              <Table.Tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <Table.Td key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Table.Td>
-                ))}
-              </Table.Tr>
-            ))}
-          </Table.Tbody>
-        </Table>
+      <Stack>
+        <ScrollArea>
+          <Table>
+            <Table.Thead>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <Table.Tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <Table.Th key={header.id} style={{ cursor: "pointer" }}>
+                      {header.isPlaceholder === true
+                        ? null
+                        : flexRender(header.column.columnDef.header, header.getContext())}
+                    </Table.Th>
+                  ))}
+                </Table.Tr>
+              ))}
+            </Table.Thead>
+            <Table.Tbody>
+              {table.getRowModel().rows.map((row) => (
+                <Table.Tr key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <Table.Td key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </Table.Td>
+                  ))}
+                </Table.Tr>
+              ))}
+            </Table.Tbody>
+          </Table>
+        </ScrollArea>
+        <Group justify="flex-end">
+          <Pagination
+            value={table.getState().pagination.pageIndex + 1}
+            total={table.getPageCount()}
+            onChange={handlePageChange}
+          />
+          <Text>{`${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}</Text>
+          <Select
+            size="sm"
+            placeholder="Page size"
+            allowDeselect={false}
+            data={[
+              { value: "10", label: "Show 10" },
+              { value: "50", label: "Show 50" },
+              { value: "100", label: "Show 100" },
+            ]}
+            value={pageSize.toString()}
+            onChange={handlePageSizeChange}
+          />
+        </Group>
       </Stack>
-      <Group justify="flex-end">
-        <Pagination
-          value={table.getState().pagination.pageIndex + 1}
-          total={table.getPageCount()}
-          onChange={handlePageChange}
-        />
-        <Text>{`${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}</Text>
-        <Select
-          size="sm"
-          placeholder="Page size"
-          allowDeselect={false}
-          data={[
-            { value: "10", label: "Show 10" },
-            { value: "50", label: "Show 50" },
-            { value: "100", label: "Show 100" },
-          ]}
-          value={pageSize.toString()}
-          onChange={handlePageSizeChange}
-        />
-      </Group>
     </Skeleton>
   );
 }
