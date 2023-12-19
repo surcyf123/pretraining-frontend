@@ -1,4 +1,4 @@
-import { Table, Stack, Group, Pagination, Text, Select, Skeleton } from "@mantine/core";
+import { Table, Stack, Group, Pagination, Text, Select, Skeleton, ActionIcon } from "@mantine/core";
 import {
   createColumnHelper,
   flexRender,
@@ -8,6 +8,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
+import { getSortingIcon } from "../utils";
 import type { SelectProps, PaginationProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 
@@ -138,13 +139,16 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
                     style={{ cursor: "pointer" }}
                     onClick={header.column.getToggleSortingHandler()}
                   >
-                    {header.isPlaceholder === true
-                      ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
-                    {{
-                      asc: " 🔼",
-                      desc: " 🔽",
-                    }[header.column.getIsSorted().valueOf().toString()] ?? null}
+                    <Group>
+                      <Text>
+                        {header.isPlaceholder === true
+                          ? null
+                          : flexRender(header.column.columnDef.header, header.getContext())}
+                      </Text>
+                      <ActionIcon size="xs" variant="default">
+                        {getSortingIcon(header.column.getIsSorted())}
+                      </ActionIcon>
+                    </Group>
                   </Table.Th>
                 ))}
               </Table.Tr>
