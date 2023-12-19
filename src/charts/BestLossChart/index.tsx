@@ -1,3 +1,4 @@
+import { Skeleton } from "@mantine/core";
 import { group } from "d3-array";
 import { schemeBrBG } from "d3-scale-chromatic";
 import { LineChart as LineGraph } from "echarts/charts";
@@ -51,7 +52,7 @@ export interface BestLossChartProps {
   yAxis: string;
   xAxisTitle: string;
   yAxisTitle: string;
-  isLoading?: boolean;
+  loading?: boolean;
   title?: string;
   style?: CSSProperties;
 }
@@ -63,9 +64,9 @@ export function BestLossChart({
   yAxis,
   xAxisTitle,
   yAxisTitle,
-  isLoading,
   title,
   style,
+  loading,
 }: BestLossChartProps): JSX.Element {
   const chartRef = useRef<HTMLDivElement>(null);
 
@@ -190,13 +191,9 @@ export function BestLossChart({
     }
   }, [processedData, theme, xAxis, xAxisTitle, yAxis, yAxisTitle, title]);
 
-  useEffect(() => {
-    if (chartRef.current !== null) {
-      const chart = getInstanceByDom(chartRef.current);
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      isLoading === true ? chart?.showLoading() : chart?.hideLoading();
-    }
-  }, [theme, isLoading]);
-
-  return <div ref={chartRef} style={{ height: "100%", width: "100%", ...style }} />;
+  return (
+    <Skeleton visible={loading ?? false}>
+      <div ref={chartRef} style={{ height: "100%", width: "100%", ...style }} />
+    </Skeleton>
+  );
 }

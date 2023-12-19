@@ -1,5 +1,4 @@
-import { Group, Pagination, Select, Stack, Table, Text } from "@mantine/core";
-
+import { Group, Pagination, Select, Skeleton, Stack, Table, Text } from "@mantine/core";
 import {
   createColumnHelper,
   flexRender,
@@ -13,7 +12,13 @@ import type { UIDDetails } from "../../utils";
 import type { PaginationProps, SelectProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 
-export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
+export function StatisticsTable({
+  data,
+  loading,
+}: {
+  data: UIDDetails[];
+  loading?: boolean;
+}): JSX.Element {
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<UIDDetails>();
     return [
@@ -83,61 +88,63 @@ export function StatisticsTable({ data }: { data: UIDDetails[] }): JSX.Element {
   };
 
   return (
-    <Stack>
-      <Table>
-        <Table.Thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <Table.Tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <Table.Th
-                  key={header.id}
-                  onClick={header.column.getToggleSortingHandler()}
-                  style={{ cursor: "pointer" }}
-                >
-                  {header.isPlaceholder === true
-                    ? null
-                    : flexRender(header.column.columnDef.header, header.getContext())}
-                  {{
-                    asc: " 🔼",
-                    desc: " 🔽",
-                  }[header.column.getIsSorted().valueOf().toString()] ?? null}
-                </Table.Th>
-              ))}
-            </Table.Tr>
-          ))}
-        </Table.Thead>
-        <Table.Tbody>
-          {table.getRowModel().rows.map((row) => (
-            <Table.Tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <Table.Td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </Table.Td>
-              ))}
-            </Table.Tr>
-          ))}
-        </Table.Tbody>
-      </Table>
-      <Group justify="flex-end">
-        <Pagination
-          value={table.getState().pagination.pageIndex + 1}
-          total={table.getPageCount()}
-          onChange={handlePageChange}
-        />
-        <Text>{`${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}</Text>
-        <Select
-          size="sm"
-          placeholder="Page size"
-          allowDeselect={false}
-          data={[
-            { value: "10", label: "Show 10" },
-            { value: "50", label: "Show 50" },
-            { value: "100", label: "Show 100" },
-          ]}
-          value={pageSize.toString()}
-          onChange={handlePageSizeChange}
-        />
-      </Group>
-    </Stack>
+    <Skeleton visible={loading ?? false}>
+      <Stack>
+        <Table>
+          <Table.Thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <Table.Tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <Table.Th
+                    key={header.id}
+                    onClick={header.column.getToggleSortingHandler()}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {header.isPlaceholder === true
+                      ? null
+                      : flexRender(header.column.columnDef.header, header.getContext())}
+                    {{
+                      asc: " 🔼",
+                      desc: " 🔽",
+                    }[header.column.getIsSorted().valueOf().toString()] ?? null}
+                  </Table.Th>
+                ))}
+              </Table.Tr>
+            ))}
+          </Table.Thead>
+          <Table.Tbody>
+            {table.getRowModel().rows.map((row) => (
+              <Table.Tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <Table.Td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Table.Td>
+                ))}
+              </Table.Tr>
+            ))}
+          </Table.Tbody>
+        </Table>
+        <Group justify="flex-end">
+          <Pagination
+            value={table.getState().pagination.pageIndex + 1}
+            total={table.getPageCount()}
+            onChange={handlePageChange}
+          />
+          <Text>{`${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}</Text>
+          <Select
+            size="sm"
+            placeholder="Page size"
+            allowDeselect={false}
+            data={[
+              { value: "10", label: "Show 10" },
+              { value: "50", label: "Show 50" },
+              { value: "100", label: "Show 100" },
+            ]}
+            value={pageSize.toString()}
+            onChange={handlePageSizeChange}
+          />
+        </Group>
+      </Stack>
+    </Skeleton>
   );
 }

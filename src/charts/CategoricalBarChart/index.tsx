@@ -1,3 +1,4 @@
+import { Skeleton } from "@mantine/core";
 import { BarChart as BarGraph } from "echarts/charts";
 import {
   GridComponent,
@@ -51,7 +52,7 @@ export interface CategoricalBarChartProps {
   yAxis: keyof UIDDetails;
   xAxisTitle: string;
   yAxisTitle: string;
-  isLoading?: boolean;
+  loading?: boolean;
   title?: string;
   style?: CSSProperties;
 }
@@ -63,7 +64,7 @@ export function CategoricalBarChart({
   yAxis,
   xAxisTitle,
   yAxisTitle,
-  isLoading,
+  loading,
   title,
   style,
 }: CategoricalBarChartProps): JSX.Element {
@@ -187,13 +188,9 @@ export function CategoricalBarChart({
     }
   }, [data, theme, xAxis, xAxisTitle, yAxis, yAxisTitle, title]);
 
-  useEffect(() => {
-    if (chartRef.current !== null) {
-      const chart = getInstanceByDom(chartRef.current);
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      isLoading === true ? chart?.showLoading() : chart?.hideLoading();
-    }
-  }, [theme, isLoading]);
-
-  return <div ref={chartRef} style={{ height: "100%", width: "100%", ...style }} />;
+  return (
+    <Skeleton visible={loading ?? false}>
+      <div ref={chartRef} style={{ height: "100%", width: "100%", ...style }} />
+    </Skeleton>
+  );
 }
