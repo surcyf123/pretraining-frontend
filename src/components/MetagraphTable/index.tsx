@@ -1,4 +1,15 @@
-import { Table, Stack, Group, Pagination, Text, Select, Skeleton } from "@mantine/core";
+import {
+  Table,
+  Stack,
+  Group,
+  Pagination,
+  Text,
+  Select,
+  Skeleton,
+  CopyButton,
+  Button,
+} from "@mantine/core";
+import { IconClipboardCheck, IconClipboardCopy } from "@tabler/icons-react";
 import {
   createColumnHelper,
   flexRender,
@@ -85,11 +96,37 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
         id: "Stake",
       }),
       columnHelper.accessor((row) => row.neuronHotKeys, {
-        cell: (info) => info.getValue(),
+        // eslint-disable-next-line react/no-unstable-nested-components
+        cell: (info) => (
+          <CopyButton value={info.getValue()}>
+            {({ copy, copied }) => (
+              <Button
+                onClick={copy}
+                variant="subtle"
+                rightSection={copied === true ? <IconClipboardCheck /> : <IconClipboardCopy />}
+              >
+                {`${info.getValue().slice(0, 3)}...`}
+              </Button>
+            )}
+          </CopyButton>
+        ),
         id: "Hotkeys",
       }),
       columnHelper.accessor((row) => row.neuronColdKeys, {
-        cell: (info) => info.getValue(),
+        // eslint-disable-next-line react/no-unstable-nested-components
+        cell: (info) => (
+          <CopyButton value={info.getValue()}>
+            {({ copy, copied }) => (
+              <Button
+                onClick={copy}
+                variant="subtle"
+                rightSection={copied === true ? <IconClipboardCheck /> : <IconClipboardCopy />}
+              >
+                {`${info.getValue().slice(0, 3)}...`}
+              </Button>
+            )}
+          </CopyButton>
+        ),
         id: "Coldkeys",
       }),
     ];
