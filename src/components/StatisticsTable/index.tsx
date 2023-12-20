@@ -1,4 +1,4 @@
-import { Group, Pagination, Select, Skeleton, Stack, Table, Text } from "@mantine/core";
+import { ActionIcon, Group, Pagination, Select, Skeleton, Stack, Table, Text } from "@mantine/core";
 import {
   createColumnHelper,
   flexRender,
@@ -8,6 +8,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
+import { getSortingIcon } from "../utils";
 import type { UIDDetails } from "../../utils";
 import type { PaginationProps, SelectProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
@@ -100,13 +101,16 @@ export function StatisticsTable({
                     onClick={header.column.getToggleSortingHandler()}
                     style={{ cursor: "pointer" }}
                   >
-                    {header.isPlaceholder === true
-                      ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
-                    {{
-                      asc: " 🔼",
-                      desc: " 🔽",
-                    }[header.column.getIsSorted().valueOf().toString()] ?? null}
+                    <Group>
+                      <Text>
+                        {header.isPlaceholder === true
+                          ? null
+                          : flexRender(header.column.columnDef.header, header.getContext())}
+                      </Text>
+                      <ActionIcon size="xs" variant="default">
+                        {getSortingIcon(header.column.getIsSorted())}
+                      </ActionIcon>
+                    </Group>
                   </Table.Th>
                 ))}
               </Table.Tr>
