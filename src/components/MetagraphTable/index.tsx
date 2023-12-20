@@ -112,23 +112,6 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
         ),
         id: "Hotkeys",
       }),
-      columnHelper.accessor((row) => row.neuronColdKeys, {
-        // eslint-disable-next-line react/no-unstable-nested-components
-        cell: (info) => (
-          <CopyButton value={info.getValue()}>
-            {({ copy, copied }) => (
-              <Button
-                onClick={copy}
-                variant="subtle"
-                rightSection={copied === true ? <IconClipboardCheck /> : <IconClipboardCopy />}
-              >
-                {`${info.getValue().slice(0, 3)}...`}
-              </Button>
-            )}
-          </CopyButton>
-        ),
-        id: "Coldkeys",
-      }),
     ];
   }, []);
 
