@@ -1,14 +1,16 @@
-import { Table, Stack, Group, Pagination, Text, Select, Skeleton } from "@mantine/core";
+import { Table, Stack, Group, Pagination, Text, Select, Skeleton, ActionIcon } from "@mantine/core";
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
+import { getSortingIcon } from "../utils";
 import type { SelectProps, PaginationProps } from "@mantine/core";
-import type { PaginationState } from "@tanstack/react-table";
+import type { PaginationState, SortingState } from "@tanstack/react-table";
 
 export interface MetagraphDetails {
   neuronID: number;
@@ -36,6 +38,13 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
     pageIndex: 0,
     pageSize: 10,
   });
+
+  const [sorting, setSorting] = useState<SortingState>([
+    {
+      desc: false,
+      id: "Rank",
+    },
+  ]);
 
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<MetagraphDetails>();
@@ -96,12 +105,14 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
   }, []);
 
   const table = useReactTable({
-    state: { pagination: { pageIndex, pageSize } },
+    state: { sorting, pagination: { pageIndex, pageSize } },
     data,
     columns,
     onPaginationChange: setPagination,
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
   const handlePageSizeChange: SelectProps["onChange"] = (value) => {
@@ -123,10 +134,21 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
             {table.getHeaderGroups().map((headerGroup) => (
               <Table.Tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <Table.Th key={header.id} style={{ cursor: "pointer" }}>
-                    {header.isPlaceholder === true
-                      ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
+                  <Table.Th
+                    key={header.id}
+                    style={{ cursor: "pointer" }}
+                    onClick={header.column.getToggleSortingHandler()}
+                  >
+                    <Group>
+                      <Text>
+                        {header.isPlaceholder === true
+                          ? null
+                          : flexRender(header.column.columnDef.header, header.getContext())}
+                      </Text>
+                      <ActionIcon size="xs" variant="default">
+                        {getSortingIcon(header.column.getIsSorted())}
+                      </ActionIcon>
+                    </Group>
                   </Table.Th>
                 ))}
               </Table.Tr>
