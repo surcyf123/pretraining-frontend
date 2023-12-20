@@ -51,49 +51,13 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<MetagraphDetails>();
     return [
-      columnHelper.accessor((row) => row.neuronID, {
-        cell: (info) => info.getValue(),
-        id: "ID",
-      }),
       columnHelper.accessor((row) => row.neuronRank, {
         cell: (info) => info.getValue().toFixed(4),
         id: "Rank",
       }),
-      columnHelper.accessor((row) => row.neuronIncentives, {
-        cell: (info) => info.getValue().toFixed(4),
-        id: "Incentives",
-      }),
-      columnHelper.accessor((row) => row.neuronEmission, {
-        cell: (info) => info.getValue().toFixed(4),
-        id: "Emission",
-      }),
-      columnHelper.accessor((row) => row.neuronConsensus, {
-        cell: (info) => info.getValue().toFixed(4),
-        id: "Consensus",
-      }),
-      columnHelper.accessor((row) => row.neuronTrust, {
-        cell: (info) => info.getValue().toFixed(4),
-        id: "Trust",
-      }),
-      columnHelper.accessor((row) => row.neuronValidatorTrust, {
-        cell: (info) => info.getValue().toFixed(4),
-        id: "Validator Trust",
-      }),
-      columnHelper.accessor((row) => row.neuronDividends, {
-        cell: (info) => info.getValue().toFixed(4),
-        id: "Dividends",
-      }),
-      columnHelper.accessor((row) => row.bonds, {
-        cell: (info) => info.getValue().toFixed(4),
-        id: "Bonds",
-      }),
-      columnHelper.accessor((row) => row.neuronWeight, {
-        cell: (info) => info.getValue().toFixed(4),
-        id: "Weight",
-      }),
-      columnHelper.accessor((row) => row.neuronStake, {
-        cell: (info) => info.getValue().toFixed(4),
-        id: "Stake",
+      columnHelper.accessor((row) => row.neuronID, {
+        cell: (info) => info.getValue(),
+        id: "UID",
       }),
       columnHelper.accessor((row) => row.neuronHotKeys, {
         // eslint-disable-next-line react/no-unstable-nested-components
@@ -111,6 +75,42 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
           </CopyButton>
         ),
         id: "Hotkeys",
+      }),
+      columnHelper.accessor((row) => row.neuronStake, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Total Stake",
+      }),
+      columnHelper.accessor((row) => row.neuronEmission, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Emissions",
+      }),
+      columnHelper.accessor((row) => row.neuronIncentives, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Incentive",
+      }),
+      columnHelper.accessor((row) => row.neuronDividends, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Dividends",
+      }),
+      columnHelper.accessor((row) => row.neuronConsensus, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Consensus",
+      }),
+      columnHelper.accessor((row) => row.neuronTrust, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Trust",
+      }),
+      columnHelper.accessor((row) => row.neuronValidatorTrust, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Validator Trust",
+      }),
+      columnHelper.accessor((row) => row.bonds, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Bonds",
+      }),
+      columnHelper.accessor((row) => row.neuronWeight, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Weight",
       }),
     ];
   }, []);
