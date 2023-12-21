@@ -99,7 +99,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
         id: "Address",
       }),
       columnHelper.accessor((row) => row.bonds, {
-        cell: (info) => info.getValue().toFixed(4),
+        cell: (info) => info.getValue(),
         id: "Bonds",
       }),
       columnHelper.accessor((row) => row.neuronWeight, {
@@ -107,7 +107,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
         id: "Weight",
       }),
       columnHelper.accessor((row) => row.neuronStake, {
-        cell: (info) => info.getValue(),
+        cell: (info) => info.getValue().toFixed(4),
         id: "Stake",
       }),
       columnHelper.accessor((row) => row.neuronHotKeys, {
