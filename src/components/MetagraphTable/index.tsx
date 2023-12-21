@@ -190,7 +190,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
                     style={{ cursor: "pointer" }}
                     onClick={header.column.getToggleSortingHandler()}
                   >
-                    <Group>
+                    <Group wrap="nowrap">
                       <Text>
                         {header.isPlaceholder === true
                           ? null
