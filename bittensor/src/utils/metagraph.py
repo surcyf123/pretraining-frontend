@@ -6,14 +6,16 @@ metagraph = bt.metagraph(netuid = 9, sync = True, lite = False)
 
 def get_metagraph_data():
   metadata = metagraph.metadata(),
+  
   neuron_data = {
+  "uid": metagraph.uids,
   "stake": metagraph.S.tolist(),
   "rank": metagraph.R.tolist(),
   "incentive": metagraph.I.tolist(),
   "emission": metagraph.E.tolist(),
   "consensus": metagraph.C.tolist(),
   "trust": metagraph.T.tolist(),
-  "trust": metagraph.Tv.tolist(),
+  "validator_trust": metagraph.Tv.tolist(),
   "dividends": metagraph.D.tolist(),
   "bonds": metagraph.B.tolist(),
   "weight": metagraph.W.tolist(),
