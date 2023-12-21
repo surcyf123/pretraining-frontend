@@ -101,7 +101,7 @@ export function StatisticsTable({
                     onClick={header.column.getToggleSortingHandler()}
                     style={{ cursor: "pointer" }}
                   >
-                    <Group wrap="nowrap">
+                    <Group>
                       <Text>
                         {header.isPlaceholder === true
                           ? null
