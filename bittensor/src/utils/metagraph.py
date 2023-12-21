@@ -19,7 +19,7 @@ def get_metagraph_data():
   "weight": metagraph.W.tolist(),
   "hotkey": metagraph.hotkeys,
   "coldkey": metagraph.coldkeys,
-  "address": metagraph.addresses()
+  "address": metagraph.addresses
   }
 
   output = pd.DataFrame(neuron_data).to_dict(orient="records") # transform data to array of records
