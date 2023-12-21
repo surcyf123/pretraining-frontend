@@ -15,10 +15,8 @@ def get_metagraph_data():
   "emission": metagraph.E.tolist(),
   "consensus": metagraph.C.tolist(),
   "trust": metagraph.T.tolist(),
-  "validator_trust": metagraph.Tv.tolist(),
+  "validatorTrust": metagraph.Tv.tolist(),
   "dividends": metagraph.D.tolist(),
-  "bonds": metagraph.B.tolist(),
-  "weight": metagraph.W.tolist(),
   "hotkey": metagraph.hotkeys,
   "coldkey": metagraph.coldkeys,
   "address": metagraph.addresses
@@ -28,5 +26,5 @@ def get_metagraph_data():
 
   return {
     "metadata": metadata,
-    "neuron_data": output
+    "neuronData": output
   }
