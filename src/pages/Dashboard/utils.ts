@@ -27,23 +27,6 @@ interface MetagraphMetadata {
   version: string;
 }
 
-interface NeuronDetails {
-  uid: number;
-  stake: number;
-  rank: number;
-  incentive: number;
-  emission: number;
-  consensus: number;
-  trust: number;
-  validator_trust: number;
-  dividends: number;
-  bonds: number[];
-  weight: number[];
-  hotkey: string;
-  coldkey: string;
-  address: string;
-}
-
 export async function fetchTableData(): Promise<Record<string, (RunDetails | null)[]>> {
   const downloadResult = await downloadData({ key: "recent-complete.json" }).result;
   // Ref: https://docs.amplify.aws/javascript/build-a-backend/storage/download/#get-the-text-value-of-downloaded-file
@@ -70,44 +53,9 @@ export async function fetchMetagraphData(): Promise<{
   const text = await downloadResult.body.text(); // Using "downloadResult.body.json()" gives error "Parsing response to json is not implemented."
   const json = JSON.parse(text) as {
     metadata: MetagraphMetadata;
-    neuron_data: NeuronDetails[];
+    neuronData: MetagraphDetails[];
   };
-
-  const neuronData = json.neuron_data.map<MetagraphDetails>(
-    ({
-      address,
-      coldkey,
-      consensus,
-      dividends,
-      emission,
-      hotkey,
-      incentive,
-      rank,
-      stake,
-      trust,
-      uid,
-      validator_trust,
-    }) => ({
-      neuronID: uid,
-      neuronRank: rank,
-      neuronIncentives: incentive,
-      neuronEmission: emission,
-      neuronConsensus: consensus,
-      neuronTrust: trust,
-      neuronValidatorTrust: validator_trust,
-      neuronDividends: dividends,
-      bonds: 0, // TODO: Update data
-      neuronWeight: 0, // TODO: Update data
-      neuronStake: stake,
-      neuronHotKeys: hotkey,
-      neuronColdKeys: coldkey,
-      neuronAddress: address,
-    }),
-  );
-  return {
-    neuronData,
-    metadata: json.metadata,
-  };
+  return json;
 }
 
 // eslint-disable-next-line import/no-unused-modules

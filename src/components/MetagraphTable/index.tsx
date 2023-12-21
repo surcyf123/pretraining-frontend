@@ -25,20 +25,18 @@ import type { SelectProps, PaginationProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 
 export interface MetagraphDetails {
-  neuronID: number;
-  neuronRank: number;
-  neuronIncentives: number;
-  neuronEmission: number;
-  neuronConsensus: number;
-  neuronTrust: number;
-  neuronValidatorTrust: number;
-  neuronDividends: number;
-  bonds: number;
-  neuronWeight: number;
-  neuronStake: number;
-  neuronHotKeys: string;
-  neuronColdKeys: string;
-  neuronAddress: string;
+  uid: number;
+  stake: number;
+  rank: number;
+  incentive: number;
+  emission: number;
+  consensus: number;
+  trust: number;
+  validatorTrust: number;
+  dividends: number;
+  hotkey: string;
+  coldkey: string;
+  address: string;
 }
 
 export interface MetagraphTableProps {
@@ -62,55 +60,47 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<MetagraphDetails>();
     return [
-      columnHelper.accessor((row) => row.neuronID, {
+      columnHelper.accessor((row) => row.uid, {
         cell: (info) => info.getValue(),
         id: "ID",
       }),
-      columnHelper.accessor((row) => row.neuronRank, {
+      columnHelper.accessor((row) => row.rank, {
         cell: (info) => info.getValue(),
         id: "Rank",
       }),
-      columnHelper.accessor((row) => row.neuronIncentives, {
+      columnHelper.accessor((row) => row.incentive, {
         cell: (info) => info.getValue().toFixed(4),
         id: "Incentives",
       }),
-      columnHelper.accessor((row) => row.neuronEmission, {
+      columnHelper.accessor((row) => row.emission, {
         cell: (info) => info.getValue().toFixed(4),
         id: "Emission",
       }),
-      columnHelper.accessor((row) => row.neuronConsensus, {
+      columnHelper.accessor((row) => row.consensus, {
         cell: (info) => info.getValue().toFixed(4),
         id: "Consensus",
       }),
-      columnHelper.accessor((row) => row.neuronTrust, {
+      columnHelper.accessor((row) => row.trust, {
         cell: (info) => info.getValue().toFixed(4),
         id: "Trust",
       }),
-      columnHelper.accessor((row) => row.neuronValidatorTrust, {
+      columnHelper.accessor((row) => row.validatorTrust, {
         cell: (info) => info.getValue().toFixed(4),
         id: "Validator Trust",
       }),
-      columnHelper.accessor((row) => row.neuronDividends, {
+      columnHelper.accessor((row) => row.dividends, {
         cell: (info) => info.getValue().toFixed(4),
         id: "Dividends",
       }),
-      columnHelper.accessor((row) => row.neuronAddress, {
+      columnHelper.accessor((row) => row.address, {
         cell: (info) => info.getValue(),
         id: "Address",
       }),
-      columnHelper.accessor((row) => row.bonds, {
-        cell: (info) => info.getValue(),
-        id: "Bonds",
-      }),
-      columnHelper.accessor((row) => row.neuronWeight, {
-        cell: (info) => info.getValue(),
-        id: "Weight",
-      }),
-      columnHelper.accessor((row) => row.neuronStake, {
+      columnHelper.accessor((row) => row.stake, {
         cell: (info) => info.getValue().toFixed(4),
         id: "Stake",
       }),
-      columnHelper.accessor((row) => row.neuronHotKeys, {
+      columnHelper.accessor((row) => row.hotkey, {
         // eslint-disable-next-line react/no-unstable-nested-components
         cell: (info) => (
           <CopyButton value={info.getValue()}>
@@ -127,7 +117,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
         ),
         id: "Hotkeys",
       }),
-      columnHelper.accessor((row) => row.neuronColdKeys, {
+      columnHelper.accessor((row) => row.coldkey, {
         // eslint-disable-next-line react/no-unstable-nested-components
         cell: (info) => (
           <CopyButton value={info.getValue()}>
