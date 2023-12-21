@@ -17,6 +17,8 @@ def get_metagraph_data():
   "trust": metagraph.T.tolist(),
   "validatorTrust": metagraph.Tv.tolist(),
   "dividends": metagraph.D.tolist(),
+  "bonds": metagraph.B.tolist(),
+  "weight": metagraph.W.tolist(),
   "hotkey": metagraph.hotkeys,
   "coldkey": metagraph.coldkeys,
   "address": metagraph.addresses
