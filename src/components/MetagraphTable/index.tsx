@@ -37,6 +37,8 @@ export interface MetagraphDetails {
   hotkey: string;
   coldkey: string;
   address: string;
+  bonds: number[];
+  weight: number[];
 }
 
 export interface MetagraphTableProps {
@@ -133,6 +135,22 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
           </CopyButton>
         ),
         id: "Coldkeys",
+      }),
+      columnHelper.accessor((row) => row.weight, {
+        cell: (info) =>
+          info
+            .getValue()
+            .map((ele) => ele.toFixed(4))
+            .join(","),
+        id: "Weight",
+      }),
+      columnHelper.accessor((row) => row.bonds, {
+        cell: (info) =>
+          info
+            .getValue()
+            .map((ele) => ele.toFixed(4))
+            .join(","),
+        id: "Bonds",
       }),
     ];
   }, []);
