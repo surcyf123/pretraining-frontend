@@ -1,2 +1,0 @@
-pandas==2.0.3
-bittensor==6.4.4
