@@ -66,7 +66,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
         id: "ID",
       }),
       columnHelper.accessor((row) => row.neuronRank, {
-        cell: (info) => info.getValue().toFixed(4),
+        cell: (info) => info.getValue(),
         id: "Rank",
       }),
       columnHelper.accessor((row) => row.neuronIncentives, {
