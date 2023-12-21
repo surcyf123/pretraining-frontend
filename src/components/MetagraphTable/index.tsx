@@ -24,7 +24,7 @@ import { getSortingIcon } from "../utils";
 import type { SelectProps, PaginationProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 
-export interface MetagraphDetails {
+export interface NeuronDetails {
   uid: number;
   stake: number;
   rank: number;
@@ -42,7 +42,7 @@ export interface MetagraphDetails {
 }
 
 export interface MetagraphTableProps {
-  data: MetagraphDetails[];
+  data: NeuronDetails[];
   loading?: boolean;
 }
 
@@ -60,7 +60,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
   ]);
 
   const columns = useMemo(() => {
-    const columnHelper = createColumnHelper<MetagraphDetails>();
+    const columnHelper = createColumnHelper<NeuronDetails>();
     return [
       columnHelper.accessor((row) => row.uid, {
         cell: (info) => info.getValue(),

@@ -1,5 +1,5 @@
 import { downloadData } from "aws-amplify/storage";
-import type { MetagraphDetails } from "../../components/MetagraphTable";
+import type { NeuronDetails } from "../../components/MetagraphTable";
 import type { HistoryData, RunDetails } from "../../utils";
 
 interface TaoStatistics {
@@ -46,14 +46,14 @@ export async function fetchLineChartData(fileName: string): Promise<HistoryData[
 // eslint-disable-next-line import/no-unused-modules
 export async function fetchMetagraphData(): Promise<{
   metadata: MetagraphMetadata;
-  neuronData: MetagraphDetails[];
+  neuronData: NeuronDetails[];
 }> {
   const downloadResult = await downloadData({ key: "metagraph.json" }).result;
   // Ref: https://docs.amplify.aws/javascript/build-a-backend/storage/download/#get-the-text-value-of-downloaded-file
   const text = await downloadResult.body.text(); // Using "downloadResult.body.json()" gives error "Parsing response to json is not implemented."
   const json = JSON.parse(text) as {
     metadata: MetagraphMetadata;
-    neuronData: MetagraphDetails[];
+    neuronData: NeuronDetails[];
   };
   return json;
 }
