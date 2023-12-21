@@ -38,6 +38,7 @@ export interface MetagraphDetails {
   neuronStake: number;
   neuronHotKeys: string;
   neuronColdKeys: string;
+  neuronAddress: string;
 }
 
 export interface MetagraphTableProps {
@@ -93,16 +94,20 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
         cell: (info) => info.getValue().toFixed(4),
         id: "Dividends",
       }),
+      columnHelper.accessor((row) => row.neuronAddress, {
+        cell: (info) => info.getValue(),
+        id: "Address",
+      }),
       columnHelper.accessor((row) => row.bonds, {
         cell: (info) => info.getValue().toFixed(4),
         id: "Bonds",
       }),
       columnHelper.accessor((row) => row.neuronWeight, {
-        cell: (info) => info.getValue().toFixed(4),
+        cell: (info) => info.getValue(),
         id: "Weight",
       }),
       columnHelper.accessor((row) => row.neuronStake, {
-        cell: (info) => info.getValue().toFixed(4),
+        cell: (info) => info.getValue(),
         id: "Stake",
       }),
       columnHelper.accessor((row) => row.neuronHotKeys, {

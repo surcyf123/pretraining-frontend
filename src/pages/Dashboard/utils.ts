@@ -28,19 +28,20 @@ interface MetagraphMetadata {
 }
 
 interface NeuronDetails {
-  each_neuron_uid: number;
-  each_neuron_stake: number;
-  each_neuron_ranks: number;
-  each_neuron_incentives: number;
-  each_neuron_emission: number;
-  each_neuron_consensus: number;
-  each_neuron_trust: number;
-  each_neuron_validator_trust: number;
-  each_neuron_dividends: number;
-  each_neuron_hotkeys: string;
-  each_neuron_coldkeys: string;
-  each_neuron_bonds?: number;
-  each_neuron_weights?: number;
+  uid: number;
+  stake: number;
+  rank: number;
+  incentive: number;
+  emission: number;
+  consensus: number;
+  trust: number;
+  validator_trust: number;
+  dividends: number;
+  bonds: number[];
+  weight: number[];
+  hotkey: string;
+  coldkey: string;
+  address: string;
 }
 
 export async function fetchTableData(): Promise<Record<string, (RunDetails | null)[]>> {
@@ -74,33 +75,33 @@ export async function fetchMetagraphData(): Promise<{
 
   const neuronData = json.neuron_data.map<MetagraphDetails>(
     ({
-      each_neuron_coldkeys,
-      each_neuron_weights,
-      each_neuron_consensus,
-      each_neuron_dividends,
-      each_neuron_emission,
-      each_neuron_hotkeys,
-      each_neuron_incentives,
-      each_neuron_ranks,
-      each_neuron_stake,
-      each_neuron_trust,
-      each_neuron_uid,
-      each_neuron_validator_trust,
-      each_neuron_bonds,
+      address,
+      coldkey,
+      consensus,
+      dividends,
+      emission,
+      hotkey,
+      incentive,
+      rank,
+      stake,
+      trust,
+      uid,
+      validator_trust,
     }) => ({
-      neuronID: each_neuron_uid,
-      neuronRank: each_neuron_ranks,
-      neuronIncentives: each_neuron_incentives,
-      neuronEmission: each_neuron_emission,
-      neuronConsensus: each_neuron_consensus,
-      neuronTrust: each_neuron_trust,
-      neuronValidatorTrust: each_neuron_validator_trust,
-      neuronDividends: each_neuron_dividends,
-      bonds: each_neuron_bonds ?? 0,
-      neuronWeight: each_neuron_weights ?? 0,
-      neuronStake: each_neuron_stake,
-      neuronHotKeys: each_neuron_hotkeys,
-      neuronColdKeys: each_neuron_coldkeys,
+      neuronID: uid,
+      neuronRank: rank,
+      neuronIncentives: incentive,
+      neuronEmission: emission,
+      neuronConsensus: consensus,
+      neuronTrust: trust,
+      neuronValidatorTrust: validator_trust,
+      neuronDividends: dividends,
+      bonds: 0, // TODO: Update data
+      neuronWeight: 0, // TODO: Update data
+      neuronStake: stake,
+      neuronHotKeys: hotkey,
+      neuronColdKeys: coldkey,
+      neuronAddress: address,
     }),
   );
   return {
