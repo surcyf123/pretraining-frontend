@@ -6,7 +6,9 @@ metagraph = bt.metagraph(netuid = 9, sync = True, lite = False)
 
 def get_metagraph_data():
   metadata = metagraph.metadata(),
+  
   neuron_data = {
+  "uid":metagraph.uids,
   "stake": metagraph.S.tolist(),
   "rank": metagraph.R.tolist(),
   "incentive": metagraph.I.tolist(),
