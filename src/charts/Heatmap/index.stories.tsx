@@ -24,7 +24,6 @@ export default {
       { x: 3, y: 9, value: 0.4 },
       { x: 9, y: 6, value: 0 },
     ],
-    seriesName: "value",
     xAxis: "x",
     xAxisLabel: "X",
     yAxis: "y",

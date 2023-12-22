@@ -50,7 +50,6 @@ export interface HeatmapProps {
   yAxis: string;
   yAxisLabel: string;
   data: Record<string, string | number | undefined | null>[];
-  seriesName: string;
 }
 
 export function Heatmap({
@@ -63,7 +62,6 @@ export function Heatmap({
   yAxis,
   yAxisLabel,
   xAxisLabel,
-  seriesName,
 }: HeatmapProps): JSX.Element {
   const chartRef = useRef<HTMLDivElement>(null);
 
@@ -138,14 +136,13 @@ export function Heatmap({
             encode: {
               x: xAxis,
               y: yAxis,
-              value: seriesName,
             },
           },
         ],
       };
       chart?.setOption(option, true);
     }
-  }, [data, seriesName, theme, title, xAxis, xAxisLabel, yAxis, yAxisLabel]);
+  }, [data, theme, title, xAxis, xAxisLabel, yAxis, yAxisLabel]);
   return (
     <Skeleton visible={loading ?? false}>
       <div ref={chartRef} style={{ height: "100%", width: "100%", ...style }} />
