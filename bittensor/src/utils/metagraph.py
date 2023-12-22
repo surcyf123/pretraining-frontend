@@ -8,7 +8,7 @@ subnets = [i for i in range(0, 33)]
 
 def get_metagraph_data():
   subnetData = {}
-  subnetMetaGraphMetadata={}
+  subnetMetaGraphMetadata = {}
   for i in subnets:
     metagraph = bt.metagraph(netuid = i, sync = True, lite = False)
     subnetMetaGraphMetadata[f"subnet-{i}"] = metagraph.metadata()
