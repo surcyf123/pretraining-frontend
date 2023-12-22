@@ -126,6 +126,9 @@ export function Heatmap({
           inRange: {
             color: schemeBrBG[11],
           },
+          orient: "horizontal",
+          left: "center",
+          bottom: "30",
         },
         dataset: {
           source: data,
@@ -139,6 +142,7 @@ export function Heatmap({
             },
           },
         ],
+        tooltip: {},
       };
       chart?.setOption(option, true);
     }
