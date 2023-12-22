@@ -130,7 +130,7 @@ export function Heatmap({
           },
           orient: "horizontal",
           left: "center",
-          bottom: "30",
+          bottom: 30,
           dimension: visualAxis as unknown as number, // Bad types
         },
         dataset: {
