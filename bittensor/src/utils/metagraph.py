@@ -36,8 +36,7 @@ def get_metagraph_data():
       updated_dictionary = {key: items + [None] * (max_length - len(items)) for key, items in neuron_data.items()} # normalize the items to have same length.
       output = pd.DataFrame(updated_dictionary).to_dict(orient="records") # convert to row wise data
       subnetData[f"subnet-{subnet}"] = output
-  
- return {
+  return {
     subnetData,
     subnetMetaGraphMetadata
   }
