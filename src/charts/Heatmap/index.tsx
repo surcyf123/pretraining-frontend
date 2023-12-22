@@ -119,8 +119,8 @@ export function Heatmap({
           },
         ],
         visualMap: {
-          min: 0,
-          max: 1,
+          min: 0, // TODO: Update logic to find value.
+          max: 1, // TODO: Update logic to find value.
           calculable: true,
           realtime: false,
           inRange: {
