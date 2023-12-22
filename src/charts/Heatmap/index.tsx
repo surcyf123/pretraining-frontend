@@ -1,7 +1,12 @@
 import { Skeleton } from "@mantine/core";
 import { schemeBrBG } from "d3-scale-chromatic";
 import { HeatmapChart } from "echarts/charts";
-import { TooltipComponent, GridComponent, VisualMapComponent } from "echarts/components";
+import {
+  TooltipComponent,
+  GridComponent,
+  VisualMapComponent,
+  DataZoomComponent,
+} from "echarts/components";
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useRef, type CSSProperties, useEffect } from "react";
@@ -10,13 +15,25 @@ import type {
   TooltipComponentOption,
   GridComponentOption,
   VisualMapComponentOption,
+  DataZoomComponentOption,
 } from "echarts/components";
 import type { ComposeOption, ECharts } from "echarts/core";
 
-use([TooltipComponent, GridComponent, VisualMapComponent, HeatmapChart, CanvasRenderer]);
+use([
+  TooltipComponent,
+  GridComponent,
+  VisualMapComponent,
+  HeatmapChart,
+  CanvasRenderer,
+  DataZoomComponent,
+]);
 
 type HeatMapOption = ComposeOption<
-  TooltipComponentOption | GridComponentOption | VisualMapComponentOption | HeatmapSeriesOption
+  | TooltipComponentOption
+  | GridComponentOption
+  | VisualMapComponentOption
+  | HeatmapSeriesOption
+  | DataZoomComponentOption
 >;
 
 export interface HeatmapProps {
