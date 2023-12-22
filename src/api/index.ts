@@ -51,11 +51,18 @@ export async function fetchMetagraphData(): Promise<{
   const downloadResult = await downloadData({ key: "metagraph.json" }).result;
   // Ref: https://docs.amplify.aws/javascript/build-a-backend/storage/download/#get-the-text-value-of-downloaded-file
   const text = await downloadResult.body.text(); // Using "downloadResult.body.json()" gives error "Parsing response to json is not implemented."
+
   const json = JSON.parse(text) as {
-    metadata: MetagraphMetadata;
+    metadata: [MetagraphMetadata];
     neuronData: NeuronDetails[];
   };
-  return json;
+
+  const [metadata] = json.metadata;
+
+  return {
+    metadata,
+    neuronData: json.neuronData,
+  };
 }
 
 // eslint-disable-next-line import/no-unused-modules
