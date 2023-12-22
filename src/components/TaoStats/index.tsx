@@ -1,5 +1,5 @@
 import { Code, Group, Skeleton, Stack, Text } from "@mantine/core";
-import { IconChevronDown, IconChevronUp, IconCurrencyDollar } from "@tabler/icons-react";
+import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchTaoStatistics } from "../../api";
 
@@ -10,6 +10,7 @@ export function TaoStats(): JSX.Element {
     refetchInterval: 5 * 60 * 1000,
   });
 
+  const price = Number.parseFloat(data?.price ?? "");
   const priceChangeIn24H = Number.parseFloat(data?.["24h_change"] ?? "");
 
   return (
@@ -20,8 +21,12 @@ export function TaoStats(): JSX.Element {
             Bittensor price <Code>TAO</Code>
           </Text>
           <Group>
-            <IconCurrencyDollar />
-            <Text size="lg">{`${data?.price}`}</Text>
+            <Text size="lg">
+              {price.toLocaleString(undefined, {
+                style: "currency",
+                currency: "usd",
+              })}
+            </Text>
             {priceChangeIn24H > 0 ? (
               <IconChevronUp color="green" />
             ) : (
