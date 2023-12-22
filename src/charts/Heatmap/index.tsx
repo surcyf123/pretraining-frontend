@@ -44,7 +44,7 @@ export interface HeatmapProps {
   loading?: boolean;
   style?: CSSProperties;
   theme?: "light" | "dark";
-  title: string;
+  title?: string;
   xAxis: string;
   xAxisLabel?: string;
   yAxis: string;
