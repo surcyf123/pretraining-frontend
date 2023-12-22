@@ -124,7 +124,7 @@ export function Heatmap({
           min: 0, // TODO: Update logic to find value.
           max: 1, // TODO: Update logic to find value.
           calculable: true,
-          realtime: false,
+          realtime: true,
           inRange: {
             color: schemeBrBG[11],
           },
