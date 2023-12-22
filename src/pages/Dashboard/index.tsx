@@ -2,17 +2,17 @@ import { Card, Stack, useMantineColorScheme, Group, Loader, Divider } from "@man
 import { useQuery } from "@tanstack/react-query";
 import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
-import { BestLossChart } from "../../charts/BestLossChart";
-import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
-import { MetagraphTable } from "../../components/MetagraphTable";
-import { StatisticsTable } from "../../components/StatisticsTable";
-import { TopBar } from "../../components/TopBar";
 import {
   fetchTableData,
   fetchLineChartData,
   fetchMetagraphData,
   fetchTaoStatistics,
-} from "./utils";
+} from "../../api";
+import { BestLossChart } from "../../charts/BestLossChart";
+import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
+import { MetagraphTable } from "../../components/MetagraphTable";
+import { StatisticsTable } from "../../components/StatisticsTable";
+import { TopBar } from "../../components/TopBar";
 import type { UIDDetails } from "../../utils";
 
 export function Dashboard() {
