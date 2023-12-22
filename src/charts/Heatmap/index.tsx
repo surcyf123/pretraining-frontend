@@ -48,7 +48,8 @@ export interface HeatmapProps {
   xAxis: string;
   xAxisLabel?: string;
   yAxis: string;
-  yAxisLabel: string;
+  yAxisLabel?: string;
+  visualAxis: string;
   data: Record<string, string | number | undefined | null>[];
 }
 
@@ -60,6 +61,7 @@ export function Heatmap({
   data,
   xAxis,
   yAxis,
+  visualAxis,
   yAxisLabel,
   xAxisLabel,
 }: HeatmapProps): JSX.Element {
@@ -119,16 +121,17 @@ export function Heatmap({
           },
         ],
         visualMap: {
-          min: 0,
-          max: 1,
+          min: 0, // TODO: Update logic to find value.
+          max: 1, // TODO: Update logic to find value.
           calculable: true,
-          realtime: false,
+          realtime: true,
           inRange: {
             color: schemeBrBG[11],
           },
           orient: "horizontal",
           left: "center",
           bottom: "30",
+          dimension: visualAxis as unknown as number, // Bad types
         },
         dataset: {
           source: data,
@@ -146,7 +149,7 @@ export function Heatmap({
       };
       chart?.setOption(option, true);
     }
-  }, [data, theme, title, xAxis, xAxisLabel, yAxis, yAxisLabel]);
+  }, [data, theme, title, xAxis, xAxisLabel, yAxis, yAxisLabel, visualAxis]);
   return (
     <Skeleton visible={loading ?? false}>
       <div ref={chartRef} style={{ height: "100%", width: "100%", ...style }} />
