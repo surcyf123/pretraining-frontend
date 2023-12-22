@@ -28,7 +28,11 @@ export function TaoStats(): JSX.Element {
               <IconChevronDown color="red" />
             )}
             <Text component="span" c={priceChangeIn24H > 0 ? "green" : "red"} size="sm">
-              {`${priceChangeIn24H}%`}
+              {(priceChangeIn24H / 100).toLocaleString(undefined, {
+                style: "percent",
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2,
+              })}
             </Text>
           </Group>
         </Stack>

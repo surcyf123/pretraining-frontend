@@ -2,16 +2,12 @@ import { Card, Stack, useMantineColorScheme, Group, Loader, Divider } from "@man
 import { useQuery } from "@tanstack/react-query";
 import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
-import {
-  fetchTableData,
-  fetchLineChartData,
-  fetchMetagraphData,
-  fetchTaoStatistics,
-} from "../../api";
+import { fetchTableData, fetchLineChartData, fetchMetagraphData } from "../../api";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { MetagraphTable } from "../../components/MetagraphTable";
 import { StatisticsTable } from "../../components/StatisticsTable";
+import { TaoStats } from "../../components/Taostats";
 import { TopBar } from "../../components/TopBar";
 import type { UIDDetails } from "../../utils";
 
@@ -49,15 +45,15 @@ export function Dashboard() {
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
 
-  const {
-    data: taoStatistics,
-    isRefetching: isRefetchingTaoStatistics,
-    isLoading: isLoadingTaoStatistics,
-  } = useQuery({
-    queryKey: ["taoStatistics"],
-    queryFn: () => fetchTaoStatistics(),
-    refetchInterval: 5 * 60 * 1000,
-  });
+  // const {
+  //   data: taoStatistics,
+  //   isRefetching: isRefetchingTaoStatistics,
+  //   isLoading: isLoadingTaoStatistics,
+  // } = useQuery({
+  //   queryKey: ["taoStatistics"],
+  //   queryFn: () => fetchTaoStatistics(),
+  //   refetchInterval: 5 * 60 * 1000,
+  // });
 
   const {
     data: metagraphDetails,
@@ -74,8 +70,7 @@ export function Dashboard() {
     isRefetchingRecentUIDJSON === true ||
     isRefetchingHistoryJSON === true ||
     isRefetchingRecentJSON === true ||
-    isRefetchingMetagraphJSON === true ||
-    isRefetchingTaoStatistics === true;
+    isRefetchingMetagraphJSON === true;
 
   const { colorScheme } = useMantineColorScheme();
   const processedData = useMemo<UIDDetails[]>(() => {
@@ -130,17 +125,7 @@ export function Dashboard() {
 
   return (
     <Stack>
-      <TopBar
-        metrics={{
-          Price: taoStatistics?.price,
-          "Market Cap": taoStatistics?.market_cap,
-          "24h Volume": taoStatistics?.["24h_volume"],
-          "Current Supply": taoStatistics?.current_supply,
-          "Validating APY": taoStatistics?.validating_apy,
-          "Staking APY": taoStatistics?.staking_apy,
-        }}
-        loading={isLoadingTaoStatistics}
-      />
+      <TaoStats />
       <Divider />
       <TopBar
         metrics={{
