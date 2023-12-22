@@ -12,6 +12,12 @@ export function TaoStats(): JSX.Element {
 
   const price = Number.parseFloat(data?.price ?? "");
   const priceChangeIn24H = Number.parseFloat(data?.["24h_change"] ?? "");
+  const marketCap = Number.parseFloat(data?.market_cap ?? "");
+  const volumeIn24H = Number.parseFloat(data?.["24h_volume"] ?? "");
+  const circulatingSupply = Number.parseFloat(data?.current_supply ?? "");
+  const totalSupply = Number.parseFloat(data?.total_supply ?? "");
+  const validatingAPR = Number.parseFloat(data?.validating_apy ?? "");
+  const stakingAPR = Number.parseFloat(data?.staking_apy ?? "");
 
   return (
     <Skeleton visible={isLoading}>
@@ -39,6 +45,62 @@ export function TaoStats(): JSX.Element {
               })}
             </Text>
           </Group>
+        </Stack>
+        <Stack align="center">
+          <Text size="sm">Market Cap</Text>
+          <Text size="lg">
+            {marketCap.toLocaleString(undefined, {
+              currency: "usd",
+              style: "currency",
+              maximumFractionDigits: 2,
+            })}
+          </Text>
+        </Stack>
+        <Stack align="center">
+          <Text size="sm">24h Volume</Text>
+          <Text size="lg">
+            {volumeIn24H.toLocaleString(undefined, {
+              currency: "usd",
+              style: "currency",
+              maximumFractionDigits: 2,
+            })}
+          </Text>
+        </Stack>
+        <Stack align="center">
+          <Text size="sm">Circulating Supply</Text>
+          <Text size="lg">
+            {circulatingSupply.toLocaleString(undefined, {
+              maximumFractionDigits: 2,
+            })}
+            𝞃
+          </Text>
+        </Stack>
+        <Stack align="center">
+          <Text size="sm">Total Supply</Text>
+          <Text size="lg">
+            {totalSupply.toLocaleString(undefined, {
+              maximumFractionDigits: 2,
+            })}
+            𝞃
+          </Text>
+        </Stack>
+        <Stack align="center">
+          <Text size="sm">Validating APR</Text>
+          <Text size="lg">
+            {(validatingAPR / 100).toLocaleString(undefined, {
+              style: "percent",
+              maximumFractionDigits: 2,
+            })}
+          </Text>
+        </Stack>
+        <Stack align="center">
+          <Text size="sm">Staking APR</Text>
+          <Text size="lg">
+            {(stakingAPR / 100).toLocaleString(undefined, {
+              style: "percent",
+              maximumFractionDigits: 2,
+            })}
+          </Text>
         </Stack>
       </Group>
     </Skeleton>
