@@ -36,7 +36,6 @@ export function TaoStats(): JSX.Element {
               {(priceChangeIn24H / 100).toLocaleString(undefined, {
                 style: "percent",
                 maximumFractionDigits: 2,
-                minimumFractionDigits: 2,
               })}
             </Text>
           </Group>
