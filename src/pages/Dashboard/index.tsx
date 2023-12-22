@@ -45,16 +45,6 @@ export function Dashboard() {
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
 
-  // const {
-  //   data: taoStatistics,
-  //   isRefetching: isRefetchingTaoStatistics,
-  //   isLoading: isLoadingTaoStatistics,
-  // } = useQuery({
-  //   queryKey: ["taoStatistics"],
-  //   queryFn: () => fetchTaoStatistics(),
-  //   refetchInterval: 5 * 60 * 1000,
-  // });
-
   const {
     data: metagraphDetails,
     isRefetching: isRefetchingMetagraphJSON,
