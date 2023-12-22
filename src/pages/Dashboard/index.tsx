@@ -2,17 +2,13 @@ import { Card, Stack, useMantineColorScheme, Group, Loader, Divider } from "@man
 import { useQuery } from "@tanstack/react-query";
 import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
+import { fetchTableData, fetchLineChartData, fetchMetagraphData } from "../../api";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { MetagraphTable } from "../../components/MetagraphTable";
 import { StatisticsTable } from "../../components/StatisticsTable";
+import { TaoStats } from "../../components/Taostats";
 import { TopBar } from "../../components/TopBar";
-import {
-  fetchTableData,
-  fetchLineChartData,
-  fetchMetagraphData,
-  fetchTaoStatistics,
-} from "./utils";
 import type { UIDDetails } from "../../utils";
 
 export function Dashboard() {
@@ -50,16 +46,6 @@ export function Dashboard() {
   });
 
   const {
-    data: taoStatistics,
-    isRefetching: isRefetchingTaoStatistics,
-    isLoading: isLoadingTaoStatistics,
-  } = useQuery({
-    queryKey: ["taoStatistics"],
-    queryFn: () => fetchTaoStatistics(),
-    refetchInterval: 5 * 60 * 1000,
-  });
-
-  const {
     data: metagraphDetails,
     isRefetching: isRefetchingMetagraphJSON,
     isLoading: isLoadingMetagraphJSON,
@@ -74,8 +60,7 @@ export function Dashboard() {
     isRefetchingRecentUIDJSON === true ||
     isRefetchingHistoryJSON === true ||
     isRefetchingRecentJSON === true ||
-    isRefetchingMetagraphJSON === true ||
-    isRefetchingTaoStatistics === true;
+    isRefetchingMetagraphJSON === true;
 
   const { colorScheme } = useMantineColorScheme();
   const processedData = useMemo<UIDDetails[]>(() => {
@@ -130,18 +115,7 @@ export function Dashboard() {
 
   return (
     <Stack>
-      <TopBar
-        metrics={{
-          Price: taoStatistics?.price,
-          "Market Cap": taoStatistics?.market_cap,
-          "24h Volume": taoStatistics?.["24h_volume"],
-          "Current Supply": taoStatistics?.current_supply,
-          "Validating APY": taoStatistics?.validating_apy,
-          "Staking APY": taoStatistics?.staking_apy,
-        }}
-        loading={isLoadingTaoStatistics}
-      />
-      <Divider />
+      <TaoStats />
       <TopBar
         metrics={{
           "Best UID": bestLossData?.uid,
