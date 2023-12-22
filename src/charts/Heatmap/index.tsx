@@ -48,7 +48,7 @@ export interface HeatmapProps {
   xAxis: string;
   xAxisLabel?: string;
   yAxis: string;
-  yAxisLabel: string;
+  yAxisLabel?: string;
   data: Record<string, string | number | undefined | null>[];
 }
 
