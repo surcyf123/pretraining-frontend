@@ -6,6 +6,7 @@ import {
   GridComponent,
   VisualMapComponent,
   DataZoomComponent,
+  DatasetComponent,
 } from "echarts/components";
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
@@ -16,6 +17,7 @@ import type {
   GridComponentOption,
   VisualMapComponentOption,
   DataZoomComponentOption,
+  DatasetComponentOption,
 } from "echarts/components";
 import type { ComposeOption, ECharts } from "echarts/core";
 
@@ -26,6 +28,7 @@ use([
   HeatmapChart,
   CanvasRenderer,
   DataZoomComponent,
+  DatasetComponent,
 ]);
 
 type HeatMapOption = ComposeOption<
@@ -34,6 +37,7 @@ type HeatMapOption = ComposeOption<
   | VisualMapComponentOption
   | HeatmapSeriesOption
   | DataZoomComponentOption
+  | DatasetComponentOption
 >;
 
 export interface HeatmapProps {
@@ -41,9 +45,26 @@ export interface HeatmapProps {
   style?: CSSProperties;
   theme?: "light" | "dark";
   title: string;
+  xAxis: string;
+  xAxisLabel?: string;
+  yAxis: string;
+  yAxisLabel?: string;
+  visualAxis: string;
+  data: Record<string, string | number | undefined | null>[];
 }
 
-export function Heatmap({ loading, style, theme, title }: HeatmapProps): JSX.Element {
+export function Heatmap({
+  loading,
+  style,
+  theme,
+  title,
+  data,
+  xAxis,
+  yAxis,
+  visualAxis,
+  yAxisLabel,
+  xAxisLabel,
+}: HeatmapProps): JSX.Element {
   const chartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -79,14 +100,14 @@ export function Heatmap({ loading, style, theme, title }: HeatmapProps): JSX.Ele
         grid: { bottom: "25%", top: "15%", right: "5%", left: "5%" },
         xAxis: {
           type: "category",
-          name: "Miner Netuid",
+          name: xAxisLabel ?? xAxis,
           nameLocation: "middle",
           nameGap: 30,
           axisLine: { show: true },
         },
         yAxis: {
           type: "category",
-          name: "validator",
+          name: yAxisLabel ?? yAxis,
           position: "bottom",
           nameLocation: "middle",
           nameGap: 20,
@@ -99,10 +120,32 @@ export function Heatmap({ loading, style, theme, title }: HeatmapProps): JSX.Ele
             xAxisIndex: 0,
           },
         ],
+        visualMap: {
+          min: 0, // TODO: Update logic to find value.
+          max: 1, // TODO: Update logic to find value.
+          calculable: true,
+          realtime: true,
+          inRange: {
+            color: schemeBrBG[11],
+          },
+          dimension: visualAxis as unknown as number, // Bad types
+        },
+        dataset: {
+          source: data,
+        },
+        series: [
+          {
+            type: "heatmap",
+            encode: {
+              x: xAxis,
+              y: yAxis,
+            },
+          },
+        ],
       };
       chart?.setOption(option, true);
     }
-  }, [theme, title]);
+  }, [data, theme, title, xAxis, xAxisLabel, yAxis, yAxisLabel, visualAxis]);
   return (
     <Skeleton visible={loading ?? false}>
       <div ref={chartRef} style={{ height: "100%", width: "100%", ...style }} />
