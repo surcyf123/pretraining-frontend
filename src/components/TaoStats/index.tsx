@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchTaoStatistics } from "../../api";
 
 export function TaoStats(): JSX.Element {
-  const { data, isRefetching, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["taoStatistics"],
     queryFn: () => fetchTaoStatistics(),
     refetchInterval: 5 * 60 * 1000,
@@ -13,7 +13,7 @@ export function TaoStats(): JSX.Element {
   const priceChangeIn24H = Number.parseFloat(data?.["24h_change"] ?? "");
 
   return (
-    <Skeleton visible={(isLoading || isRefetching) ?? false}>
+    <Skeleton visible={isLoading}>
       <Group wrap="nowrap" justify="space-between">
         <Stack align="center">
           <Text size="sm">
