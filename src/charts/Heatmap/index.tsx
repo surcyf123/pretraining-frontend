@@ -60,6 +60,21 @@ export function Heatmap({ loading, style, theme, title }: HeatmapProps): JSX.Ele
           fontFamily: "Space Mono, Courier, monospace",
         },
         grid: { bottom: "25%", top: "15%", right: "5%", left: "5%" },
+        xAxis: {
+          type: "category",
+          name: "Miner Netuid",
+          nameLocation: "middle",
+          nameGap: 30,
+          axisLine: { show: true },
+        },
+        yAxis: {
+          type: "category",
+          name: "validator",
+          position: "bottom",
+          nameLocation: "middle",
+          nameGap: 20,
+          axisLine: { show: true },
+        },
         dataZoom: [
           {
             type: "inside",
