@@ -7,7 +7,7 @@ import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { MetagraphTable } from "../../components/MetagraphTable";
 import { StatisticsTable } from "../../components/StatisticsTable";
-import { TaoStats } from "../../components/Taostats";
+import { TaoStats } from "../../components/TaoStats";
 import { TopBar } from "../../components/TopBar";
 import type { UIDDetails } from "../../utils";
 
