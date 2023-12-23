@@ -110,7 +110,7 @@ export function Heatmap({
           name: yAxisLabel ?? yAxis,
           position: "bottom",
           nameLocation: "middle",
-          nameGap: 20,
+          nameGap: 30,
           axisLine: { show: true },
         },
         dataZoom: [
