@@ -117,7 +117,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
             )}
           </CopyButton>
         ),
-        id: "Hotkeys",
+        id: "Hotkey",
       }),
       columnHelper.accessor((row) => row.coldkey, {
         // eslint-disable-next-line react/no-unstable-nested-components
@@ -134,23 +134,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
             )}
           </CopyButton>
         ),
-        id: "Coldkeys",
-      }),
-      columnHelper.accessor((row) => row.weight, {
-        cell: (info) =>
-          info
-            .getValue()
-            .map((ele) => ele.toFixed(4))
-            .join(","),
-        id: "Weight",
-      }),
-      columnHelper.accessor((row) => row.bonds, {
-        cell: (info) =>
-          info
-            .getValue()
-            .map((ele) => ele.toFixed(4))
-            .join(","),
-        id: "Bonds",
+        id: "Coldkey",
       }),
     ];
   }, []);
