@@ -25,7 +25,7 @@
         },
         "bittensor": {
           "deploymentBucketName": "amplify-pretraining-prod-115707-deployment",
-          "s3Key": "amplify-builds/bittensor-594770424c4d77635267-build.zip"
+          "s3Key": "amplify-builds/bittensor-69342b544e377a703851-build.zip"
         }
       },
       "auth": {
@@ -42,7 +42,8 @@
       },
       "custom": {
         "Route53HostedZone": {},
-        "BittensorDomain": {}
+        "BittensorDomain": {},
+        "BittensorContainer": {}
       }
     }
   }
