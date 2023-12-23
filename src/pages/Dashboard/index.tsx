@@ -57,6 +57,18 @@ export function Dashboard() {
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
 
+  const heatmapData = useMemo(
+    () =>
+      (metagraphDetails?.neuronData ?? []).flatMap(({ weight, uid }) =>
+        weight.map<Record<string, number | string | undefined | null>>((ele, index) => ({
+          validatorID: uid,
+          weight: ele,
+          minerID: index,
+        })),
+      ),
+    [metagraphDetails?.neuronData],
+  );
+
   const isRefetching =
     isRefetchingRecentUIDJSON === true ||
     isRefetchingHistoryJSON === true ||
@@ -217,25 +229,13 @@ export function Dashboard() {
         <Heatmap
           title="Weight Matrix"
           style={{ height: "30vh" }}
-          data={[
-            { x: 2, y: 3, customValue: 0.8 },
-            { x: 5, y: 7, customValue: 0.5 },
-            { x: 8, y: 4, customValue: 0.2 },
-            { x: 3, y: 6, customValue: 0.9 },
-            { x: 1, y: 2, customValue: 0.6 },
-            { x: 9, y: 1, customValue: 0.7 },
-            { x: 6, y: 8, customValue: 0.3 },
-            { x: 4, y: 5, customValue: 0.4 },
-            { x: 7, y: 9, customValue: 0.1 },
-            { x: 2, y: 7, customValue: 0.6 },
-            { x: 5, y: 4, customValue: 0.8 },
-            { x: 8, y: 1, customValue: 0.5 },
-            { x: 3, y: 9, customValue: 0.4 },
-            { x: 9, y: 6, customValue: 0 },
-          ]}
-          xAxis="x"
-          yAxis="y"
-          visualAxis="customValue"
+          data={heatmapData}
+          xAxis="minerID"
+          yAxis="validatorID"
+          visualAxis="weight"
+          loading={isLoadingMetagraphJSON}
+          xAxisLabel="Miner"
+          yAxisLabel="Validator"
         />
       </Card>
       {isRefetching === true ? (
