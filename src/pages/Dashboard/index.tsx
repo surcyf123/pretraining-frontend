@@ -61,9 +61,9 @@ export function Dashboard() {
     () =>
       (metagraphDetails?.neuronData ?? []).flatMap(({ weight, uid }) =>
         weight.map<Record<string, number | string | undefined | null>>((ele, index) => ({
-          uid,
+          validatorID: uid,
           weight: ele,
-          index,
+          minerID: index,
         })),
       ),
     [metagraphDetails?.neuronData],
@@ -230,12 +230,12 @@ export function Dashboard() {
           title="Weight Matrix"
           style={{ height: "30vh" }}
           data={heatmapData}
-          xAxis="index"
-          yAxis="uid"
+          xAxis="minerID"
+          yAxis="validatorID"
           visualAxis="weight"
           loading={isLoadingMetagraphJSON}
-          xAxisLabel="Index"
-          yAxisLabel="UID"
+          xAxisLabel="Miner"
+          yAxisLabel="Validator"
         />
       </Card>
       {isRefetching === true ? (
