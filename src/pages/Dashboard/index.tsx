@@ -60,7 +60,11 @@ export function Dashboard() {
   const heatmapData = useMemo(
     () =>
       (metagraphDetails?.neuronData ?? []).flatMap(({ weight, uid }) =>
-        weight.map((ele, index) => ({ uid, weight: ele, index })),
+        weight.map<Record<string, number | string | undefined | null>>((ele, index) => ({
+          uid,
+          weight: ele,
+          index,
+        })),
       ),
     [metagraphDetails?.neuronData],
   );
