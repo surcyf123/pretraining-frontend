@@ -57,12 +57,13 @@ export function Dashboard() {
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
 
-  const heatmapData = useMemo(() => {
-    const output = (metagraphDetails?.neuronData ?? []).flatMap(({ weight, uid }) =>
-      weight.map((ele, index) => ({ uid, weight: ele, index })),
-    );
-    return output;
-  }, [metagraphDetails?.neuronData]);
+  const heatmapData = useMemo(
+    () =>
+      (metagraphDetails?.neuronData ?? []).flatMap(({ weight, uid }) =>
+        weight.map((ele, index) => ({ uid, weight: ele, index })),
+      ),
+    [metagraphDetails?.neuronData],
+  );
 
   const isRefetching =
     isRefetchingRecentUIDJSON === true ||
