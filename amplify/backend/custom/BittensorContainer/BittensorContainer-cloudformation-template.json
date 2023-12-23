@@ -1,0 +1,19 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters": {
+    "env": {
+      "Type": "String"
+    },
+    "storages359bce836BucketName": {
+      "Type": "String",
+      "Description": "Input parameter describing BucketName attribute for storage/s359bce836 resource"
+    },
+    "storages359bce836Region": {
+      "Type": "String",
+      "Description": "Input parameter describing Region attribute for storage/s359bce836 resource"
+    }
+  },
+  "Resources": {
+  },
+  "Outputs": {}
+}

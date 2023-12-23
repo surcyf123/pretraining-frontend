@@ -28,6 +28,20 @@
     }
   },
   "custom": {
+    "BittensorContainer": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "BucketName",
+            "Region"
+          ],
+          "category": "storage",
+          "resourceName": "s359bce836"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "customCloudformation"
+    },
     "BittensorDomain": {
       "dependsOn": [
         "Route53HostedZone"
