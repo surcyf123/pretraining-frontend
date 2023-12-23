@@ -228,7 +228,7 @@ export function Dashboard() {
       <Card shadow="md">
         <Heatmap
           title="Weight Matrix"
-          style={{ height: "30vh" }}
+          style={{ height: "50vh" }}
           data={heatmapData}
           xAxis="minerID"
           yAxis="validatorID"
