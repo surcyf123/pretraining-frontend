@@ -86,6 +86,10 @@ export function Heatmap({
   }, [theme]); // Whenever theme changes we need to dispose the chart to render a fresh one with appropriate styling
 
   useEffect(() => {
+    const visualAxisValue = data
+      .map((ele) => ele[visualAxis])
+      .filter((ele): ele is number => typeof ele === "number");
+
     if (chartRef.current !== null) {
       const chart = getInstanceByDom(chartRef.current);
       const option: HeatMapOption = {
@@ -121,8 +125,8 @@ export function Heatmap({
           },
         ],
         visualMap: {
-          min: 0, // TODO: Update logic to find value.
-          max: 1, // TODO: Update logic to find value.
+          min: visualAxisValue.length > 0 ? Math.min(...visualAxisValue) : 0,
+          max: visualAxisValue.length > 0 ? Math.max(...visualAxisValue) : 0,
           calculable: true,
           realtime: true,
           inRange: {
