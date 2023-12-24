@@ -6,6 +6,7 @@ import { fetchTableData, fetchLineChartData, fetchMetagraphData } from "../../ap
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { Heatmap } from "../../charts/Heatmap";
+import { MetaBox } from "../../components/MetaBox";
 import { MetagraphTable } from "../../components/MetagraphTable";
 import { StatisticsTable } from "../../components/StatisticsTable";
 import { TaoStats } from "../../components/TaoStats";
@@ -130,6 +131,8 @@ export function Dashboard() {
     <Stack>
       <TaoStats />
       <Divider />
+      <MetaBox data={metagraphDetails?.metadata} loading={isLoadingMetagraphJSON} />
+      <Divider />
       <TopBar
         metrics={{
           "Best UID": bestLossData?.uid,
@@ -144,16 +147,6 @@ export function Dashboard() {
         loading={isRecentUIDJSONLoading}
       />
       <Divider />
-      <TopBar
-        metrics={{
-          "Network UID": metagraphDetails?.metadata.netuid,
-          Neurons: metagraphDetails?.metadata.n,
-          Block: metagraphDetails?.metadata.block,
-          Version: metagraphDetails?.metadata.version,
-          Network: metagraphDetails?.metadata.network,
-        }}
-        loading={isLoadingMetagraphJSON}
-      />
       <Card shadow="md">
         <BestLossChart
           title="All Time"

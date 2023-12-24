@@ -19,7 +19,7 @@ interface TaoStatistics {
   last_updated: string;
 }
 
-interface MetagraphMetadata {
+export interface MetagraphMetadata {
   netuid: number;
   n: number;
   block: number;
