@@ -1,4 +1,5 @@
-import { Card, Grid, Skeleton, Stack, Text } from "@mantine/core";
+import { Card, Grid, Group, Skeleton, Stack, Text } from "@mantine/core";
+import { IconId, IconNetwork, IconPackage, IconTallymarks } from "@tabler/icons-react";
 import type { MetagraphMetadata } from "../../api";
 
 export function MetaBox({
@@ -14,7 +15,10 @@ export function MetaBox({
         <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
           <Card>
             <Stack>
-              <Text>Network UID</Text>
+              <Group>
+                <IconId />
+                <Text>Network UID</Text>
+              </Group>
               <Text>{data?.netuid}</Text>
             </Stack>
           </Card>
@@ -22,7 +26,10 @@ export function MetaBox({
         <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
           <Card>
             <Stack>
-              <Text>Neurons Count</Text>
+              <Group>
+                <IconTallymarks />
+                <Text>Neurons Count</Text>
+              </Group>
               <Text>{data?.n}</Text>
             </Stack>
           </Card>
@@ -30,7 +37,10 @@ export function MetaBox({
         <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
           <Card>
             <Stack>
-              <Text>Block</Text>
+              <Group>
+                <IconPackage />
+                <Text>Block</Text>
+              </Group>
               <Text>{data?.block}</Text>
             </Stack>
           </Card>
@@ -38,7 +48,10 @@ export function MetaBox({
         <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
           <Card>
             <Stack>
-              <Text>Network & Version</Text>
+              <Group>
+                <IconNetwork />
+                <Text>Network & Version</Text>
+              </Group>
               <Text>
                 {data?.network} | {data?.version}
               </Text>
