@@ -9,7 +9,6 @@ import {
   ActionIcon,
   CopyButton,
   Button,
-  Box,
 } from "@mantine/core";
 import { IconClipboardCheck, IconClipboardCopy } from "@tabler/icons-react";
 import {
