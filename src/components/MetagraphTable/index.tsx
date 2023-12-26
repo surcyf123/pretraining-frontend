@@ -167,7 +167,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
       <Stack>
         <Box
           style={{
-            overflow: "auto",
+            overflowX: "auto",
           }}
         >
           <Table>
