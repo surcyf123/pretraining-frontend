@@ -11,7 +11,7 @@ fastapi = "^0.106.0"
 uvicorn = {extras = ["standard"], version = "^0.25.0"}
 
 [tool.poetry.scripts]
-serve = "api.serve:serve"
+serve = "api.main:serve"
 
 [build-system]
 requires = ["poetry-core"]
