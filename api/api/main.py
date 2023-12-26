@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from typing import Dict
-import json
 import uvicorn
 import bittensor
 
@@ -23,17 +22,17 @@ def root():
 @app.get("/metagraph/{netuid}")
 def metagraph(netuid: int = 0):
     metagraph = get_from_cache(netuid)
-    return metagraph
+    return vars(metagraph)
 
 @app.get("/metadata/{netuid}")
 def metadata(netuid: int = 0):
     metagraph = get_from_cache(netuid)
-    return json.dumps(metagraph.metadata)
+    return vars(metagraph.metadata)
 
 @app.get("/weights/{netuid}")
 def weights(netuid: int = 0):
     metagraph = get_from_cache(netuid)
-    return json.dumps(metagraph.weights)
+    return vars(metagraph.weights)
 
 def start():
     uvicorn.run("api.main:app", host="0.0.0.0", port=8000, reload=True, loop="asyncio") # Ref: Why asyncio loop? https://youtrack.jetbrains.com/issue/PY-57332
