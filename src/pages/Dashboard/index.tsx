@@ -10,6 +10,7 @@ import { MetaBox } from "../../components/MetaBox";
 import { MetagraphTable } from "../../components/MetagraphTable";
 import { StatisticsTable } from "../../components/StatisticsTable";
 import { TopBar } from "../../components/TopBar";
+import { calculateAverageValidatorTrust } from "./utils";
 import type { UIDDetails } from "../../utils";
 
 export function Dashboard() {
@@ -66,6 +67,11 @@ export function Dashboard() {
           minerID: index,
         })),
       ),
+    [metagraphDetails?.neuronData],
+  );
+
+  const averageValidatorTrust = useMemo(
+    () => calculateAverageValidatorTrust(metagraphDetails?.neuronData ?? []),
     [metagraphDetails?.neuronData],
   );
 
@@ -134,6 +140,7 @@ export function Dashboard() {
         metrics={{
           "Best UID": bestLossData?.uid,
           "Average Loss": bestLossData?.average_loss?.toFixed(4),
+          "Average Validator Trust": averageValidatorTrust?.toFixed(4),
           "Win Percentage": bestLossData?.win_rate.toLocaleString(undefined, {
             style: "percent",
             maximumFractionDigits: 2,

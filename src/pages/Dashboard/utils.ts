@@ -1,3 +1,5 @@
+import { mean } from "d3-array";
+import type { NeuronDetails } from "../../components/MetagraphTable";
 import type { RunDetails } from "../../utils";
 
 // eslint-disable-next-line import/no-unused-modules
@@ -11,4 +13,10 @@ export function parseRunDetails(jsonData: Record<string, (RunDetails | null)[]>)
     }),
     {},
   );
+}
+
+export function calculateAverageValidatorTrust(neuronDetails: NeuronDetails[]): number | undefined {
+  const neurons = neuronDetails.filter((ele) => ele.stake > 20000);
+  const averageTrust = mean(neurons, (ele) => ele.validatorTrust);
+  return averageTrust;
 }
