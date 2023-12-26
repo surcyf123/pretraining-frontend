@@ -9,7 +9,7 @@ metagraphs: Dict[int, bittensor.metagraph] = dict()
 def get_from_cache(netuid: int = 0):
     metagraph = metagraphs.get(netuid)
     if metagraph is None:
-        metagraph = bittensor.metagraph(netuid)
+        metagraph = bittensor.metagraph(netuid, lite=False)
         metagraphs[netuid] = metagraph
     else:
         metagraph.sync()
@@ -31,7 +31,7 @@ def metadata(netuid: int = 0):
 
 @app.get("/weights/{netuid}")
 def weights(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False)
+    metagraph = get_from_cache(netuid)
     output = metagraph.W.float().tolist()
     return output
 
