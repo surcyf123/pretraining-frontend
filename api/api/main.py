@@ -20,6 +20,11 @@ def get_from_cache(netuid: int = 0):
 def read_root():
     return {"Hello": "World"}
 
+@app.get("/metagraph/{netuid}")
+def metagraph(netuid: int = 0):
+    metagraph = get_from_cache(netuid)
+    return metagraph
+
 @app.get("/metadata/{netuid}")
 def metadata(netuid: int = 0):
     metagraph = get_from_cache(netuid)
