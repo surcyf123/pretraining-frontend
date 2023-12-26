@@ -1,4 +1,4 @@
-# PWA | ReactJS
+# `openpretrain.ai` [τ, τ]
 
 It has support for:
 
@@ -16,6 +16,35 @@ It has support for:
 
 ---
 
-Notes:
+# How to run the frontend?
 
-Instructions to run/compile the code is present inside `CLI.md`.
+- Clone the repository.
+- Install NodeJS from https://nodejs.org/en.
+- Verify the NodeJS installation by running the command `node -v` in your terminal.
+- Check the npm (Node Package Manager) version by running `npm -v` in the terminal.
+- Install yarn globally using the command `npm install --global yarn` in your terminal. For more information, visit https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable.
+- Confirm the installation of yarn by checking its version with the command `yarn --version`.
+- Once yarn is successfully installed, navigate to the project directory in the terminal.
+- Run the command `yarn` to install all the project dependencies.
+- After the installation is complete, you can execute the following commands to run the app:
+   - To start development: `yarn start`
+   - To build: `yarn build`
+      
+#### Notes:
+
+More Instructions to run/compile the code is present inside `CLI.md`.
+
+---
+
+# How to run the backend?
+
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
+
+- Clone the repo.
+- [Install `Python 3.11`](https://www.python.org/downloads/).
+- [Install `poetry` via `pipx`](https://python-poetry.org/docs/#installing-with-pipx).
+- `cd` into `api` folder.
+- From the terminal, run `poetry install` to install all the Python dependecies.
+- After the installation is complete, you can execute the following commands to run the app:
+   - To start the server in `dev` mode: `poetry run start`
+   - To start the server in `prod` mode: `poetry run serve`
