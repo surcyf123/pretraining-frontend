@@ -104,7 +104,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
       }),
       columnHelper.accessor((row) => row.emission, {
         cell: (info) => ((info.getValue() * 72) / 1000000000).toFixed(10),
-        id: "Rewards in 𝞃",
+        id: "Daily Rewards",
       }),
       columnHelper.accessor((row) => row.hotkey, {
         // eslint-disable-next-line react/no-unstable-nested-components
