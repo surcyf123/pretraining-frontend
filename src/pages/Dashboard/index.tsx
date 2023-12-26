@@ -10,7 +10,7 @@ import { MetaBox } from "../../components/MetaBox";
 import { MetagraphTable } from "../../components/MetagraphTable";
 import { StatisticsTable } from "../../components/StatisticsTable";
 import { TopBar } from "../../components/TopBar";
-import { calculateAverageVTrust } from "./utils";
+import { calculateAverageValidatorTrust } from "./utils";
 import type { UIDDetails } from "../../utils";
 
 export function Dashboard() {
@@ -71,7 +71,7 @@ export function Dashboard() {
   );
 
   const averageVTrust = useMemo(
-    () => calculateAverageVTrust(metagraphDetails?.neuronData ?? []),
+    () => calculateAverageValidatorTrust(metagraphDetails?.neuronData ?? []),
     [metagraphDetails?.neuronData],
   );
 
