@@ -17,8 +17,8 @@ def get_from_cache(netuid: int = 0):
     return metagraph
 
 @app.get("/")
-def read_root():
-    return {"Hello": "World"}
+def root():
+    return {"Hello": "Bittensor"}
 
 @app.get("/metagraph/{netuid}")
 def metagraph(netuid: int = 0):
