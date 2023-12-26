@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from typing import Dict
+from pandas import DataFrame
 import uvicorn
 import bittensor
 
@@ -27,7 +28,7 @@ def metadata(netuid: int = 0):
 @app.get("/neurons/{netuid}")
 def neurons(netuid: int = 0):
     metagraph = get_from_cache(netuid)
-    output = {
+    records = {
         "uid": metagraph.uids.tolist(),
         "stake": metagraph.S.tolist(),
         "rank": metagraph.R.tolist(),
@@ -41,6 +42,9 @@ def neurons(netuid: int = 0):
         "coldkey": metagraph.coldkeys,
         "address": metagraph.addresses
     }
+    df = DataFrame(records)
+    df['rewards'] = df['emission'].apply(lambda x: x * 72 / 1000000000)
+    output = df.to_dict(orient="records") # transform data to array of records
     return output
 
 @app.get("/weights/{netuid}")
