@@ -1,5 +1,5 @@
 import { Card, Grid, Group, Skeleton, Stack, Text } from "@mantine/core";
-import { IconId, IconNetwork, IconPackage, IconTallymarks } from "@tabler/icons-react";
+import { IconId, IconPackage, IconTallymarks } from "@tabler/icons-react";
 import type { MetagraphMetadata } from "../../api";
 
 export function MetaBox({
@@ -12,7 +12,7 @@ export function MetaBox({
   return (
     <Skeleton visible={loading ?? false}>
       <Grid>
-        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
+        <Grid.Col span={{ base: 12, md: 4 }}>
           <Card>
             <Stack>
               <Group>
@@ -23,7 +23,7 @@ export function MetaBox({
             </Stack>
           </Card>
         </Grid.Col>
-        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
+        <Grid.Col span={{ base: 12, md: 4 }}>
           <Card>
             <Stack>
               <Group>
@@ -34,7 +34,7 @@ export function MetaBox({
             </Stack>
           </Card>
         </Grid.Col>
-        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
+        <Grid.Col span={{ base: 12, md: 4 }}>
           <Card>
             <Stack>
               <Group>
@@ -42,19 +42,6 @@ export function MetaBox({
                 <Text>Block</Text>
               </Group>
               <Text>{data?.block}</Text>
-            </Stack>
-          </Card>
-        </Grid.Col>
-        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
-          <Card>
-            <Stack>
-              <Group>
-                <IconNetwork />
-                <Text>Network & Version</Text>
-              </Group>
-              <Text>
-                {data?.network} | {data?.version}
-              </Text>
             </Stack>
           </Card>
         </Grid.Col>
