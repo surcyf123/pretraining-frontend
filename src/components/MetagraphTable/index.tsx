@@ -103,7 +103,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
         id: "Stake",
       }),
       columnHelper.accessor((row) => row.emission, {
-        cell: (info) => ((info.getValue() * 72) / 1000000000).toFixed(9),
+        cell: (info) => ((info.getValue() * 72) / 1000000000).toFixed(10),
         id: "Rewards in 𝞃",
       }),
       columnHelper.accessor((row) => row.hotkey, {
