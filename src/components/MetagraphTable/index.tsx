@@ -9,6 +9,7 @@ import {
   ActionIcon,
   CopyButton,
   Button,
+  Box,
 } from "@mantine/core";
 import { IconClipboardCheck, IconClipboardCopy } from "@tabler/icons-react";
 import {
@@ -103,7 +104,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
         id: "Stake",
       }),
       columnHelper.accessor((row) => row.emission, {
-        cell: (info) => ((info.getValue() * 72) / 1000000000).toFixed(10),
+        cell: (info) => ((info.getValue() * 72) / 1000000000).toFixed(3),
         id: "Daily Rewards",
       }),
       columnHelper.accessor((row) => row.hotkey, {
