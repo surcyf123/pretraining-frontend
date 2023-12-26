@@ -9,6 +9,7 @@ import {
   ActionIcon,
   CopyButton,
   Button,
+  Box,
 } from "@mantine/core";
 import { IconClipboardCheck, IconClipboardCopy } from "@tabler/icons-react";
 import {
@@ -164,43 +165,49 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
   return (
     <Skeleton visible={loading ?? false}>
       <Stack>
-        <Table>
-          <Table.Thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <Table.Tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <Table.Th
-                    key={header.id}
-                    style={{ cursor: "pointer" }}
-                    onClick={header.column.getToggleSortingHandler()}
-                  >
-                    <Group wrap="nowrap">
-                      <Text>
-                        {header.isPlaceholder === true
-                          ? null
-                          : flexRender(header.column.columnDef.header, header.getContext())}
-                      </Text>
-                      <ActionIcon size="xs" variant="default">
-                        {getSortingIcon(header.column.getIsSorted())}
-                      </ActionIcon>
-                    </Group>
-                  </Table.Th>
-                ))}
-              </Table.Tr>
-            ))}
-          </Table.Thead>
-          <Table.Tbody>
-            {table.getRowModel().rows.map((row) => (
-              <Table.Tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <Table.Td key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Table.Td>
-                ))}
-              </Table.Tr>
-            ))}
-          </Table.Tbody>
-        </Table>
+        <Box
+          style={{
+            overflowX: "auto",
+          }}
+        >
+          <Table>
+            <Table.Thead>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <Table.Tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <Table.Th
+                      key={header.id}
+                      style={{ cursor: "pointer" }}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      <Group wrap="nowrap">
+                        <Text>
+                          {header.isPlaceholder === true
+                            ? null
+                            : flexRender(header.column.columnDef.header, header.getContext())}
+                        </Text>
+                        <ActionIcon size="xs" variant="default">
+                          {getSortingIcon(header.column.getIsSorted())}
+                        </ActionIcon>
+                      </Group>
+                    </Table.Th>
+                  ))}
+                </Table.Tr>
+              ))}
+            </Table.Thead>
+            <Table.Tbody>
+              {table.getRowModel().rows.map((row) => (
+                <Table.Tr key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <Table.Td key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </Table.Td>
+                  ))}
+                </Table.Tr>
+              ))}
+            </Table.Tbody>
+          </Table>
+        </Box>
         <Group justify="flex-end">
           <Pagination
             value={table.getState().pagination.pageIndex + 1}
