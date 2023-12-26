@@ -48,5 +48,6 @@
         "command": "yarn start"
       }
     ]
-  }
+  },
+  "python.defaultInterpreterPath": "api/.venv/bin/python",
 }
