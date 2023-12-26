@@ -16,6 +16,10 @@ const NavLinks: { path: string; label: string }[] = [
     label: "Home",
   },
   {
+    path: "/general",
+    label: "General",
+  },
+  {
     path: "/dashboard",
     label: "Dashboard",
   },
