@@ -38,3 +38,7 @@ More Instructions to run/compile the code is present inside `CLI.md`.
 ---
 
 # How to run the backend?
+
+- Clone the repo.
+- [Install `Python 3.11`](https://www.python.org/downloads/).
+- [Install `poetry` via `pipx`](https://python-poetry.org/docs/#installing-with-pipx).
