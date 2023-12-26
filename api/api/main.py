@@ -19,11 +19,6 @@ def get_from_cache(netuid: int = 0):
 def root():
     return {"Hello": "Bittensor"}
 
-@app.get("/metagraph/{netuid}")
-def metagraph(netuid: int = 0):
-    metagraph = get_from_cache(netuid)
-    return vars(metagraph)
-
 @app.get("/metadata/{netuid}")
 def metadata(netuid: int = 0):
     metagraph = get_from_cache(netuid)
@@ -33,19 +28,36 @@ def metadata(netuid: int = 0):
 def weights(netuid: int = 0):
     metagraph = get_from_cache(netuid)
     output = metagraph.W.float().tolist()
+    return output 
+
+@app.get("/neurons/{netuid}")
+def neurons(netuid: int = 0):
+    metagraph = get_from_cache(netuid)
+    output = {
+        "uid": metagraph.uids.tolist(),
+        "stake": metagraph.S.tolist(),
+        "rank": metagraph.R.tolist(),
+        "incentive": metagraph.I.tolist(),
+        "emission": metagraph.E.tolist(),
+        "consensus": metagraph.C.tolist(),
+        "trust": metagraph.T.tolist(),
+        "validatorTrust": metagraph.Tv.tolist(),
+        "dividends": metagraph.D.tolist(),
+        "hotkey": metagraph.hotkeys,
+        "coldkey": metagraph.coldkeys,
+        "address": metagraph.addresses
+    }
     return output
 
-@app.get("/stake/{netuid}")
+@app.get("/weights/{netuid}")
 def weights(netuid: int = 0):
     metagraph = get_from_cache(netuid)
-    output = metagraph.S.float().tolist()
-    return output    
+    return metagraph.W.tolist()    
 
-@app.get("/axons/{netuid}")
-def weights(netuid: int = 0):
+@app.get("/bonds/{netuid}")
+def bonds(netuid: int = 0):
     metagraph = get_from_cache(netuid)
-    output = metagraph.axons
-    return output
+    return metagraph.B.tolist()    
 
 def start():
     uvicorn.run("api.main:app", host="0.0.0.0", port=8000, reload=True, loop="asyncio") # Ref: Why asyncio loop? https://youtrack.jetbrains.com/issue/PY-57332
