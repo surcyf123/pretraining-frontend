@@ -1,4 +1,4 @@
-# PWA | ReactJS
+# `openpretrain.ai` [τ, τ]
 
 It has support for:
 
