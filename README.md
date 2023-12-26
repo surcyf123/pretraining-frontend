@@ -27,7 +27,6 @@ It has support for:
 - Once yarn is successfully installed, navigate to the project directory in the terminal.
 - Run the command `yarn` to install all the project dependencies.
 - After the installation is complete, you can execute the following commands to run the app:
-
    - To start development: `yarn start`
    - To build: `yarn build`
       
