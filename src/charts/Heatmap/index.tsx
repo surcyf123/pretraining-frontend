@@ -145,7 +145,42 @@ export function Heatmap({
             },
           },
         ],
-        tooltip: {},
+        tooltip: {
+          trigger: "item",
+          formatter: (params) => {
+            let output = "";
+            if (Array.isArray(params)) {
+              output = "";
+            } else {
+              const paramsData = params.data as Record<string, string | number | null | undefined>;
+              const xAxisData = paramsData[xAxis];
+              const yAxisData = paramsData[yAxis];
+              const visualAxisData = paramsData[visualAxis];
+              output = `
+              <div>
+                ${
+                  typeof xAxisData === "string" || typeof xAxisData === "number"
+                    ? `<span>${xAxisLabel}-ID: ${xAxisData}</span>`
+                    : ""
+                }
+                <br/>
+                  ${
+                    typeof yAxisData === "number" || typeof yAxisData === "string"
+                      ? `<span>${yAxisLabel}-ID: ${yAxisData}</span>`
+                      : ""
+                  }
+                  <br/>
+                  ${
+                    typeof visualAxisData === "number" || typeof visualAxisData === "string"
+                      ? `<span>${visualAxis}: ${visualAxisData}</span>`
+                      : ""
+                  }
+              </div>
+              `;
+            }
+            return output;
+          },
+        },
       };
       chart?.setOption(option, true);
     }
