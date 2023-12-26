@@ -9,6 +9,7 @@ import {
   ActionIcon,
   CopyButton,
   Button,
+  Box,
 } from "@mantine/core";
 import { IconClipboardCheck, IconClipboardCopy } from "@tabler/icons-react";
 import {
@@ -164,7 +165,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
   return (
     <Skeleton visible={loading ?? false}>
       <Stack>
-        <Group
+        <Box
           style={{
             overflow: "auto",
           }}
@@ -206,7 +207,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
               ))}
             </Table.Tbody>
           </Table>
-        </Group>
+        </Box>
         <Group justify="flex-end">
           <Pagination
             value={table.getState().pagination.pageIndex + 1}
