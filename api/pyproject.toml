@@ -10,6 +10,7 @@ python = "^3.11"
 fastapi = "0.99.1"
 uvicorn = {extras = ["standard"], version = "0.22.0"}
 bittensor = "^6.5.0"
+pandas = "^2.1.4"
 
 [tool.poetry.scripts]
 start = "api.main:start"
