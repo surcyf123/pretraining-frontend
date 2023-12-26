@@ -15,8 +15,8 @@ export function parseRunDetails(jsonData: Record<string, (RunDetails | null)[]>)
   );
 }
 
-export function calculateAverageValidatorTrust(nueronDetails: NeuronDetails[]): number | undefined {
-  const vTrusts = nueronDetails.filter((ele) => ele.stake > 20000);
-  const averageVTrust = mean(vTrusts, (ele) => ele.validatorTrust);
-  return averageVTrust;
+export function calculateAverageValidatorTrust(neuronDetails: NeuronDetails[]): number | undefined {
+  const neurons = neuronDetails.filter((ele) => ele.stake > 20000);
+  const averageTrust = mean(neurons, (ele) => ele.validatorTrust);
+  return averageTrust;
 }
