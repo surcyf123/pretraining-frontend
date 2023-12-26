@@ -11,6 +11,7 @@ import {
   Button,
 } from "@mantine/core";
 import { IconClipboardCheck, IconClipboardCopy } from "@tabler/icons-react";
+import { useQuery } from "@tanstack/react-query";
 import {
   createColumnHelper,
   flexRender,
@@ -20,6 +21,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
+import { fetchTaoStatistics } from "../../api";
 import { getSortingIcon } from "../utils";
 import { calculateRewards } from "./utils";
 import type { SelectProps, PaginationProps } from "@mantine/core";
@@ -48,6 +50,11 @@ export interface MetagraphTableProps {
 }
 
 export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Element {
+  const { data: taoStatistics, isLoading: isTaoStatisticsLoading } = useQuery({
+    queryKey: ["taoStatistics"],
+    queryFn: () => fetchTaoStatistics(),
+    refetchInterval: 5 * 60 * 1000,
+  });
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -107,6 +114,16 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
         cell: (info) => calculateRewards(info.getValue()).toFixed(3),
         id: "Daily Rewards",
       }),
+      columnHelper.accessor((row) => row.emission, {
+        cell: (info) =>
+          (
+            calculateRewards(info.getValue()) * Number.parseFloat(taoStatistics?.price ?? "")
+          ).toLocaleString(undefined, {
+            style: "currency",
+            currency: "USD",
+          }),
+        id: "Daily $",
+      }),
       columnHelper.accessor((row) => row.hotkey, {
         // eslint-disable-next-line react/no-unstable-nested-components
         cell: (info) => (
@@ -142,7 +159,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
         id: "Coldkey",
       }),
     ];
-  }, []);
+  }, [taoStatistics?.price]);
 
   const table = useReactTable({
     state: { sorting, pagination: { pageIndex, pageSize } },
@@ -167,7 +184,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
   };
 
   return (
-    <Skeleton visible={loading ?? false}>
+    <Skeleton visible={(loading ?? false) || isTaoStatisticsLoading}>
       <Stack>
         <Table>
           <Table.Thead>
