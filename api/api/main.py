@@ -27,12 +27,24 @@ def metagraph(netuid: int = 0):
 @app.get("/metadata/{netuid}")
 def metadata(netuid: int = 0):
     metagraph = get_from_cache(netuid)
-    return vars(metagraph.metadata)
+    return metagraph.metadata()
 
 @app.get("/weights/{netuid}")
 def weights(netuid: int = 0):
     metagraph = get_from_cache(netuid)
     output = metagraph.W.float().tolist()
+    return output
+
+@app.get("/stake/{netuid}")
+def weights(netuid: int = 0):
+    metagraph = get_from_cache(netuid)
+    output = metagraph.S.float().tolist()
+    return output    
+
+@app.get("/axons/{netuid}")
+def weights(netuid: int = 0):
+    metagraph = get_from_cache(netuid)
+    output = metagraph.axons
     return output
 
 def start():
