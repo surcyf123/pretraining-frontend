@@ -22,6 +22,7 @@ import {
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { getSortingIcon } from "../utils";
+import { calculateRewards } from "./utils";
 import type { SelectProps, PaginationProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 
@@ -102,6 +103,10 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
       columnHelper.accessor((row) => row.stake, {
         cell: (info) => info.getValue().toFixed(4),
         id: "Stake",
+      }),
+      columnHelper.accessor((row) => row.emission, {
+        cell: (info) => calculateRewards(info.getValue()).toFixed(3),
+        id: "Daily Rewards",
       }),
       columnHelper.accessor((row) => row.hotkey, {
         // eslint-disable-next-line react/no-unstable-nested-components
