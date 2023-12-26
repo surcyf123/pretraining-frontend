@@ -23,6 +23,7 @@ import { useMemo, useState } from "react";
 import { getSortingIcon } from "../utils";
 import type { SelectProps, PaginationProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
+import { calculateRewards } from "./utils";
 
 export interface NeuronDetails {
   uid: number;
@@ -103,7 +104,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
         id: "Stake",
       }),
       columnHelper.accessor((row) => row.emission, {
-        cell: (info) => ((info.getValue() * 72) / 1000000000).toFixed(3),
+        cell: (info) => calculateRewards(info.getValue()).toFixed(3),
         id: "Daily Rewards",
       }),
       columnHelper.accessor((row) => row.hotkey, {
