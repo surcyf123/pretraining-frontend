@@ -31,8 +31,9 @@ def metadata(netuid: int = 0):
 
 @app.get("/weights/{netuid}")
 def weights(netuid: int = 0):
-    metagraph = get_from_cache(netuid)
-    return vars(metagraph.weights)
+    metagraph = bittensor.metagraph(netuid, lite=False)
+    output = metagraph.W.float().tolist()
+    return output
 
 def start():
     uvicorn.run("api.main:app", host="0.0.0.0", port=8000, reload=True, loop="asyncio") # Ref: Why asyncio loop? https://youtrack.jetbrains.com/issue/PY-57332
