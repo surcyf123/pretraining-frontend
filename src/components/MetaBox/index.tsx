@@ -11,8 +11,8 @@ export function MetaBox({
 }): JSX.Element {
   return (
     <Skeleton visible={loading ?? false}>
-      <Grid grow>
-        <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
+      <Grid>
+        <Grid.Col span={{ base: 12, md: 4 }}>
           <Card>
             <Stack align="center" justify="center">
               <Group>
@@ -23,7 +23,7 @@ export function MetaBox({
             </Stack>
           </Card>
         </Grid.Col>
-        <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
+        <Grid.Col span={{ base: 12, md: 4 }}>
           <Card>
             <Stack align="center" justify="center">
               <Group>
@@ -34,7 +34,7 @@ export function MetaBox({
             </Stack>
           </Card>
         </Grid.Col>
-        <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
+        <Grid.Col span={{ base: 12, md: 4 }}>
           <Card>
             <Stack align="center" justify="center">
               <Group>
