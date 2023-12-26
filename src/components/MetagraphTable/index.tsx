@@ -102,6 +102,10 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
         cell: (info) => info.getValue().toFixed(4),
         id: "Stake",
       }),
+      columnHelper.accessor((row) => row.emission, {
+        cell: (info) => ((info.getValue() * 72) / 1000000000).toFixed(9),
+        id: "Rewards in 𝞃",
+      }),
       columnHelper.accessor((row) => row.hotkey, {
         // eslint-disable-next-line react/no-unstable-nested-components
         cell: (info) => (
