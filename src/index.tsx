@@ -17,7 +17,7 @@ const MantineTheme = createTheme({
 const root = createRoot(document.getElementById("root") as HTMLDivElement);
 root.render(
   <StrictMode>
-    <MantineProvider theme={MantineTheme}>
+    <MantineProvider theme={MantineTheme} defaultColorScheme="dark">
       <RouterProvider router={Routers} />
     </MantineProvider>
   </StrictMode>,
