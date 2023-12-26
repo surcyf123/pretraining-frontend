@@ -45,6 +45,7 @@ More Instructions to run/compile the code is present inside `CLI.md`.
 - [Install `poetry` via `pipx`](https://python-poetry.org/docs/#installing-with-pipx).
 - `cd` into `api` folder.
 - From the terminal, run `poetry install` to install all the Python dependecies.
+- [Run a local subtensor](https://github.com/unconst/pretrain-subnet?tab=readme-ov-file#mining-steps). This increases decentralization and resilience of the network.
 - After the installation is complete, you can execute the following commands to run the app:
    - To start the server in `dev` mode: `poetry run start`
    - To start the server in `prod` mode: `poetry run serve`
