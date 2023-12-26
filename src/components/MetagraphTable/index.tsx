@@ -104,7 +104,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
         id: "Dividends",
       }),
       columnHelper.accessor((row) => row.address, {
-        cell: (info) => info.getValue().replace("/ipv0/", ""),
+        cell: (info) => info.getValue().split("/").at(-1),
         id: "Address",
       }),
       columnHelper.accessor((row) => row.stake, {
