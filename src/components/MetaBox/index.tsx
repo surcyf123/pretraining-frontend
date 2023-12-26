@@ -26,7 +26,6 @@ export function MetaBox({
         <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
           <Card>
             <Stack align="center" justify="center">
-              {" "}
               <Group>
                 <IconTallymarks />
                 <Text>Neurons Count</Text>
@@ -38,7 +37,6 @@ export function MetaBox({
         <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
           <Card>
             <Stack align="center" justify="center">
-              {" "}
               <Group>
                 <IconPackage />
                 <Text>Block</Text>
