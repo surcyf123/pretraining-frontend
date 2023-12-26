@@ -9,7 +9,7 @@ metagraphs: Dict[int, bittensor.metagraph] = dict()
 def get_from_cache(netuid: int = 0):
     metagraph = metagraphs.get(netuid)
     if metagraph is None:
-        metagraph = bittensor.metagraph(netuid, lite=False)
+        metagraph = bittensor.metagraph(netuid, lite=False, network='local')
         metagraphs[netuid] = metagraph
     else:
         metagraph.sync()
