@@ -14,7 +14,7 @@ export function MetaBox({
       <Grid grow>
         <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
           <Card>
-            <Stack>
+            <Stack align="center" justify="center">
               <Group>
                 <IconId />
                 <Text>Network UID</Text>
@@ -25,7 +25,8 @@ export function MetaBox({
         </Grid.Col>
         <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
           <Card>
-            <Stack>
+            <Stack align="center" justify="center">
+              {" "}
               <Group>
                 <IconTallymarks />
                 <Text>Neurons Count</Text>
@@ -36,7 +37,8 @@ export function MetaBox({
         </Grid.Col>
         <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
           <Card>
-            <Stack>
+            <Stack align="center" justify="center">
+              {" "}
               <Group>
                 <IconPackage />
                 <Text>Block</Text>
