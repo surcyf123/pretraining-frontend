@@ -21,9 +21,9 @@ import {
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { getSortingIcon } from "../utils";
+import { calculateRewards } from "./utils";
 import type { SelectProps, PaginationProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
-import { calculateRewards } from "./utils";
 
 export interface NeuronDetails {
   uid: number;
