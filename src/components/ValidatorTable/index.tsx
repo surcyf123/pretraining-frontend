@@ -20,6 +20,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { range } from "d3-array";
 import { useMemo, useState } from "react";
 import { getSortingIcon } from "../utils";
 import type { Validator } from "./utils";
@@ -72,6 +73,39 @@ export function ValidatorTable({ data, loading }: ValidatorTableProps): JSX.Elem
           </CopyButton>
         ),
         id: "Hotkey",
+      }),
+      columnHelper.accessor((row) => row.coldkey, {
+        // eslint-disable-next-line react/no-unstable-nested-components
+        cell: (info) => (
+          <CopyButton value={info.getValue()}>
+            {({ copy, copied }) => (
+              <Button
+                onClick={copy}
+                variant="subtle"
+                rightSection={copied === true ? <IconClipboardCheck /> : <IconClipboardCopy />}
+                p="0"
+              >
+                {`${info.getValue().slice(0, 6)}...`}
+              </Button>
+            )}
+          </CopyButton>
+        ),
+        id: "Coldkey",
+      }),
+      ...range(33).map((ele) => {
+        return columnHelper.accessor((row) => row[ele.toString()], {
+          cell: (info) => {
+            let value = info.getValue();
+            if (typeof value === "number") {
+              value = value.toLocaleString(undefined, {
+                style: "percent",
+                maximumFractionDigits: 2,
+              });
+            }
+            return value;
+          },
+          id: `SN ${ele}`,
+        });
       }),
     ];
   }, []);
