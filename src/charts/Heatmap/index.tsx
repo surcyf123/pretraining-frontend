@@ -160,7 +160,7 @@ export function Heatmap({
               <div>
                 ${
                   typeof xAxisData === "string" || typeof xAxisData === "number"
-                    ? `<span>${xAxisLabel}-ID: ${xAxisData}</span>`
+                    ? `<span>${xAxisLabel}: ${xAxisData}</span>`
                     : ""
                 }
                 <br/>
