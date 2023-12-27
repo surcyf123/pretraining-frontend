@@ -65,7 +65,7 @@ def average_validator_trust(netuid: int = 0):
         "validatorTrust": metagraph.Tv.tolist(),
     }
     df = DataFrame(reocrds)
-    filtered_df = df[df["stake"]>20000]
+    filtered_df = df[df["stake"] > 20000]
     average = df["validatorTrust"].mean()
     return average
 
