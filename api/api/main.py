@@ -61,6 +61,18 @@ def bonds(netuid: int = 0):
     metagraph = get_from_cache(netuid)
     return metagraph.B.tolist()    
 
+@app.get("/average-validator-trust/{netuid}")
+def average_validator_trust(netuid: int = 0):
+    metagraph = get_from_cache(netuid)
+    records = {
+        "stake": metagraph.S.tolist(),
+        "validatorTrust": metagraph.Tv.tolist(),
+    }
+    df = DataFrame(records)
+    filtered_df = df[df["stake"] > 20000]
+    average = filtered_df["validatorTrust"].mean()
+    return average
+
 def start():
     uvicorn.run("api.main:app", host="0.0.0.0", port=8000, reload=True, loop="asyncio") # Ref: Why asyncio loop? https://youtrack.jetbrains.com/issue/PY-57332
 
