@@ -66,7 +66,7 @@ def average_validator_trust(netuid: int = 0):
     }
     df = DataFrame(records)
     filtered_df = df[df["stake"] > 20000]
-    average = df["validatorTrust"].mean()
+    average = filtered_df["validatorTrust"].mean()
     return average
 
 def start():
