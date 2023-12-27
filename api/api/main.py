@@ -7,7 +7,7 @@ import bittensor
 
 app = FastAPI()
 origins = [
-    "http://localhost",
+    "http://localhost:8080",
     "https://www.openpretrain.ai",
 ]  # Why? https://fastapi.tiangolo.com/tutorial/cors/
 app.add_middleware(
