@@ -2,6 +2,8 @@ import { downloadData } from "aws-amplify/storage";
 import type { NeuronDetails } from "../components/MetagraphTable";
 import type { HistoryData, RunDetails } from "../utils";
 
+const Endpoint = "http://localhost:8000"; // TODO: update endpoint
+
 interface TaoStatistics {
   network: string;
   token: string;
@@ -19,7 +21,7 @@ interface TaoStatistics {
   last_updated: string;
 }
 
-export interface MetagraphMetadata {
+interface MetagraphMetadata {
   netuid: number;
   n: number;
   block: number;
@@ -69,5 +71,11 @@ export async function fetchMetagraphData(): Promise<{
 export async function fetchTaoStatistics(): Promise<TaoStatistics> {
   const rawResponse = await fetch("https://taostats.io/data.json");
   const [response] = (await rawResponse.json()) as [TaoStatistics];
+  return response;
+}
+
+export async function fetchMetagraphMetaData(netuid: number): Promise<MetagraphMetadata> {
+  const rawResponse = await fetch(`${Endpoint}/metadata/${netuid}`);
+  const response = (await rawResponse.json()) as MetagraphMetadata;
   return response;
 }

@@ -134,7 +134,7 @@ export function Dashboard() {
 
   return (
     <Stack>
-      <MetaBox data={metagraphDetails?.metadata} loading={isLoadingMetagraphJSON} />
+      <MetaBox netuid={9} />
       <Divider />
       <TopBar
         metrics={{

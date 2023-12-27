@@ -1,16 +1,17 @@
 import { Card, Grid, Group, Skeleton, Stack, Text } from "@mantine/core";
 import { IconId, IconPackage, IconTallymarks } from "@tabler/icons-react";
-import type { MetagraphMetadata } from "../../api";
+import { useQuery } from "@tanstack/react-query";
+import { fetchMetagraphMetaData } from "../../api";
 
-export function MetaBox({
-  data,
-  loading,
-}: {
-  data?: MetagraphMetadata;
-  loading?: boolean;
-}): JSX.Element {
+export function MetaBox({ netuid }: { netuid: number }): JSX.Element {
+  const { data, isLoading } = useQuery({
+    queryKey: ["metagraphJSON", netuid],
+    queryFn: () => fetchMetagraphMetaData(netuid),
+    refetchInterval: 10 * 60 * 1000,
+    // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
+  });
   return (
-    <Skeleton visible={loading ?? false}>
+    <Skeleton visible={isLoading}>
       <Grid>
         <Grid.Col span={{ base: 12, md: 4 }}>
           <Card>
