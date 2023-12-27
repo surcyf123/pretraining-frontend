@@ -39,7 +39,7 @@ export function ValidatorTable({ data, loading }: ValidatorTableProps): JSX.Elem
 
   const [sorting, setSorting] = useState<SortingState>([
     {
-      desc: false,
+      desc: true,
       id: "Stake",
     },
   ]);
@@ -50,10 +50,6 @@ export function ValidatorTable({ data, loading }: ValidatorTableProps): JSX.Elem
       columnHelper.accessor((row) => row.uid, {
         cell: (info) => info.getValue(),
         id: "UID",
-      }),
-      columnHelper.accessor((row) => row.address, {
-        cell: (info) => info.getValue().split("/").at(-1),
-        id: "Address",
       }),
       columnHelper.accessor((row) => row.stake, {
         cell: (info) => info.getValue().toFixed(4),
