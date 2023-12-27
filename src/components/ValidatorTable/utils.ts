@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unused-modules
 export interface Validator {
   uid: number;
   stake: number;
@@ -6,7 +5,6 @@ export interface Validator {
   address: string;
 }
 
-// eslint-disable-next-line import/no-unused-modules
 export const Validators: Validator[] = [
   {
     uid: 0,

@@ -22,12 +22,12 @@ import {
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { getSortingIcon } from "../utils";
-import type { ValidatorDetails } from "./utils";
+import type { Validator } from "./utils";
 import type { SelectProps, PaginationProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 
 export interface ValidatorTableProps {
-  data: ValidatorDetails[];
+  data: Validator[];
   loading?: boolean;
 }
 
@@ -45,7 +45,7 @@ export function ValidatorTable({ data, loading }: ValidatorTableProps): JSX.Elem
   ]);
 
   const columns = useMemo(() => {
-    const columnHelper = createColumnHelper<ValidatorDetails>();
+    const columnHelper = createColumnHelper<Validator>();
     return [
       columnHelper.accessor((row) => row.uid, {
         cell: (info) => info.getValue(),
