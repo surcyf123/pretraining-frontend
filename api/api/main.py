@@ -65,7 +65,6 @@ def average_validator_trust(netuid: int = 0):
         "validatorTrust": metagraph.Tv.tolist(),
     }
     df = DataFrame(reocrds)
-    print(df)
     filtered_df = df[df["stake"]>20000]
     output = filtered_df.to_dict(orient="records")
     return output
