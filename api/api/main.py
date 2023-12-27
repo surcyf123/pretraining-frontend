@@ -1,10 +1,14 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from typing import Dict
 from pandas import DataFrame
 import uvicorn
 import bittensor
 
 app = FastAPI()
+origins = ["http://localhost", "https://www.openpretrain.ai"]
+app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"],)
+
 metagraphs: Dict[int, bittensor.metagraph] = dict()
 
 def get_from_cache(netuid: int = 0):
