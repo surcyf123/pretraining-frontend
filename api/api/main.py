@@ -66,8 +66,8 @@ def average_validator_trust(netuid: int = 0):
     }
     df = DataFrame(reocrds)
     filtered_df = df[df["stake"]>20000]
-    output = filtered_df.to_dict(orient="records")
-    return output
+    average = df["validatorTrust"].mean()
+    return average
 
 def start():
     uvicorn.run("api.main:app", host="0.0.0.0", port=8000, reload=True, loop="asyncio") # Ref: Why asyncio loop? https://youtrack.jetbrains.com/issue/PY-57332
