@@ -60,11 +60,11 @@ def bonds(netuid: int = 0):
 @app.get("/average-validator-trust/{netuid}")
 def average_validator_trust(netuid: int = 0):
     metagraph = get_from_cache(netuid)
-    reocrds = {
+    records = {
         "stake": metagraph.S.tolist(),
         "validatorTrust": metagraph.Tv.tolist(),
     }
-    df = DataFrame(reocrds)
+    df = DataFrame(records)
     filtered_df = df[df["stake"] > 20000]
     average = df["validatorTrust"].mean()
     return average
