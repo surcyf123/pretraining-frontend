@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Dict
-from pandas import DataFrame
+from pandas import DataFrame, concat
 import uvicorn
 import bittensor
 
@@ -72,9 +72,12 @@ def validators():
         "uid": metagraph.uids.tolist(),
         "stake": metagraph.S.tolist(),
         "hotkey": metagraph.hotkeys,
+        "coldkey": metagraph.coldkeys,
         "address": metagraph.addresses,
     }
-    df = DataFrame(records)
+    records_df = DataFrame(records)
+    weights_df = DataFrame(metagraph.W.tolist())
+    df = concat([records_df, weights_df], axis=1)
     output = df.to_dict(orient="records")  # transform data to array of records
     return output
 
