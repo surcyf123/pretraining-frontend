@@ -15,10 +15,6 @@ pandas = "^2.1.4"
 [tool.poetry.scripts]
 start = "api.main:start"
 serve = "api.main:serve"
-pretty = "python -m black ./"
-
-[tool.poetry.group.dev.dependencies]
-black = "23.7.0"
 
 [build-system]
 requires = ["poetry-core"]
