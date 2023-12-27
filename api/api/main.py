@@ -84,8 +84,8 @@ def weights(netuid: int = 0):
     weight_matrix = metagraph.W.tolist()
     formatted_weight_matrix = [
         {"validatorID": v_id, "weight": weight, "minerID": m_id}
-        for v_id, validator in enumerate(weight_matrix)
-        for m_id, weight in enumerate(validator)
+        for v_id, miners in enumerate(weight_matrix)
+        for m_id, weight in enumerate(miners)
     ]
     return formatted_weight_matrix
 
