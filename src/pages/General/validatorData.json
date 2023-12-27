@@ -1,0 +1,386 @@
+[
+  {
+    "uid": 0,
+    "stake": 28313.416015625,
+    "hotkey": "5CaCUPsSSdKWcMJbmdmJdnWVa15fJQuz5HsSGgVdZffpHAUa",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 1,
+    "stake": 0.0002821309899445623,
+    "hotkey": "5GmaAk7frPXnAxjbQvXcoEzMGZfkrDee76eGmKoB3wxUburE",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 2,
+    "stake": 1183694.75,
+    "hotkey": "5F4tQyWrhfGVcNhoqeiNsR6KjD4wMZ2kfhLj4oHYuyHbZAc3",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 3,
+    "stake": 158395.765625,
+    "hotkey": "5FFApaS75bv5pJHfAp2FVLBj9ZaXuFDjEypsaBNc1wCfe52v",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 4,
+    "stake": 269891.40625,
+    "hotkey": "5HK5tp6t2S59DywmHRWPBVJeJ86T61KjurYqeooqj8sREpeN",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 5,
+    "stake": 55081.21875,
+    "hotkey": "5CXRfP2ekFhe62r7q3vppRajJmGhTi7vwvb2yr79jveZ282w",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 6,
+    "stake": 689452.6875,
+    "hotkey": "5Hddm3iBFD2GLT5ik7LZnT3XJUnRnN8PoeCFgGQgawUVKNm8",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 7,
+    "stake": 92857.5,
+    "hotkey": "5G1NjW9YhXLadMWajvTkfcJy6up3yH2q1YzMXDTi6ijanChe",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 8,
+    "stake": 22303.3125,
+    "hotkey": "5CVS9d1NcQyWKUyadLevwGxg6LgBcF9Lik6NSnbe5q59jwhE",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 9,
+    "stake": 1563.8802490234375,
+    "hotkey": "5FxgfWWL6i6AJQV7HmMghycad2dQWrWE2b6JiuwqDp11iW4C",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 10,
+    "stake": 0.011883511207997799,
+    "hotkey": "5ELRcA7XEiCUvNDB98aMgjGt1m2X2oLCfuSephKEFVJbJyZ9",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 11,
+    "stake": 12.152904510498047,
+    "hotkey": "5FyQwqvALREfXVLLN3LEvtBPzqGhqNtxQqoHjHFatneejmWr",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 12,
+    "stake": 0.038012996315956116,
+    "hotkey": "5HimZN7Espe8qAcm7ngydeSvTQ5ofatMzTBTtR5oqpQCEbWx",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 13,
+    "stake": 0.0060379281640052795,
+    "hotkey": "5G3jKS7BJPgrsirMu8cXGQiPRZYC5ceDx9xVyswhSEG8tGUs",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 14,
+    "stake": 31.255218505859375,
+    "hotkey": "5H9XxRFAW2KHnN94qzCGMyEs6Bi4pTiatW9LcwGmtJp42Vaq",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 15,
+    "stake": 47866.82421875,
+    "hotkey": "5CsvRJXuR955WojnGMdok1hbhffZyB4N5ocrv82f3p5A2zVp",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 16,
+    "stake": 0.0021439590491354465,
+    "hotkey": "5DXRG8rCuuF7Lkd46mMbkdDNq52kDdph5PbxrCLAhuKAwkdq",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 17,
+    "stake": 374802.53125,
+    "hotkey": "5EhvL1FVkQPpMjZX4MAADcW42i3xPSF1KiCpuaxTYVr28sux",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 18,
+    "stake": 9.908116340637207,
+    "hotkey": "5Ehv5XMriPZwNBtYHdQV7VrdbN8MBTDTmQhWprZJXxSiMapR",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 19,
+    "stake": 10839.9619140625,
+    "hotkey": "5CPzGD8sxyv8fKKXNvKem4qJRhCXABRmpUgC1wb1V4YAXLc3",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 20,
+    "stake": 505470.8125,
+    "hotkey": "5HEo565WAy4Dbq3Sv271SAi7syBSofyfhhwRNjFNSM2gP9M2",
+    "address": "/ipv4/34.141.190.201:8091"
+  },
+  {
+    "uid": 21,
+    "stake": 23731.17578125,
+    "hotkey": "5FudZjGkVH2cF9MssgLrpf6S4QUBodpZCvekFzTTMV1nU64p",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 22,
+    "stake": 281305.46875,
+    "hotkey": "5DvTpiniW9s3APmHRYn8FroUWyfnLtrsid5Mtn5EwMXHN2ed",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 23,
+    "stake": 12.988234519958496,
+    "hotkey": "5FTh8hmM4eJYB1z3QpAh4ou15bwP3uwh1LTC3LKkcy3imXTm",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 24,
+    "stake": 12.994629859924316,
+    "hotkey": "5C5CM1MdGv2m1w5JFKB9Q5YBRhNtfp82Psx5DWWCXSj2czHy",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 25,
+    "stake": 0.14692586660385132,
+    "hotkey": "5FRCV1jBJDCmcBptN2mmskR9GGbcJsAF2ThQZRgo2TAEY5XY",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 26,
+    "stake": 0.19192013144493103,
+    "hotkey": "5CSyVNFvSaQXLoz3Ft8GCqc2jJ5t3i7LJwchP21R9oiAwxhM",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 27,
+    "stake": 5050.83056640625,
+    "hotkey": "5H6BgKkAr2Anmm9Xw5BVDE4VaQmFEVMkJUHeT7Gki4J7yF4x",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 28,
+    "stake": 18336.916015625,
+    "hotkey": "5Guiz2PGHgAVatda1maoNR5wp4Ug3yfmJgQqcjJR71sY8bVu",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 29,
+    "stake": 20353.251953125,
+    "hotkey": "5D2wzCtQWgmDyhBYESFekn6bDJf5sKiA1TRukVJBxCsvBDPU",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 30,
+    "stake": 40545.8046875,
+    "hotkey": "5FFM6Nvvm78GqyMratgXXvjbqZPi7SHgSQ81nyS96jBuUWgt",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 31,
+    "stake": 38391.0234375,
+    "hotkey": "5Fq5v71D4LX8Db1xsmRSy6udQThcZ8sFDqxQFwnUZ1BuqY5A",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 32,
+    "stake": 42559.22265625,
+    "hotkey": "5ED6jwDECEmNvSp98R2qyEUPHDv9pi14E6n3TS8CicD6YfhL",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 33,
+    "stake": 51544.17578125,
+    "hotkey": "5Dz8ShM6rtPw1GBAaqxjycT9LF1TC3iDpzpUH9gKr85Nizo6",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 34,
+    "stake": 138.09088134765625,
+    "hotkey": "5Gpt8XWFTXmKrRF1qaxcBQLvnPLpKi6Pt2XC4vVQR7gqNKtU",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 35,
+    "stake": 4.149868965148926,
+    "hotkey": "5FeHGZBvF4gniQPYGCpQQmUaZwKpwZ7g8hJ16K2L6GpQmDUk",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 36,
+    "stake": 135163.890625,
+    "hotkey": "5FLKnbMjHY8LarHZvk2q2RY9drWFbpxjAcR5x8tjr3GqtU6F",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 37,
+    "stake": 1.6059075593948364,
+    "hotkey": "5DiJYopByVi1abvhcNeEJ2UcNECHRG2N2SFGj9V5dC1QHJko",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 38,
+    "stake": 0.25157132744789124,
+    "hotkey": "5EsbfxPcQaUrCDurUJ8Q5qDKNENNGziu3qHWUbXrcuY2pbNz",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 39,
+    "stake": 0.5119572877883911,
+    "hotkey": "5HBvt2r539i34YhdJnmQS9Z83zgztPF9zrdDdJcWYpYm8oN6",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 40,
+    "stake": 1.1301363706588745,
+    "hotkey": "5C88zLBbob1g3p76ierkQAzLTbJCR1HqugaZKyzqU6r2Q12y",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 41,
+    "stake": 133061.296875,
+    "hotkey": "5HNQURvmjjYhTSksi8Wfsw676b4owGwfLR2BFAQzG7H3HhYf",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 42,
+    "stake": 0.00031729499460197985,
+    "hotkey": "5DaXGEctDivmU2wKeCMmRPsVvbJ8mmjqDokfPXFQ5c2BANMB",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 43,
+    "stake": 7735.541015625,
+    "hotkey": "5FcXnzNo3mrqReTEY4ftkg5iXRBi61iyvM4W1bywZLRqfxAY",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 44,
+    "stake": 0.9471681714057922,
+    "hotkey": "5FBvGUf3FhJfzLnDKwHCVqtycVzuK4uLqmx1dyYd4xFpP8Th",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 45,
+    "stake": 0.1976652592420578,
+    "hotkey": "5Cg5w3WJv7Gh34Am1tCDX96XNcJrcYRKfVwmgJYJCAqezbjz",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 46,
+    "stake": 1.4982832670211792,
+    "hotkey": "5FPN3f3EP6zsBemJsMhL3zhTLqjoQnCBXfzro1uqKP4K7Lcy",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 47,
+    "stake": 29348.337890625,
+    "hotkey": "5GcBK8PDrVifV1xAf4Qkkk6KsbsmhDdX9atvk8vyKU8xdU63",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 48,
+    "stake": 27543.837890625,
+    "hotkey": "5HeKSHGdsRCwVgyrHchijnZJnq4wiv6GqoDLNah8R5WMfnLB",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 49,
+    "stake": 44720.40234375,
+    "hotkey": "5G3f8VDTT1ydirT3QffnV2TMrNMR2MkQfGUubQNqZcGSj82T",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 50,
+    "stake": 3854.178466796875,
+    "hotkey": "5ECvRLMj9jkbdM4sLuH5WvjUe87TcAdjRfUj5onN4iKqYYGm",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 51,
+    "stake": 138.21925354003906,
+    "hotkey": "5FqPJMZDp39KRd9jDhXuFpZWkYD7wG5AXmjoWqK8rDy7ok5B",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 52,
+    "stake": 3300.3037109375,
+    "hotkey": "5CUb6xjxEJvggBrhScJpsqEyRATpA37x2qtQYsHErDGCwLUi",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 53,
+    "stake": 15.875554084777832,
+    "hotkey": "5EpxBYq4aVgTQ1rYeBo2mzYt3hgpRTqxZTSsJEkCstBP5Jse",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 54,
+    "stake": 120.00251007080078,
+    "hotkey": "5HVyT4uzFXaU1q39KMnq8hb5RjbqbjGNTTfc3tx8egmZBGvW",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 55,
+    "stake": 0.9420033693313599,
+    "hotkey": "5DtPqa4WTT1bUeqXD5MnT2xmYGi6A1SZZeM8xsMaNVqsXPfd",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 56,
+    "stake": 9.999999717180685e-10,
+    "hotkey": "5Do7NqdstDfVGee9x7A8To6pon8ud2iZkHFy514LvoaVe6dR",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 57,
+    "stake": 28449.486328125,
+    "hotkey": "5DnXm2tBGAD57ySJv5SfpTfLcsQbSKKp6xZKFWABw3cYUgqg",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 58,
+    "stake": 47960.44921875,
+    "hotkey": "5HbScNssaEfioJHXjcXdpyqo1AKnYjymidGF8opcF9rTFZdT",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 59,
+    "stake": 27107.79296875,
+    "hotkey": "5DJGBzzPH9num5eGwbEiYFM1GEh3qGHkG2HK4ZeUtoSaU9Bb",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 60,
+    "stake": 69.06377410888672,
+    "hotkey": "5EFiiNVJMuSBYP7JaQVdcBGa2bdtLbcUSsYjrxtk2rWJh1Wo",
+    "address": "/ipv4/82.64.218.144:8098"
+  },
+  {
+    "uid": 61,
+    "stake": 35467.68359375,
+    "hotkey": "5FKstHjZkh4v3qAMSBa1oJcHCLjxYZ8SNTSz1opTv4hR7gVB",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 62,
+    "stake": 0.0,
+    "hotkey": "5HRJsfS7Deo79dEp8c8dwZtJF1kTUM3ZwM23ynje6iFGD8tt",
+    "address": "/ipv0/0.0.0.0:0"
+  },
+  {
+    "uid": 63,
+    "stake": 0.9999989867210388,
+    "hotkey": "5EnZUXKv4E4DFxJgJJbCqe4nqRqFHySKFs4hfL7jmyeGpZKb",
+    "address": "/ipv0/0.0.0.0:0"
+  }
+]

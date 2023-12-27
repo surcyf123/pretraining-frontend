@@ -49,5 +49,5 @@
       }
     ]
   },
-  "python.defaultInterpreterPath": "api/.venv/bin/python",
+  "python.defaultInterpreterPath": "api/.venv/bin/python"
 }
