@@ -5,7 +5,6 @@ import { useMemo } from "react";
 import { fetchTableData, fetchLineChartData, fetchMetagraphData } from "../../api";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
-import { Heatmap } from "../../charts/Heatmap";
 import { MetaBox } from "../../components/MetaBox";
 import { MetagraphTable } from "../../components/MetagraphTable";
 import { StatisticsTable } from "../../components/StatisticsTable";
@@ -57,18 +56,6 @@ export function Dashboard() {
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
-
-  const heatmapData = useMemo(
-    () =>
-      (metagraphDetails?.neuronData ?? []).flatMap(({ weight, uid }) =>
-        weight.map<Record<string, number | string | undefined | null>>((ele, index) => ({
-          validatorID: uid,
-          weight: ele,
-          minerID: index,
-        })),
-      ),
-    [metagraphDetails?.neuronData],
-  );
 
   const averageValidatorTrust = useMemo(
     () => calculateAverageValidatorTrust(metagraphDetails?.neuronData ?? []),
@@ -221,19 +208,6 @@ export function Dashboard() {
       </Card>
       <Card shadow="md">
         <MetagraphTable data={metagraphDetails?.neuronData ?? []} />
-      </Card>
-      <Card shadow="md">
-        <Heatmap
-          title="Weight Matrix"
-          style={{ height: "50vh" }}
-          data={heatmapData}
-          xAxis="minerID"
-          yAxis="validatorID"
-          visualAxis="weight"
-          loading={isLoadingMetagraphJSON}
-          xAxisLabel="Miner"
-          yAxisLabel="Validator"
-        />
       </Card>
       {isRefetching === true ? (
         <Loader color="blue" type="bars" pos="fixed" left="20px" bottom="20px" />
