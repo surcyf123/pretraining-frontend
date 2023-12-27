@@ -6,7 +6,7 @@ import uvicorn
 import bittensor
 
 app = FastAPI()
-origins = ["http://localhost", "https://www.openpretrain.ai"]
+origins = ["http://localhost", "https://www.openpretrain.ai"] # Why? https://fastapi.tiangolo.com/tutorial/cors/
 app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"],)
 
 metagraphs: Dict[int, bittensor.metagraph] = dict()
