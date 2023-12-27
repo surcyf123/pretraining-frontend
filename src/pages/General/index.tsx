@@ -23,7 +23,7 @@ export function General(): JSX.Element {
           yAxisLabel="Validator"
         />
       </Card>
-      <Text ta="center">Comming soon...</Text>
+      <Text ta="center">More comming soon...</Text>
     </Stack>
   );
 }
