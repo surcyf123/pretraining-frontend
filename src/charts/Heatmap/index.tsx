@@ -166,7 +166,7 @@ export function Heatmap({
                 <br/>
                   ${
                     typeof yAxisData === "number" || typeof yAxisData === "string"
-                      ? `<span>${yAxisLabel}-ID: ${yAxisData}</span>`
+                      ? `<span>${yAxisLabel}: ${yAxisData}</span>`
                       : ""
                   }
                   <br/>
