@@ -64,6 +64,19 @@ def neurons(netuid: int = 0):
     output = df.to_dict(orient="records")  # transform data to array of records
     return output
 
+@app.get("/validators")
+def validators():
+    metagraph = get_from_cache(0)
+    records = {
+        "uid": metagraph.uids.tolist(),
+        "stake": metagraph.S.tolist(),
+        "hotkey": metagraph.hotkeys,
+        "address": metagraph.addresses,
+    }
+    df = DataFrame(records)
+    output = df.to_dict(orient="records")  # transform data to array of records
+    return output
+
 
 @app.get("/weights/{netuid}")
 def weights(netuid: int = 0):
