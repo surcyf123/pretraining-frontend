@@ -1,11 +1,13 @@
-export interface ValidatorDetails {
+// eslint-disable-next-line import/no-unused-modules
+export interface Validator {
   uid: number;
   stake: number;
   hotkey: string;
   address: string;
 }
 
-export const ValidatorData: ValidatorDetails[] = [
+// eslint-disable-next-line import/no-unused-modules
+export const Validators: Validator[] = [
   {
     uid: 0,
     stake: 28313.416015625,
