@@ -5,6 +5,7 @@ from pandas import DataFrame, concat
 import uvicorn
 import bittensor
 from CacheToolsUtils import cachetools, cached
+from .utils import calculate_trust
 
 app = FastAPI()
 cache = cachetools.TTLCache(
@@ -65,15 +66,19 @@ def neurons(netuid: int = 0):
 @cached(cache=cache)
 def validators():
     metagraph = bittensor.metagraph(0, lite=False, network="local", sync=True)
+    weights = metagraph.W
+    Sn = (metagraph.S / metagraph.S.sum()).clone().float()
+    trust = calculate_trust(weights, Sn)
     records = {
         "uid": metagraph.uids.tolist(),
         "stake": metagraph.S.tolist(),
         "hotkey": metagraph.hotkeys,
         "coldkey": metagraph.coldkeys,
         "address": metagraph.addresses,
+        "trust": trust.tolist(),
     }
     records_df = DataFrame(records)
-    weights_df = DataFrame(metagraph.W.tolist())
+    weights_df = DataFrame(weights.tolist())
     df = concat([records_df, weights_df], axis=1)
     output = df.to_dict(orient="records")  # transform data to array of records
     return output
