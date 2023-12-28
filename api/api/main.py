@@ -9,7 +9,7 @@ from CacheToolsUtils import cachetools, cached
 app = FastAPI()
 cache = cachetools.TTLCache(
     maxsize=33, ttl=10 * 60
-)  # ttl in seconds maxsize is number of items
+)  # ttl in seconds; maxsize is number of items
 origins = [
     "http://localhost:8080",
     "https://www.openpretrain.ai",
