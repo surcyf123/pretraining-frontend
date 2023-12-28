@@ -12,6 +12,7 @@ uvicorn = {extras = ["standard"], version = "0.22.0"}
 bittensor = "^6.5.0"
 pandas = "^2.1.4"
 cachetoolsutils = "^8.3"
+torch = "^2.1.2"
 
 [tool.poetry.scripts]
 start = "api.main:start"
