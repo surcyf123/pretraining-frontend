@@ -4,6 +4,7 @@ from typing import Dict
 from pandas import DataFrame, concat
 import uvicorn
 import bittensor
+from cachetools import cached, TTLCache
 
 app = FastAPI()
 origins = [
@@ -21,6 +22,7 @@ app.add_middleware(
 metagraphs: Dict[int, bittensor.metagraph] = dict()
 
 
+@cached(cache=TTLCache(maxsize = 1, ttl = 10 * 60)) # ttl in seconds 
 def get_from_cache(netuid: int = 0):
     metagraph = metagraphs.get(netuid)
     if metagraph is None:
