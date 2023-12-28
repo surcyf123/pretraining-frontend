@@ -2,25 +2,25 @@ from torch import sigmoid, FloatTensor
 
 
 # Ref: https://docs.bittensor.com/emissions#trust
-def calculateTrust(W: FloatTensor, S: FloatTensor, threshold: int = 0) -> FloatTensor:
-    Wn = (W > threshold).float()
-    return Wn.T @ S
+def calculateTrust(weight: FloatTensor, stake: FloatTensor, threshold: int = 0) -> FloatTensor:
+    thresholdMatrix = (weight > threshold).float()
+    return thresholdMatrix.T @ stake
 
 
 # Ref: https://docs.bittensor.com/emissions#trust
-def calculateRank(W: FloatTensor, S: FloatTensor) -> FloatTensor:
-    R = W.T @ S
-    return R / R.sum()
+def calculateRank(weight: FloatTensor, stake: FloatTensor) -> FloatTensor:
+    rank = weight.T @ stake
+    return rank / rank.sum()
 
 
 # Ref: https://docs.bittensor.com/emissions#trust
 def calculateConsensus(
-    T: FloatTensor, kappa: float = 0.5, rho: int = 10
+    trust: FloatTensor, kappa: float = 0.5, rho: int = 10
 ) -> FloatTensor:
-    return sigmoid(rho * (T - kappa))
+    return sigmoid(rho * (trust - kappa))
 
 
 # Ref: https://docs.bittensor.com/emissions#trust
-def calculateEmission(C: FloatTensor, R: FloatTensor) -> FloatTensor:
-    E = C * R
-    return E / E.sum()
+def calculateEmission(consensus: FloatTensor, rank: FloatTensor) -> FloatTensor:
+    emission = consensus * rank
+    return emission / emission.sum()
