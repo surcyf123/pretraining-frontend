@@ -67,6 +67,9 @@ def neurons(netuid: int = 0):
 @app.get("/validators")
 def validators():
     metagraph = get_from_cache(0)
+    weight_matrix = metagraph.W.tolist()
+    weight_matrix_dataframe = DataFrame(weight_matrix)
+    weight_matrix_dict = weight_matrix_dataframe.to_dict() # transpose matrix 64x33 to 33x64
     records = {
         "uid": metagraph.uids.tolist(),
         "stake": metagraph.S.tolist(),
@@ -74,7 +77,10 @@ def validators():
         "address": metagraph.addresses,
     }
     df = DataFrame(records)
+    for key, value in weight_matrix_dict.items():
+        df[f"SN{key}"] = value
     output = df.to_dict(orient="records")  # transform data to array of records
+    print(df)
     return output
 
 
