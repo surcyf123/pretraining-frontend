@@ -7,7 +7,7 @@ import bittensor
 from CacheToolsUtils import cachetools, cached
 
 app = FastAPI()
-cache = cachetools.TTLCache(maxsize=33, ttl=10 * 60)
+cache = cachetools.TTLCache(maxsize=33, ttl=10 * 60) # ttl in seconds maxsize is number of items
 origins = [
     "http://localhost:8080",
     "https://www.openpretrain.ai",
@@ -29,14 +29,14 @@ def root():
 
 
 @app.get("/metadata/{netuid}")
-@cached(cache=cache)  # ttl in seconds maxsize is number of items
+@cached(cache=cache)
 def metadata(netuid: int = 0):
     metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
     return metagraph.metadata()
 
 
 @app.get("/neurons/{netuid}")
-@cached(cache=cache)  # ttl in seconds maxsize is number of items
+@cached(cache=cache)
 def neurons(netuid: int = 0):
     metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
     records = {
@@ -60,7 +60,7 @@ def neurons(netuid: int = 0):
 
 
 @app.get("/validators")
-@cached(cache=cache)  # ttl in seconds maxsize is number of items
+@cached(cache=cache)
 def validators():
     metagraph = bittensor.metagraph(0, lite=False, network="local", sync=True)
     records = {
@@ -78,7 +78,7 @@ def validators():
 
 
 @app.get("/weights/{netuid}")
-@cached(cache=cache)  # ttl in seconds maxsize is number of items
+@cached(cache=cache)
 def weights(netuid: int = 0):
     metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
     weight_matrix = metagraph.W.tolist()
@@ -91,14 +91,14 @@ def weights(netuid: int = 0):
 
 
 @app.get("/bonds/{netuid}")
-@cached(cache=cache)  # ttl in seconds maxsize is number of items
+@cached(cache=cache)
 def bonds(netuid: int = 0):
     metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
     return metagraph.B.tolist()
 
 
 @app.get("/average-validator-trust/{netuid}")
-@cached(cache=cache)  # ttl in seconds maxsize is number of items
+@cached(cache=cache)
 def average_validator_trust(netuid: int = 0):
     metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
     records = {
