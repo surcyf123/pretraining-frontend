@@ -2,7 +2,9 @@ from torch import sigmoid, FloatTensor
 
 
 # Ref: https://docs.bittensor.com/emissions#trust
-def calculateTrust(weight: FloatTensor, stake: FloatTensor, threshold: int = 0) -> FloatTensor:
+def calculateTrust(
+    weight: FloatTensor, stake: FloatTensor, threshold: int = 0
+) -> FloatTensor:
     thresholdMatrix = (weight > threshold).float()
     return thresholdMatrix.T @ stake
 
