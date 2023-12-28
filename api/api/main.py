@@ -4,10 +4,10 @@ from typing import Dict
 from pandas import DataFrame, concat
 import uvicorn
 import bittensor
-from CacheToolsUtils import cachetools,cached
+from CacheToolsUtils import cachetools, cached
 
 app = FastAPI()
-cache = cachetools.TTLCache(maxsize = 33, ttl = 10 * 60)
+cache = cachetools.TTLCache(maxsize=33, ttl=10 * 60)
 
 origins = [
     "http://localhost:8080",
@@ -23,22 +23,23 @@ app.add_middleware(
 
 metagraphs: Dict[int, bittensor.metagraph] = dict()
 
+
 @app.get("/")
 def root():
     return {"Hello": "Bittensor"}
 
 
 @app.get("/metadata/{netuid}")
-@cached(cache=cache) # ttl in seconds maxsize is number of items
+@cached(cache=cache)  # ttl in seconds maxsize is number of items
 def metadata(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="local",sync = True)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
     return metagraph.metadata()
 
 
 @app.get("/neurons/{netuid}")
-@cached(cache=cache) # ttl in seconds maxsize is number of items
+@cached(cache=cache)  # ttl in seconds maxsize is number of items
 def neurons(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="local",sync = True)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
     records = {
         "uid": metagraph.uids.tolist(),
         "stake": metagraph.S.tolist(),
@@ -60,9 +61,9 @@ def neurons(netuid: int = 0):
 
 
 @app.get("/validators")
-@cached(cache=cache) # ttl in seconds maxsize is number of items
+@cached(cache=cache)  # ttl in seconds maxsize is number of items
 def validators():
-    metagraph = bittensor.metagraph(0, lite=False, network="local",sync = True)
+    metagraph = bittensor.metagraph(0, lite=False, network="local", sync=True)
     records = {
         "uid": metagraph.uids.tolist(),
         "stake": metagraph.S.tolist(),
@@ -78,9 +79,9 @@ def validators():
 
 
 @app.get("/weights/{netuid}")
-@cached(cache=cache) # ttl in seconds maxsize is number of items
+@cached(cache=cache)  # ttl in seconds maxsize is number of items
 def weights(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="local",sync = True)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
     weight_matrix = metagraph.W.tolist()
     formatted_weight_matrix = [
         {"validatorID": v_id, "weight": weight, "minerID": m_id}
@@ -91,16 +92,16 @@ def weights(netuid: int = 0):
 
 
 @app.get("/bonds/{netuid}")
-@cached(cache=cache) # ttl in seconds maxsize is number of items
+@cached(cache=cache)  # ttl in seconds maxsize is number of items
 def bonds(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="local",sync = True)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
     return metagraph.B.tolist()
 
 
 @app.get("/average-validator-trust/{netuid}")
-@cached(cache=cache) # ttl in seconds maxsize is number of items
+@cached(cache=cache)  # ttl in seconds maxsize is number of items
 def average_validator_trust(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="local",sync = True)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
     records = {
         "stake": metagraph.S.tolist(),
         "validatorTrust": metagraph.Tv.tolist(),
