@@ -118,19 +118,19 @@ def average_validator_trust(netuid: int = 0):
 @cached(cache=cache)
 def average_validator_trust():
     metagraph = bittensor.metagraph(0, lite=False, network="local", sync=True)
-    W = metagraph.W
-    Sn = (metagraph.S / metagraph.S.sum()).clone().float()
+    weights = metagraph.W
+    normalizedStake = (metagraph.S / metagraph.S.sum()).clone().float()
 
-    T = calculateTrust(W, Sn)
-    R = calculateRank(W, Sn)
-    C = calculateConsensus(T)
-    E = calculateEmission(C, R)
+    trust = calculateTrust(weights, normalizedStake)
+    rank = calculateRank(weights, normalizedStake)
+    consensus = calculateConsensus(trust)
+    emission = calculateEmission(consensus, rank)
     df = DataFrame(
         {
-            "trust": T.tolist(),
-            "rank": R.tolist(),
-            "Consensus": C.tolist(),
-            "Emission": E.tolist(),
+            "trust": trust.tolist(),
+            "rank": rank.tolist(),
+            "consensus": consensus.tolist(),
+            "emission": emission.tolist(),
         }
     )
     vitals = df.to_dict(orient="records")
