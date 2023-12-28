@@ -22,7 +22,7 @@ app.add_middleware(
 metagraphs: Dict[int, bittensor.metagraph] = dict()
 
 
-@cached(cache=TTLCache(maxsize = 1, ttl = 10 * 60)) # ttl in seconds 
+@cached(cache=TTLCache(maxsize = 33, ttl = 10 * 60)) # ttl in seconds maxsize is number of items
 def get_from_cache(netuid: int = 0):
     metagraph = metagraphs.get(netuid)
     if metagraph is None:
