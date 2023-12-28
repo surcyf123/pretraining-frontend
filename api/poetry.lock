@@ -328,6 +328,26 @@ files = [
 ]
 
 [[package]]
+name = "cachetoolsutils"
+version = "8.3"
+description = "Cachetools Utilities"
+optional = false
+python-versions = ">=3.10"
+files = [
+    {file = "CacheToolsUtils-8.3-py3-none-any.whl", hash = "sha256:eec685e701a11fecdfa1983c9a5227080cc18e7d85574595698a45acb505dd80"},
+    {file = "CacheToolsUtils-8.3.tar.gz", hash = "sha256:4218c86f82db6805bca545e952990524e16cc3b06b73091b15e4fc755dad0b08"},
+]
+
+[package.dependencies]
+cachetools = "*"
+
+[package.extras]
+dev = ["black", "coverage", "flake8", "mypy", "pymarkdownlnt", "pytest", "types-cachetools", "types-redis"]
+doc = ["myst-parser", "sphinx", "sphinx-autoapi", "sphinx-lint", "sphinx-rtd-theme"]
+pub = ["build", "twine", "wheel"]
+tests = ["pymemcache", "redis"]
+
+[[package]]
 name = "certifi"
 version = "2023.11.17"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -3370,4 +3390,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "1ae71ef40c43278eb2efa6cdf6dbbbd3b645b94ddbc0a4fbaaad5021dcb03016"
+content-hash = "ca49781b15f2547be96e9a9422ccbc47ae8a451815a874510ea9880387398be0"
