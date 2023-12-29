@@ -1,8 +1,17 @@
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import { AppShell, ActionIcon, Group, NavLink as MantineNavLink, Image } from "@mantine/core";
-import { IconChevronDown, IconLogout, IconMoonStars, IconSun } from "@tabler/icons-react";
+import {
+  AppShell,
+  ActionIcon,
+  Group,
+  NavLink as MantineNavLink,
+  Image,
+  Menu,
+  Grid,
+} from "@mantine/core";
+import { IconLogout, IconMoonStars, IconSun, IconChevronDown } from "@tabler/icons-react";
 import { NavLink, useLocation } from "react-router-dom";
 import Logo from "./logo.png";
+import { SubnetsData } from "./utils";
 import type { MantineColorScheme } from "@mantine/core";
 
 export interface HeaderProps {
@@ -39,12 +48,34 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
         <Group wrap="nowrap">
           {NavLinks.map(({ path, label }) =>
             label === "Subnets" ? (
-              <MantineNavLink
-                rightSection={<IconChevronDown size={20} />}
-                to="#"
-                component={NavLink}
-                label="Subnets"
-              />
+              <Menu key={path} trigger="hover">
+                <Menu.Target>
+                  <MantineNavLink
+                    rightSection={<IconChevronDown size={20} />}
+                    to="#"
+                    component={NavLink}
+                    label="Subnets"
+                  />
+                </Menu.Target>
+                <Menu.Dropdown>
+                  <Grid maw={900} p={4} gutter="0px">
+                    {SubnetsData.map((subnet) => {
+                      return (
+                        <Grid.Col key={subnet.path}>
+                          <Menu.Item>
+                            <MantineNavLink
+                              style={{ padding: 0, background: "transparent" }}
+                              to={subnet.path}
+                              component={NavLink}
+                              label={subnet.label}
+                            />
+                          </Menu.Item>
+                        </Grid.Col>
+                      );
+                    })}
+                  </Grid>
+                </Menu.Dropdown>
+              </Menu>
             ) : (
               <MantineNavLink
                 key={path}
