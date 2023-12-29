@@ -59,20 +59,18 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
                 </Menu.Target>
                 <Menu.Dropdown>
                   <Grid maw={900} p={4} gutter={0}>
-                    {SubnetsData.map((subnet) => {
-                      return (
-                        <Grid.Col key={subnet.path}>
-                          <Menu.Item>
-                            <MantineNavLink
-                              style={{ padding: 0, background: "transparent" }}
-                              to={subnet.path}
-                              component={NavLink}
-                              label={subnet.label}
-                            />
-                          </Menu.Item>
-                        </Grid.Col>
-                      );
-                    })}
+                    {SubnetsData.map((subnet) => (
+                      <Grid.Col key={subnet.path}>
+                        <Menu.Item>
+                          <MantineNavLink
+                            style={{ padding: 0, background: "transparent" }}
+                            to={subnet.path}
+                            component={NavLink}
+                            label={subnet.label}
+                          />
+                        </Menu.Item>
+                      </Grid.Col>
+                    ))}
                   </Grid>
                 </Menu.Dropdown>
               </Menu>
