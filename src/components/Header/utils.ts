@@ -3,7 +3,7 @@ export function sum(a: number, b: number) {
   return a + b;
 }
 
-export const SubnetsData = [
+export const SubnetsData: { path: string; label: string }[] = [
   {
     label: "00 : Root",
     path: "#00",
