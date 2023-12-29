@@ -5,6 +5,7 @@ from pandas import DataFrame, concat
 import uvicorn
 import bittensor
 from CacheToolsUtils import cachetools, cached
+from .utils import calculateTrust, calculateRank, calculateEmission, calculateConsensus
 
 app = FastAPI()
 cache = cachetools.TTLCache(
@@ -111,6 +112,29 @@ def average_validator_trust(netuid: int = 0):
     filtered_df = df[df["stake"] > 20000]
     average = filtered_df["validatorTrust"].mean()
     return average
+
+
+@app.get("/vitals")
+@cached(cache=cache)
+def vitals():
+    metagraph = bittensor.metagraph(0, lite=False, network="local", sync=True)
+    weights = metagraph.W.float()
+    normalizedStake = (metagraph.S / metagraph.S.sum()).clone().float()
+
+    trust = calculateTrust(weights, normalizedStake)
+    rank = calculateRank(weights, normalizedStake)
+    consensus = calculateConsensus(trust)
+    emission = calculateEmission(consensus, rank)
+    df = DataFrame(
+        {
+            "trust": trust.tolist(),
+            "rank": rank.tolist(),
+            "consensus": consensus.tolist(),
+            "emission": emission.tolist(),
+        }
+    )
+    vitals = df.to_dict(orient="records")
+    return vitals
 
 
 def start():
