@@ -64,9 +64,13 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
                         <Grid.Col
                           key={subnet.path}
                           span={{
+                            md: 6,
                             lg: 4,
                           }}
                           order={{
+                            /* calculate grid position by dividing links into tow columns each containing 17 items */
+                            md: (index % 17) * 2 + Math.floor(index / 17), // TODO : reafactor login so it can work on any size arrays
+
                             /* calculate grid position by dividing links into tow columns each containing 11 items */
                             lg: (index % 11) * 3 + Math.floor(index / 11), // TODO : reafactor login so it can work on any size arrays
                           }}
