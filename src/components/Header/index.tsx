@@ -59,9 +59,18 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
                 </Menu.Target>
                 <Menu.Dropdown>
                   <Grid maw={900} p={4} gutter="0px">
-                    {SubnetsData.map((subnet) => {
+                    {SubnetsData.map((subnet, index) => {
                       return (
-                        <Grid.Col key={subnet.path}>
+                        <Grid.Col
+                          key={subnet.path}
+                          span={{
+                            lg: 4,
+                          }}
+                          order={{
+                            /* calculate grid position by dividing links into tow columns each containing 11 items */
+                            lg: (index % 11) * 3 + Math.floor(index / 11), // TODO : reafactor login so it can work on any size arrays
+                          }}
+                        >
                           <Menu.Item>
                             <MantineNavLink
                               style={{ padding: 0, background: "transparent" }}
