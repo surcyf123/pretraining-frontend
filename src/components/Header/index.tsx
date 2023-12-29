@@ -58,7 +58,7 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
                   />
                 </Menu.Target>
                 <Menu.Dropdown>
-                  <Grid maw={900} p={4} gutter="0px">
+                  <Grid maw={900} p={4} gutter={0}>
                     {SubnetsData.map((subnet) => {
                       return (
                         <Grid.Col key={subnet.path}>
