@@ -67,7 +67,9 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
                         }}
                         order={{
                           /* calculate grid position by dividing links into tow columns each containing 11 items */
-                          lg: (index % 11) * 3 + Math.floor(index / 11), // TODO : reafactor calculation so it can work on any size arrays
+                          lg:
+                            (index % Math.floor(SubnetsData.length / 3)) * 3 +
+                            Math.floor(index / Math.floor(SubnetsData.length / 3)), // TODO : reafactor calculation so it can work on any size arrays
                         }}
                       >
                         <Menu.Item>
