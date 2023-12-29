@@ -47,12 +47,6 @@
     }
   },
   "function": {
-    "bittensor": {
-      "build": true,
-      "dependsOn": [],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "wandb": {
       "build": true,
       "dependsOn": [
@@ -90,22 +84,6 @@
     }
   },
   "parameters": {
-    "AMPLIFY_function_bittensor_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "bittensor"
-        }
-      ]
-    },
-    "AMPLIFY_function_bittensor_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "bittensor"
-        }
-      ]
-    },
     "AMPLIFY_function_wandbHistory_deploymentBucketName": {
       "usedBy": [
         {
