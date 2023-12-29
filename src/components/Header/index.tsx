@@ -58,34 +58,36 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
                   />
                 </Menu.Target>
                 <Menu.Dropdown>
-                  <Grid maw={900} p={4} gutter="0px">
-                    {SubnetsData.map((subnet, index) => {
-                      return (
-                        <Grid.Col
-                          key={subnet.path}
-                          span={{
-                            md: 6,
-                            lg: 4,
-                          }}
-                          order={{
-                            /* calculate grid position by dividing links into tow columns each containing 17 items */
-                            md: (index % 17) * 2 + Math.floor(index / 17), // TODO : reafactor login so it can work on any size arrays
+                  <Grid maw={900} p={4} gutter={0}>
+                    {SubnetsData.map((subnet, index) => (
+                      <Grid.Col
+                        key={subnet.path}
+                        span={{
+                          md: 6,
+                          lg: 4,
+                        }}
+                        order={{
+                          /* calculate grid position by dividing links into tow columns each containing 17 items */
+                          md:
+                            (index % Math.ceil(SubnetsData.length / 2)) * 2 +
+                            Math.ceil(index / Math.ceil(SubnetsData.length / 2)), // TODO : reafactor calculation so it can work on any size arrays
 
-                            /* calculate grid position by dividing links into tow columns each containing 11 items */
-                            lg: (index % 11) * 3 + Math.floor(index / 11), // TODO : reafactor login so it can work on any size arrays
-                          }}
-                        >
-                          <Menu.Item>
-                            <MantineNavLink
-                              style={{ padding: 0, background: "transparent" }}
-                              to={subnet.path}
-                              component={NavLink}
-                              label={subnet.label}
-                            />
-                          </Menu.Item>
-                        </Grid.Col>
-                      );
-                    })}
+                          /* calculate grid position by dividing links into tow columns each containing 11 items */
+                          lg:
+                            (index % Math.floor(SubnetsData.length / 3)) * 3 +
+                            Math.floor(index / Math.floor(SubnetsData.length / 3)), // TODO : reafactor calculation so it can work on any size arrays
+                        }}
+                      >
+                        <Menu.Item>
+                          <MantineNavLink
+                            style={{ padding: 0, background: "transparent" }}
+                            to={subnet.path}
+                            component={NavLink}
+                            label={subnet.label}
+                          />
+                        </Menu.Item>
+                      </Grid.Col>
+                    ))}
                   </Grid>
                 </Menu.Dropdown>
               </Menu>
