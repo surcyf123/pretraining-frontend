@@ -116,7 +116,7 @@ def average_validator_trust(netuid: int = 0):
 
 @app.get("/vitals")
 @cached(cache=cache)
-def average_validator_trust():
+def vitals():
     metagraph = bittensor.metagraph(0, lite=False, network="local", sync=True)
     weights = metagraph.W
     normalizedStake = (metagraph.S / metagraph.S.sum()).clone().float()
