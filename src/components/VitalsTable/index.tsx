@@ -23,6 +23,7 @@ export function VitalsTable({ data, loading }: VitalsTableProps): JSX.Element {
       id: "Rank",
     },
   ]);
+
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<Vitals>();
     return [
