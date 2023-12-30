@@ -1,4 +1,4 @@
-import { Card, Divider, Stack, Text, useMantineColorScheme } from "@mantine/core";
+import { Card, Divider, Stack, Text, Title, useMantineColorScheme } from "@mantine/core";
 import { Heatmap } from "../../charts/Heatmap";
 import { HeatmapData } from "../../charts/Heatmap/data";
 import { TaoStats } from "../../components/TaoStats";
@@ -13,8 +13,11 @@ export function General(): JSX.Element {
     <Stack>
       <TaoStats />
       <Divider />
+      <Title order={4}>Subnet Details</Title>
       <ValidatorTable data={Validators} />
+      <Title order={4}>Subnet Emissions</Title>
       <VitalsTable data={VitalsData} />
+      <Title order={4}>Subnet Weights</Title>
       <Card shadow="md">
         <Heatmap
           title="Weight Matrix"
@@ -29,7 +32,7 @@ export function General(): JSX.Element {
           yAxisLabel="Validator"
         />
       </Card>
-      <Text ta="center">More comming soon...</Text>
+      <Text ta="center">More coming soon...</Text>
     </Stack>
   );
 }
