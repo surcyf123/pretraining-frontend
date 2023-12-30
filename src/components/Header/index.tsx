@@ -40,7 +40,7 @@ const NavLinks: HeaderLinksProps[] = [
 export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.Element {
   const location = useLocation();
   const { authStatus, signOut } = useAuthenticator((context) => [context.authStatus]);
-
+  
   return (
     <AppShell.Header p="xs">
       <Group justify="space-between" align="center">
