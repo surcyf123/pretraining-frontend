@@ -61,10 +61,7 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
                 <Menu.Target>
                   <MantineNavLink
                     component={NavLink}
-                    active={
-                      currentPathName === link ||
-                      links.findIndex((linkItem) => linkItem.link === currentPathName) !== -1
-                    }
+                    active={links.findIndex((linkItem) => linkItem.link === currentPathName) !== -1}
                     to={link}
                     label={<Text fw={500}>{label}</Text>}
                     noWrap
