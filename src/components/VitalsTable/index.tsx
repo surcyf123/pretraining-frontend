@@ -45,6 +45,10 @@ export function VitalsTable({ data, loading }: VitalsTableProps): JSX.Element {
     const columnHelper = createColumnHelper<Vitals>();
     return [
       columnHelper.accessor((row) => row.trust, {
+        cell: (info) => info.row.index + 1,
+        id: "NetUID",
+      }),
+      columnHelper.accessor((row) => row.trust, {
         cell: (info) => info.getValue().toFixed(4),
         id: "Trust",
       }),
