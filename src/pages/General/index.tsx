@@ -21,7 +21,7 @@ export function General(): JSX.Element {
           xAxis="minerID"
           yAxis="validatorID"
           visualAxis="weight"
-          xAxisLabel="Miner"
+          xAxisLabel="NetUID"
           yAxisLabel="Validator"
         />
       </Card>
