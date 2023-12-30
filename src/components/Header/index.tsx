@@ -70,7 +70,7 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
                   />
                 </Menu.Target>
                 <Menu.Dropdown>
-                  <ScrollArea h="70vh">
+                  <ScrollArea h="50vh">
                     {links.map((item) => (
                       <Menu.Item key={item.link}>
                         <MantineNavLink
