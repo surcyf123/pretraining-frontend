@@ -7,7 +7,6 @@ import {
   Image,
   Menu,
   Text,
-  ScrollArea,
 } from "@mantine/core";
 import { IconChevronDown, IconLogout, IconMoonStars, IconSun } from "@tabler/icons-react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -68,18 +67,16 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
                   />
                 </Menu.Target>
                 <Menu.Dropdown>
-                  <ScrollArea h="70vh">
-                    {links?.map((item) => (
-                      <Menu.Item key={item.link}>
-                        <MantineNavLink
-                          component={NavLink}
-                          active={location.pathname === item.link}
-                          to={item.link}
-                          label={<Text>{item.label}</Text>}
-                        />
-                      </Menu.Item>
-                    ))}
-                  </ScrollArea>
+                  {links?.map((item) => (
+                    <Menu.Item key={item.link}>
+                      <MantineNavLink
+                        component={NavLink}
+                        active={location.pathname === item.link}
+                        to={item.link}
+                        label={<Text>{item.label}</Text>}
+                      />
+                    </Menu.Item>
+                  ))}
                 </Menu.Dropdown>
               </Menu>
             ) : (
