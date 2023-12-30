@@ -65,7 +65,6 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
                     to={link}
                     label={<Text fw={500}>{label}</Text>}
                     noWrap
-                    title={`Go to ${label}`}
                     rightSection={<IconChevronDown size="1rem" />}
                   />
                 </Menu.Target>
