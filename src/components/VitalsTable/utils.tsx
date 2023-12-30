@@ -5,7 +5,7 @@ export interface Vitals {
   emission: number;
 }
 
-export const Vitals: Vital[] = [
+export const VitalsData: Vitals[] = [
   {
     trust: 0.00035061893868260086,
     rank: 0.0003526906075421721,
