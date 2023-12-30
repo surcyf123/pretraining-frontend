@@ -6,16 +6,16 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo } from "react";
-import type { Vital } from "./utils";
+import type { Vitals } from "./utils";
 
-export interface VitalTableProps {
-  data: Vital[];
+export interface VitalsTableProps {
+  data: Vitals[];
   loading?: boolean;
 }
 
-export function VitalTable({ data, loading }: VitalTableProps): JSX.Element {
+export function VitalsTable({ data, loading }: VitalsTableProps): JSX.Element {
   const columns = useMemo(() => {
-    const columnHelper = createColumnHelper<Vital>();
+    const columnHelper = createColumnHelper<Vitals>();
     return [
       columnHelper.accessor((row) => row.trust, {
         cell: (info) => info.getValue().toFixed(4),
