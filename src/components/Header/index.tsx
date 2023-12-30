@@ -48,13 +48,14 @@ const NavLinks: HeaderLinksProps[] = [
 export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.Element {
   const location = useLocation();
   const { authStatus, signOut } = useAuthenticator((context) => [context.authStatus]);
+  const currentPathName = location.pathname;
   return (
     <AppShell.Header p="xs">
       <Group justify="space-between" align="center">
         <Image {...Logo} h={30} alt="Openpretrain logo" />
         <Group wrap="nowrap">
           {NavLinks?.map(({ label, link, links }) =>
-            Array.isArray(links) === true ? (
+            Array.isArray(links) ? (
               <Menu key={link} trigger="hover">
                 <Menu.Target>
                   <MantineNavLink
@@ -69,11 +70,11 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
                 </Menu.Target>
                 <Menu.Dropdown>
                   <ScrollArea h="70vh">
-                    {links?.map((item) => (
+                    {links.map((item) => (
                       <Menu.Item key={item.link}>
                         <MantineNavLink
                           component={NavLink}
-                          active={location.pathname === item.link}
+                          active={currentPathName === item.link}
                           to={item.link}
                           label={<Text>{item.label}</Text>}
                         />
@@ -86,7 +87,7 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
               <MantineNavLink
                 key={link}
                 component={NavLink}
-                active={location.pathname === link}
+                active={currentPathName === link}
                 to={link}
                 label={<Text fw={500}>{label}</Text>}
                 noWrap
