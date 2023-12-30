@@ -44,24 +44,24 @@ export function VitalsTable({ data, loading }: VitalsTableProps): JSX.Element {
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<Vitals>();
     return [
-      columnHelper.accessor((row) => row.trust, {
-        cell: (info) => info.row.index + 1,
+      columnHelper.accessor((_, index) => index, {
+        cell: (info) => info.getValue(),
         id: "NetUID",
       }),
       columnHelper.accessor((row) => row.trust, {
-        cell: (info) => info.getValue().toFixed(4),
+        cell: (info) => info.getValue(),
         id: "Trust",
       }),
       columnHelper.accessor((row) => row.rank, {
-        cell: (info) => info.getValue().toFixed(4),
+        cell: (info) => info.getValue(),
         id: "Rank",
       }),
       columnHelper.accessor((row) => row.consensus, {
-        cell: (info) => info.getValue().toFixed(4),
+        cell: (info) => info.getValue(),
         id: "Consensus",
       }),
       columnHelper.accessor((row) => row.emission, {
-        cell: (info) => info.getValue().toFixed(4),
+        cell: (info) => info.getValue(),
         id: "Emission",
       }),
     ];
