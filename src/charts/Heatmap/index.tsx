@@ -173,8 +173,8 @@ export function Heatmap({
                   }
                   <br/>
                   ${
-                    typeof visualAxisData === "number" || typeof visualAxisData === "string"
-                      ? `<span>${visualAxisLabel}: ${visualAxisData}</span>`
+                    typeof visualAxisData === "number"
+                      ? `<span>${visualAxisLabel}: ${visualAxisData.toFixed(4)}</span>`
                       : ""
                   }
               </div>
