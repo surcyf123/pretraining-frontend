@@ -43,24 +43,15 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
       <Group justify="space-between" align="center">
         <Image {...Logo} h={30} alt="Openpretrain logo" />
         <Group wrap="nowrap">
-          {NavLinks.map(({ path, label }) =>
-            label === "Subnets" ? (
-              <MantineNavLink
-                rightSection={<IconChevronDown size={20} />}
-                to="#"
-                component={NavLink}
-                label="Subnets"
-              />
-            ) : (
-              <MantineNavLink
-                key={path}
-                component={NavLink}
-                active={location.pathname === path}
-                to={path}
-                label={label}
-              />
-            ),
-          )}
+          {NavLinks.map(({ path, label }) => (
+            <MantineNavLink
+              key={path}
+              component={NavLink}
+              active={location.pathname === path}
+              to={path}
+              label={label}
+            />
+          ))}
         </Group>
         <Group>
           <ActionIcon onClick={onToggleColorScheme} variant="default">
