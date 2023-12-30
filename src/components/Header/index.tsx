@@ -5,30 +5,40 @@ import { NavLink, useLocation } from "react-router-dom";
 import Logo from "./logo.png";
 import type { MantineColorScheme } from "@mantine/core";
 
+export interface HeaderLinksProps {
+  link: string;
+  label: string;
+  links?: { label: string; link: string }[];
+}
+
 export interface HeaderProps {
   colorScheme: MantineColorScheme;
   onToggleColorScheme: () => void;
 }
 
-const NavLinks: { path: string; label: string }[] = [
+const NavLinks: HeaderLinksProps[] = [
   {
-    path: "/",
+    link: "/",
     label: "Home",
   },
   {
-    path: "/general",
+    link: "/general",
     label: "General",
   },
   {
-    path: "/dashboard",
+    link: "/dashboard",
     label: "Dashboard",
+  },
+  {
+    link: "#",
+    label: "Subnets",
   },
 ];
 
 export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.Element {
   const location = useLocation();
   const { authStatus, signOut } = useAuthenticator((context) => [context.authStatus]);
-
+  
   return (
     <AppShell.Header p="xs">
       <Group justify="space-between" align="center">
