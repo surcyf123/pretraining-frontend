@@ -4,8 +4,8 @@ import { HeatmapData } from "../../charts/Heatmap/data";
 import { TaoStats } from "../../components/TaoStats";
 import { ValidatorTable } from "../../components/ValidatorTable";
 import { Validators } from "../../components/ValidatorTable/utils";
-import { VitalTable } from "../../components/VitalTable";
-import { Vitals } from "../../components/VitalTable/utils";
+import { VitalsTable } from "../../components/VitalsTable";
+import { VitalsData } from "../../components/VitalsTable/utils";
 
 export function General(): JSX.Element {
   const { colorScheme } = useMantineColorScheme();
@@ -14,7 +14,7 @@ export function General(): JSX.Element {
       <TaoStats />
       <Divider />
       <ValidatorTable data={Validators} />
-      <VitalTable data={Vitals} />
+      <VitalsTable data={VitalsData} />
       <Card shadow="md">
         <Heatmap
           title="Weight Matrix"

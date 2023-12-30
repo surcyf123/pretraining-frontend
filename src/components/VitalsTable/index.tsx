@@ -19,16 +19,16 @@ import {
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { getSortingIcon } from "../utils";
-import type { Vital } from "./utils";
+import type { Vitals } from "./utils";
 import type { SelectProps, PaginationProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 
-export interface VitalTableProps {
-  data: Vital[];
+export interface VitalsTableProps {
+  data: Vitals[];
   loading?: boolean;
 }
 
-export function VitalTable({ data, loading }: VitalTableProps): JSX.Element {
+export function VitalsTable({ data, loading }: VitalsTableProps): JSX.Element {
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -42,7 +42,7 @@ export function VitalTable({ data, loading }: VitalTableProps): JSX.Element {
   ]);
 
   const columns = useMemo(() => {
-    const columnHelper = createColumnHelper<Vital>();
+    const columnHelper = createColumnHelper<Vitals>();
     return [
       columnHelper.accessor((row) => row.trust, {
         cell: (info) => info.getValue().toFixed(4),
