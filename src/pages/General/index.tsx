@@ -21,6 +21,7 @@ export function General(): JSX.Element {
           xAxis="minerID"
           yAxis="validatorID"
           visualAxis="weight"
+          visualAxisLabel="Weight"
           xAxisLabel="Miner"
           yAxisLabel="Validator"
         />
