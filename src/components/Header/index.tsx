@@ -12,38 +12,13 @@ import {
 import { IconChevronDown, IconLogout, IconMoonStars, IconSun } from "@tabler/icons-react";
 import { NavLink, useLocation } from "react-router-dom";
 import Logo from "./logo.png";
-import { SubnetsData } from "./utils";
+import { NavLinks } from "./utils";
 import type { MantineColorScheme } from "@mantine/core";
 
-export interface HeaderLinksProps {
-  link: string;
-  label: string;
-  links?: { label: string; link: string }[];
-}
 export interface HeaderProps {
   colorScheme: MantineColorScheme;
   onToggleColorScheme: () => void;
 }
-
-const NavLinks: HeaderLinksProps[] = [
-  {
-    link: "/",
-    label: "Home",
-  },
-  {
-    link: "/general",
-    label: "General",
-  },
-  {
-    link: "/dashboard",
-    label: "Dashboard",
-  },
-  {
-    link: "#",
-    label: "Subnets",
-    links: SubnetsData,
-  },
-];
 
 export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.Element {
   const location = useLocation();
