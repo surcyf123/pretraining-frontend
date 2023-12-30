@@ -5,7 +5,6 @@ export function sum(a: number, b: number) {
   return a + b;
 }
 
-// eslint-disable-next-line import/no-unused-modules
 export const SubnetsData: HeaderLinksProps["links"] = [
   {
     label: "00 : Root",

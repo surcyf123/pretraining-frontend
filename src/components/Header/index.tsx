@@ -3,6 +3,7 @@ import { AppShell, ActionIcon, Group, NavLink as MantineNavLink, Image } from "@
 import { IconLogout, IconMoonStars, IconSun } from "@tabler/icons-react";
 import { NavLink, useLocation } from "react-router-dom";
 import Logo from "./logo.png";
+import { SubnetsData } from "./utils";
 import type { MantineColorScheme } from "@mantine/core";
 
 export interface HeaderLinksProps {
@@ -32,6 +33,7 @@ const NavLinks: HeaderLinksProps[] = [
   {
     link: "#",
     label: "Subnets",
+    links: SubnetsData,
   },
 ];
 
