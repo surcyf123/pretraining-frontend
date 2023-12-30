@@ -1,12 +1,15 @@
-import { Table, Stack, Group, Text, Skeleton, Box } from "@mantine/core";
+import { Table, Stack, Group, Text, Skeleton, ActionIcon, Box } from "@mantine/core";
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { getSortingIcon } from "../utils";
 import type { Vitals } from "./utils";
+import type { SortingState } from "@tanstack/react-table";
 
 export interface VitalsTableProps {
   data: Vitals[];
@@ -14,6 +17,13 @@ export interface VitalsTableProps {
 }
 
 export function VitalsTable({ data, loading }: VitalsTableProps): JSX.Element {
+  const [sorting, setSorting] = useState<SortingState>([
+    {
+      desc: false,
+      id: "Rank",
+    },
+  ]);
+
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<Vitals>();
     return [
@@ -37,9 +47,12 @@ export function VitalsTable({ data, loading }: VitalsTableProps): JSX.Element {
   }, []);
 
   const table = useReactTable({
+    state: { sorting },
     data,
     columns,
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
   return (
@@ -55,14 +68,20 @@ export function VitalsTable({ data, loading }: VitalsTableProps): JSX.Element {
               {table.getHeaderGroups().map((headerGroup) => (
                 <Table.Tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
-                    <Table.Th key={header.id} style={{ cursor: "pointer" }}>
+                    <Table.Th
+                      key={header.id}
+                      style={{ cursor: "pointer" }}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
                       <Group wrap="nowrap">
                         <Text>
                           {header.isPlaceholder === true
                             ? null
                             : flexRender(header.column.columnDef.header, header.getContext())}
                         </Text>
-                        {/* TODO : handle sorting */}
+                        <ActionIcon size="xs" variant="default">
+                          {getSortingIcon(header.column.getIsSorted())}
+                        </ActionIcon>
                       </Group>
                     </Table.Th>
                   ))}
