@@ -1,15 +1,27 @@
-import { Table, Stack, Group, Text, Skeleton, ActionIcon, Box } from "@mantine/core";
+import {
+  Table,
+  Stack,
+  Group,
+  Pagination,
+  Text,
+  Select,
+  Skeleton,
+  ActionIcon,
+  Box,
+} from "@mantine/core";
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { getSortingIcon } from "../utils";
 import type { Vital } from "./utils";
-import type { SortingState } from "@tanstack/react-table";
+import type { SelectProps, PaginationProps } from "@mantine/core";
+import type { PaginationState, SortingState } from "@tanstack/react-table";
 
 export interface VitalTableProps {
   data: Vital[];
@@ -17,6 +29,11 @@ export interface VitalTableProps {
 }
 
 export function VitalTable({ data, loading }: VitalTableProps): JSX.Element {
+  const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+
   const [sorting, setSorting] = useState<SortingState>([
     {
       desc: false,
@@ -47,13 +64,26 @@ export function VitalTable({ data, loading }: VitalTableProps): JSX.Element {
   }, []);
 
   const table = useReactTable({
-    state: { sorting },
+    state: { sorting, pagination: { pageIndex, pageSize } },
     data,
     columns,
+    onPaginationChange: setPagination,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
+
+  const handlePageSizeChange: SelectProps["onChange"] = (value) => {
+    const parsedPageSize = Number.parseInt(value ?? "", 10);
+    if (Number.isNaN(parsedPageSize) === false) {
+      table.setPageSize(parsedPageSize);
+    }
+  };
+
+  const handlePageChange: PaginationProps["onChange"] = (page) => {
+    table.setPageIndex(page - 1);
+  };
 
   return (
     <Skeleton visible={loading ?? false}>
@@ -101,6 +131,26 @@ export function VitalTable({ data, loading }: VitalTableProps): JSX.Element {
             </Table.Tbody>
           </Table>
         </Box>
+        <Group justify="flex-end">
+          <Pagination
+            value={table.getState().pagination.pageIndex + 1}
+            total={table.getPageCount()}
+            onChange={handlePageChange}
+          />
+          <Text>{`${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}</Text>
+          <Select
+            size="sm"
+            placeholder="Page size"
+            allowDeselect={false}
+            data={[
+              { value: "10", label: "Show 10" },
+              { value: "50", label: "Show 50" },
+              { value: "100", label: "Show 100" },
+            ]}
+            value={pageSize.toString()}
+            onChange={handlePageSizeChange}
+          />
+        </Group>
       </Stack>
     </Skeleton>
   );
