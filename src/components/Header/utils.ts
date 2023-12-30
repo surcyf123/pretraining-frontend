@@ -1,11 +1,15 @@
-import type { HeaderLinksProps } from ".";
+interface HeaderLinksProps {
+  link: string;
+  label: string;
+  links?: { label: string; link: string }[];
+}
 
 //  dummy test: TODO: remove this while writing real tests
 export function sum(a: number, b: number) {
   return a + b;
 }
 
-export const SubnetsData: HeaderLinksProps["links"] = [
+const SubnetsData: HeaderLinksProps["links"] = [
   {
     label: "00 : Root",
     link: "#00",
@@ -139,5 +143,25 @@ export const SubnetsData: HeaderLinksProps["links"] = [
   {
     label: "32 : Roleplay",
     link: "#32",
+  },
+];
+
+export const NavLinks: HeaderLinksProps[] = [
+  {
+    link: "/",
+    label: "Home",
+  },
+  {
+    link: "/general",
+    label: "General",
+  },
+  {
+    link: "/dashboard",
+    label: "Dashboard",
+  },
+  {
+    link: "#",
+    label: "Subnets",
+    links: SubnetsData,
   },
 ];
