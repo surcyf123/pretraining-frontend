@@ -1,141 +1,143 @@
+import type { HeaderLinksProps } from ".";
+
 //  dummy test: TODO: remove this while writing real tests
 export function sum(a: number, b: number) {
   return a + b;
 }
 
-export const SubnetsData: { path: string; label: string }[] = [
+export const SubnetsData: HeaderLinksProps["links"] = [
   {
     label: "00 : Root",
-    path: "#00",
+    link: "#00",
   },
   {
     label: "01 : Text Prompting",
-    path: "#01",
+    link: "#01",
   },
   {
     label: "02 : Machine Transation",
-    path: "#02",
+    link: "#02",
   },
   {
     label: "03 : Data Scraping",
-    path: "#03",
+    link: "#03",
   },
   {
     label: "04 : Multi Modality",
-    path: "#04",
+    link: "#04",
   },
   {
     label: "05 : Image Generation",
-    path: "#05",
+    link: "#05",
   },
   {
     label: "06 : Unknown",
-    path: "#06",
+    link: "#06",
   },
   {
     label: "07 : Storage",
-    path: "#07",
+    link: "#07",
   },
   {
     label: "08 : Time Series Prediction",
-    path: "#08",
+    link: "#08",
   },
   {
     label: "09 : Pretraining",
-    path: "#09",
+    link: "#09",
   },
   {
     label: "10 : Map Reduce",
-    path: "#10",
+    link: "#10",
   },
 
   {
     label: "11 : Text Training",
-    path: "#11",
+    link: "#11",
   },
   {
     label: "12 : Unknown",
-    path: "#12",
+    link: "#12",
   },
   {
     label: "13 : Dataverse",
-    path: "#13",
+    link: "#13",
   },
   {
     label: "14 : LLM Defender",
-    path: "#14",
+    link: "#14",
   },
   {
     label: "15 : Blockchain Insights",
-    path: "#15",
+    link: "#15",
   },
   {
     label: "16 : Audio",
-    path: "#16",
+    link: "#16",
   },
   {
     label: "17 : Petal",
-    path: "#17",
+    link: "#17",
   },
   {
     label: "18 : Cortex.t",
-    path: "#18",
+    link: "#18",
   },
   {
     label: "19 : Vision",
-    path: "#19",
+    link: "#19",
   },
   {
     label: "20 : Unknown",
-    path: "#20",
+    link: "#20",
   },
   {
     label: "21 : Filetao",
-    path: "#21",
+    link: "#21",
   },
 
   {
     label: "22 : Unknown",
-    path: "#22",
+    link: "#22",
   },
   {
     label: "23 : Prime-Net",
-    path: "#23",
+    link: "#23",
   },
   {
     label: "24 : Unknown",
-    path: "#24",
+    link: "#24",
   },
   {
     label: "25 : Bitcurrent",
-    path: "#25",
+    link: "#25",
   },
   {
     label: "26 : Image Alchemy",
-    path: "#26",
+    link: "#26",
   },
   {
     label: "27 : Compute",
-    path: "#27",
+    link: "#27",
   },
   {
     label: "28 : ZK Tensor",
-    path: "#17",
+    link: "#17",
   },
   {
     label: "29 : 3D Gen",
-    path: "#29",
+    link: "#29",
   },
   {
     label: "30 : Lovelace",
-    path: "#30",
+    link: "#30",
   },
   {
     label: "31 : Game of Life",
-    path: "#31",
+    link: "#31",
   },
   {
     label: "32 : Roleplay",
-    path: "#32",
+    link: "#32",
   },
 ];
