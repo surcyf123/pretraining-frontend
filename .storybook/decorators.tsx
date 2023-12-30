@@ -13,13 +13,13 @@ function ThemeWrapper({ children }: MantineProviderProps): JSX.Element {
   const darkMode = useDarkMode();
 
   return (
-    <QueryClientProvider client={ReactQueryClient}>
-      <Authenticator.Provider>
+    <Authenticator.Provider>
+      <QueryClientProvider client={ReactQueryClient}>
         <MantineProvider forceColorScheme={darkMode === true ? "dark" : "light"}>
           {children}
         </MantineProvider>
-      </Authenticator.Provider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </Authenticator.Provider>
   );
 }
 
