@@ -143,11 +143,9 @@ def vitals():
 @cached(cache=cache)
 def currentTaoPrice():
     output = {}
-    price = get(
-        f"{BaseMEXCEndpoint}/api/v3/ticker/price", params={"symbol": "TAOUSDT"}
-    )
+    price = get(f"{BaseMEXCEndpoint}/api/v3/ticker/price", params={"symbol": "TAOUSDT"})
 
-    output["price"] = (price.json(),)
+    output["price"] = price.json()
     return output
 
 
