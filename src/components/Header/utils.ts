@@ -12,137 +12,137 @@ export function sum(a: number, b: number) {
 const SubnetsData: HeaderLinksProps["links"] = [
   {
     label: "00 : Root",
-    link: "#00",
+    link: "subnet-0",
   },
   {
     label: "01 : Text Prompting",
-    link: "#01",
+    link: "subnet-1",
   },
   {
     label: "02 : Machine Transation",
-    link: "#02",
+    link: "subnet-2",
   },
   {
     label: "03 : Data Scraping",
-    link: "#03",
+    link: "subnet-3",
   },
   {
     label: "04 : Multi Modality",
-    link: "#04",
+    link: "subnet-4",
   },
   {
     label: "05 : Image Generation",
-    link: "#05",
+    link: "subnet-5",
   },
   {
     label: "06 : Unknown",
-    link: "#06",
+    link: "subnet-6",
   },
   {
     label: "07 : Storage",
-    link: "#07",
+    link: "subnet-7",
   },
   {
     label: "08 : Time Series Prediction",
-    link: "#08",
+    link: "subnet-8",
   },
   {
     label: "09 : Pretraining",
-    link: "#09",
+    link: "subnet-9",
   },
   {
     label: "10 : Map Reduce",
-    link: "#10",
+    link: "subnet-10",
   },
 
   {
     label: "11 : Text Training",
-    link: "#11",
+    link: "subnet-11",
   },
   {
     label: "12 : Unknown",
-    link: "#12",
+    link: "subnet-12",
   },
   {
     label: "13 : Dataverse",
-    link: "#13",
+    link: "subnet-13",
   },
   {
     label: "14 : LLM Defender",
-    link: "#14",
+    link: "subnet-14",
   },
   {
     label: "15 : Blockchain Insights",
-    link: "#15",
+    link: "subnet-15",
   },
   {
     label: "16 : Audio",
-    link: "#16",
+    link: "subnet-16",
   },
   {
     label: "17 : Petal",
-    link: "#17",
+    link: "subnet-17",
   },
   {
     label: "18 : Cortex.t",
-    link: "#18",
+    link: "subnet-18",
   },
   {
     label: "19 : Vision",
-    link: "#19",
+    link: "subnet-19",
   },
   {
     label: "20 : Unknown",
-    link: "#20",
+    link: "subnet-20",
   },
   {
     label: "21 : Filetao",
-    link: "#21",
+    link: "subnet-21",
   },
 
   {
     label: "22 : Unknown",
-    link: "#22",
+    link: "subnet-22",
   },
   {
     label: "23 : Prime-Net",
-    link: "#23",
+    link: "subnet-23",
   },
   {
     label: "24 : Unknown",
-    link: "#24",
+    link: "subnet-24",
   },
   {
     label: "25 : Bitcurrent",
-    link: "#25",
+    link: "subnet-25",
   },
   {
     label: "26 : Image Alchemy",
-    link: "#26",
+    link: "subnet-26",
   },
   {
     label: "27 : Compute",
-    link: "#27",
+    link: "subnet-27",
   },
   {
     label: "28 : ZK Tensor",
-    link: "#17",
+    link: "subnet-28",
   },
   {
     label: "29 : 3D Gen",
-    link: "#29",
+    link: "subnet-29",
   },
   {
     label: "30 : Lovelace",
-    link: "#30",
+    link: "subnet-30",
   },
   {
     label: "31 : Game of Life",
-    link: "#31",
+    link: "subnet-31",
   },
   {
     label: "32 : Roleplay",
-    link: "#32",
+    link: "subnet-32",
   },
 ];
 
