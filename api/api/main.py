@@ -6,7 +6,9 @@ import uvicorn
 import bittensor
 from CacheToolsUtils import cachetools, cached
 from .utils import calculateTrust, calculateRank, calculateEmission, calculateConsensus
+from requests import get
 
+BaseMEXCEndpoint = "https://api.mexc.com"
 app = FastAPI()
 cache = cachetools.TTLCache(
     maxsize=33, ttl=10 * 60
@@ -135,6 +137,13 @@ def vitals():
     )
     vitals = df.to_dict(orient="records")
     return vitals
+
+
+@app.get("/stats")
+@cached(cache=cache)
+def currentTaoPrice():
+    stats = get(f"{BaseMEXCEndpoint}/api/v3/ticker/24hr", params={"symbol": "TAOUSDT"}).json()
+    return stats
 
 
 def start():
