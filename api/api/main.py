@@ -6,7 +6,7 @@ import uvicorn
 import bittensor
 from CacheToolsUtils import cachetools, cached
 from .utils import calculateTrust, calculateRank, calculateEmission, calculateConsensus
-import requests
+from requests import get
 
 BaseMEXCEndpoint = "https://api.mexc.com"
 app = FastAPI()
@@ -143,7 +143,7 @@ def vitals():
 @cached(cache=cache)
 def currentTaoPrice():
     output = {}
-    price = requests.get(
+    price = get(
         f"{BaseMEXCEndpoint}/api/v3/ticker/price", params={"symbol": "TAOUSDT"}
     )
 
