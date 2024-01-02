@@ -142,11 +142,8 @@ def vitals():
 @app.get("/stats")
 @cached(cache=cache)
 def currentTaoPrice():
-    output = {}
-    price = get(f"{BaseMEXCEndpoint}/api/v3/ticker/price", params={"symbol": "TAOUSDT"})
-
-    output["price"] = price.json()
-    return output
+    stats = get(f"{BaseMEXCEndpoint}/api/v3/ticker/24hr", params={"symbol": "TAOUSDT"}).json()
+    return stats
 
 
 def start():
