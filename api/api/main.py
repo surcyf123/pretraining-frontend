@@ -5,7 +5,13 @@ from pandas import DataFrame, concat
 import uvicorn
 import bittensor
 from CacheToolsUtils import cachetools, cached
-from .utils import calculateTrust, calculateRank, calculateEmission, calculateConsensus
+from .utils import (
+    calculateTrust,
+    calculateRank,
+    calculateEmission,
+    calculateConsensus,
+    fetchRuns,
+)
 from requests import get
 
 BaseMEXCEndpoint = "https://api.mexc.com"
@@ -24,7 +30,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 metagraphs: Dict[int, bittensor.metagraph] = dict()
 
 
@@ -174,6 +179,14 @@ def taoAveragePrice():
         params={"symbol": "TAOUSDT", "interval": "1m"},
     ).json()
     return stats
+
+
+@app.get("/wandb/latest")
+def wanbData():
+    runs = fetchRuns()
+    # TODO: add logic to filter data
+    print(runs)
+    return None
 
 
 def start():
