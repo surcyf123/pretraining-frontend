@@ -142,26 +142,39 @@ def vitals():
 @app.get("/tao/price-change-stats")
 @cached(cache=cache)
 def taoPriceChangeStats():
-    stats = get(f"{BaseMEXCEndpoint}/api/v3/ticker/24hr", params={"symbol": "TAOUSDT"}).json()
+    stats = get(
+        f"{BaseMEXCEndpoint}/api/v3/ticker/24hr", params={"symbol": "TAOUSDT"}
+    ).json()
     return stats
+
 
 @app.get("/tao/price")
 # @cached(cache=cache)
 def taoTickerPrice():
-    stats = get(f"{BaseMEXCEndpoint}/api/v3/ticker/price", params={"symbol": "TAOUSDT"}).json()
-    return stats    
+    stats = get(
+        f"{BaseMEXCEndpoint}/api/v3/ticker/price", params={"symbol": "TAOUSDT"}
+    ).json()
+    return stats
+
 
 @app.get("/tao/average-price")
 # @cached(cache=cache)
 def taoAveragePrice():
-    stats = get(f"{BaseMEXCEndpoint}/api/v3/avgPrice", params={"symbol": "TAOUSDT"}).json()
-    return stats 
+    stats = get(
+        f"{BaseMEXCEndpoint}/api/v3/avgPrice", params={"symbol": "TAOUSDT"}
+    ).json()
+    return stats
+
 
 @app.get("/tao/candlestick")
 # @cached(cache=cache)
 def taoAveragePrice():
-    stats = get(f"{BaseMEXCEndpoint}/api/v3/klines", params={"symbol": "TAOUSDT", "interval": "1m"}).json()
-    return stats 
+    stats = get(
+        f"{BaseMEXCEndpoint}/api/v3/klines",
+        params={"symbol": "TAOUSDT", "interval": "1m"},
+    ).json()
+    return stats
+
 
 def start():
     uvicorn.run(
