@@ -199,8 +199,8 @@ def wanbData():
                         convertedData.append(loads(ele))
                     else:
                         convertedData.append(ele)
-        else:
-            convertedData = originalFormatJsonData
+            else:
+                convertedData = originalFormatJsonData
         output[run.name] = convertedData
     return output
 
