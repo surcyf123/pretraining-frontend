@@ -12,6 +12,7 @@ import {
   Box,
 } from "@mantine/core";
 import { IconClipboardCheck, IconClipboardCopy } from "@tabler/icons-react";
+import { useQuery } from "@tanstack/react-query";
 import {
   createColumnHelper,
   flexRender,
@@ -22,17 +23,19 @@ import {
 } from "@tanstack/react-table";
 import { range } from "d3-array";
 import { useMemo, useState } from "react";
+import { fetchValidators } from "../../api";
 import { getSortingIcon } from "../utils";
-import type { Validator } from "./utils";
+import type { Validator } from "../../api";
 import type { SelectProps, PaginationProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 
-export interface ValidatorTableProps {
-  data: Validator[];
-  loading?: boolean;
-}
+export function ValidatorTable(): JSX.Element {
+  const { data: validators, isLoading } = useQuery({
+    queryKey: ["validators"],
+    queryFn: fetchValidators,
+    refetchInterval: 10 * 60 * 1000,
+  });
 
-export function ValidatorTable({ data, loading }: ValidatorTableProps): JSX.Element {
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -53,7 +56,7 @@ export function ValidatorTable({ data, loading }: ValidatorTableProps): JSX.Elem
         id: "UID",
       }),
       columnHelper.accessor((row) => row.stake, {
-        cell: (info) => info.getValue().toFixed(4),
+        cell: (info) => info.getValue(),
         id: "Stake",
       }),
       columnHelper.accessor((row) => row.hotkey, {
@@ -112,7 +115,7 @@ export function ValidatorTable({ data, loading }: ValidatorTableProps): JSX.Elem
 
   const table = useReactTable({
     state: { sorting, pagination: { pageIndex, pageSize } },
-    data,
+    data: validators ?? [],
     columns,
     onPaginationChange: setPagination,
     onSortingChange: setSorting,
@@ -133,7 +136,7 @@ export function ValidatorTable({ data, loading }: ValidatorTableProps): JSX.Elem
   };
 
   return (
-    <Skeleton visible={loading ?? false}>
+    <Skeleton visible={isLoading}>
       <Stack>
         <Box
           style={{

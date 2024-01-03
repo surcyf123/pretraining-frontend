@@ -3,7 +3,6 @@ import { Heatmap } from "../../charts/Heatmap";
 import { HeatmapData } from "../../charts/Heatmap/data";
 import { TaoStats } from "../../components/TaoStats";
 import { ValidatorTable } from "../../components/ValidatorTable";
-import { Validators } from "../../components/ValidatorTable/utils";
 import { VitalsTable } from "../../components/VitalsTable";
 
 export function General(): JSX.Element {
@@ -13,7 +12,7 @@ export function General(): JSX.Element {
       <TaoStats />
       <Divider />
       <Title order={4}>Subnet Details</Title>
-      <ValidatorTable data={Validators} />
+      <ValidatorTable />
       <Title order={4}>Subnet Emissions</Title>
       <VitalsTable />
       <Title order={4}>Subnet Weights</Title>
