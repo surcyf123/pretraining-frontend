@@ -28,6 +28,16 @@ export interface Vitals {
   label: string;
 }
 
+// eslint-disable-next-line import/no-unused-modules
+export interface Validator {
+  uid: number;
+  stake: number;
+  hotkey: string;
+  coldkey: string;
+  address: string;
+  [key: string]: string | number;
+}
+
 // Currently everytime the ec2 instance re-starts we need to update the url here.
 // TODO: Fix issue by creating a load balancer.
 const BaseURL = "http://ec2-100-25-150-233.compute-1.amazonaws.com:8000";
@@ -87,4 +97,11 @@ export async function fetchSubnetVitals(): Promise<Vitals[]> {
   const rawResponse = await fetch(`${BaseURL}/vitals`);
   const vitals = (await rawResponse.json()) as Vitals[];
   return vitals;
+}
+
+// eslint-disable-next-line import/no-unused-modules
+export async function fetchValidators(): Promise<Validator[]> {
+  const rawResponse = await fetch(`${BaseURL}/validators`);
+  const validators = (await rawResponse.json()) as Validator[];
+  return validators;
 }
