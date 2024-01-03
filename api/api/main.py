@@ -71,7 +71,7 @@ def neurons(netuid: int = 0):
 
 
 @app.get("/validators")
-@cached(cache=cache)
+# @cached(cache=cache)
 def validators():
     metagraph = bittensor.metagraph(0, lite=False, network="local", sync=True)
     records = {
@@ -123,7 +123,7 @@ def average_validator_trust(netuid: int = 0):
 
 
 @app.get("/vitals")
-@cached(cache=cache)
+# @cached(cache=cache) TODO: Fix caching
 def vitals():
     subnetLabels = getSubnetLabels()
     metagraph = bittensor.metagraph(0, lite=False, network="local", sync=True)
@@ -157,7 +157,7 @@ def taoPriceChangeStats():
 
 
 @app.get("/tao/price")
-# @cached(cache=cache)
+@cached(cache=cache)
 def taoTickerPrice():
     stats = get(
         f"{BaseMEXCEndpoint}/api/v3/ticker/price", params={"symbol": "TAOUSDT"}
@@ -166,7 +166,7 @@ def taoTickerPrice():
 
 
 @app.get("/tao/average-price")
-# @cached(cache=cache)
+@cached(cache=cache)
 def taoAveragePrice():
     stats = get(
         f"{BaseMEXCEndpoint}/api/v3/avgPrice", params={"symbol": "TAOUSDT"}
@@ -175,7 +175,7 @@ def taoAveragePrice():
 
 
 @app.get("/tao/candlestick")
-# @cached(cache=cache)
+@cached(cache=cache)
 def taoAveragePrice():
     stats = get(
         f"{BaseMEXCEndpoint}/api/v3/klines",
