@@ -10,7 +10,7 @@ from .utils import (
     calculateRank,
     calculateEmission,
     calculateConsensus,
-    subnetDictionary,
+    getSubnetLabels,
 )
 from requests import get
 
@@ -125,7 +125,7 @@ def average_validator_trust(netuid: int = 0):
 @app.get("/vitals")
 @cached(cache=cache)
 def vitals():
-    subnetInfo = subnetDictionary()
+    subnetLabels = getSubnetLabels()
     metagraph = bittensor.metagraph(0, lite=False, network="local", sync=True)
     weights = metagraph.W.float()
     normalizedStake = (metagraph.S / metagraph.S.sum()).clone().float()
@@ -141,8 +141,8 @@ def vitals():
             "emission": emission.tolist(),
         }
     )
-    df["netUID"] = subnetInfo.keys()
-    df["label"] = subnetInfo.values()
+    df["netUID"] = subnetLabels.keys()
+    df["label"] = subnetLabels.values()
     vitals = df.to_dict(orient="records")
     return vitals
 

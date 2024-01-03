@@ -28,7 +28,7 @@ def calculateEmission(consensus: FloatTensor, rank: FloatTensor) -> FloatTensor:
     return emission / emission.sum()
 
 
-def subnetDictionary():
+def getSubnetLabels():
     return {
         "00": "Root",
         "01": "Text Prompting",
