@@ -29,3 +29,4 @@ amplifytools.xcconfig
 #amplify-do-not-edit-end
 
 __pycache__
+.env
