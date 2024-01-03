@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Dict
-from pandas import DataFrame, concat,Series
+from pandas import DataFrame, concat, Series
 import uvicorn
 import bittensor
 from CacheToolsUtils import cachetools, cached
@@ -184,25 +184,26 @@ def taoAveragePrice():
 
 @app.get("/wandb/latest")
 def wanbData():
-    output={}
+    output = {}
     runs = fetchRuns()
     # TODO: add logic to filter data
     for run in runs:
         runHistory = run.history()
-        if 'original_format_json' in runHistory.columns:
-            originalFormatJsonData = runHistory['original_format_json']
-            if (isinstance(originalFormatJsonData, Series)):
+        if "original_format_json" in runHistory.columns:
+            originalFormatJsonData = runHistory["original_format_json"]
+            if isinstance(originalFormatJsonData, Series):
                 convertedData = []
                 targetList = originalFormatJsonData.to_list()
                 for ele in targetList:
                     if isinstance(ele, str):
                         convertedData.append(loads(ele))
-                    else:    
+                    else:
                         convertedData.append(ele)
         else:
             convertedData = originalFormatJsonData
-        output[run.name] = convertedData       
+        output[run.name] = convertedData
     return output
+
 
 def start():
     uvicorn.run(
@@ -212,4 +213,3 @@ def start():
 
 def serve():
     uvicorn.run("api.main:app", host="0.0.0.0", port=8000)
-
