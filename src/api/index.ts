@@ -19,6 +19,20 @@ interface TaoStatistics {
   last_updated: string;
 }
 
+// eslint-disable-next-line import/no-unused-modules
+export interface Vital {
+  trust: number;
+  rank: number;
+  consensus: number;
+  emission: number;
+  netUID: string;
+  label: string;
+}
+
+// Currently everytime the ec2 instance re-starts we need to update the url here.
+// TODO: Fix issue by creating a load balancer.
+const BaseURL = "http://ec2-100-25-150-233.compute-1.amazonaws.com:8000";
+
 export interface MetagraphMetadata {
   netuid: number;
   n: number;
@@ -43,7 +57,6 @@ export async function fetchLineChartData(fileName: string): Promise<HistoryData[
   return json;
 }
 
-// eslint-disable-next-line import/no-unused-modules
 export async function fetchMetagraphData(): Promise<{
   metadata: MetagraphMetadata;
   neuronData: NeuronDetails[];
@@ -65,9 +78,15 @@ export async function fetchMetagraphData(): Promise<{
   };
 }
 
-// eslint-disable-next-line import/no-unused-modules
 export async function fetchTaoStatistics(): Promise<TaoStatistics> {
   const rawResponse = await fetch("https://taostats.io/data.json");
   const [response] = (await rawResponse.json()) as [TaoStatistics];
   return response;
+}
+
+// eslint-disable-next-line import/no-unused-modules
+export async function fetchSubnetVitals(): Promise<Vital[]> {
+  const rawResponse = await fetch(`${BaseURL}/vitals`);
+  const vitals = (await rawResponse.json()) as Vital[];
+  return vitals;
 }
