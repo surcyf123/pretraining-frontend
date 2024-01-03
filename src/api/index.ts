@@ -19,8 +19,7 @@ interface TaoStatistics {
   last_updated: string;
 }
 
-// eslint-disable-next-line import/no-unused-modules
-export interface Vital {
+export interface Vitals {
   trust: number;
   rank: number;
   consensus: number;
@@ -84,9 +83,8 @@ export async function fetchTaoStatistics(): Promise<TaoStatistics> {
   return response;
 }
 
-// eslint-disable-next-line import/no-unused-modules
-export async function fetchSubnetVitals(): Promise<Vital[]> {
+export async function fetchSubnetVitals(): Promise<Vitals[]> {
   const rawResponse = await fetch(`${BaseURL}/vitals`);
-  const vitals = (await rawResponse.json()) as Vital[];
+  const vitals = (await rawResponse.json()) as Vitals[];
   return vitals;
 }

@@ -5,7 +5,6 @@ import { TaoStats } from "../../components/TaoStats";
 import { ValidatorTable } from "../../components/ValidatorTable";
 import { Validators } from "../../components/ValidatorTable/utils";
 import { VitalsTable } from "../../components/VitalsTable";
-import { VitalsData } from "../../components/VitalsTable/utils";
 
 export function General(): JSX.Element {
   const { colorScheme } = useMantineColorScheme();
@@ -16,7 +15,7 @@ export function General(): JSX.Element {
       <Title order={4}>Subnet Details</Title>
       <ValidatorTable data={Validators} />
       <Title order={4}>Subnet Emissions</Title>
-      <VitalsTable data={VitalsData} />
+      <VitalsTable />
       <Title order={4}>Subnet Weights</Title>
       <Card shadow="md">
         <Heatmap
