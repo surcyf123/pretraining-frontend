@@ -55,3 +55,10 @@ cd ~/
 poetry install
 nohup poetry run serve &  # run poetry in deattached
 ```
+
+## Enviroment variables configuration
+- To add enviroment variables create a .env file at the root of python project
+
+```
+WANDB_API_KEY=<YOUR WANDB API KEY>
+```
