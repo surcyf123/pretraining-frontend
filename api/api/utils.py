@@ -26,3 +26,41 @@ def calculateConsensus(
 def calculateEmission(consensus: FloatTensor, rank: FloatTensor) -> FloatTensor:
     emission = consensus * rank
     return emission / emission.sum()
+
+
+def getSubnetLabels():
+    return {
+        "00": "Root",
+        "01": "Text Prompting",
+        "02": "Machine Transation",
+        "03": "Data Scraping",
+        "04": "Multi Modality",
+        "05": "Image Generation",
+        "06": "Unknown",
+        "07": "Storage",
+        "08": "Time Series Prediction",
+        "09": "Pretraining",
+        "10": "Map Reduce",
+        "11": "Text Training",
+        "12": "Unknown",
+        "13": "Dataverse",
+        "14": "LLM Defender",
+        "15": "Blockchain Insights",
+        "16": "Audio",
+        "17": "Petal",
+        "18": "Cortex.t",
+        "19": "Vision",
+        "20": "Unknown",
+        "21": "Filetao",
+        "22": "Unknown",
+        "23": "Prime-Net",
+        "24": "Unknown",
+        "25": "Bitcurrent",
+        "26": "Image Alchemy",
+        "27": "Compute",
+        "28": "ZK Tensor",
+        "29": "3D Gen",
+        "30": "Lovelace",
+        "31": "Game of Life",
+        "32": "Roleplay",
+    }

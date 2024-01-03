@@ -5,7 +5,13 @@ from pandas import DataFrame, concat
 import uvicorn
 import bittensor
 from CacheToolsUtils import cachetools, cached
-from .utils import calculateTrust, calculateRank, calculateEmission, calculateConsensus
+from .utils import (
+    calculateTrust,
+    calculateRank,
+    calculateEmission,
+    calculateConsensus,
+    getSubnetLabels,
+)
 from requests import get
 
 BaseMEXCEndpoint = "https://api.mexc.com"
@@ -119,10 +125,10 @@ def average_validator_trust(netuid: int = 0):
 @app.get("/vitals")
 @cached(cache=cache)
 def vitals():
+    subnetLabels = getSubnetLabels()
     metagraph = bittensor.metagraph(0, lite=False, network="local", sync=True)
     weights = metagraph.W.float()
     normalizedStake = (metagraph.S / metagraph.S.sum()).clone().float()
-
     trust = calculateTrust(weights, normalizedStake)
     rank = calculateRank(weights, normalizedStake)
     consensus = calculateConsensus(trust)
@@ -135,6 +141,8 @@ def vitals():
             "emission": emission.tolist(),
         }
     )
+    df["netUID"] = subnetLabels.keys()
+    df["label"] = subnetLabels.values()
     vitals = df.to_dict(orient="records")
     return vitals
 
