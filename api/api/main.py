@@ -5,7 +5,13 @@ from pandas import DataFrame, concat
 import uvicorn
 import bittensor
 from CacheToolsUtils import cachetools, cached
-from .utils import calculateTrust, calculateRank, calculateEmission, calculateConsensus,vitalLabels
+from .utils import (
+    calculateTrust,
+    calculateRank,
+    calculateEmission,
+    calculateConsensus,
+    vitalLabels,
+)
 from requests import get
 
 BaseMEXCEndpoint = "https://api.mexc.com"
@@ -135,8 +141,8 @@ def vitals():
             "emission": emission.tolist(),
         }
     )
-    df["netUID"]=vitalsDictionary.keys()
-    df["labels"]=vitalsDictionary.values()
+    df["netUID"] = vitalsDictionary.keys()
+    df["labels"] = vitalsDictionary.values()
     vitals = df.to_dict(orient="records")
     return vitals
 
