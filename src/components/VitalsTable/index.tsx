@@ -21,13 +21,13 @@ import {
 import { useMemo, useState } from "react";
 import { fetchSubnetVitals } from "../../api";
 import { getSortingIcon } from "../utils";
-import type { Vital } from "../../api";
+import type { Vitals } from "../../api";
 import type { SelectProps, PaginationProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 
 export function VitalsTable(): JSX.Element {
   const { data: vitals, isLoading } = useQuery({
-    queryKey: ["subnetVitals"],
+    queryKey: ["vitals"],
     queryFn: fetchSubnetVitals,
     refetchInterval: 10 * 60 * 1000,
   });
@@ -45,7 +45,7 @@ export function VitalsTable(): JSX.Element {
   ]);
 
   const columns = useMemo(() => {
-    const columnHelper = createColumnHelper<Vital>();
+    const columnHelper = createColumnHelper<Vitals>();
     return [
       columnHelper.accessor((row) => row.netUID, {
         cell: (info) => info.getValue(),
