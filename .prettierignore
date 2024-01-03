@@ -10,3 +10,4 @@ dist
 storybook-static
 multi.json
 amplify
+.venv

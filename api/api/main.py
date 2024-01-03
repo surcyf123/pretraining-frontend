@@ -1,37 +1,55 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Dict
-from pandas import DataFrame
+from pandas import DataFrame, concat
 import uvicorn
 import bittensor
+from CacheToolsUtils import cachetools, cached
+from .utils import (
+    calculateTrust,
+    calculateRank,
+    calculateEmission,
+    calculateConsensus,
+    getSubnetLabels,
+)
+from requests import get
 
+BaseMEXCEndpoint = "https://api.mexc.com"
 app = FastAPI()
-origins = ["http://localhost", "https://www.openpretrain.ai"] # Why? https://fastapi.tiangolo.com/tutorial/cors/
-app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"],)
+cache = cachetools.TTLCache(
+    maxsize=33, ttl=10 * 60
+)  # ttl in seconds; maxsize is number of items
+origins = [
+    "http://localhost:8080",
+    "https://www.openpretrain.ai",
+]  # Why? https://fastapi.tiangolo.com/tutorial/cors/
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 metagraphs: Dict[int, bittensor.metagraph] = dict()
 
-def get_from_cache(netuid: int = 0):
-    metagraph = metagraphs.get(netuid)
-    if metagraph is None:
-        metagraph = bittensor.metagraph(netuid, lite=False, network='local')
-        metagraphs[netuid] = metagraph
-    else:
-        metagraph.sync()
-    return metagraph
 
 @app.get("/")
 def root():
     return {"Hello": "Bittensor"}
 
+
 @app.get("/metadata/{netuid}")
+@cached(cache=cache)
 def metadata(netuid: int = 0):
-    metagraph = get_from_cache(netuid)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
     return metagraph.metadata()
 
+
 @app.get("/neurons/{netuid}")
+@cached(cache=cache)
 def neurons(netuid: int = 0):
-    metagraph = get_from_cache(netuid)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
     records = {
         "uid": metagraph.uids.tolist(),
         "stake": metagraph.S.tolist(),
@@ -44,26 +62,56 @@ def neurons(netuid: int = 0):
         "dividends": metagraph.D.tolist(),
         "hotkey": metagraph.hotkeys,
         "coldkey": metagraph.coldkeys,
-        "address": metagraph.addresses
+        "address": metagraph.addresses,
     }
     df = DataFrame(records)
-    df['rewards'] = df['emission'].apply(lambda x: x * 72 / 1000000000)
-    output = df.to_dict(orient="records") # transform data to array of records
+    df["rewards"] = df["emission"].apply(lambda x: x * 72 / 1000000000)
+    output = df.to_dict(orient="records")  # transform data to array of records
     return output
 
+
+@app.get("/validators")
+@cached(cache=cache)
+def validators():
+    metagraph = bittensor.metagraph(0, lite=False, network="local", sync=True)
+    records = {
+        "uid": metagraph.uids.tolist(),
+        "stake": metagraph.S.tolist(),
+        "hotkey": metagraph.hotkeys,
+        "coldkey": metagraph.coldkeys,
+        "address": metagraph.addresses,
+    }
+    records_df = DataFrame(records)
+    weights_df = DataFrame(metagraph.W.tolist())
+    df = concat([records_df, weights_df], axis=1)
+    output = df.to_dict(orient="records")  # transform data to array of records
+    return output
+
+
 @app.get("/weights/{netuid}")
+@cached(cache=cache)
 def weights(netuid: int = 0):
-    metagraph = get_from_cache(netuid)
-    return metagraph.W.tolist()    
+    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
+    weight_matrix = metagraph.W.tolist()
+    formatted_weight_matrix = [
+        {"validatorID": v_id, "weight": weight, "minerID": m_id}
+        for v_id, miners in enumerate(weight_matrix)
+        for m_id, weight in enumerate(miners)
+    ]
+    return formatted_weight_matrix
+
 
 @app.get("/bonds/{netuid}")
+@cached(cache=cache)
 def bonds(netuid: int = 0):
-    metagraph = get_from_cache(netuid)
-    return metagraph.B.tolist()    
+    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
+    return metagraph.B.tolist()
+
 
 @app.get("/average-validator-trust/{netuid}")
+@cached(cache=cache)
 def average_validator_trust(netuid: int = 0):
-    metagraph = get_from_cache(netuid)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
     records = {
         "stake": metagraph.S.tolist(),
         "validatorTrust": metagraph.Tv.tolist(),
@@ -73,8 +121,74 @@ def average_validator_trust(netuid: int = 0):
     average = filtered_df["validatorTrust"].mean()
     return average
 
+
+@app.get("/vitals")
+@cached(cache=cache)
+def vitals():
+    subnetLabels = getSubnetLabels()
+    metagraph = bittensor.metagraph(0, lite=False, network="local", sync=True)
+    weights = metagraph.W.float()
+    normalizedStake = (metagraph.S / metagraph.S.sum()).clone().float()
+    trust = calculateTrust(weights, normalizedStake)
+    rank = calculateRank(weights, normalizedStake)
+    consensus = calculateConsensus(trust)
+    emission = calculateEmission(consensus, rank)
+    df = DataFrame(
+        {
+            "trust": trust.tolist(),
+            "rank": rank.tolist(),
+            "consensus": consensus.tolist(),
+            "emission": emission.tolist(),
+        }
+    )
+    df["netUID"] = subnetLabels.keys()
+    df["label"] = subnetLabels.values()
+    vitals = df.to_dict(orient="records")
+    return vitals
+
+
+@app.get("/tao/price-change-stats")
+@cached(cache=cache)
+def taoPriceChangeStats():
+    stats = get(
+        f"{BaseMEXCEndpoint}/api/v3/ticker/24hr", params={"symbol": "TAOUSDT"}
+    ).json()
+    return stats
+
+
+@app.get("/tao/price")
+# @cached(cache=cache)
+def taoTickerPrice():
+    stats = get(
+        f"{BaseMEXCEndpoint}/api/v3/ticker/price", params={"symbol": "TAOUSDT"}
+    ).json()
+    return stats
+
+
+@app.get("/tao/average-price")
+# @cached(cache=cache)
+def taoAveragePrice():
+    stats = get(
+        f"{BaseMEXCEndpoint}/api/v3/avgPrice", params={"symbol": "TAOUSDT"}
+    ).json()
+    return stats
+
+
+@app.get("/tao/candlestick")
+# @cached(cache=cache)
+def taoAveragePrice():
+    stats = get(
+        f"{BaseMEXCEndpoint}/api/v3/klines",
+        params={"symbol": "TAOUSDT", "interval": "1m"},
+    ).json()
+    return stats
+
+
 def start():
-    uvicorn.run("api.main:app", host="0.0.0.0", port=8000, reload=True, loop="asyncio") # Ref: Why asyncio loop? https://youtrack.jetbrains.com/issue/PY-57332
+    uvicorn.run(
+        "api.main:app", host="0.0.0.0", port=8000, reload=True, loop="asyncio"
+    )  # Ref: Why asyncio loop? https://youtrack.jetbrains.com/issue/PY-57332
+
 
 def serve():
-    uvicorn.run("api.main:app", host="0.0.0.0", port=8000)          
+    uvicorn.run("api.main:app", host="0.0.0.0", port=8000)
