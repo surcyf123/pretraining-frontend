@@ -189,10 +189,10 @@ def wanbData():
     # TODO: add logic to filter data
     for run in runs:
         runHistory = run.history()
+        convertedData = []
         if "original_format_json" in runHistory.columns:
             originalFormatJsonData = runHistory["original_format_json"]
             if isinstance(originalFormatJsonData, Series):
-                convertedData = []
                 targetList = originalFormatJsonData.to_list()
                 for ele in targetList:
                     if isinstance(ele, str):
