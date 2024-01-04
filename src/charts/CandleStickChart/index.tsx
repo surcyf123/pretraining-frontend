@@ -99,6 +99,7 @@ export function CandleStickChart({
           axisLine: { show: true },
           scale: true,
         },
+        // TODO: add series and dataset
       };
       chart?.setOption(option, true);
     }
