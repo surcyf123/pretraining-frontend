@@ -7,6 +7,8 @@ export default {
   args: {
     style: { height: "100vh" },
     title: "Candle Stick",
+    xAxis: "time",
+    yAxis: "data",
   },
 } as Meta<typeof CandleStickChart>;
 
