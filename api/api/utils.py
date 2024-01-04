@@ -1,4 +1,5 @@
 from torch import sigmoid, FloatTensor
+from subprocess import run,PIPE
 
 
 # Ref: https://docs.bittensor.com/emissions#trust
@@ -64,3 +65,8 @@ def getSubnetLabels():
         "31": "Game of Life",
         "32": "Roleplay",
     }
+
+def getDelegates():
+    # Ref: https://stackabuse.com/executing-shell-commands-with-python
+    output = run(["btcli", "r","list_delegates"],stdout=PIPE,text=True)
+    return output.stdout

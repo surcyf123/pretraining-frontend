@@ -11,6 +11,7 @@ from .utils import (
     calculateEmission,
     calculateConsensus,
     getSubnetLabels,
+    getDelegates
 )
 from requests import get
 
@@ -183,6 +184,11 @@ def taoAveragePrice():
     ).json()
     return stats
 
+@app.get("/delegates")
+def delegates():
+    delegates = getDelegates()  
+    # TODO: add formatting to json
+    return delegates
 
 def start():
     uvicorn.run(
