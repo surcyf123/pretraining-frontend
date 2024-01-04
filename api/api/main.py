@@ -42,14 +42,14 @@ def root():
 @app.get("/metadata/{netuid}")
 @cached(cache=cache)
 def metadata(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
     return metagraph.metadata()
 
 
 @app.get("/neurons/{netuid}")
 @cached(cache=cache)
 def neurons(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
     records = {
         "uid": metagraph.uids.tolist(),
         "stake": metagraph.S.tolist(),
@@ -73,7 +73,7 @@ def neurons(netuid: int = 0):
 @app.get("/validators")
 # @cached(cache=cache)
 def validators():
-    metagraph = bittensor.metagraph(0, lite=False, network="local", sync=True)
+    metagraph = bittensor.metagraph(0, lite=False, network="finney", sync=True)
     records = {
         "uid": metagraph.uids.tolist(),
         "stake": metagraph.S.tolist(),
@@ -91,7 +91,7 @@ def validators():
 @app.get("/weights/{netuid}")
 @cached(cache=cache)
 def weights(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
     weight_matrix = metagraph.W.tolist()
     formatted_weight_matrix = [
         {"validatorID": v_id, "weight": weight, "minerID": m_id}
@@ -104,14 +104,14 @@ def weights(netuid: int = 0):
 @app.get("/bonds/{netuid}")
 @cached(cache=cache)
 def bonds(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
     return metagraph.B.tolist()
 
 
 @app.get("/average-validator-trust/{netuid}")
 @cached(cache=cache)
 def average_validator_trust(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
     records = {
         "stake": metagraph.S.tolist(),
         "validatorTrust": metagraph.Tv.tolist(),
@@ -126,7 +126,7 @@ def average_validator_trust(netuid: int = 0):
 # @cached(cache=cache) TODO: Fix caching
 def vitals():
     subnetLabels = getSubnetLabels()
-    metagraph = bittensor.metagraph(0, lite=False, network="local", sync=True)
+    metagraph = bittensor.metagraph(0, lite=False, network="finney", sync=True)
     weights = metagraph.W.float()
     normalizedStake = (metagraph.S / metagraph.S.sum()).clone().float()
     trust = calculateTrust(weights, normalizedStake)
