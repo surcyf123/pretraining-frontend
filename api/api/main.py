@@ -37,18 +37,14 @@ def root():
 
 
 @app.get("/metadata/{netuid}")
-@cached(cache=cachetools.TTLCache(
-    maxsize=33, ttl=10 * 60
-))
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def metadata(netuid: int = 0):
     metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
     return metagraph.metadata()
 
 
 @app.get("/neurons/{netuid}")
-@cached(cache=cachetools.TTLCache(
-    maxsize=33, ttl=10 * 60
-))
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def neurons(netuid: int = 0):
     metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
     records = {
@@ -72,9 +68,7 @@ def neurons(netuid: int = 0):
 
 
 @app.get("/validators")
-@cached(cache=cachetools.TTLCache(
-    maxsize=33, ttl=10 * 60
-))
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def validators():
     metagraph = bittensor.metagraph(0, lite=False, network="finney", sync=True)
     records = {
@@ -92,9 +86,7 @@ def validators():
 
 
 @app.get("/weights/{netuid}")
-@cached(cache=cachetools.TTLCache(
-    maxsize=33, ttl=10 * 60
-))
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def weights(netuid: int = 0):
     metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
     weight_matrix = metagraph.W.tolist()
@@ -107,18 +99,14 @@ def weights(netuid: int = 0):
 
 
 @app.get("/bonds/{netuid}")
-@cached(cache=cachetools.TTLCache(
-    maxsize=33, ttl=10 * 60
-))
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def bonds(netuid: int = 0):
     metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
     return metagraph.B.tolist()
 
 
 @app.get("/average-validator-trust/{netuid}")
-@cached(cache=cachetools.TTLCache(
-    maxsize=33, ttl=10 * 60
-))
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def average_validator_trust(netuid: int = 0):
     metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
     records = {
@@ -132,9 +120,7 @@ def average_validator_trust(netuid: int = 0):
 
 
 @app.get("/vitals")
-@cached(cache=cachetools.TTLCache(
-    maxsize=33, ttl=10 * 60
-))
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def vitals():
     subnetLabels = getSubnetLabels()
     metagraph = bittensor.metagraph(0, lite=False, network="finney", sync=True)
@@ -159,9 +145,7 @@ def vitals():
 
 
 @app.get("/tao/price-change-stats")
-@cached(cache=cachetools.TTLCache(
-    maxsize=33, ttl=10 * 60
-))
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def taoPriceChangeStats():
     stats = get(
         f"{BaseMEXCEndpoint}/api/v3/ticker/24hr", params={"symbol": "TAOUSDT"}
@@ -170,9 +154,7 @@ def taoPriceChangeStats():
 
 
 @app.get("/tao/price")
-@cached(cache=cachetools.TTLCache(
-    maxsize=33, ttl=10 * 60
-))
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def taoTickerPrice():
     stats = get(
         f"{BaseMEXCEndpoint}/api/v3/ticker/price", params={"symbol": "TAOUSDT"}
@@ -181,9 +163,7 @@ def taoTickerPrice():
 
 
 @app.get("/tao/average-price")
-@cached(cache=cachetools.TTLCache(
-    maxsize=33, ttl=10 * 60
-))
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def taoAveragePrice():
     stats = get(
         f"{BaseMEXCEndpoint}/api/v3/avgPrice", params={"symbol": "TAOUSDT"}
@@ -192,9 +172,7 @@ def taoAveragePrice():
 
 
 @app.get("/tao/candlestick")
-@cached(cache=cachetools.TTLCache(
-    maxsize=33, ttl=10 * 60
-))
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def taoAveragePrice():
     stats = get(
         f"{BaseMEXCEndpoint}/api/v3/klines",
