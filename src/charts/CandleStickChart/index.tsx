@@ -18,6 +18,10 @@ export interface CandleStickChartProps {
   loading?: boolean;
   theme?: "light" | "dark";
   title?: string;
+  xAxisTitle?: string;
+  xAxis: string;
+  yAxisTitle?: string;
+  yAxis: string;
 }
 
 type CandleStickChartOptions = ComposeOption<
@@ -29,6 +33,10 @@ export function CandleStickChart({
   loading,
   theme,
   title,
+  xAxis,
+  xAxisTitle,
+  yAxis,
+  yAxisTitle,
 }: CandleStickChartProps): JSX.Element {
   const chartRef = useRef<HTMLDivElement>(null);
 
@@ -69,10 +77,27 @@ export function CandleStickChart({
             xAxisIndex: 0,
           },
         ],
+        xAxis: {
+          type: "category",
+          name: xAxisTitle ?? xAxis,
+          position: "bottom",
+          nameLocation: "middle",
+          nameGap: 30,
+          axisLine: { show: true },
+        },
+        yAxis: {
+          type: "value",
+          name: yAxisTitle ?? yAxis,
+          position: "left",
+          nameLocation: "middle",
+          nameGap: 50,
+          axisLine: { show: true },
+          scale: true,
+        },
       };
       chart?.setOption(option, true);
     }
-  }, [title, theme]);
+  }, [title, theme, xAxisTitle, xAxis, yAxisTitle, yAxis]);
 
   return (
     <Skeleton visible={loading ?? false}>
