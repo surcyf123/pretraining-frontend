@@ -1,5 +1,7 @@
 import { Skeleton } from "@mantine/core";
-import { getInstanceByDom, init } from "echarts/core";
+import { GridComponent, TitleComponent, DataZoomComponent } from "echarts/components";
+import { getInstanceByDom, init, use } from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
 import { useEffect, useRef } from "react";
 import type {
   TitleComponentOption,
@@ -8,6 +10,13 @@ import type {
 } from "echarts/components";
 import type { ECharts, ComposeOption } from "echarts/core";
 import type { CSSProperties } from "react";
+
+use([
+  CanvasRenderer, // If you only need to use the canvas rendering mode, the bundle will not include the SVGRenderer module, which is not needed.
+  GridComponent,
+  TitleComponent,
+  DataZoomComponent,
+]);
 
 export interface CandleStickChartProps {
   style?: CSSProperties;
