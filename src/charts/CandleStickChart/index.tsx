@@ -1,5 +1,6 @@
 import { Skeleton } from "@mantine/core";
-import { useRef, type CSSProperties } from "react";
+import { useRef } from "react";
+import type { CSSProperties } from "react";
 
 export interface CandleStickChartProps {
   style?: CSSProperties;
