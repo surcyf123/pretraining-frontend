@@ -1,4 +1,4 @@
-import { RawCandleStickData, splitData } from "./utils";
+import { RawCandleStickData, transformData } from "./utils";
 import { CandleStickChart } from ".";
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -10,7 +10,7 @@ export default {
     title: "Candle Stick",
     xAxis: "time",
     yAxis: "data",
-    data: splitData(RawCandleStickData),
+    data: transformData(RawCandleStickData),
   },
 } as Meta<typeof CandleStickChart>;
 

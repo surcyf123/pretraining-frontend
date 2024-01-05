@@ -94,7 +94,7 @@ export const RawCandleStickData: [string, number, number, number, number][] = [
   ["2013/6/13", 2190.1, 2148.35, 2126.22, 2190.1],
 ];
 
-export function splitData(rawData: [string, number, number, number, number][]): CandleStickData {
+export function transformData(rawData: [string, number, number, number, number][]): CandleStickData {
   const categoryData: string[] = [];
   const values: number[][] = [];
   rawData.forEach(([date, ...rest]) => {
