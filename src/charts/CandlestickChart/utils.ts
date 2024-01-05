@@ -352,4 +352,4 @@ export const CandleStickData = [
     date: "2013/6/13",
     y: [2190.1, 2148.35, 2126.22, 2190.1],
   },
-]
+];
