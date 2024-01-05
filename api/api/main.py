@@ -11,7 +11,7 @@ from .utils import (
     calculateEmission,
     calculateConsensus,
     getSubnetLabels,
-    convertToInteger,
+    convertToFloat,
 )
 from requests import get
 
@@ -155,27 +155,28 @@ def taoPriceChangeStats():
     stats = get(
         f"{BaseMEXCEndpoint}/api/v3/ticker/24hr", params={"symbol": "TAOUSDT"}
     ).json()
-    parsedStats = {key: convertToInteger(value) for key, value in stats.items()}
+    parsedStats = {key: convertToFloat(value) for key, value in stats.items()}
     return parsedStats
 
 
 @app.get("/tao/price")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def taoTickerPrice():
-    stats = get(
+    price = get(
         f"{BaseMEXCEndpoint}/api/v3/ticker/price", params={"symbol": "TAOUSDT"}
     ).json()
-    return stats
+    parsedPrice = {key: convertToFloat(value) for key, value in price.items()}
+    return parsedPrice
 
 
 @app.get("/tao/average-price")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def taoAveragePrice():
-    stats = get(
+    averagePrice = get(
         f"{BaseMEXCEndpoint}/api/v3/avgPrice", params={"symbol": "TAOUSDT"}
     ).json()
-    return stats
-
+    parsedAveragePrice = {key: convertToFloat(value) for key, value in averagePrice.items()}
+    return parsedAveragePrice
 
 @app.get("/tao/candlestick")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))

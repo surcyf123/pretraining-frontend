@@ -1,6 +1,7 @@
 from torch import sigmoid, FloatTensor
 
 
+
 # Ref: https://docs.bittensor.com/emissions#trust
 def calculateTrust(
     weight: FloatTensor, stake: FloatTensor, threshold: int = 0
@@ -28,7 +29,7 @@ def calculateEmission(consensus: FloatTensor, rank: FloatTensor) -> FloatTensor:
     return emission / emission.sum()
 
 
-def convertToInteger(value):
+def convertToFloat(value):
     output = 0
     try:
         output = float(value)
