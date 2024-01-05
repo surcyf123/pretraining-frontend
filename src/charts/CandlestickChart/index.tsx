@@ -1,8 +1,10 @@
 import { Skeleton } from "@mantine/core";
+import { CandlestickChart as CandlestickGraph } from "echarts/charts";
 import { GridComponent, TitleComponent, DataZoomComponent } from "echarts/components";
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useEffect, useRef } from "react";
+import type { CandlestickSeriesOption } from "echarts/charts";
 import type {
   TitleComponentOption,
   GridComponentOption,
@@ -16,9 +18,10 @@ use([
   GridComponent,
   TitleComponent,
   DataZoomComponent,
+  CandlestickGraph,
 ]);
 
-export interface CandleStickChartProps {
+export interface CandlestickChartProps {
   style?: CSSProperties;
   loading?: boolean;
   theme?: "light" | "dark";
@@ -29,11 +32,11 @@ export interface CandleStickChartProps {
   yAxis: string;
 }
 
-type CandleStickChartOptions = ComposeOption<
-  TitleComponentOption | GridComponentOption | DataZoomComponentOption
+type CandlestickChartOptions = ComposeOption<
+  TitleComponentOption | GridComponentOption | DataZoomComponentOption | CandlestickSeriesOption
 >;
 
-export function CandleStickChart({
+export function CandlestickChart({
   style,
   loading,
   theme,
@@ -42,7 +45,7 @@ export function CandleStickChart({
   xAxisTitle,
   yAxis,
   yAxisTitle,
-}: CandleStickChartProps): JSX.Element {
+}: CandlestickChartProps): JSX.Element {
   const chartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -66,7 +69,7 @@ export function CandleStickChart({
   useEffect(() => {
     if (chartRef.current !== null) {
       const chart = getInstanceByDom(chartRef.current);
-      const option: CandleStickChartOptions = {
+      const option: CandlestickChartOptions = {
         title: {
           text: title,
           left: "center",
