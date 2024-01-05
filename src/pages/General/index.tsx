@@ -23,10 +23,21 @@ export function General(): JSX.Element {
     <Stack>
       <TaoStats />
       <Divider />
-      <Title order={4}>Validator Details</Title>
-      <ValidatorTable />
+      <Card shadow="md">
+        <CandlestickChart
+          title="Tao Prices"
+          style={{ height: "50vh" }}
+          theme={colorScheme === "auto" ? "dark" : colorScheme}
+          data={taoCandlestick ?? []}
+          xAxis="time"
+          yAxis="data"
+          loading={isTaoCandlestick}
+        />
+      </Card>
       <Title order={4}>Subnet Emissions</Title>
       <VitalsTable />
+      <Title order={4}>Validator Details</Title>
+      <ValidatorTable />
       <Title order={4}>Subnet Weights</Title>
       <Card shadow="md">
         <Heatmap
@@ -41,17 +52,6 @@ export function General(): JSX.Element {
           xAxisLabel="NetUID"
           yAxisLabel="Validator"
           loading={isHeatmapDataLoading}
-        />
-      </Card>
-      <Card shadow="md">
-        <CandlestickChart
-          title="Tao Prices"
-          style={{ height: "50vh" }}
-          theme={colorScheme === "auto" ? "dark" : colorScheme}
-          data={taoCandlestick ?? []}
-          xAxis="time"
-          yAxis="data"
-          loading={isTaoCandlestick}
         />
       </Card>
     </Stack>
