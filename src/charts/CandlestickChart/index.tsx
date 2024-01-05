@@ -1,12 +1,21 @@
 import { Skeleton } from "@mantine/core";
-import { GridComponent, TitleComponent, DataZoomComponent } from "echarts/components";
+import { CandlestickChart as CandlestickGraph } from "echarts/charts";
+import {
+  GridComponent,
+  TitleComponent,
+  DataZoomComponent,
+  DatasetComponent,
+} from "echarts/components";
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useEffect, useRef } from "react";
+import type { CandleStick } from "./utils";
+import type { CandlestickSeriesOption } from "echarts/charts";
 import type {
   TitleComponentOption,
   GridComponentOption,
   DataZoomComponentOption,
+  DatasetComponentOption,
 } from "echarts/components";
 import type { ECharts, ComposeOption } from "echarts/core";
 import type { CSSProperties } from "react";
@@ -16,9 +25,11 @@ use([
   GridComponent,
   TitleComponent,
   DataZoomComponent,
+  CandlestickGraph,
+  DatasetComponent,
 ]);
 
-export interface CandleStickChartProps {
+export interface CandlestickChartProps {
   style?: CSSProperties;
   loading?: boolean;
   theme?: "light" | "dark";
@@ -27,13 +38,18 @@ export interface CandleStickChartProps {
   xAxis: string;
   yAxisTitle?: string;
   yAxis: string;
+  data: CandleStick[];
 }
 
-type CandleStickChartOptions = ComposeOption<
-  TitleComponentOption | GridComponentOption | DataZoomComponentOption
+type CandlestickChartOptions = ComposeOption<
+  | TitleComponentOption
+  | GridComponentOption
+  | DataZoomComponentOption
+  | CandlestickSeriesOption
+  | DatasetComponentOption
 >;
 
-export function CandleStickChart({
+export function CandlestickChart({
   style,
   loading,
   theme,
@@ -42,7 +58,8 @@ export function CandleStickChart({
   xAxisTitle,
   yAxis,
   yAxisTitle,
-}: CandleStickChartProps): JSX.Element {
+  data,
+}: CandlestickChartProps): JSX.Element {
   const chartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -66,7 +83,7 @@ export function CandleStickChart({
   useEffect(() => {
     if (chartRef.current !== null) {
       const chart = getInstanceByDom(chartRef.current);
-      const option: CandleStickChartOptions = {
+      const option: CandlestickChartOptions = {
         title: {
           text: title,
           left: "center",
@@ -99,11 +116,19 @@ export function CandleStickChart({
           axisLine: { show: true },
           scale: true,
         },
-        // TODO: add series and dataset
+        series: [
+          {
+            name: "candlestick",
+            type: "candlestick",
+          },
+        ],
+        dataset: {
+          source: data,
+        },
       };
       chart?.setOption(option, true);
     }
-  }, [title, theme, xAxisTitle, xAxis, yAxisTitle, yAxis]);
+  }, [title, theme, xAxisTitle, xAxis, yAxisTitle, yAxis, data]);
 
   return (
     <Skeleton visible={loading ?? false}>
