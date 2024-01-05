@@ -6,6 +6,7 @@ export default {
   component: CandleStickChart,
   args: {
     style: { height: "100vh" },
+    title: "Candle Stick",
   },
 } as Meta<typeof CandleStickChart>;
 
