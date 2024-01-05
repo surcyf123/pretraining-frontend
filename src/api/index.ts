@@ -38,9 +38,7 @@ export interface Validator {
   [key: string]: string | number;
 }
 
-// Currently everytime the ec2 instance re-starts we need to update the url here.
-// TODO: Fix issue by creating a load balancer.
-const BaseURL = "http://ec2-100-25-150-233.compute-1.amazonaws.com:8000";
+const BaseURL = "https://api.openpretrain.ai";
 
 export interface MetagraphMetadata {
   netuid: number;
