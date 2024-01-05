@@ -11,6 +11,7 @@ from .utils import (
     calculateEmission,
     calculateConsensus,
     getSubnetLabels,
+    convertToInteger,
 )
 from requests import get
 
@@ -70,7 +71,9 @@ def neurons(netuid: int = 0):
 @app.get("/validators")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def validators():
-    delegates = get("https://raw.githubusercontent.com/opentensor/bittensor-delegates/main/public/delegates.json").json()
+    delegates = get(
+        "https://raw.githubusercontent.com/opentensor/bittensor-delegates/main/public/delegates.json"
+    ).json()
     metagraph = bittensor.metagraph(0, lite=False, network="finney", sync=True)
     records = {
         "uid": metagraph.uids.tolist(),
@@ -152,7 +155,8 @@ def taoPriceChangeStats():
     stats = get(
         f"{BaseMEXCEndpoint}/api/v3/ticker/24hr", params={"symbol": "TAOUSDT"}
     ).json()
-    return stats
+    parsedStats = {key: convertToInteger(value) for key, value in stats.items()}
+    return parsedStats
 
 
 @app.get("/tao/price")

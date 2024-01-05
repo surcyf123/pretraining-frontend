@@ -64,3 +64,13 @@ def getSubnetLabels():
         "31": "Game of Life",
         "32": "Roleplay",
     }
+
+
+def convertToInteger(value):
+    output = 0
+    try:
+        output = float(value)
+    except (ValueError, TypeError):
+        output = value
+    finally:
+        return output
