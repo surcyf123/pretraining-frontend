@@ -3,7 +3,7 @@ import { CandlestickChart } from ".";
 import type { Meta, StoryObj } from "@storybook/react";
 
 export default {
-  title: "CandleStickChart",
+  title: "CandlestickChart",
   component: CandlestickChart,
   args: {
     style: { height: "100vh" },

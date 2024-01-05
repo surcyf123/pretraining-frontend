@@ -1,6 +1,11 @@
 import { Skeleton } from "@mantine/core";
 import { CandlestickChart as CandlestickGraph } from "echarts/charts";
-import { GridComponent, TitleComponent, DataZoomComponent } from "echarts/components";
+import {
+  GridComponent,
+  TitleComponent,
+  DataZoomComponent,
+  DatasetComponent,
+} from "echarts/components";
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useEffect, useRef } from "react";
@@ -10,6 +15,7 @@ import type {
   TitleComponentOption,
   GridComponentOption,
   DataZoomComponentOption,
+  DatasetComponentOption,
 } from "echarts/components";
 import type { ECharts, ComposeOption } from "echarts/core";
 import type { CSSProperties } from "react";
@@ -20,6 +26,7 @@ use([
   TitleComponent,
   DataZoomComponent,
   CandlestickGraph,
+  DatasetComponent,
 ]);
 
 export interface CandlestickChartProps {
@@ -35,7 +42,11 @@ export interface CandlestickChartProps {
 }
 
 type CandlestickChartOptions = ComposeOption<
-  TitleComponentOption | GridComponentOption | DataZoomComponentOption | CandlestickSeriesOption
+  | TitleComponentOption
+  | GridComponentOption
+  | DataZoomComponentOption
+  | CandlestickSeriesOption
+  | DatasetComponentOption
 >;
 
 export function CandlestickChart({
