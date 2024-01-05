@@ -1,9 +1,6 @@
-export interface CandleStickData {
-  categoryData: string[];
-  values: number[][];
-}
-
-export const RawCandleStickData: [string, number, number, number, number][] = [
+// TODO: Identify unknown data values.
+export type CandleStick = [string, number, number, number, number]; // [Date,unknown,unknown,unknown,unknown]
+export const CandlestickData: CandleStick[] = [
   ["2013/1/24", 2320.26, 2320.26, 2287.3, 2362.94],
   ["2013/1/25", 2300, 2291.3, 2288.26, 2308.38],
   ["2013/1/28", 2295.35, 2346.5, 2295.35, 2346.92],
@@ -93,16 +90,3 @@ export const RawCandleStickData: [string, number, number, number, number][] = [
   ["2013/6/7", 2242.26, 2210.9, 2205.07, 2250.63],
   ["2013/6/13", 2190.1, 2148.35, 2126.22, 2190.1],
 ];
-
-export function transformData(rawData: [string, number, number, number, number][]): CandleStickData {
-  const categoryData: string[] = [];
-  const values: number[][] = [];
-  rawData.forEach(([date, ...rest]) => {
-    categoryData.push(date);
-    values.push(rest);
-  });
-  return {
-    categoryData,
-    values,
-  };
-}
