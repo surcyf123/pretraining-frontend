@@ -184,11 +184,12 @@ def taoAveragePrice():
 @app.get("/tao/candlestick")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def taoAveragePrice():
-    stats = get(
+    kLineData = get(
         f"{BaseMEXCEndpoint}/api/v3/klines",
         params={"symbol": "TAOUSDT", "interval": "1m"},
     ).json()
-    return stats
+    convertedData = [[convertToFloat(item) for item in items] for items in kLineData]
+    return convertedData
 
 
 def start():
