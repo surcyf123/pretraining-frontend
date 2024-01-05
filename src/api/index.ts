@@ -35,7 +35,11 @@ export interface Validator {
   hotkey: string;
   coldkey: string;
   address: string;
-  [key: string]: string | number;
+  name?: string;
+  url?: string;
+  description?: string;
+  signature?: string;
+  [key: string]: string | number | undefined;
 }
 
 // Currently everytime the ec2 instance re-starts we need to update the url here.
