@@ -1,10 +1,8 @@
-/* eslint-disable import/no-unused-modules */
 export interface CandleStickData {
   categoryData: string[];
   values: number[][];
 }
 
-// eslint-disable-next-line import/no-unused-modules
 export const RawCandleStickData: [string, number, number, number, number][] = [
   ["2013/1/24", 2320.26, 2320.26, 2287.3, 2362.94],
   ["2013/1/25", 2300, 2291.3, 2288.26, 2308.38],
@@ -96,7 +94,6 @@ export const RawCandleStickData: [string, number, number, number, number][] = [
   ["2013/6/13", 2190.1, 2148.35, 2126.22, 2190.1],
 ];
 
-// eslint-disable-next-line import/no-unused-modules
 export function splitData(rawData: [string, number, number, number, number][]): CandleStickData {
   const categoryData: string[] = [];
   const values: number[][] = [];
