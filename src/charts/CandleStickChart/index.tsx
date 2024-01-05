@@ -1,8 +1,11 @@
 import { Skeleton } from "@mantine/core";
+import { CandlestickChart } from "echarts/charts";
 import { GridComponent, TitleComponent, DataZoomComponent } from "echarts/components";
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useEffect, useRef } from "react";
+import type { CandleStickData } from "./utils";
+import type { CandlestickSeriesOption } from "echarts/charts";
 import type {
   TitleComponentOption,
   GridComponentOption,
@@ -16,6 +19,7 @@ use([
   GridComponent,
   TitleComponent,
   DataZoomComponent,
+  CandlestickChart,
 ]);
 
 export interface CandleStickChartProps {
@@ -27,10 +31,11 @@ export interface CandleStickChartProps {
   xAxis: string;
   yAxisTitle?: string;
   yAxis: string;
+  data: CandleStickData;
 }
 
 type CandleStickChartOptions = ComposeOption<
-  TitleComponentOption | GridComponentOption | DataZoomComponentOption
+  TitleComponentOption | GridComponentOption | DataZoomComponentOption | CandlestickSeriesOption
 >;
 
 export function CandleStickChart({
@@ -42,6 +47,7 @@ export function CandleStickChart({
   xAxisTitle,
   yAxis,
   yAxisTitle,
+  data,
 }: CandleStickChartProps): JSX.Element {
   const chartRef = useRef<HTMLDivElement>(null);
 
@@ -89,6 +95,7 @@ export function CandleStickChart({
           nameLocation: "middle",
           nameGap: 30,
           axisLine: { show: true },
+          data: data.categoryData,
         },
         yAxis: {
           type: "value",
@@ -99,11 +106,17 @@ export function CandleStickChart({
           axisLine: { show: true },
           scale: true,
         },
-        // TODO: add series and dataset
+        series: [
+          {
+            name: "candlestick",
+            type: "candlestick",
+            data: data.values,
+          },
+        ],
       };
       chart?.setOption(option, true);
     }
-  }, [title, theme, xAxisTitle, xAxis, yAxisTitle, yAxis]);
+  }, [title, theme, xAxisTitle, xAxis, yAxisTitle, yAxis, data]);
 
   return (
     <Skeleton visible={loading ?? false}>
