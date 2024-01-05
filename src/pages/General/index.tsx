@@ -1,6 +1,7 @@
-import { Card, Divider, Stack, Text, Title, useMantineColorScheme } from "@mantine/core";
+import { Card, Divider, Stack, Title, useMantineColorScheme } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
-import { fetchHeatmapData } from "../../api";
+import { fetchHeatmapData, fetchTaoCandlestick } from "../../api";
+import { CandlestickChart } from "../../charts/CandlestickChart";
 import { Heatmap } from "../../charts/Heatmap";
 import { TaoStats } from "../../components/TaoStats";
 import { ValidatorTable } from "../../components/ValidatorTable";
@@ -11,6 +12,11 @@ export function General(): JSX.Element {
   const { data: heatmapData, isLoading: isHeatmapDataLoading } = useQuery({
     queryKey: ["heatmapData"],
     queryFn: () => fetchHeatmapData(),
+    refetchInterval: 10 * 60 * 1000,
+  });
+  const { data: taoCandlestick, isLoading: isTaoCandlestick } = useQuery({
+    queryKey: ["taoCandlestick"],
+    queryFn: () => fetchTaoCandlestick(),
     refetchInterval: 10 * 60 * 1000,
   });
   return (
@@ -37,7 +43,17 @@ export function General(): JSX.Element {
           loading={isHeatmapDataLoading}
         />
       </Card>
-      <Text ta="center">More coming soon...</Text>
+      <Card shadow="md">
+        <CandlestickChart
+          title="Weight Matrix"
+          style={{ height: "50vh" }}
+          theme={colorScheme === "auto" ? "dark" : colorScheme}
+          data={taoCandlestick ?? []}
+          xAxis="time"
+          yAxis="data"
+          loading={isTaoCandlestick}
+        />
+      </Card>
     </Stack>
   );
 }
