@@ -45,7 +45,7 @@ export function General(): JSX.Element {
       </Card>
       <Card shadow="md">
         <CandlestickChart
-          title="Weight Matrix"
+          title="Tao Prices"
           style={{ height: "50vh" }}
           theme={colorScheme === "auto" ? "dark" : colorScheme}
           data={taoCandlestick ?? []}

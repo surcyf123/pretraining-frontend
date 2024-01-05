@@ -100,7 +100,7 @@ export function CandlestickChart({
           },
         ],
         xAxis: {
-          type: "category",
+          type: "time",
           name: xAxisTitle ?? xAxis,
           position: "bottom",
           nameLocation: "middle",
