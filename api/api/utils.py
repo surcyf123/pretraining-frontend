@@ -28,6 +28,16 @@ def calculateEmission(consensus: FloatTensor, rank: FloatTensor) -> FloatTensor:
     return emission / emission.sum()
 
 
+def convertToInteger(value):
+    output = 0
+    try:
+        output = float(value)
+    except (ValueError, TypeError):
+        output = value
+    finally:
+        return output
+
+
 def getSubnetLabels():
     return {
         "00": "Root",
