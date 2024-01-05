@@ -63,10 +63,10 @@ export function ValidatorTable(): JSX.Element {
       columnHelper.accessor((row) => row.name, {
         // eslint-disable-next-line react/no-unstable-nested-components
         cell: (info) => {
-          let output = <>{info.getValue()}</>;
+          let output = <Text size="sm">{info.getValue()}</Text>;
           if (typeof info.row.original.url === "string") {
             output = (
-              <Anchor href={info.row.original.url} target="_blank">
+              <Anchor href={info.row.original.url} target="_blank" size="sm">
                 {info.getValue()}
               </Anchor>
             );
