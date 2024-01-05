@@ -106,3 +106,9 @@ export async function fetchValidators(): Promise<Validator[]> {
   const validators = (await rawResponse.json()) as Validator[];
   return validators;
 }
+
+export async function fetchHeatmapData(): Promise<Record<string, number>[]> {
+  const rawResponse = await fetch(`${BaseURL}/weights/0`);
+  const validators = (await rawResponse.json()) as Record<string, number>[];
+  return validators;
+}
