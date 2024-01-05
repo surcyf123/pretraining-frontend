@@ -60,13 +60,19 @@ export function ValidatorTable(): JSX.Element {
         cell: (info) => info.getValue(),
         id: "Stake",
       }),
-      columnHelper.accessor((row) => ({ label: row.name, href: row.url }), {
+      columnHelper.accessor((row) => row.name, {
         // eslint-disable-next-line react/no-unstable-nested-components
-        cell: (info) => (
-          <Anchor href={info.getValue().href} target="_blank">
-            {info.getValue().label}
-          </Anchor>
-        ),
+        cell: (info) => {
+          let output = <>{info.getValue()}</>;
+          if (typeof info.row.original.url === "string") {
+            output = (
+              <Anchor href={info.row.original.url} target="_blank">
+                {info.getValue()}
+              </Anchor>
+            );
+          }
+          return output;
+        },
         id: "Name",
       }),
       columnHelper.accessor((row) => row.hotkey, {
