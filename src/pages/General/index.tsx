@@ -23,7 +23,7 @@ export function General(): JSX.Element {
     <Stack>
       <TaoStats />
       <Divider />
-      <Title order={4}>Subnet Details</Title>
+      <Title order={4}>Validator Details</Title>
       <ValidatorTable />
       <Title order={4}>Subnet Emissions</Title>
       <VitalsTable />
