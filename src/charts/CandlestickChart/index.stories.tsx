@@ -9,7 +9,8 @@ export default {
     title: "Candle Stick",
     xAxis: "time",
     yAxis: "data",
+    data: transformData(RawCandleStickData),
   },
-} as Meta<typeof CandlestickChart>;
+} as Meta<typeof CandleStickChart>;
 
-export const Template: StoryObj<typeof CandlestickChart> = {};
+export const Template: StoryObj<typeof CandleStickChart> = {};
