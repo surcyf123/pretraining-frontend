@@ -1,17 +1,17 @@
-import { RawCandleStickData, transformData } from "./utils";
-import { CandleStickChart } from ".";
+import { CandlestickData } from "./utils";
+import { CandlestickChart } from ".";
 import type { Meta, StoryObj } from "@storybook/react";
 
 export default {
   title: "CandleStickChart",
-  component: CandleStickChart,
+  component: CandlestickChart,
   args: {
     style: { height: "100vh" },
     title: "Candle Stick",
     xAxis: "time",
     yAxis: "data",
-    data: transformData(RawCandleStickData),
+    data: CandlestickData,
   },
-} as Meta<typeof CandleStickChart>;
+} as Meta<typeof CandlestickChart>;
 
-export const Template: StoryObj<typeof CandleStickChart> = {};
+export const Template: StoryObj<typeof CandlestickChart> = {};
