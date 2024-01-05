@@ -1,15 +1,15 @@
-import { CandleStickChart } from ".";
+import { CandlestickChart } from ".";
 import type { Meta, StoryObj } from "@storybook/react";
 
 export default {
-  title: "CandleStickChart",
-  component: CandleStickChart,
+  title: "CandlestickChart",
+  component: CandlestickChart,
   args: {
     style: { height: "100vh" },
     title: "Candle Stick",
     xAxis: "time",
     yAxis: "data",
   },
-} as Meta<typeof CandleStickChart>;
+} as Meta<typeof CandlestickChart>;
 
-export const Template: StoryObj<typeof CandleStickChart> = {};
+export const Template: StoryObj<typeof CandlestickChart> = {};
