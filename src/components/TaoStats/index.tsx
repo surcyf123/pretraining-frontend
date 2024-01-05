@@ -32,7 +32,7 @@ export function TaoStats(): JSX.Element {
               <IconChevronDown color="red" />
             )}
             <Text component="span" c={priceChangePercent > 0 ? "green" : "red"} size="sm">
-              {priceChangePercent.toLocaleString(undefined, {
+              {(priceChangePercent / 100).toLocaleString(undefined, {
                 style: "percent",
                 maximumFractionDigits: 2,
               })}
