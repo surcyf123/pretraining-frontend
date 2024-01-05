@@ -42,7 +42,7 @@ export interface Validator {
   [key: string]: string | number | undefined;
 }
 
-const BaseURL = "https://api.openpretrain.ai/validators";
+const BaseURL = "https://api.openpretrain.ai";
 
 export interface MetagraphMetadata {
   netuid: number;
