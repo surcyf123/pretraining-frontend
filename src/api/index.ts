@@ -101,7 +101,6 @@ export async function fetchSubnetVitals(): Promise<Vitals[]> {
   return vitals;
 }
 
-// eslint-disable-next-line import/no-unused-modules
 export async function fetchValidators(): Promise<Validator[]> {
   const rawResponse = await fetch(`${BaseURL}/validators`);
   const validators = (await rawResponse.json()) as Validator[];
