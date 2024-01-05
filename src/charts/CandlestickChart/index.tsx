@@ -9,7 +9,7 @@ import {
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useEffect, useRef } from "react";
-import type { CandleStick } from "./utils";
+import type { Candlestick } from "../../api";
 import type { CandlestickSeriesOption } from "echarts/charts";
 import type {
   TitleComponentOption,
@@ -38,7 +38,7 @@ export interface CandlestickChartProps {
   xAxis: string;
   yAxisTitle?: string;
   yAxis: string;
-  data: CandleStick[];
+  data: Candlestick[];
 }
 
 type CandlestickChartOptions = ComposeOption<

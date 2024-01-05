@@ -2,6 +2,8 @@ import { downloadData } from "aws-amplify/storage";
 import type { NeuronDetails } from "../components/MetagraphTable";
 import type { HistoryData, RunDetails } from "../utils";
 
+export type Candlestick = [string, number, number, number, number]; // [Date, Opening price, Highest price, Lowest price, Closing price]
+
 interface TaoPrice {
   symbol: string;
   price: number;
@@ -110,18 +112,25 @@ export async function fetchValidators(): Promise<Validator[]> {
 
 export async function fetchHeatmapData(): Promise<Record<string, number>[]> {
   const rawResponse = await fetch(`${BaseURL}/weights/0`);
-  const validators = (await rawResponse.json()) as Record<string, number>[];
-  return validators;
+  const output = (await rawResponse.json()) as Record<string, number>[];
+  return output;
 }
 
 export async function fetchTaoPriceChangeStatistics(): Promise<TaoPriceChangeStatistics> {
   const rawResponse = await fetch(`${BaseURL}/tao/price-change-stats`);
-  const validators = (await rawResponse.json()) as TaoPriceChangeStatistics;
-  return validators;
+  const output = (await rawResponse.json()) as TaoPriceChangeStatistics;
+  return output;
 }
 
 export async function fetchTaoPrice(): Promise<TaoPrice> {
   const rawResponse = await fetch(`${BaseURL}/tao/price`);
-  const validators = (await rawResponse.json()) as TaoPrice;
-  return validators;
+  const output = (await rawResponse.json()) as TaoPrice;
+  return output;
+}
+
+// eslint-disable-next-line import/no-unused-modules
+export async function fetchTaoCandlestick(): Promise<Candlestick[]> {
+  const rawResponse = await fetch(`${BaseURL}/tao/candlestick`);
+  const output = (await rawResponse.json()) as Candlestick[];
+  return output;
 }

@@ -1,6 +1,7 @@
+import type { Candlestick } from "../../api";
+
 // TODO: Identify unknown data values.
-export type CandleStick = [string, number, number, number, number]; // [Date, Opening price, Highest price, Lowest price, Closing price]
-export const CandlestickData: CandleStick[] = [
+export const CandlestickData: Candlestick[] = [
   ["2013/1/24", 2320.26, 2320.26, 2287.3, 2362.94],
   ["2013/1/25", 2300, 2291.3, 2288.26, 2308.38],
   ["2013/1/28", 2295.35, 2346.5, 2295.35, 2346.92],
