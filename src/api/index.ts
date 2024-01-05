@@ -2,7 +2,7 @@ import { downloadData } from "aws-amplify/storage";
 import type { NeuronDetails } from "../components/MetagraphTable";
 import type { HistoryData, RunDetails } from "../utils";
 
-export type Candlestick = [string, number, number, number, number]; // [Date, Opening price, Highest price, Lowest price, Closing price]
+export type Candlestick = [number, number, number, number, number]; // [Date, Opening price, Highest price, Lowest price, Closing price]
 
 interface TaoPrice {
   symbol: string;
