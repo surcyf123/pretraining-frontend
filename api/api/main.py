@@ -175,8 +175,11 @@ def taoAveragePrice():
     averagePrice = get(
         f"{BaseMEXCEndpoint}/api/v3/avgPrice", params={"symbol": "TAOUSDT"}
     ).json()
-    parsedAveragePrice = {key: convertToFloat(value) for key, value in averagePrice.items()}
+    parsedAveragePrice = {
+        key: convertToFloat(value) for key, value in averagePrice.items()
+    }
     return parsedAveragePrice
+
 
 @app.get("/tao/candlestick")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
