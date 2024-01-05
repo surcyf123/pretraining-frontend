@@ -22,23 +22,6 @@ interface TaoPriceChangeStatistics {
   count?: number | null;
 }
 
-interface TaoStatistics {
-  network: string;
-  token: string;
-  price: string;
-  "24h_change": string;
-  "24h_volume": string;
-  current_supply: string;
-  total_supply: string;
-  delegated_supply: string;
-  market_cap: string;
-  next_halvening: string;
-  daily_return_per_1000t: string;
-  validating_apy: string;
-  staking_apy: string;
-  last_updated: string;
-}
-
 export interface Vitals {
   trust: number;
   rank: number;
@@ -106,12 +89,6 @@ export async function fetchMetagraphData(): Promise<{
     metadata,
     neuronData: json.neuronData,
   };
-}
-
-export async function fetchTaoStatistics(): Promise<TaoStatistics> {
-  const rawResponse = await fetch("https://taostats.io/data.json");
-  const [response] = (await rawResponse.json()) as [TaoStatistics];
-  return response;
 }
 
 export async function fetchSubnetVitals(): Promise<Vitals[]> {
