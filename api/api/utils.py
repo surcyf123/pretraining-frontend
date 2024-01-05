@@ -29,7 +29,7 @@ def calculateEmission(consensus: FloatTensor, rank: FloatTensor) -> FloatTensor:
 
 
 def convertToFloat(value):
-    output = 0
+    output = value
     try:
         output = float(value)
     except (ValueError, TypeError):
