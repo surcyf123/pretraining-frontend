@@ -10,6 +10,7 @@ import {
   CopyButton,
   Button,
   Box,
+  Anchor,
 } from "@mantine/core";
 import { IconClipboardCheck, IconClipboardCopy } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
@@ -58,6 +59,21 @@ export function ValidatorTable(): JSX.Element {
       columnHelper.accessor((row) => row.stake, {
         cell: (info) => info.getValue(),
         id: "Stake",
+      }),
+      columnHelper.accessor((row) => row.name, {
+        // eslint-disable-next-line react/no-unstable-nested-components
+        cell: (info) => {
+          let output = <>{info.getValue()}</>;
+          if (typeof info.row.original.url === "string") {
+            output = (
+              <Anchor href={info.row.original.url} target="_blank">
+                {info.getValue()}
+              </Anchor>
+            );
+          }
+          return output;
+        },
+        id: "Name",
       }),
       columnHelper.accessor((row) => row.hotkey, {
         // eslint-disable-next-line react/no-unstable-nested-components
