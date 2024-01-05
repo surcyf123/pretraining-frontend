@@ -12,6 +12,7 @@ from .utils import (
     calculateConsensus,
     getSubnetLabels,
 )
+from .delegates import Delegates
 from requests import get
 
 BaseMEXCEndpoint = "https://api.mexc.com"
@@ -81,7 +82,8 @@ def validators():
     records_df = DataFrame(records)
     weights_df = DataFrame(metagraph.W.tolist())
     df = concat([records_df, weights_df], axis=1)
-    output = df.to_dict(orient="records")  # transform data to array of records
+    validatorData = df.to_dict(orient="records")  # transform data to array of records
+    output = list(map(lambda x: {**x, **Delegates.get(x["hotkey"], {})}, validatorData))
     return output
 
 
