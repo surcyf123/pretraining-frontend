@@ -2,6 +2,11 @@ import { downloadData } from "aws-amplify/storage";
 import type { NeuronDetails } from "../components/MetagraphTable";
 import type { HistoryData, RunDetails } from "../utils";
 
+interface TaoPrice {
+  symbol: string;
+  price: number;
+}
+
 interface TaoPriceChangeStatistics {
   symbol: string;
   priceChange: number;
@@ -109,9 +114,14 @@ export async function fetchHeatmapData(): Promise<Record<string, number>[]> {
   return validators;
 }
 
-// eslint-disable-next-line import/no-unused-modules
 export async function fetchTaoPriceChangeStatistics(): Promise<TaoPriceChangeStatistics> {
   const rawResponse = await fetch(`${BaseURL}/tao/price-change-stats`);
   const validators = (await rawResponse.json()) as TaoPriceChangeStatistics;
+  return validators;
+}
+
+export async function fetchTaoPrice(): Promise<TaoPrice> {
+  const rawResponse = await fetch(`${BaseURL}/tao/price`);
+  const validators = (await rawResponse.json()) as TaoPrice;
   return validators;
 }
