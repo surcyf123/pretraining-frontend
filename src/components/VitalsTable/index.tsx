@@ -39,8 +39,8 @@ export function VitalsTable(): JSX.Element {
 
   const [sorting, setSorting] = useState<SortingState>([
     {
-      desc: false,
-      id: "Rank",
+      desc: true,
+      id: "Emission",
     },
   ]);
 
@@ -55,21 +55,22 @@ export function VitalsTable(): JSX.Element {
         cell: (info) => info.getValue(),
         id: "Subnet",
       }),
-      columnHelper.accessor((row) => row.trust, {
-        cell: (info) => info.getValue(),
-        id: "Trust",
-      }),
-      columnHelper.accessor((row) => row.rank, {
-        cell: (info) => info.getValue(),
-        id: "Rank",
-      }),
-      columnHelper.accessor((row) => row.consensus, {
-        cell: (info) => info.getValue(),
-        id: "Consensus",
+      columnHelper.accessor((row) => row.emission, {
+        cell: (info) =>
+          info.getValue().toLocaleString(undefined, {
+            style: "percent",
+            maximumFractionDigits: 4,
+            minimumFractionDigits: 4,
+          }),
+        id: "Emission",
       }),
       columnHelper.accessor((row) => row.emission, {
-        cell: (info) => info.getValue(),
-        id: "Emission",
+        cell: (info) =>
+          (info.getValue() * 7200).toLocaleString(undefined, {
+            maximumFractionDigits: 4,
+            minimumFractionDigits: 4,
+          }),
+        id: "τ/day",
       }),
     ];
   }, []);

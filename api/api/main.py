@@ -70,6 +70,7 @@ def neurons(netuid: int = 0):
 @app.get("/validators")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def validators():
+    delegates = get("https://raw.githubusercontent.com/opentensor/bittensor-delegates/main/public/delegates.json").json()
     metagraph = bittensor.metagraph(0, lite=False, network="finney", sync=True)
     records = {
         "uid": metagraph.uids.tolist(),
@@ -81,7 +82,8 @@ def validators():
     records_df = DataFrame(records)
     weights_df = DataFrame(metagraph.W.tolist())
     df = concat([records_df, weights_df], axis=1)
-    output = df.to_dict(orient="records")  # transform data to array of records
+    validatorData = df.to_dict(orient="records")  # transform data to array of records
+    output = list(map(lambda x: {**x, **delegates.get(x["hotkey"], {})}, validatorData))
     return output
 
 

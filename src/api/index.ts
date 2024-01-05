@@ -2,6 +2,26 @@ import { downloadData } from "aws-amplify/storage";
 import type { NeuronDetails } from "../components/MetagraphTable";
 import type { HistoryData, RunDetails } from "../utils";
 
+interface TaoPriceChangeStatistics {
+  symbol: string;
+  priceChange: string;
+  priceChangePercent: string;
+  prevClosePrice: string;
+  lastPrice: string;
+  bidPrice: string;
+  bidQty: string;
+  askPrice: string;
+  askQty: string;
+  openPrice: string;
+  highPrice: string;
+  lowPrice: string;
+  volume: string;
+  quoteVolume: string;
+  openTime: string;
+  closeTime: string;
+  count?: string | null;
+}
+
 interface TaoStatistics {
   network: string;
   token: string;
@@ -28,7 +48,6 @@ export interface Vitals {
   label: string;
 }
 
-// eslint-disable-next-line import/no-unused-modules
 export interface Validator {
   uid: number;
   stake: number;
@@ -42,10 +61,6 @@ export interface Validator {
   [key: string]: string | number | undefined;
 }
 
-// Currently everytime the ec2 instance re-starts we need to update the url here.
-// TODO: Fix issue by creating a load balancer.
-const BaseURL = "http://ec2-100-25-150-233.compute-1.amazonaws.com:8000";
-
 export interface MetagraphMetadata {
   netuid: number;
   n: number;
@@ -53,6 +68,8 @@ export interface MetagraphMetadata {
   network: string;
   version: string;
 }
+
+const BaseURL = "https://api.openpretrain.ai";
 
 export async function fetchTableData(): Promise<Record<string, (RunDetails | null)[]>> {
   const downloadResult = await downloadData({ key: "recent-complete.json" }).result;
@@ -103,9 +120,21 @@ export async function fetchSubnetVitals(): Promise<Vitals[]> {
   return vitals;
 }
 
-// eslint-disable-next-line import/no-unused-modules
 export async function fetchValidators(): Promise<Validator[]> {
   const rawResponse = await fetch(`${BaseURL}/validators`);
   const validators = (await rawResponse.json()) as Validator[];
+  return validators;
+}
+
+export async function fetchHeatmapData(): Promise<Record<string, number>[]> {
+  const rawResponse = await fetch(`${BaseURL}/weights/0`);
+  const validators = (await rawResponse.json()) as Record<string, number>[];
+  return validators;
+}
+
+// eslint-disable-next-line import/no-unused-modules
+export async function fetchTaoPriceChangeStatistics(): Promise<TaoPriceChangeStatistics> {
+  const rawResponse = await fetch(`${BaseURL}/tao/price-change-stats`);
+  const validators = (await rawResponse.json()) as TaoPriceChangeStatistics;
   return validators;
 }
