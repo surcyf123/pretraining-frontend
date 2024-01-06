@@ -5,7 +5,7 @@ from pandas import DataFrame, concat
 import uvicorn
 import bittensor
 from CacheToolsUtils import cachetools, cached
-from .utils import (
+from .utils.metagraph import (
     calculateTrust,
     calculateRank,
     calculateEmission,
@@ -13,6 +13,7 @@ from .utils import (
     getSubnetLabels,
     convertToFloat,
 )
+from .utils.wandb import fetchRuns
 from requests import get
 
 BaseMEXCEndpoint = "https://api.mexc.com"
