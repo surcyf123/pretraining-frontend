@@ -5,7 +5,7 @@ from pandas import DataFrame, concat
 import uvicorn
 import bittensor
 from CacheToolsUtils import cachetools, cached
-from .utils import (
+from .utils.metagraph import (
     calculateTrust,
     calculateRank,
     calculateEmission,
@@ -13,6 +13,7 @@ from .utils import (
     getSubnetLabels,
     convertToFloat,
 )
+from .utils.wandb import fetchValidatorRuns
 from requests import get
 
 BaseMEXCEndpoint = "https://api.mexc.com"
@@ -28,7 +29,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 metagraphs: Dict[int, bittensor.metagraph] = dict()
 
 
@@ -190,6 +190,14 @@ def taoCandlestick():
     ).json()
     convertedData = [[convertToFloat(item) for item in items] for items in candlestick]
     return convertedData
+
+
+@app.get("/wandb/validator-runs")
+def validatorRuns():
+    runs = fetchValidatorRuns()
+    # TODO: add logic to filter data
+    print(runs)
+    return None
 
 
 def start():

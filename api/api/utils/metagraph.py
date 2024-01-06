@@ -1,4 +1,5 @@
 from torch import sigmoid, FloatTensor
+from typing import Union
 
 
 # Ref: https://docs.bittensor.com/emissions#trust
@@ -28,7 +29,7 @@ def calculateEmission(consensus: FloatTensor, rank: FloatTensor) -> FloatTensor:
     return emission / emission.sum()
 
 
-def convertToFloat(value):
+def convertToFloat(value) -> Union[float, str]:
     output = value
     try:
         output = float(value)
@@ -38,7 +39,7 @@ def convertToFloat(value):
         return output
 
 
-def getSubnetLabels():
+def getSubnetLabels() -> dict:
     return {
         "00": "Root",
         "01": "Text Prompting",
