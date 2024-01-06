@@ -1,7 +1,7 @@
 export interface UIDDetails {
   uid: number;
   runid: string;
-  block: number;
+  block?: number;
   timestamp: number;
   average_losses: (number | null)[];
   average_loss: number | null;
