@@ -30,7 +30,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-metagraphs: Dict[int, bittensor.metagraph] = dict()
 
 
 @app.get("/")
