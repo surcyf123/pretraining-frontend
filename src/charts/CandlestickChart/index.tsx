@@ -120,6 +120,11 @@ export function CandlestickChart({
           {
             name: "candlestick",
             type: "candlestick",
+            encode: {
+              x: 0,
+              y: [1, 2, 3, 4],
+              tooltip: [1, 2, 3, 4],
+            },
           },
         ],
         dataset: {
