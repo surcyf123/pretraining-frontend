@@ -2,21 +2,53 @@ import { downloadData } from "aws-amplify/storage";
 import type { NeuronDetails } from "../components/MetagraphTable";
 import type { HistoryData, RunDetails } from "../utils";
 
-interface TaoStatistics {
-  network: string;
-  token: string;
-  price: string;
-  "24h_change": string;
-  "24h_volume": string;
-  current_supply: string;
-  total_supply: string;
-  delegated_supply: string;
-  market_cap: string;
-  next_halvening: string;
-  daily_return_per_1000t: string;
-  validating_apy: string;
-  staking_apy: string;
-  last_updated: string;
+export type Candlestick = [number, number, number, number, number]; // [Date, Opening price, Highest price, Lowest price, Closing price]
+
+interface TaoPrice {
+  symbol: string;
+  price: number;
+}
+
+interface TaoPriceChangeStatistics {
+  symbol: string;
+  priceChange: number;
+  priceChangePercent: number;
+  prevClosePrice: number;
+  lastPrice: number;
+  bidPrice: number;
+  bidQty: number;
+  askPrice: number;
+  askQty: number;
+  openPrice: number;
+  highPrice: number;
+  lowPrice: number;
+  volume: number;
+  quoteVolume: number;
+  openTime: number;
+  closeTime: number;
+  count?: number | null;
+}
+
+export interface Vitals {
+  trust: number;
+  rank: number;
+  consensus: number;
+  emission: number;
+  netUID: string;
+  label: string;
+}
+
+export interface Validator {
+  uid: number;
+  stake: number;
+  hotkey: string;
+  coldkey: string;
+  address: string;
+  name?: string;
+  url?: string;
+  description?: string;
+  signature?: string;
+  [key: string]: string | number | undefined;
 }
 
 export interface MetagraphMetadata {
@@ -26,6 +58,8 @@ export interface MetagraphMetadata {
   network: string;
   version: string;
 }
+
+const BaseURL = "https://api.openpretrain.ai";
 
 export async function fetchTableData(): Promise<Record<string, (RunDetails | null)[]>> {
   const downloadResult = await downloadData({ key: "recent-complete.json" }).result;
@@ -43,7 +77,6 @@ export async function fetchLineChartData(fileName: string): Promise<HistoryData[
   return json;
 }
 
-// eslint-disable-next-line import/no-unused-modules
 export async function fetchMetagraphData(): Promise<{
   metadata: MetagraphMetadata;
   neuronData: NeuronDetails[];
@@ -65,9 +98,39 @@ export async function fetchMetagraphData(): Promise<{
   };
 }
 
+export async function fetchSubnetVitals(): Promise<Vitals[]> {
+  const rawResponse = await fetch(`${BaseURL}/vitals`);
+  const vitals = (await rawResponse.json()) as Vitals[];
+  return vitals;
+}
+
+export async function fetchValidators(): Promise<Validator[]> {
+  const rawResponse = await fetch(`${BaseURL}/validators`);
+  const validators = (await rawResponse.json()) as Validator[];
+  return validators;
+}
+
+export async function fetchHeatmapData(): Promise<Record<string, number>[]> {
+  const rawResponse = await fetch(`${BaseURL}/weights/0`);
+  const output = (await rawResponse.json()) as Record<string, number>[];
+  return output;
+}
+
+export async function fetchTaoPriceChangeStatistics(): Promise<TaoPriceChangeStatistics> {
+  const rawResponse = await fetch(`${BaseURL}/tao/price-change-stats`);
+  const output = (await rawResponse.json()) as TaoPriceChangeStatistics;
+  return output;
+}
+
+export async function fetchTaoPrice(): Promise<TaoPrice> {
+  const rawResponse = await fetch(`${BaseURL}/tao/price`);
+  const output = (await rawResponse.json()) as TaoPrice;
+  return output;
+}
+
 // eslint-disable-next-line import/no-unused-modules
-export async function fetchTaoStatistics(): Promise<TaoStatistics> {
-  const rawResponse = await fetch("https://taostats.io/data.json");
-  const [response] = (await rawResponse.json()) as [TaoStatistics];
-  return response;
+export async function fetchTaoCandlestick(): Promise<Candlestick[]> {
+  const rawResponse = await fetch(`${BaseURL}/tao/candlestick`);
+  const output = (await rawResponse.json()) as Candlestick[];
+  return output;
 }
