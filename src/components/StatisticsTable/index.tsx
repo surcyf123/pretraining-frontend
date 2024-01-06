@@ -27,14 +27,9 @@ export function StatisticsTable({
         cell: (info) => info.getValue(),
         id: "UID",
       }),
-      columnHelper.accessor((row) => row.timestamp, {
-        cell: (info) =>
-          new Date(info.getValue()).toLocaleString(undefined, {
-            dateStyle: "short",
-            timeStyle: "medium",
-            hour12: true,
-          }),
-        id: "Timestamp",
+      columnHelper.accessor((row) => row.block, {
+        cell: (info) => info.getValue(),
+        id: "Block",
       }),
       columnHelper.accessor((row) => row.average_loss, {
         cell: (info) => (info.getValue() ?? NaN).toFixed(4),
