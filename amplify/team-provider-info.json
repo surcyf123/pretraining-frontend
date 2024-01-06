@@ -38,8 +38,7 @@
       },
       "custom": {
         "Route53HostedZone": {},
-        "BittensorDomain": {},
-        "BittensorContainer": {}
+        "BittensorDomain": {}
       }
     }
   }
