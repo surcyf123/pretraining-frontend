@@ -14,7 +14,7 @@ export function TaoStats(): JSX.Element {
 
   return (
     <Skeleton visible={isLoading}>
-      <Group wrap="nowrap" justify="space-between">
+      <Group justify="space-between">
         <Stack align="center">
           <Text size="sm">
             Bittensor price <Code>TAO</Code>
@@ -79,6 +79,16 @@ export function TaoStats(): JSX.Element {
           <Text size="sm">Low Price</Text>
           <Text size="lg">
             {data?.lowPrice.toLocaleString(undefined, {
+              currency: "usd",
+              style: "currency",
+              maximumFractionDigits: 2,
+            })}
+          </Text>
+        </Stack>
+        <Stack align="center">
+          <Text size="sm">Previous Close Price</Text>
+          <Text size="lg">
+            {data?.prevClosePrice.toLocaleString(undefined, {
               currency: "usd",
               style: "currency",
               maximumFractionDigits: 2,
