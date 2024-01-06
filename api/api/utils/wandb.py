@@ -11,7 +11,7 @@ def fetchValidatorRuns() -> WandbApi.runs:
         f"{EntityName}/{ProjectName}",
         filters={
             "display_name": {
-                "$regex": "^validator.*"  # Ref: https://stackoverflow.com/a/3483399
+                "$regex": "^validator-4.*"  # Ref: https://stackoverflow.com/a/3483399
             }
         },
     )
