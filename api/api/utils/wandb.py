@@ -6,7 +6,7 @@ ProjectName = "pretraining-subnet"
 EntityName = "opentensor-dev"
 
 
-def fetchRuns() -> WandbApi.runs:
+def fetchValidatorRuns() -> WandbApi.runs:
     runs = WandbApi.runs(
         f"{EntityName}/{ProjectName}",
         filters={

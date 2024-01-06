@@ -13,7 +13,7 @@ from .utils.metagraph import (
     getSubnetLabels,
     convertToFloat,
 )
-from .utils.wandb import fetchRuns
+from .utils.wandb import fetchValidatorRuns
 from requests import get
 
 BaseMEXCEndpoint = "https://api.mexc.com"
@@ -192,9 +192,9 @@ def taoCandlestick():
     return convertedData
 
 
-@app.get("/wandb/latest")
-def wanbData():
-    runs = fetchRuns()
+@app.get("/wandb/validator-runs")
+def validatorRuns():
+    runs = fetchValidatorRuns()
     # TODO: add logic to filter data
     print(runs)
     return None
