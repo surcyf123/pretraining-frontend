@@ -1,23 +1,18 @@
 export interface UIDDetails {
   uid: number;
-  runid: string;
-  timestamp: number;
-  average_losses: (number | null)[];
-  average_loss: number | null;
+  block: number;
+  average_loss: number;
   win_rate: number;
   win_total: number;
-  last_update: number;
-  blacklisted: boolean;
-  weight: number | null;
+  weight: number;
 }
 
 export interface RunDetails {
-  uid_data: Record<string, UIDDetails | undefined>;
   timestamp: number;
-  pages: number[];
   uids: number[];
+  uid_data: Record<string, UIDDetails | undefined>;
+  pages: number[];
   best_average_loss: number | null;
-  best_average_loss_uid: number | null;
 }
 
 export interface HistoryData {
