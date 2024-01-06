@@ -22,7 +22,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
-import { fetchTaoStatistics } from "../../api";
+import { fetchTaoPrice } from "../../api";
 import { getSortingIcon } from "../utils";
 import { calculateRewards } from "./utils";
 import type { SelectProps, PaginationProps } from "@mantine/core";
@@ -51,9 +51,9 @@ export interface MetagraphTableProps {
 }
 
 export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Element {
-  const { data: taoStatistics, isLoading: isTaoStatisticsLoading } = useQuery({
-    queryKey: ["taoStatistics"],
-    queryFn: () => fetchTaoStatistics(),
+  const { data: taoPrice, isLoading: isTaoStatisticsLoading } = useQuery({
+    queryKey: ["taoPrice"],
+    queryFn: () => fetchTaoPrice(),
     refetchInterval: 5 * 60 * 1000,
   });
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
@@ -117,9 +117,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
       }),
       columnHelper.accessor((row) => row.emission, {
         cell: (info) =>
-          (
-            calculateRewards(info.getValue()) * Number.parseFloat(taoStatistics?.price ?? "")
-          ).toLocaleString(undefined, {
+          (calculateRewards(info.getValue()) * (taoPrice?.price ?? 0)).toLocaleString(undefined, {
             style: "currency",
             currency: "USD",
           }),
@@ -160,7 +158,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
         id: "Coldkey",
       }),
     ];
-  }, [taoStatistics?.price]);
+  }, [taoPrice?.price]);
 
   const table = useReactTable({
     state: { sorting, pagination: { pageIndex, pageSize } },

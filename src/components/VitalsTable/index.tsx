@@ -9,6 +9,7 @@ import {
   ActionIcon,
   Box,
 } from "@mantine/core";
+import { useQuery } from "@tanstack/react-query";
 import {
   createColumnHelper,
   flexRender,
@@ -18,17 +19,19 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
+import { fetchSubnetVitals } from "../../api";
 import { getSortingIcon } from "../utils";
-import type { Vitals } from "./utils";
+import type { Vitals } from "../../api";
 import type { SelectProps, PaginationProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 
-export interface VitalsTableProps {
-  data: Vitals[];
-  loading?: boolean;
-}
+export function VitalsTable(): JSX.Element {
+  const { data: vitals, isLoading } = useQuery({
+    queryKey: ["vitals"],
+    queryFn: fetchSubnetVitals,
+    refetchInterval: 10 * 60 * 1000,
+  });
 
-export function VitalsTable({ data, loading }: VitalsTableProps): JSX.Element {
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -36,40 +39,45 @@ export function VitalsTable({ data, loading }: VitalsTableProps): JSX.Element {
 
   const [sorting, setSorting] = useState<SortingState>([
     {
-      desc: false,
-      id: "Rank",
+      desc: true,
+      id: "Emission",
     },
   ]);
 
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<Vitals>();
     return [
-      columnHelper.accessor((_, index) => index, {
+      columnHelper.accessor((row) => row.netUID, {
         cell: (info) => info.getValue(),
         id: "NetUID",
       }),
-      columnHelper.accessor((row) => row.trust, {
+      columnHelper.accessor((row) => row.label, {
         cell: (info) => info.getValue(),
-        id: "Trust",
-      }),
-      columnHelper.accessor((row) => row.rank, {
-        cell: (info) => info.getValue(),
-        id: "Rank",
-      }),
-      columnHelper.accessor((row) => row.consensus, {
-        cell: (info) => info.getValue(),
-        id: "Consensus",
+        id: "Subnet",
       }),
       columnHelper.accessor((row) => row.emission, {
-        cell: (info) => info.getValue(),
+        cell: (info) =>
+          info.getValue().toLocaleString(undefined, {
+            style: "percent",
+            maximumFractionDigits: 4,
+            minimumFractionDigits: 4,
+          }),
         id: "Emission",
+      }),
+      columnHelper.accessor((row) => row.emission, {
+        cell: (info) =>
+          (info.getValue() * 7200).toLocaleString(undefined, {
+            maximumFractionDigits: 4,
+            minimumFractionDigits: 4,
+          }),
+        id: "τ/day",
       }),
     ];
   }, []);
 
   const table = useReactTable({
     state: { sorting, pagination: { pageIndex, pageSize } },
-    data,
+    data: vitals ?? [],
     columns,
     onPaginationChange: setPagination,
     onSortingChange: setSorting,
@@ -90,7 +98,7 @@ export function VitalsTable({ data, loading }: VitalsTableProps): JSX.Element {
   };
 
   return (
-    <Skeleton visible={loading ?? false}>
+    <Skeleton visible={isLoading}>
       <Stack>
         <Box
           style={{

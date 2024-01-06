@@ -5,20 +5,18 @@ from pandas import DataFrame, concat
 import uvicorn
 import bittensor
 from CacheToolsUtils import cachetools, cached
-from .utils.metagraph import (
+from .utils import (
     calculateTrust,
     calculateRank,
     calculateEmission,
     calculateConsensus,
+    getSubnetLabels,
+    convertToFloat,
 )
-from .utils.wandb import fetchRuns
 from requests import get
 
 BaseMEXCEndpoint = "https://api.mexc.com"
 app = FastAPI()
-cache = cachetools.TTLCache(
-    maxsize=33, ttl=10 * 60
-)  # ttl in seconds; maxsize is number of items
 origins = [
     "http://localhost:8080",
     "https://www.openpretrain.ai",
@@ -39,16 +37,16 @@ def root():
 
 
 @app.get("/metadata/{netuid}")
-@cached(cache=cache)
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def metadata(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
     return metagraph.metadata()
 
 
 @app.get("/neurons/{netuid}")
-@cached(cache=cache)
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def neurons(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
     records = {
         "uid": metagraph.uids.tolist(),
         "stake": metagraph.S.tolist(),
@@ -70,9 +68,12 @@ def neurons(netuid: int = 0):
 
 
 @app.get("/validators")
-@cached(cache=cache)
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def validators():
-    metagraph = bittensor.metagraph(0, lite=False, network="local", sync=True)
+    delegates = get(
+        "https://raw.githubusercontent.com/opentensor/bittensor-delegates/main/public/delegates.json"
+    ).json()
+    metagraph = bittensor.metagraph(0, lite=False, network="finney", sync=True)
     records = {
         "uid": metagraph.uids.tolist(),
         "stake": metagraph.S.tolist(),
@@ -83,14 +84,15 @@ def validators():
     records_df = DataFrame(records)
     weights_df = DataFrame(metagraph.W.tolist())
     df = concat([records_df, weights_df], axis=1)
-    output = df.to_dict(orient="records")  # transform data to array of records
+    validatorData = df.to_dict(orient="records")  # transform data to array of records
+    output = list(map(lambda x: {**x, **delegates.get(x["hotkey"], {})}, validatorData))
     return output
 
 
 @app.get("/weights/{netuid}")
-@cached(cache=cache)
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def weights(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
     weight_matrix = metagraph.W.tolist()
     formatted_weight_matrix = [
         {"validatorID": v_id, "weight": weight, "minerID": m_id}
@@ -101,16 +103,16 @@ def weights(netuid: int = 0):
 
 
 @app.get("/bonds/{netuid}")
-@cached(cache=cache)
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def bonds(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
     return metagraph.B.tolist()
 
 
 @app.get("/average-validator-trust/{netuid}")
-@cached(cache=cache)
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def average_validator_trust(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="local", sync=True)
+    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
     records = {
         "stake": metagraph.S.tolist(),
         "validatorTrust": metagraph.Tv.tolist(),
@@ -122,12 +124,12 @@ def average_validator_trust(netuid: int = 0):
 
 
 @app.get("/vitals")
-@cached(cache=cache)
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def vitals():
-    metagraph = bittensor.metagraph(0, lite=False, network="local", sync=True)
+    subnetLabels = getSubnetLabels()
+    metagraph = bittensor.metagraph(0, lite=False, network="finney", sync=True)
     weights = metagraph.W.float()
     normalizedStake = (metagraph.S / metagraph.S.sum()).clone().float()
-
     trust = calculateTrust(weights, normalizedStake)
     rank = calculateRank(weights, normalizedStake)
     consensus = calculateConsensus(trust)
@@ -140,45 +142,53 @@ def vitals():
             "emission": emission.tolist(),
         }
     )
+    df["netUID"] = subnetLabels.keys()
+    df["label"] = subnetLabels.values()
     vitals = df.to_dict(orient="records")
     return vitals
 
 
 @app.get("/tao/price-change-stats")
-@cached(cache=cache)
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def taoPriceChangeStats():
     stats = get(
         f"{BaseMEXCEndpoint}/api/v3/ticker/24hr", params={"symbol": "TAOUSDT"}
     ).json()
-    return stats
+    parsedStats = {key: convertToFloat(value) for key, value in stats.items()}
+    return parsedStats
 
 
 @app.get("/tao/price")
-# @cached(cache=cache)
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def taoTickerPrice():
-    stats = get(
+    price = get(
         f"{BaseMEXCEndpoint}/api/v3/ticker/price", params={"symbol": "TAOUSDT"}
     ).json()
-    return stats
+    parsedPrice = {key: convertToFloat(value) for key, value in price.items()}
+    return parsedPrice
 
 
 @app.get("/tao/average-price")
-# @cached(cache=cache)
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def taoAveragePrice():
-    stats = get(
+    averagePrice = get(
         f"{BaseMEXCEndpoint}/api/v3/avgPrice", params={"symbol": "TAOUSDT"}
     ).json()
-    return stats
+    parsedAveragePrice = {
+        key: convertToFloat(value) for key, value in averagePrice.items()
+    }
+    return parsedAveragePrice
 
 
 @app.get("/tao/candlestick")
-# @cached(cache=cache)
-def taoAveragePrice():
-    stats = get(
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
+def taoCandlestick():
+    candlestick = get(
         f"{BaseMEXCEndpoint}/api/v3/klines",
         params={"symbol": "TAOUSDT", "interval": "1m"},
     ).json()
-    return stats
+    convertedData = [[convertToFloat(item) for item in items] for items in candlestick]
+    return convertedData
 
 
 @app.get("/wandb/latest")
