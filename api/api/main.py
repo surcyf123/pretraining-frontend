@@ -198,7 +198,7 @@ def validatorRuns():
     runs = fetchValidatorRuns()
     parsedRuns = loads(
         dumps(runs, indent=2, ignore_nan=True)
-    )  # TO parse NaN and Infinity to null
+    )  # To parse NaN and Infinity to null
     return parsedRuns
 
 
