@@ -28,10 +28,29 @@ def extractOriginalFormatData(runs: WandbApi.runs):
     return validatorRunData
 
 
+def calculateBestAverageLoss(data: dict) -> dict:
+    output = data
+    for validatorID, validatorInfo in data.items():
+        for index, item in enumerate(validatorInfo):
+            uids = item.get("uids", [])
+            uidData = item.get("uid_data", {})
+            averageLosses = []
+            for uid in uids:
+                currentUIDData = uidData.get(str(uid), None)
+                if isinstance(currentUIDData, dict):
+                    averageLoss = currentUIDData.get("average_loss", None)
+                    averageLosses.append(averageLoss)
+            if len(averageLosses) > 0:
+                bestAverageLoss = min(averageLosses)
+                output[validatorID][index]["best_average_loss"] = bestAverageLoss
+    return output
+
+
 def fetchValidatorRuns() -> dict:
     runs = WandbApi.runs(
         f"{EntityName}/{ProjectName}",
         filters={"display_name": {"$regex": "^validator-(\d+)-(\d+)-(\d+)-(\d+)_.+$"}},
     )
     originalFormatJsonData = extractOriginalFormatData(runs)
+    updatedData = calculateBestAverageLoss(originalFormatJsonData)
     return originalFormatJsonData

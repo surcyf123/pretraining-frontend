@@ -194,9 +194,12 @@ def taoCandlestick():
 
 
 @app.get("/wandb/validator-runs")
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def validatorRuns():
     runs = fetchValidatorRuns()
-    parsedRuns = loads(dumps(runs, indent=2, ignore_nan=True)) # TO parse NaN and Infinity to null
+    parsedRuns = loads(
+        dumps(runs, indent=2, ignore_nan=True)
+    )  # TO parse NaN and Infinity to null
     return parsedRuns
 
 
