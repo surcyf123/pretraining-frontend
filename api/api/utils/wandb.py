@@ -14,8 +14,8 @@ def extractOriginalFormatData(runs: WandbApi.runs):
         runData = run.history()
         if "original_format_json" in runData.columns:
             originalFormatJsonData = runData["original_format_json"]
+            convertedData = []
             if isinstance(originalFormatJsonData, Series):
-                convertedData = []
                 targetList = originalFormatJsonData.to_list()
                 for ele in targetList:
                     if isinstance(ele, str):
@@ -24,7 +24,7 @@ def extractOriginalFormatData(runs: WandbApi.runs):
                         convertedData.append(ele)
             else:
                 convertedData = originalFormatJsonData
-        validatorRunData[run.name] = convertedData
+            validatorRunData[run.name] = convertedData
     return validatorRunData
 
 
