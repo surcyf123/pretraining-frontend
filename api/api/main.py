@@ -15,6 +15,7 @@ from .utils.metagraph import (
 )
 from .utils.wandb import fetchValidatorRuns
 from requests import get
+from simplejson import dumps, loads
 
 BaseMEXCEndpoint = "https://api.mexc.com"
 app = FastAPI()
@@ -195,9 +196,8 @@ def taoCandlestick():
 @app.get("/wandb/validator-runs")
 def validatorRuns():
     runs = fetchValidatorRuns()
-    # TODO: add logic to filter data
-    print(runs)
-    return None
+    parsedRuns = loads(dumps(runs, indent=2, ignore_nan=True)) # TO parse NaN and Infinity to null
+    return parsedRuns
 
 
 def start():
