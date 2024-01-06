@@ -9,10 +9,6 @@ EntityName = "opentensor-dev"
 def fetchValidatorRuns() -> WandbApi.runs:
     runs = WandbApi.runs(
         f"{EntityName}/{ProjectName}",
-        filters={
-            "display_name": {
-                "$regex": "^validator-4.*"  # Ref: https://stackoverflow.com/a/3483399
-            }
-        },
+        filters={"display_name": {"$regex": "^validator-(\d+)-(\d+)-(\d+)-(\d+)_.+$"}},
     )
     return runs
