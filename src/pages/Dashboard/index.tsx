@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import {
   fetchTableData,
   fetchLineChartData,
-  fetchNeuronData,
+  fetchNeuronsData,
   fetchMetagraphMetadata,
 } from "../../api";
 import { BestLossChart } from "../../charts/BestLossChart";
@@ -68,7 +68,7 @@ export function Dashboard() {
     isLoading: isLoadingNeuronDetails,
   } = useQuery({
     queryKey: ["neuronDetails"],
-    queryFn: () => fetchNeuronData(9),
+    queryFn: () => fetchNeuronsData(9),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });

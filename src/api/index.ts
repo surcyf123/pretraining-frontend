@@ -78,7 +78,7 @@ export async function fetchMetagraphMetadata(netUID: number): Promise<MetagraphM
   return metadata;
 }
 
-export async function fetchNeuronData(netUID: number): Promise<NeuronDetails[]> {
+export async function fetchNeuronsData(netUID: number): Promise<NeuronDetails[]> {
   const rawResponse = await fetch(`${BaseURL}/neurons/${netUID}`);
   const neuronDetails = (await rawResponse.json()) as NeuronDetails[];
   return neuronDetails;
