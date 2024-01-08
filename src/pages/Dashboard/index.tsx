@@ -63,26 +63,26 @@ export function Dashboard() {
   });
 
   const {
-    data: neuronDetails,
-    isRefetching: isRefetchingNeuronDetails,
-    isLoading: isLoadingNeuronDetails,
+    data: neurons,
+    isRefetching: isRefetchingNeurons,
+    isLoading: isLoadingNeurons,
   } = useQuery({
-    queryKey: ["neuronDetails"],
+    queryKey: ["neurons"],
     queryFn: () => fetchNeurons(9),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
 
   const averageValidatorTrust = useMemo(
-    () => calculateAverageValidatorTrust(neuronDetails ?? []),
-    [neuronDetails],
+    () => calculateAverageValidatorTrust(neurons ?? []),
+    [neurons],
   );
 
   const isRefetching =
     isRefetchingRecentUIDJSON === true ||
     isRefetchingHistoryJSON === true ||
     isRefetchingRecentJSON === true ||
-    isRefetchingNeuronDetails === true ||
+    isRefetchingNeurons === true ||
     isRefetchingMetagraphMetadata === true;
 
   const { colorScheme } = useMantineColorScheme();
@@ -219,7 +219,7 @@ export function Dashboard() {
         <StatisticsTable data={tableData} loading={isRecentUIDJSONLoading} />
       </Card>
       <Card shadow="md">
-        <MetagraphTable data={neuronDetails ?? []} loading={isLoadingNeuronDetails} />
+        <MetagraphTable data={neurons ?? []} loading={isLoadingNeurons} />
       </Card>
       {isRefetching === true ? (
         <Loader color="blue" type="bars" pos="fixed" left="20px" bottom="20px" />
