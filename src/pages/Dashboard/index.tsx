@@ -30,7 +30,7 @@ export function Dashboard() {
     isRefetching: isRefetchingHistoryJSON,
   } = useQuery({
     queryKey: ["historyJSON"],
-    queryFn: () => fetchLineChartData(30),
+    queryFn: () => fetchLineChartData("history.json"),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
@@ -41,7 +41,7 @@ export function Dashboard() {
     isRefetching: isRefetchingRecentJSON,
   } = useQuery({
     queryKey: ["recentJSON"],
-    queryFn: () => fetchLineChartData(3),
+    queryFn: () => fetchLineChartData("recent.json"),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
