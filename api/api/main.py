@@ -13,7 +13,11 @@ from .utils.metagraph import (
     getSubnetLabels,
     convertToFloat,
 )
-from .utils.wandb import fetchValidatorRuns, transformValidatorRuns
+from .utils.wandb import (
+    fetchValidatorRuns,
+    transformValidatorRuns,
+    smoothBestAverageLoss,
+)
 from requests import get
 from simplejson import dumps, loads
 
@@ -207,8 +211,9 @@ def validatorRuns(days: int = 30):
 def linechartData(days: int = 30):
     runs = fetchValidatorRuns(days)
     transformedData = transformValidatorRuns(runs)
+    smoothedBestAverageLoss = smoothBestAverageLoss(transformedData)
     parsedRuns = loads(
-        dumps(transformedData, indent=2, ignore_nan=True)
+        dumps(smoothedBestAverageLoss, indent=2, ignore_nan=True)
     )  # To parse NaN and Infinity to null
     return parsedRuns
 
