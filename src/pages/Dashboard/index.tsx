@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import {
   fetchTableData,
   fetchLineChartData,
-  fetchMetagraphData,
+  fetchNeuronData,
   fetchMetagraphMetadata,
 } from "../../api";
 import { BestLossChart } from "../../charts/BestLossChart";
@@ -62,28 +62,27 @@ export function Dashboard() {
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
 
-  // TODO: Remove this query function
   const {
-    data: metagraphDetails,
-    isRefetching: isRefetchingMetagraphJSON,
-    isLoading: isLoadingMetagraphJSON,
+    data: neuronDetails,
+    isRefetching: isRefetchingNeuronDetails,
+    isLoading: isLoadingNeuronDetails,
   } = useQuery({
-    queryKey: ["metagraphJSON"],
-    queryFn: () => fetchMetagraphData(),
+    queryKey: ["neuronDetails"],
+    queryFn: () => fetchNeuronData(9),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
 
   const averageValidatorTrust = useMemo(
-    () => calculateAverageValidatorTrust(metagraphDetails?.neuronData ?? []),
-    [metagraphDetails?.neuronData],
+    () => calculateAverageValidatorTrust(neuronDetails ?? []),
+    [neuronDetails],
   );
 
   const isRefetching =
     isRefetchingRecentUIDJSON === true ||
     isRefetchingHistoryJSON === true ||
     isRefetchingRecentJSON === true ||
-    isRefetchingMetagraphJSON === true ||
+    isRefetchingNeuronDetails === true ||
     isRefetchingMetagraphMetadata === true;
 
   const { colorScheme } = useMantineColorScheme();
@@ -220,10 +219,7 @@ export function Dashboard() {
         <StatisticsTable data={tableData} loading={isRecentUIDJSONLoading} />
       </Card>
       <Card shadow="md">
-        <MetagraphTable
-          data={metagraphDetails?.neuronData ?? []}
-          loading={isLoadingMetagraphJSON}
-        />
+        <MetagraphTable data={neuronDetails ?? []} loading={isLoadingNeuronDetails} />
       </Card>
       {isRefetching === true ? (
         <Loader color="blue" type="bars" pos="fixed" left="20px" bottom="20px" />

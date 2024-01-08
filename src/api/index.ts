@@ -1,4 +1,3 @@
-import { downloadData } from "aws-amplify/storage";
 import type { NeuronDetails } from "../components/MetagraphTable";
 import type { LineChartData, RunDetails } from "../utils";
 
@@ -79,25 +78,10 @@ export async function fetchMetagraphMetadata(netUID: number): Promise<MetagraphM
   return metadata;
 }
 
-export async function fetchMetagraphData(): Promise<{
-  metadata: MetagraphMetadata;
-  neuronData: NeuronDetails[];
-}> {
-  const downloadResult = await downloadData({ key: "metagraph.json" }).result;
-  // Ref: https://docs.amplify.aws/javascript/build-a-backend/storage/download/#get-the-text-value-of-downloaded-file
-  const text = await downloadResult.body.text(); // Using "downloadResult.body.json()" gives error "Parsing response to json is not implemented."
-
-  const json = JSON.parse(text) as {
-    metadata: [MetagraphMetadata];
-    neuronData: NeuronDetails[];
-  };
-
-  const [metadata] = json.metadata;
-
-  return {
-    metadata,
-    neuronData: json.neuronData,
-  };
+export async function fetchNeuronData(netUID: number): Promise<NeuronDetails[]> {
+  const rawResponse = await fetch(`${BaseURL}/neurons/${netUID}`);
+  const neuronDetails = (await rawResponse.json()) as NeuronDetails[];
+  return neuronDetails;
 }
 
 export async function fetchSubnetVitals(): Promise<Vitals[]> {
@@ -130,7 +114,6 @@ export async function fetchTaoPrice(): Promise<TaoPrice> {
   return output;
 }
 
-// eslint-disable-next-line import/no-unused-modules
 export async function fetchTaoCandlestick(): Promise<Candlestick[]> {
   const rawResponse = await fetch(`${BaseURL}/tao/candlestick`);
   const output = (await rawResponse.json()) as Candlestick[];
