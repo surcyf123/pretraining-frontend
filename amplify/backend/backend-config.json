@@ -41,36 +41,7 @@
       "service": "customCloudformation"
     }
   },
-  "function": {
-    "wandb": {
-      "build": true,
-      "dependsOn": [
-        {
-          "attributes": [
-            "BucketName"
-          ],
-          "category": "storage",
-          "resourceName": "s359bce836"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "wandbHistory": {
-      "build": true,
-      "dependsOn": [
-        {
-          "attributes": [
-            "BucketName"
-          ],
-          "category": "storage",
-          "resourceName": "s359bce836"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    }
-  },
+  "function": {},
   "hosting": {
     "amplifyhosting": {
       "providerPlugin": "awscloudformation",
@@ -79,54 +50,6 @@
     }
   },
   "parameters": {
-    "AMPLIFY_function_wandbHistory_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "wandbHistory"
-        }
-      ]
-    },
-    "AMPLIFY_function_wandbHistory_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "wandbHistory"
-        }
-      ]
-    },
-    "AMPLIFY_function_wandbHistory_wandbApiKey": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "wandbHistory"
-        }
-      ]
-    },
-    "AMPLIFY_function_wandb_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "wandb"
-        }
-      ]
-    },
-    "AMPLIFY_function_wandb_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "wandb"
-        }
-      ]
-    },
-    "AMPLIFY_function_wandb_wandbApiKey": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "wandb"
-        }
-      ]
-    },
     "AMPLIFY_hosting_amplifyhosting_appId": {
       "usedBy": [
         {
@@ -144,11 +67,5 @@
       ]
     }
   },
-  "storage": {
-    "s359bce836": {
-      "dependsOn": [],
-      "providerPlugin": "awscloudformation",
-      "service": "S3"
-    }
-  }
+  "storage": {}
 }
