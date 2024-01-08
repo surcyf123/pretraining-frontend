@@ -1,6 +1,6 @@
 import { downloadData } from "aws-amplify/storage";
 import type { NeuronDetails } from "../components/MetagraphTable";
-import type { HistoryData, RunDetails } from "../utils";
+import type { LineChartData, RunDetails } from "../utils";
 
 export type Candlestick = [number, number, number, number, number]; // [Date, Opening price, Highest price, Lowest price, Closing price]
 
@@ -62,16 +62,16 @@ export interface MetagraphMetadata {
 const BaseURL = "https://api.openpretrain.ai";
 
 export async function fetchTableData(): Promise<Record<string, (RunDetails | null)[]>> {
-  const rawResponse = await fetch(`${BaseURL}/wandb/validator-runs`);
+  const rawResponse = await fetch(`${BaseURL}/wandb/validator-runs/3`);
   const validatorRuns = (await rawResponse.json()) as Record<string, (RunDetails | null)[]>;
   return validatorRuns;
 }
 
-export async function fetchLineChartData(fileName: string): Promise<HistoryData[]> {
+export async function fetchLineChartData(fileName: string): Promise<LineChartData[]> {
   const downloadResult = await downloadData({ key: fileName }).result;
   // Ref: https://docs.amplify.aws/javascript/build-a-backend/storage/download/#get-the-text-value-of-downloaded-file
   const text = await downloadResult.body.text(); // Using "downloadResult.body.json()" gives error "Parsing response to json is not implemented."
-  const json = JSON.parse(text) as HistoryData[];
+  const json = JSON.parse(text) as LineChartData[];
   return json;
 }
 
