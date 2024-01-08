@@ -13,7 +13,7 @@ from .utils.metagraph import (
     getSubnetLabels,
     convertToFloat,
 )
-from .utils.wandb import fetchValidatorRuns
+from .utils.wandb import fetchValidatorRuns, transformValidatorRuns
 from requests import get
 from simplejson import dumps, loads
 
@@ -192,12 +192,23 @@ def taoCandlestick():
     return convertedData
 
 
-@app.get("/wandb/validator-runs")
+@app.get("/wandb/validator-runs/{days}")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
-def validatorRuns():
-    runs = fetchValidatorRuns()
+def validatorRuns(days: int = 30):
+    runs = fetchValidatorRuns(days)
     parsedRuns = loads(
         dumps(runs, indent=2, ignore_nan=True)
+    )  # To parse NaN and Infinity to null
+    return parsedRuns
+
+
+@app.get("/wandb/linechart/{days}")
+@cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
+def linechartData(days: int = 3):
+    runs = fetchValidatorRuns(days)
+    transformedData = transformValidatorRuns(runs)
+    parsedRuns = loads(
+        dumps(transformedData, indent=2, ignore_nan=True)
     )  # To parse NaN and Infinity to null
     return parsedRuns
 
