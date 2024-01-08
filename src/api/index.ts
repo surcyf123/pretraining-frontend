@@ -73,6 +73,12 @@ export async function fetchLineChartData(days: number): Promise<LineChartData[]>
   return lineChartData;
 }
 
+export async function fetchMetagraphMetadata(netUID: number): Promise<MetagraphMetadata> {
+  const rawResponse = await fetch(`${BaseURL}/metadata/${netUID}`);
+  const metadata = (await rawResponse.json()) as MetagraphMetadata;
+  return metadata;
+}
+
 export async function fetchMetagraphData(): Promise<{
   metadata: MetagraphMetadata;
   neuronData: NeuronDetails[];

@@ -2,7 +2,12 @@ import { Card, Stack, useMantineColorScheme, Group, Loader, Divider } from "@man
 import { useQuery } from "@tanstack/react-query";
 import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
-import { fetchTableData, fetchLineChartData, fetchMetagraphData } from "../../api";
+import {
+  fetchTableData,
+  fetchLineChartData,
+  fetchMetagraphData,
+  fetchMetagraphMetadata,
+} from "../../api";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { MetaBox } from "../../components/MetaBox";
@@ -47,6 +52,18 @@ export function Dashboard() {
   });
 
   const {
+    data: metagraphMetadata,
+    isRefetching: isRefetchingMetagraphMetadata,
+    isLoading: isLoadingMetagraphMetadata,
+  } = useQuery({
+    queryKey: ["metagraphMetadata"],
+    queryFn: () => fetchMetagraphMetadata(9),
+    refetchInterval: 10 * 60 * 1000,
+    // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
+  });
+
+  // TODO: Remove this query function
+  const {
     data: metagraphDetails,
     isRefetching: isRefetchingMetagraphJSON,
     isLoading: isLoadingMetagraphJSON,
@@ -66,7 +83,8 @@ export function Dashboard() {
     isRefetchingRecentUIDJSON === true ||
     isRefetchingHistoryJSON === true ||
     isRefetchingRecentJSON === true ||
-    isRefetchingMetagraphJSON === true;
+    isRefetchingMetagraphJSON === true ||
+    isRefetchingMetagraphMetadata === true;
 
   const { colorScheme } = useMantineColorScheme();
   const processedData = useMemo<UIDDetails[]>(() => {
@@ -116,7 +134,7 @@ export function Dashboard() {
 
   return (
     <Stack>
-      <MetaBox data={metagraphDetails?.metadata} loading={isLoadingMetagraphJSON} />
+      <MetaBox data={metagraphMetadata} loading={isLoadingMetagraphMetadata} />
       <Divider />
       <TopBar
         metrics={{
@@ -202,7 +220,10 @@ export function Dashboard() {
         <StatisticsTable data={tableData} loading={isRecentUIDJSONLoading} />
       </Card>
       <Card shadow="md">
-        <MetagraphTable data={metagraphDetails?.neuronData ?? []} />
+        <MetagraphTable
+          data={metagraphDetails?.neuronData ?? []}
+          loading={isLoadingMetagraphJSON}
+        />
       </Card>
       {isRefetching === true ? (
         <Loader color="blue" type="bars" pos="fixed" left="20px" bottom="20px" />
