@@ -3,6 +3,7 @@ from pandas import Series
 from json import loads
 from datetime import datetime, timedelta
 from pandas import DataFrame
+from math import nan
 
 login()
 WandbApi = Api()
@@ -73,7 +74,7 @@ def transformValidatorRuns(runs: WandbApi.runs):
                 {
                     "key": validatorID,
                     "best_average_loss": item.get("best_average_loss", None),
-                    "timestamp": item.get("timestamp", None),
+                    "timestamp": item.get("timestamp", nan) * 1000 , # Convert 'sec' to 'ms' for 'js'.
                 }
             )
     return output
