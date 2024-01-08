@@ -199,7 +199,7 @@ export function Dashboard() {
         </Card>
       </Group>
       <Card shadow="md">
-        <StatisticsTable data={tableData} loading={isRecentUIDJSONLoading}/>
+        <StatisticsTable data={tableData} loading={isRecentUIDJSONLoading} />
       </Card>
       <Card shadow="md">
         <MetagraphTable data={metagraphDetails?.neuronData ?? []} />
