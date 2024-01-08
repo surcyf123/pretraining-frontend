@@ -204,7 +204,7 @@ def validatorRuns(days: int = 30):
 
 @app.get("/wandb/line-chart/{days}")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
-def linechartData(days: int = 30):
+def lineChartData(days: int = 30):
     runs = fetchValidatorRuns(days)
     transformedData = transformValidatorRuns(runs)
     parsedRuns = loads(
