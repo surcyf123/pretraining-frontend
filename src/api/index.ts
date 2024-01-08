@@ -62,7 +62,7 @@ export interface MetagraphMetadata {
 const BaseURL = "https://api.openpretrain.ai";
 
 export async function fetchTableData(): Promise<Record<string, (RunDetails | null)[]>> {
-  const rawResponse = await fetch(`${BaseURL}/wandb/validator-runs`);
+  const rawResponse = await fetch(`${BaseURL}/wandb/validator-runs/3`);
   const validatorRuns = (await rawResponse.json()) as Record<string, (RunDetails | null)[]>;
   return validatorRuns;
 }
