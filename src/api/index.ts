@@ -1,6 +1,6 @@
 import { downloadData } from "aws-amplify/storage";
 import type { NeuronDetails } from "../components/MetagraphTable";
-import type { HistoryData, RunDetails } from "../utils";
+import type { LineChartData, RunDetails } from "../utils";
 
 export type Candlestick = [number, number, number, number, number]; // [Date, Opening price, Highest price, Lowest price, Closing price]
 
@@ -67,11 +67,11 @@ export async function fetchTableData(): Promise<Record<string, (RunDetails | nul
   return validatorRuns;
 }
 
-export async function fetchLineChartData(fileName: string): Promise<HistoryData[]> {
+export async function fetchLineChartData(fileName: string): Promise<LineChartData[]> {
   const downloadResult = await downloadData({ key: fileName }).result;
   // Ref: https://docs.amplify.aws/javascript/build-a-backend/storage/download/#get-the-text-value-of-downloaded-file
   const text = await downloadResult.body.text(); // Using "downloadResult.body.json()" gives error "Parsing response to json is not implemented."
-  const json = JSON.parse(text) as HistoryData[];
+  const json = JSON.parse(text) as LineChartData[];
   return json;
 }
 
@@ -132,4 +132,3 @@ export async function fetchTaoCandlestick(): Promise<Candlestick[]> {
   const output = (await rawResponse.json()) as Candlestick[];
   return output;
 }
-

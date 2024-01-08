@@ -13,7 +13,7 @@ import {
 import { getInstanceByDom, init, use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { useRef, useEffect, useMemo } from "react";
-import type { HistoryData } from "../../utils";
+import type { LineChartData } from "../../utils";
 import type { LineSeriesOption } from "echarts/charts";
 import type {
   TitleComponentOption,
@@ -47,7 +47,7 @@ use([
 
 export interface BestLossChartProps {
   theme?: "light" | "dark";
-  data: HistoryData[];
+  data: LineChartData[];
   xAxis: string;
   yAxis: string;
   xAxisTitle: string;
@@ -140,7 +140,7 @@ export function BestLossChart({
             let output = "";
             if (Array.isArray(params) && params.length > 0) {
               const { timestamp, best_average_loss: bestAverageLoss } = params[0]
-                .data as HistoryData;
+                .data as LineChartData;
               output = `
               <div>
                 <span>${xAxisTitle}: ${new Date(timestamp).toLocaleString(undefined, {
