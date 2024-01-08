@@ -12,7 +12,6 @@ EntityName = "opentensor-dev"
 def extractOriginalFormatData(runs: WandbApi.runs):
     validatorRunData = {}
     for run in runs:
-        print(run.name)
         runData = run.history()
         if "original_format_json" in runData.columns:
             originalFormatJsonData = runData["original_format_json"]
