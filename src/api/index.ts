@@ -67,12 +67,10 @@ export async function fetchTableData(): Promise<Record<string, (RunDetails | nul
   return validatorRuns;
 }
 
-export async function fetchLineChartData(fileName: string): Promise<LineChartData[]> {
-  const downloadResult = await downloadData({ key: fileName }).result;
-  // Ref: https://docs.amplify.aws/javascript/build-a-backend/storage/download/#get-the-text-value-of-downloaded-file
-  const text = await downloadResult.body.text(); // Using "downloadResult.body.json()" gives error "Parsing response to json is not implemented."
-  const json = JSON.parse(text) as LineChartData[];
-  return json;
+export async function fetchLineChartData(days: number): Promise<LineChartData[]> {
+  const rawResponse = await fetch(`${BaseURL}/wandb/line-chart/${days}`);
+  const lineChartData = (await rawResponse.json()) as LineChartData[];
+  return lineChartData;
 }
 
 export async function fetchMetagraphData(): Promise<{
