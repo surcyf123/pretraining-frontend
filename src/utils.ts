@@ -15,7 +15,7 @@ export interface RunDetails {
   best_average_loss: number | null;
 }
 
-export interface HistoryData {
+export interface LineChartData {
   key: string;
   best_average_loss: number | null;
   timestamp: number;

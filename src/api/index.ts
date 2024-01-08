@@ -132,3 +132,4 @@ export async function fetchTaoCandlestick(): Promise<Candlestick[]> {
   const output = (await rawResponse.json()) as Candlestick[];
   return output;
 }
+
