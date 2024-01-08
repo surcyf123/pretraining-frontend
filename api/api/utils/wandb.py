@@ -47,14 +47,26 @@ def calculateBestAverageLoss(data: dict) -> dict:
     return output
 
 
-def fetchValidatorRuns() -> dict:
+def transformValidatorRuns(runs: WandbApi.runs):
+    output = []
+    for validatorID, validatorInfo in runs.items():
+         for item in validatorInfo:
+             output.append({
+                 "key":validatorID,
+                 "best_average_loss":item.get("best_average_loss", None),
+                 "timestamp": item.get("timestamp", None)
+             })
+    return output
+
+
+def fetchValidatorRuns(days: int) -> dict:
     runs = WandbApi.runs(
         f"{EntityName}/{ProjectName}",
         filters={
             "created_at": {
-                "$gte": (datetime.now() - timedelta(days=30)).strftime(
+                "$gte": (datetime.now() - timedelta(days=days)).strftime(
                     "%Y-%m-%dT%H:%M:%S"
-                )  # fetch data for previous 30 days
+                )  # fetch data for previous n days
             },
             "display_name": {"$regex": "^validator-(\d+)-(\d+)-(\d+)-(\d+)_.+$"},
         },
