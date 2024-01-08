@@ -2,11 +2,29 @@ from wandb import login, Api
 from pandas import Series
 from json import loads
 from datetime import datetime, timedelta
+from pandas import DataFrame
 
 login()
 WandbApi = Api()
 ProjectName = "pretraining-subnet"
 EntityName = "opentensor-dev"
+
+
+def smoothBestAverageLoss(data):
+    df = DataFrame(data).sort_values("timestamp")
+    groupedData = df.groupby("key")
+    # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.rolling.html
+    df["smoothed_best_average_loss"] = (
+        groupedData["best_average_loss"]
+        .rolling(
+            window=40,  # Window size.
+            min_periods=10,  # Minimum entries required to calculate data.
+        )
+        .mean()
+        .reset_index(0, drop=True)
+    )  # drop the index column
+    output = df.to_dict(orient="records")
+    return output
 
 
 def extractOriginalFormatData(runs: WandbApi.runs):
@@ -50,12 +68,14 @@ def calculateBestAverageLoss(data: dict) -> dict:
 def transformValidatorRuns(runs: WandbApi.runs):
     output = []
     for validatorID, validatorInfo in runs.items():
-         for item in validatorInfo:
-             output.append({
-                 "key":validatorID,
-                 "best_average_loss":item.get("best_average_loss", None),
-                 "timestamp": item.get("timestamp", None)
-             })
+        for item in validatorInfo:
+            output.append(
+                {
+                    "key": validatorID,
+                    "best_average_loss": item.get("best_average_loss", None),
+                    "timestamp": item.get("timestamp", None),
+                }
+            )
     return output
 
 
