@@ -23,7 +23,7 @@ export function Subnet(): JSX.Element {
         yAxis="validatorID"
         visualAxis="weight"
         visualAxisLabel="Weight"
-        xAxisLabel="NetUID"
+        xAxisLabel="Neuron"
         yAxisLabel="Validator"
         loading={isHeatmapDataLoading}
       />
