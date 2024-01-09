@@ -4,6 +4,7 @@ import { Dashboard } from "./pages/Dashboard";
 import { ErrorPage } from "./pages/ErrorPage";
 import { General } from "./pages/General";
 import { Home } from "./pages/Home";
+import { Subnet } from "./pages/Subnet";
 
 export const Routers = createBrowserRouter([
   {
@@ -29,7 +30,7 @@ export const Routers = createBrowserRouter([
       },
       {
         path: ":subnet", // Ref: https://reactrouter.com/en/main/route/route
-        element: <>Heatmap</>,
+        element: <Subnet />,
       },
     ],
   },
