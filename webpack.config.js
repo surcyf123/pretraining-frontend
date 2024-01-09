@@ -86,7 +86,7 @@ module.exports = (env) => {
     output: {
       path: path.resolve(__dirname, "dist/bundle"),
       filename: "bundle.js",
-      publicPath: '/' // Ref: https://stackoverflow.com/a/43212553
+      publicPath: "/", // Ref: https://stackoverflow.com/a/43212553
     },
     plugins,
   };
