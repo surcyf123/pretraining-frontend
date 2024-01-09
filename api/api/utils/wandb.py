@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from pandas import DataFrame
 from math import nan
 from numpy import concatenate
+from itertools import groupby
 
 login()
 WandbApi = Api()
@@ -75,16 +76,23 @@ def transformValidatorRuns(runs: WandbApi.runs):
                 {
                     "key": validatorID,
                     "best_average_loss": item.get("best_average_loss", None),
-                    "timestamp": item.get("timestamp", nan) * 1000 , # Convert 'sec' to 'ms' for 'js'.
+                    "timestamp": item.get("timestamp", nan)
+                    * 1000,  # Convert 'sec' to 'ms' for 'js'.
                 }
             )
     return output
 
 
 def extractUIDData(runData: dict):
-    UIDValues = list(filter(lambda x: x is not None,  concatenate(list(runData.values())))) # Ref: https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html
+    UIDValues = list(
+        filter(lambda x: x is not None, concatenate(list(runData.values())))
+    )  # Ref: https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html
     output = concatenate([list(item["uid_data"].values()) for item in UIDValues])
-    return output.tolist()
+    sortedOutput = sorted(output, key=lambda x: x["block"], reverse=True) # sort in descending order
+    groupedData = groupby(sortedOutput, key=lambda x: x["uid"])
+    uids = [list(group)[0] for _key, group in groupedData] # first element of every uid
+    return uids
+
 
 def fetchValidatorRuns(days: int) -> dict:
     runs = WandbApi.runs(

@@ -17,7 +17,7 @@ from .utils.wandb import (
     fetchValidatorRuns,
     transformValidatorRuns,
     smoothBestAverageLoss,
-    extractUIDData
+    extractUIDData,
 )
 from requests import get
 from simplejson import dumps, loads
