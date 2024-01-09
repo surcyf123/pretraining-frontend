@@ -3,12 +3,12 @@ import { useParams } from "react-router-dom";
 import { Heatmap } from "../../charts/Heatmap";
 
 export function Subnet(): JSX.Element {
-  const { subnet } = useParams<{ subnet: string }>(); // Ref: https://reactrouter.com/en/main/hooks/use-params
+  const { netuid } = useParams<{ netuid: string }>();
   const { colorScheme } = useMantineColorScheme();
   return (
     <Card>
       <Heatmap
-        title={subnet}
+        title={netuid}
         style={{ height: "50vh" }}
         theme={colorScheme === "auto" ? "dark" : colorScheme}
         // TODO: Add data
