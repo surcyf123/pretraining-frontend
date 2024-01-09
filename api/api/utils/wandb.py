@@ -5,6 +5,8 @@ from datetime import datetime, timedelta
 from pandas import DataFrame
 from math import nan
 from numpy import concatenate
+from itertools import groupby
+from math import isnan, isinf
 
 login()
 WandbApi = Api()
@@ -75,16 +77,38 @@ def transformValidatorRuns(runs: WandbApi.runs):
                 {
                     "key": validatorID,
                     "best_average_loss": item.get("best_average_loss", None),
-                    "timestamp": item.get("timestamp", nan) * 1000 , # Convert 'sec' to 'ms' for 'js'.
+                    "timestamp": item.get("timestamp", nan)
+                    * 1000,  # Convert 'sec' to 'ms' for 'js'.
                 }
             )
     return output
 
 
-def extractUIDData(runData: dict):
-    UIDValues = list(filter(lambda x: x is not None,  concatenate(list(runData.values())))) # Ref: https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html
-    output = concatenate([list(item["uid_data"].values()) for item in UIDValues])
-    return output.tolist()
+def filterUID(item) -> bool:
+    output = True
+    if item["block"] is None or isnan(item["block"]) or isinf(item["block"]):
+        output = False
+    elif (
+        item["average_loss"] is None
+        or isnan(item["average_loss"])
+        or isinf(item["average_loss"])
+    ):
+        output = False
+    return output
+
+
+def extractUIDs(runData: dict):
+    runs = list(
+        filter(lambda x: x is not None, concatenate(list(runData.values())))
+    )  # Ref: https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html
+    uids = concatenate([list(item["uid_data"].values()) for item in runs])
+    sortedUIDs = list(
+        filter(filterUID, sorted(uids, key=lambda x: x["block"], reverse=True))
+    )  # sort in descending order
+    groups = groupby(sortedUIDs, key=lambda x: x["uid"])
+    output = [list(group)[0] for _key, group in groups]  # first element of every uid
+    return output
+
 
 def fetchValidatorRuns(days: int) -> dict:
     runs = WandbApi.runs(
