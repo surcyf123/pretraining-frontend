@@ -6,6 +6,7 @@ from pandas import DataFrame
 from math import nan
 from numpy import concatenate
 from itertools import groupby
+from math import isnan,isinf
 
 login()
 WandbApi = Api()
@@ -82,13 +83,22 @@ def transformValidatorRuns(runs: WandbApi.runs):
             )
     return output
 
+def filterUIDData(item)->bool:
+    output=True
+    if item["block"] is None or isnan(item["block"]) or isinf(item["block"]):
+        output=False
+    elif item["average_loss"] is None or isnan(item["average_loss"]) or isinf(item["average_loss"]):
+        output=False
+    return output
+    
+
 
 def extractUIDData(runData: dict):
     UIDValues = list(
         filter(lambda x: x is not None, concatenate(list(runData.values())))
     )  # Ref: https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html
     output = concatenate([list(item["uid_data"].values()) for item in UIDValues])
-    sortedOutput = sorted(output, key=lambda x: x["block"], reverse=True) # sort in descending order
+    sortedOutput = list(filter(filterUIDData, sorted(output, key=lambda x: x["block"], reverse=True))) # sort in descending order
     groupedData = groupby(sortedOutput, key=lambda x: x["uid"])
     uids = [list(group)[0] for _key, group in groupedData] # first element of every uid
     return uids
