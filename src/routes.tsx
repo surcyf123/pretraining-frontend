@@ -29,7 +29,7 @@ export const Routers = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: ":subnet", // Ref: https://reactrouter.com/en/main/route/route
+        path: "subnet/:netuid", // Ref: https://reactrouter.com/en/main/route/route
         element: <Subnet />,
       },
     ],
