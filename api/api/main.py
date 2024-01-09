@@ -203,7 +203,7 @@ def validatorRuns(days: int = 30):
     runs = fetchValidatorRuns(days)
     uids = extractUIDData(runs)
     parsedRuns = loads(
-        dumps(runDetails, indent=2, ignore_nan=True)
+        dumps(uids, indent=2, ignore_nan=True)
     )  # To parse NaN and Infinity to null
     return parsedRuns
 
