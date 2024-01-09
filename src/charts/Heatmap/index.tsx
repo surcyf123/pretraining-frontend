@@ -99,7 +99,7 @@ export function Heatmap({
         textStyle: {
           fontFamily: "Space Mono, Courier, monospace",
         },
-        grid: { bottom: "25%", top: "15%", right: "5%", left: "5%" },
+        grid: { bottom: "15%", top: "15%", right: "5%", left: "5%" },
         xAxis: {
           type: "category",
           name: xAxisLabel ?? xAxis,

@@ -15,15 +15,15 @@ export function Subnet(): JSX.Element {
   return (
     <Card>
       <Heatmap
-        title={netuid}
-        style={{ height: "50vh" }}
+        title={`Subnet: ${netuid}`}
+        style={{ height: "70vh" }}
         theme={colorScheme === "auto" ? "dark" : colorScheme}
         data={heatmapData ?? []}
         xAxis="minerID"
         yAxis="validatorID"
         visualAxis="weight"
         visualAxisLabel="Weight"
-        xAxisLabel="NetUID"
+        xAxisLabel="Neuron"
         yAxisLabel="Validator"
         loading={isHeatmapDataLoading}
       />
