@@ -201,9 +201,9 @@ def taoCandlestick():
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def validatorRuns(days: int = 30):
     runs = fetchValidatorRuns(days)
-    UIDData = extractUIDData(runs)
+    runDetails = extractUIDData(runs)
     parsedRuns = loads(
-        dumps(UIDData, indent=2, ignore_nan=True)
+        dumps(runDetails, indent=2, ignore_nan=True)
     )  # To parse NaN and Infinity to null
     return parsedRuns
 
