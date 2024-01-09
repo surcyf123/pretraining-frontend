@@ -10,7 +10,7 @@ import { VitalsTable } from "../../components/VitalsTable";
 export function General(): JSX.Element {
   const { colorScheme } = useMantineColorScheme();
   const { data: heatmapData, isLoading: isHeatmapDataLoading } = useQuery({
-    queryKey: ["heatmapData"],
+    queryKey: ["heatmap"],
     queryFn: () => fetchHeatmapData(0),
     refetchInterval: 10 * 60 * 1000,
   });
