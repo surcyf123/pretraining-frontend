@@ -86,6 +86,7 @@ export function Dashboard() {
     isRefetchingMetagraphMetadata === true;
 
   const { colorScheme } = useMantineColorScheme();
+  // TODO: remove this logic  (data processing is being done in backend)
   const processedData = useMemo<UIDDetails[]>(() => {
     let output: UIDDetails[] = [];
     if (isRecentUIDJSONLoading === false && recentUIDJSON !== undefined) {
