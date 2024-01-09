@@ -97,7 +97,7 @@ def filterUID(item) -> bool:
     return output
 
 
-def extractUIDData(runData: dict):
+def extractUIDs(runData: dict):
     runs = list(
         filter(lambda x: x is not None, concatenate(list(runData.values())))
     )  # Ref: https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html
