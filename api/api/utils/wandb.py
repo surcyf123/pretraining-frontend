@@ -92,16 +92,15 @@ def filterUIDData(item)->bool:
     return output
     
 
-
 def extractUIDData(runData: dict):
-    UIDValues = list(
+    runs = list(
         filter(lambda x: x is not None, concatenate(list(runData.values())))
     )  # Ref: https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html
-    output = concatenate([list(item["uid_data"].values()) for item in UIDValues])
-    sortedOutput = list(filter(filterUIDData, sorted(output, key=lambda x: x["block"], reverse=True))) # sort in descending order
-    groupedData = groupby(sortedOutput, key=lambda x: x["uid"])
-    uids = [list(group)[0] for _key, group in groupedData] # first element of every uid
-    return uids
+    uids = concatenate([list(item["uid_data"].values()) for item in runs])
+    sortedUIDs = list(filter(filterUIDData, sorted(uids, key=lambda x: x["block"], reverse=True))) # sort in descending order
+    groups = groupby(sortedUIDs, key=lambda x: x["uid"])
+    output = [list(group)[0] for _key, group in groups] # first element of every uid
+    return output
 
 
 def fetchValidatorRuns(days: int) -> dict:
