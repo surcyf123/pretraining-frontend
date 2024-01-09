@@ -4,6 +4,7 @@ from json import loads
 from datetime import datetime, timedelta
 from pandas import DataFrame
 from math import nan
+from numpy import concatenate
 
 login()
 WandbApi = Api()
@@ -79,6 +80,11 @@ def transformValidatorRuns(runs: WandbApi.runs):
             )
     return output
 
+
+def extractUIDData(runData: dict):
+    UIDValues = list(filter(lambda x: x is not None,  concatenate(list(runData.values()))))
+    output = concatenate([list(item["uid_data"].values()) for item in UIDValues])
+    return output.tolist()
 
 def fetchValidatorRuns(days: int) -> dict:
     runs = WandbApi.runs(

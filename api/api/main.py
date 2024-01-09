@@ -17,6 +17,7 @@ from .utils.wandb import (
     fetchValidatorRuns,
     transformValidatorRuns,
     smoothBestAverageLoss,
+    extractUIDData
 )
 from requests import get
 from simplejson import dumps, loads
@@ -200,8 +201,9 @@ def taoCandlestick():
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def validatorRuns(days: int = 30):
     runs = fetchValidatorRuns(days)
+    UIDData = extractUIDData(runs)
     parsedRuns = loads(
-        dumps(runs, indent=2, ignore_nan=True)
+        dumps(UIDData, indent=2, ignore_nan=True)
     )  # To parse NaN and Infinity to null
     return parsedRuns
 
