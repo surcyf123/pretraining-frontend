@@ -27,6 +27,10 @@ export const Routers = createBrowserRouter([
         path: "login",
         element: <Dashboard />,
       },
+      {
+        path: ":subnet", // Ref: https://reactrouter.com/en/main/route/route
+        element: <>Heatmap</>,
+      },
     ],
   },
 ]);
