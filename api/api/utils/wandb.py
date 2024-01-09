@@ -82,7 +82,7 @@ def transformValidatorRuns(runs: WandbApi.runs):
 
 
 def extractUIDData(runData: dict):
-    UIDValues = list(filter(lambda x: x is not None,  concatenate(list(runData.values()))))
+    UIDValues = list(filter(lambda x: x is not None,  concatenate(list(runData.values())))) # Ref: https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html
     output = concatenate([list(item["uid_data"].values()) for item in UIDValues])
     return output.tolist()
 
