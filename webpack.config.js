@@ -20,6 +20,7 @@ module.exports = (env) => {
     new HtmlWebpackPlugin({
       template: path.join(process.cwd(), "./src/index.ejs"),
       scriptLoading: "defer",
+      publicPath:"/"
     }),
   ];
 
