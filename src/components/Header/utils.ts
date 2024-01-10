@@ -160,7 +160,7 @@ export const NavLinks: HeaderLinksProps[] = [
     label: "Dashboard",
   },
   {
-    link: "/",
+    link: "#",
     label: "Subnets",
     links: SubnetsData,
   },

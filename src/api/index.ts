@@ -1,5 +1,5 @@
 import type { NeuronDetails } from "../components/MetagraphTable";
-import type { LineChartData, RunDetails } from "../utils";
+import type { LineChartData, UIDDetails } from "../utils";
 
 export type Candlestick = [number, number, number, number, number]; // [Date, Opening price, Highest price, Lowest price, Closing price]
 
@@ -60,9 +60,9 @@ export interface MetagraphMetadata {
 
 const BaseURL = "https://api.openpretrain.ai";
 
-export async function fetchTableData(): Promise<Record<string, (RunDetails | null)[]>> {
+export async function fetchTableData(): Promise<UIDDetails[]> {
   const rawResponse = await fetch(`${BaseURL}/wandb/validator-runs/3`);
-  const validatorRuns = (await rawResponse.json()) as Record<string, (RunDetails | null)[]>;
+  const validatorRuns = (await rawResponse.json()) as UIDDetails[];
   return validatorRuns;
 }
 

@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 from pandas import DataFrame
 from math import nan
 from numpy import concatenate
-from itertools import groupby
 from math import isnan, isinf
 from functools import reduce
 
@@ -86,7 +85,7 @@ def transformValidatorRuns(runs: WandbApi.runs):
     return output
 
 
-def filterUIDData(item) -> bool:
+def filterUID(item) -> bool:
     output = True
     if item["block"] is None or isnan(item["block"]) or isinf(item["block"]):
         output = False
@@ -99,7 +98,7 @@ def filterUIDData(item) -> bool:
     return output
 
 
-def reducer(acc, curr):
+def reduceUID(acc, curr):
     key = curr["uid"]
     if key in acc:
         acc[key].append(curr)
@@ -108,17 +107,17 @@ def reducer(acc, curr):
     return acc
 
 
-def extractUIDData(runData: dict):
-    UIDValues = list(
+def extractUIDs(runData: dict):
+    runs = list(
         filter(lambda x: x is not None, concatenate(list(runData.values())))
     )  # Ref: https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html
-    output = concatenate([list(item["uid_data"].values()) for item in UIDValues])
-    sortedOutput = list(
-        filter(filterUIDData, sorted(output, key=lambda x: x["block"], reverse=True))
+    uids = concatenate([list(item["uid_data"].values()) for item in runs])
+    sortedUIDs = list(
+        filter(filterUID, sorted(uids, key=lambda x: x["block"], reverse=True))
     )  # sort in descending order
-    groupedData = reduce(reducer, sortedOutput, {})
-    uids = [group[0] for group in groupedData.values()]  # first element of every uid
-    return uids
+    groups = reduce(reduceUID, sortedUIDs, {})
+    output = [group[0] for group in groups.values()]  # first element of every uid
+    return output
 
 
 def fetchValidatorRuns(days: int) -> dict:

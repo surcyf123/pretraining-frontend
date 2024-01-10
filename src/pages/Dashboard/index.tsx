@@ -16,6 +16,7 @@ import { StatisticsTable } from "../../components/StatisticsTable";
 import { TopBar } from "../../components/TopBar";
 import { calculateAverageValidatorTrust } from "./utils";
 import type { UIDDetails } from "../../utils";
+import type { InternMap } from "d3-array";
 
 export function Dashboard() {
   const {
@@ -86,35 +87,23 @@ export function Dashboard() {
     isRefetchingMetagraphMetadata === true;
 
   const { colorScheme } = useMantineColorScheme();
-  // TODO: remove this logic  (data processing is being done in backend)
-  const processedData = useMemo<UIDDetails[]>(() => {
-    let output: UIDDetails[] = [];
+  // complete chart data
+  const chartData = useMemo(() => {
+    let output: InternMap<string, UIDDetails[]> | undefined;
     if (isRecentUIDJSONLoading === false && recentUIDJSON !== undefined) {
-      output = Object.values(recentUIDJSON)
-        .flat()
-        .flatMap((ele) => (ele === null ? [] : Object.values(ele.uid_data)))
-        .filter(
-          (ele): ele is UIDDetails =>
-            ele?.average_loss !== undefined && ele?.average_loss !== null && ele?.win_rate > 0,
-        );
+      output = rollup(
+        recentUIDJSON,
+        (arr) => sort(arr, (a, b) => ascending(a.block, b.block)),
+        (d) => d.uid.toString(),
+      );
     }
     return output;
   }, [isRecentUIDJSONLoading, recentUIDJSON]);
-  // complete chart data
-  const chartData = useMemo(
-    () =>
-      rollup(
-        processedData,
-        (arr) => sort(arr, (a, b) => ascending(a.block, b.block)),
-        (d) => d.uid.toString(),
-      ),
-    [processedData],
-  );
 
   // latest data for each UID
   const tableData = useMemo(() => {
     const output: UIDDetails[] = [];
-    chartData.forEach((ele) => {
+    chartData?.forEach((ele) => {
       const last = ele.pop();
       if (last !== undefined) {
         output.push(last);
