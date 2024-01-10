@@ -130,10 +130,9 @@ def parseRunID(runID: str) -> dict:
         "_"
     )  # ["validator-id-year-month-date","hours-minutes-sec"]
     validator, id, year, month, date = segments[0].split("-")
-    timestamp = f"{date}-{month}-{year}_{segments[1]}"
-    parsedTimestamp = datetime.strptime(timestamp, "%d-%m-%Y_%H-%M-%S").timestamp()
-    validatorID = f"{validator}-{id}"
-    return {"timestamp": parsedTimestamp, "validatorID": validatorID}
+    timestamp = f"{date}-{month}-{year}-{segments[1]}"
+    parsedTimestamp = datetime.strptime(timestamp, "%d-%m-%Y-%H-%M-%S").timestamp()
+    return {"timestamp": parsedTimestamp, "validatorID": id}
 
 
 def filterRecentValidatorRun(runs: dict) -> dict:
