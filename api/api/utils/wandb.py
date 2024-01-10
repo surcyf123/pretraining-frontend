@@ -154,7 +154,7 @@ def filterRecentValidatorRun(runs: dict) -> dict:
     sortedRunIDs = sorted(runIDs, key=lambda x: x["timestamp"], reverse=True)
     groups = reduce(reduceValidatorID, sortedRunIDs, {})
     filteredKeys = [
-        f"{value[0]['validatorID']}-{datetime.fromtimestamp(value[0]['parsedTimestamp']).strftime('%Y-%m-%d_%H-%M-%S')}"
+        f"{value[0]['validatorID']}-{datetime.fromtimestamp(value[0]['timestamp']).strftime('%Y-%m-%d_%H-%M-%S')}"
         for value in groups.values()
     ]
     filteredRuns = {[key]: runs[key] for key in filteredKeys}
