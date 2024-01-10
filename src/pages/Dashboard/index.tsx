@@ -1,6 +1,5 @@
 import { Card, Stack, useMantineColorScheme, Group, Loader, Divider } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
-import { ascending, rollup, sort } from "d3-array";
 import { useMemo } from "react";
 import {
   fetchTableData,
@@ -15,8 +14,6 @@ import { MetagraphTable } from "../../components/MetagraphTable";
 import { StatisticsTable } from "../../components/StatisticsTable";
 import { TopBar } from "../../components/TopBar";
 import { calculateAverageValidatorTrust } from "./utils";
-import type { UIDDetails } from "../../utils";
-import type { InternMap } from "d3-array";
 
 export function Dashboard() {
   const {
@@ -87,39 +84,15 @@ export function Dashboard() {
     isRefetchingMetagraphMetadata === true;
 
   const { colorScheme } = useMantineColorScheme();
-  // complete chart data
-  const chartData = useMemo(() => {
-    let output: InternMap<string, UIDDetails[]> | undefined;
-    if (isRecentUIDJSONLoading === false && recentUIDJSON !== undefined) {
-      output = rollup(
-        recentUIDJSON,
-        (arr) => sort(arr, (a, b) => ascending(a.block, b.block)),
-        (d) => d.uid.toString(),
-      );
-    }
-    return output;
-  }, [isRecentUIDJSONLoading, recentUIDJSON]);
-
-  // latest data for each UID
-  const tableData = useMemo(() => {
-    const output: UIDDetails[] = [];
-    chartData?.forEach((ele) => {
-      const last = ele.pop();
-      if (last !== undefined) {
-        output.push(last);
-      }
-    });
-    return output;
-  }, [chartData]);
 
   const bestLossData = useMemo(() => {
-    const losses = tableData
-      .map((ele) => ele.average_loss)
+    const losses = recentUIDJSON
+      ?.map((ele) => ele.average_loss)
       .filter((ele): ele is number => typeof ele === "number");
 
-    const minimumLoss = Math.min(...losses);
-    return tableData.find((ele) => ele.average_loss === minimumLoss);
-  }, [tableData]);
+    const minimumLoss = Math.min(...(losses ?? []));
+    return recentUIDJSON?.find((ele) => ele.average_loss === minimumLoss);
+  }, [recentUIDJSON]);
 
   return (
     <Stack>
@@ -170,7 +143,7 @@ export function Dashboard() {
       <Group grow>
         <Card shadow="md">
           <CategoricalBarChart
-            data={tableData}
+            data={recentUIDJSON ?? []}
             style={{ height: "30vh" }}
             theme={colorScheme === "auto" ? "dark" : colorScheme}
             xAxis="uid"
@@ -182,7 +155,7 @@ export function Dashboard() {
         </Card>
         <Card shadow="md">
           <CategoricalBarChart
-            data={tableData}
+            data={recentUIDJSON ?? []}
             style={{ height: "30vh" }}
             theme={colorScheme === "auto" ? "dark" : colorScheme}
             xAxis="uid"
@@ -194,7 +167,7 @@ export function Dashboard() {
         </Card>
         <Card shadow="md">
           <CategoricalBarChart
-            data={tableData}
+            data={recentUIDJSON ?? []}
             style={{ height: "30vh" }}
             theme={colorScheme === "auto" ? "dark" : colorScheme}
             xAxis="uid"
@@ -206,7 +179,7 @@ export function Dashboard() {
         </Card>
       </Group>
       <Card shadow="md">
-        <StatisticsTable data={tableData} loading={isRecentUIDJSONLoading} />
+        <StatisticsTable data={recentUIDJSON ?? []} loading={isRecentUIDJSONLoading} />
       </Card>
       <Card shadow="md">
         <MetagraphTable data={neurons ?? []} loading={isLoadingNeurons} />
