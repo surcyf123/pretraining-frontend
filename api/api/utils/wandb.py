@@ -140,6 +140,28 @@ def extractRunIDDetails(runIDs: list[str]) -> list[dict]:
     return runIDDetails
 
 
+def reduceValidatorID(acc, curr):
+    key = curr["validatorID"]
+    if key in acc:
+        acc[key].append(curr)
+    else:
+        acc[key] = [curr]
+    return acc
+
+
+def filterRecentValidatorRun(runs: dict) -> dict:
+    runIDs = extractRunIDDetails(runs.keys())
+    sortedRunIDs = sorted(runIDs, key=lambda x: x["timestamp"], reverse=True)
+    groups = reduce(reduceValidatorID, sortedRunIDs, {})
+    filteredKeys = [
+        f"{value[0]['validatorID']}-{datetime.fromtimestamp(value[0]['parsedTimestamp']).strftime('%Y-%m-%d_%H-%M-%S')}"
+        for value in groups.values()
+    ]
+    filteredRuns = {[key]: runs[key] for key in filteredKeys}
+
+    return filteredRuns
+
+
 def fetchValidatorRuns(days: int) -> dict:
     runs = WandbApi.runs(
         f"{EntityName}/{ProjectName}",
@@ -153,5 +175,6 @@ def fetchValidatorRuns(days: int) -> dict:
         },
     )
     originalFormatJsonData = extractOriginalFormatData(runs)
-    updatedData = calculateBestAverageLoss(originalFormatJsonData)
+    filteredRuns=filterRecentValidatorRun(originalFormatJsonData)
+    updatedData = calculateBestAverageLoss(filteredRuns)
     return updatedData
