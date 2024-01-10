@@ -125,7 +125,7 @@ def extractUIDs(runData: dict):
     return output
 
 
-def parseRunID(runID: str) -> float:
+def parseRunID(runID: str) -> dict:
     splittedRunID = runID.split(
         "_"
     )  # ["validator-id-year-month-date","hours-minutes-sec"]
