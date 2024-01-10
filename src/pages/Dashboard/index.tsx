@@ -1,7 +1,12 @@
 import { Card, Stack, useMantineColorScheme, Group, Loader, Divider } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { fetchRecentUIDs, fetchLineChartData, fetchNeurons, fetchMetagraphMetadata } from "../../api";
+import {
+  fetchRecentUIDs,
+  fetchLineChartData,
+  fetchNeurons,
+  fetchMetagraphMetadata,
+} from "../../api";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { MetaBox } from "../../components/MetaBox";
