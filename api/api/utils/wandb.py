@@ -126,11 +126,11 @@ def extractUIDs(runData: dict):
 
 
 def parseRunID(runID: str) -> dict:
-    splittedRunID = runID.split(
+    segments = runID.split(
         "_"
     )  # ["validator-id-year-month-date","hours-minutes-sec"]
-    validator, id, year, month, date = splittedRunID[0].split("-")
-    timestamp = f"{date}-{month}-{year}_{splittedRunID[1]}"
+    validator, id, year, month, date = segments[0].split("-")
+    timestamp = f"{date}-{month}-{year}_{segments[1]}"
     parsedTimestamp = datetime.strptime(timestamp, "%d-%m-%Y_%H-%M-%S").timestamp()
     validatorID = f"{validator}-{id}"
     return {"timestamp": parsedTimestamp, "validatorID": validatorID}
