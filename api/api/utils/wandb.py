@@ -149,7 +149,7 @@ def filterRecentValidatorRun(runs: dict) -> dict:
         sortedResults,
         {},
     )
-    filteredKeys = [createRunID(value[0]) for value in groups.values()]
+    filteredRunIDs = [createRunID(value[0]) for value in groups.values()]
     filteredRuns = {key: runs[key] for key in filteredKeys}
     return filteredRuns
 
