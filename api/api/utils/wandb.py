@@ -125,19 +125,18 @@ def extractUIDs(runData: dict):
     return output
 
 
-def parseValidatorID(runID: str) -> dict:
-    splittedValidatorID = runID.split(
+def parseRunID(runID: str) -> dict:
+    splittedRunID = runID.split(
         "_"
     )  # ["validator-id-year-month-date","hours-minutes-sec"]
-    validator, id, year, month, date = splittedValidatorID[0].split("-")
-    timestamp = f"{date}-{month}-{year}_{splittedValidatorID[1]}"
-    parsedTime = datetime.strptime(timestamp, "%d-%m-%Y_%H-%M-%S").timestamp()
+    validator, id, year, month, date = splittedRunID[0].split("-")
+    timestamp = f"{date}-{month}-{year}_{splittedRunID[1]}"
+    parsedTimestamp = datetime.strptime(timestamp, "%d-%m-%Y_%H-%M-%S").timestamp()
     validatorID = f"{validator}-{id}"
-    return {"timestamp": parsedTime, "validatorID": validatorID}
-
+    return {"timestamp": parsedTimestamp, "validatorID": validatorID}
 
 def filterRecentValidatorRun(runs: dict) -> dict:
-    runIDs = [parseValidatorID(key) for key in runs.keys()]
+    runIDs = [parseRunID(key) for key in runs.keys()]
     sortedRunIDs = sorted(runIDs, key=lambda x: x["timestamp"], reverse=True)
     groups = reduce(
         lambda acc, curr: reducer(acc, curr, "validatorID"), sortedRunIDs, {}
