@@ -120,7 +120,7 @@ def extractUIDs(runData: dict):
     return output
 
 
-def extractRunIDInfo(runIDs: list[str]) -> list[dict]:
+def extractRunIDDetails(runIDs: list[str]) -> list[dict]:
     runIDDetails = []
     for runID in runIDs:
         splittedValidatorID = runID.split(
