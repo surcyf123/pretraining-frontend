@@ -98,12 +98,13 @@ def filterUID(item) -> bool:
     return output
 
 
-def reduceUID(acc, curr):
-    key = curr["uid"]
-    if key in acc:
-        acc[key].append(curr)
+def reducer(value) -> dict:
+    acc, curr, key = value["acc"], value["curr"], value["key"]
+    item = curr[key]
+    if item in acc:
+        acc[item].append(curr)
     else:
-        acc[key] = [curr]
+        acc[item] = [curr]
     return acc
 
 
@@ -115,7 +116,11 @@ def extractUIDs(runData: dict):
     sortedUIDs = list(
         filter(filterUID, sorted(uids, key=lambda x: x["block"], reverse=True))
     )  # sort in descending order
-    groups = reduce(reduceUID, sortedUIDs, {})
+    groups = reduce(
+        lambda acc, curr: reducer({"acc": acc, "curr": curr, "key": "uid"}),
+        sortedUIDs,
+        {},
+    )
     output = [group[0] for group in groups.values()]  # first element of every uid
     return output
 
