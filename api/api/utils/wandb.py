@@ -85,7 +85,7 @@ def transformValidatorRuns(runs: WandbApi.runs):
     return output
 
 
-def filterUID(item) -> bool:
+def isValidUIDItem(item) -> bool:
     output = True
     if item["block"] is None or isnan(item["block"]) or isinf(item["block"]):
         output = False
@@ -113,7 +113,7 @@ def extractUIDs(runData: dict):
     )  # Ref: https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html
     uids = concatenate([list(item["uid_data"].values()) for item in runs])
     sortedUIDs = list(
-        filter(filterUID, sorted(uids, key=lambda x: x["block"], reverse=True))
+        filter(isValidUIDItem, sorted(uids, key=lambda x: x["block"], reverse=True))
     )  # sort in descending order
     groups = reduce(reduceUID, sortedUIDs, {})
     output = [group[0] for group in groups.values()]  # first element of every uid
