@@ -125,6 +125,16 @@ def extractUIDs(runData: dict):
     return output
 
 
+def parseRunID(runID: str) -> dict:
+    segments = runID.split(
+        "_"
+    )  # ["validator-id-year-month-date","hours-minutes-sec"]
+    validator, id, year, month, date = segments[0].split("-")
+    timestamp = f"{date}-{month}-{year}-{segments[1]}"
+    parsedTimestamp = datetime.strptime(timestamp, "%d-%m-%Y-%H-%M-%S").timestamp()
+    return {"timestamp": parsedTimestamp, "validatorID": id}
+
+
 def fetchValidatorRuns(days: int) -> dict:
     runs = WandbApi.runs(
         f"{EntityName}/{ProjectName}",
