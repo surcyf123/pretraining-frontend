@@ -129,7 +129,7 @@ def parseRunID(runID: str) -> dict:
     segments = runID.split(
         "_"
     )  # ["validator-id-year-month-date","hours-minutes-sec"]
-    validator, id, year, month, date = segments[0].split("-")
+    id, year, month, date = segments[0].split("-")[1:]
     timestamp = f"{date}-{month}-{year}-{segments[1]}"
     parsedTimestamp = datetime.strptime(timestamp, "%d-%m-%Y-%H-%M-%S").timestamp()
     return {"timestamp": parsedTimestamp, "validatorID": id}
@@ -144,7 +144,7 @@ def filterRecentValidatorRun(runs: dict) -> dict:
         {},
     )
     joinValidatorID = (
-        lambda value: f"{value['validatorID']}-{datetime.fromtimestamp(value['timestamp']).strftime('%Y-%m-%d_%H-%M-%S')}"
+        lambda value: f"validator-{value['validatorID']}-{datetime.fromtimestamp(value['timestamp']).strftime('%Y-%m-%d_%H-%M-%S')}"
     )
     filteredKeys = [joinValidatorID(value[0]) for value in groups.values()]
     filteredRuns = {key: runs[key] for key in filteredKeys}
