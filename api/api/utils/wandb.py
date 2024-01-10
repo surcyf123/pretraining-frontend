@@ -142,7 +142,7 @@ def createRunID(value: dict) -> str:
 
 
 def filterRecentValidatorRun(runs: dict) -> dict:
-    parsedRunIDs= [parseRunID(key) for key in runs.keys()]
+    parsedRunIDs = [parseRunID(key) for key in runs.keys()]
     sortedResults = sorted(parsedRunIDs, key=lambda x: x["timestamp"], reverse=True)
     groups = reduce(
         lambda acc, curr: reducer({"acc": acc, "curr": curr, "key": "validatorID"}),
