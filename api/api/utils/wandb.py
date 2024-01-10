@@ -157,7 +157,9 @@ def filterRecentValidatorRun(runs: dict) -> dict:
         f"{value[0]['validatorID']}-{datetime.fromtimestamp(value[0]['timestamp']).strftime('%Y-%m-%d_%H-%M-%S')}"
         for value in groups.values()
     ]
-    filteredRuns = {[key]: runs[key] for key in filteredKeys}
+    filteredRuns={}
+    for key in filteredKeys:
+         filteredKeys[key]=runs[key]
 
     return filteredRuns
 
