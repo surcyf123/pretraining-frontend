@@ -74,7 +74,7 @@ export function BestLossChart({
     [data, yAxis],
   );
   const processedData = useMemo(() => group(filteredData, (d) => d.key), [filteredData]);
-  
+
   useEffect(() => {
     let chart: ECharts | undefined;
     let observer: ResizeObserver | undefined;
