@@ -1,12 +1,7 @@
 import { Card, Stack, useMantineColorScheme, Group, Loader, Divider } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import {
-  fetchTableData,
-  fetchLineChartData,
-  fetchNeurons,
-  fetchMetagraphMetadata,
-} from "../../api";
+import { fetchRecentUIDs, fetchLineChartData, fetchNeurons, fetchMetagraphMetadata } from "../../api";
 import { BestLossChart } from "../../charts/BestLossChart";
 import { CategoricalBarChart } from "../../charts/CategoricalBarChart";
 import { MetaBox } from "../../components/MetaBox";
@@ -17,12 +12,12 @@ import { calculateAverageValidatorTrust } from "./utils";
 
 export function Dashboard() {
   const {
-    data: recentUIDJSON,
-    isLoading: isRecentUIDJSONLoading,
-    isRefetching: isRefetchingRecentUIDJSON,
+    data: recentUIDs,
+    isLoading: isRecentUIDsLoading,
+    isRefetching: isRefetchingRecentUIDs,
   } = useQuery({
-    queryKey: ["recentUIDJSON"],
-    queryFn: () => fetchTableData(),
+    queryKey: ["recentUIDs"],
+    queryFn: () => fetchRecentUIDs(),
     refetchInterval: 10 * 60 * 1000,
     // default stale time is 0 Ref: https://tanstack.com/query/v4/docs/react/guides/initial-query-data#staletime-and-initialdataupdatedat
   });
@@ -77,7 +72,7 @@ export function Dashboard() {
   );
 
   const isRefetching =
-    isRefetchingRecentUIDJSON === true ||
+    isRefetchingRecentUIDs === true ||
     isRefetchingHistoryJSON === true ||
     isRefetchingRecentJSON === true ||
     isRefetchingNeurons === true ||
@@ -86,13 +81,13 @@ export function Dashboard() {
   const { colorScheme } = useMantineColorScheme();
 
   const bestLossData = useMemo(() => {
-    const losses = recentUIDJSON
+    const losses = recentUIDs
       ?.map((ele) => ele.average_loss)
       .filter((ele): ele is number => typeof ele === "number");
 
     const minimumLoss = Math.min(...(losses ?? []));
-    return recentUIDJSON?.find((ele) => ele.average_loss === minimumLoss);
-  }, [recentUIDJSON]);
+    return recentUIDs?.find((ele) => ele.average_loss === minimumLoss);
+  }, [recentUIDs]);
 
   return (
     <Stack>
@@ -110,7 +105,7 @@ export function Dashboard() {
           Weight: bestLossData?.weight?.toFixed(4),
           "Win Total": bestLossData?.win_total,
         }}
-        loading={isRecentUIDJSONLoading}
+        loading={isRecentUIDsLoading}
       />
       <Divider />
       <Card shadow="md">
@@ -143,43 +138,43 @@ export function Dashboard() {
       <Group grow>
         <Card shadow="md">
           <CategoricalBarChart
-            data={recentUIDJSON ?? []}
+            data={recentUIDs ?? []}
             style={{ height: "30vh" }}
             theme={colorScheme === "auto" ? "dark" : colorScheme}
             xAxis="uid"
             yAxis="weight"
             xAxisTitle="UID"
             yAxisTitle="Weight"
-            loading={isRecentUIDJSONLoading}
+            loading={isRecentUIDsLoading}
           />
         </Card>
         <Card shadow="md">
           <CategoricalBarChart
-            data={recentUIDJSON ?? []}
+            data={recentUIDs ?? []}
             style={{ height: "30vh" }}
             theme={colorScheme === "auto" ? "dark" : colorScheme}
             xAxis="uid"
             yAxis="win_rate"
             xAxisTitle="UID"
             yAxisTitle="Win Rate"
-            loading={isRecentUIDJSONLoading}
+            loading={isRecentUIDsLoading}
           />
         </Card>
         <Card shadow="md">
           <CategoricalBarChart
-            data={recentUIDJSON ?? []}
+            data={recentUIDs ?? []}
             style={{ height: "30vh" }}
             theme={colorScheme === "auto" ? "dark" : colorScheme}
             xAxis="uid"
             yAxis="average_loss"
             xAxisTitle="UID"
             yAxisTitle="Loss"
-            loading={isRecentUIDJSONLoading}
+            loading={isRecentUIDsLoading}
           />
         </Card>
       </Group>
       <Card shadow="md">
-        <StatisticsTable data={recentUIDJSON ?? []} loading={isRecentUIDJSONLoading} />
+        <StatisticsTable data={recentUIDs ?? []} loading={isRecentUIDsLoading} />
       </Card>
       <Card shadow="md">
         <MetagraphTable data={neurons ?? []} loading={isLoadingNeurons} />
