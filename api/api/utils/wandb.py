@@ -5,8 +5,9 @@ from datetime import datetime, timedelta
 from pandas import DataFrame
 from math import nan
 from numpy import concatenate
-from itertools import groupby
 from math import isnan, isinf
+from functools import reduce
+
 
 login()
 WandbApi = Api()
@@ -97,6 +98,15 @@ def filterUID(item) -> bool:
     return output
 
 
+def reduceUID(acc, curr):
+    key = curr["uid"]
+    if key in acc:
+        acc[key].append(curr)
+    else:
+        acc[key] = [curr]
+    return acc
+
+
 def extractUIDs(runData: dict):
     runs = list(
         filter(lambda x: x is not None, concatenate(list(runData.values())))
@@ -105,8 +115,8 @@ def extractUIDs(runData: dict):
     sortedUIDs = list(
         filter(filterUID, sorted(uids, key=lambda x: x["block"], reverse=True))
     )  # sort in descending order
-    groups = groupby(sortedUIDs, key=lambda x: x["uid"])
-    output = [list(group)[0] for _key, group in groups]  # first element of every uid
+    groups = reduce(reduceUID, sortedUIDs, {})
+    output = [group[0] for group in groups.values()]  # first element of every uid
     return output
 
 
