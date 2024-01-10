@@ -98,7 +98,7 @@ def isValidUIDItem(item) -> bool:
     return output
 
 
-def reducer(value) -> dict:
+def reducer(value: dict) -> dict:
     acc, curr, key = value["acc"], value["curr"], value["key"]
     item = curr[key]
     if item in acc:
@@ -125,6 +125,35 @@ def extractUIDs(runData: dict):
     return output
 
 
+def parseRunID(runID: str) -> dict:
+    segments = runID.split("_")  # ["validator-id-year-month-date","hours-minutes-sec"]
+    id, year, month, date = segments[0].split("-")[1:]
+    timestamp = f"{date}-{month}-{year}-{segments[1]}"
+    parsedTimestamp = datetime.strptime(timestamp, "%d-%m-%Y-%H-%M-%S").timestamp()
+    return {"timestamp": parsedTimestamp, "validatorID": id}
+
+
+def createRunID(value: dict) -> str:
+    validatorID = f"validator-{value['validatorID']}"
+    formattedTimestamp = datetime.fromtimestamp(value["timestamp"]).strftime(
+        "%Y-%m-%d_%H-%M-%S"
+    )
+    return f"{validatorID}-{formattedTimestamp}"
+
+
+def filterRecentValidatorRun(runs: dict) -> dict:
+    parsedRunIDs = [parseRunID(key) for key in runs.keys()]
+    sortedResults = sorted(parsedRunIDs, key=lambda x: x["timestamp"], reverse=True)
+    groups = reduce(
+        lambda acc, curr: reducer({"acc": acc, "curr": curr, "key": "validatorID"}),
+        sortedResults,
+        {},
+    )
+    filteredRunIDs = [createRunID(value[0]) for value in groups.values()]
+    filteredRuns = {key: runs[key] for key in filteredRunIDs}
+    return filteredRuns
+
+
 def fetchValidatorRuns(days: int) -> dict:
     runs = WandbApi.runs(
         f"{EntityName}/{ProjectName}",
@@ -138,5 +167,6 @@ def fetchValidatorRuns(days: int) -> dict:
         },
     )
     originalFormatJsonData = extractOriginalFormatData(runs)
-    updatedData = calculateBestAverageLoss(originalFormatJsonData)
+    filteredRuns = filterRecentValidatorRun(originalFormatJsonData)
+    updatedData = calculateBestAverageLoss(filteredRuns)
     return updatedData
