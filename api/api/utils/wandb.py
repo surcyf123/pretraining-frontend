@@ -6,7 +6,9 @@ from pandas import DataFrame
 from math import nan
 from numpy import concatenate
 from itertools import groupby
-from math import isnan,isinf
+from math import isnan, isinf
+from functools import reduce
+
 
 login()
 WandbApi = Api()
@@ -83,14 +85,27 @@ def transformValidatorRuns(runs: WandbApi.runs):
             )
     return output
 
-def filterUIDData(item)->bool:
-    output=True
+
+def filterUIDData(item) -> bool:
+    output = True
     if item["block"] is None or isnan(item["block"]) or isinf(item["block"]):
-        output=False
-    elif item["average_loss"] is None or isnan(item["average_loss"]) or isinf(item["average_loss"]):
-        output=False
+        output = False
+    elif (
+        item["average_loss"] is None
+        or isnan(item["average_loss"])
+        or isinf(item["average_loss"])
+    ):
+        output = False
     return output
-    
+
+
+def reducer(acc, curr):
+    key = curr["uid"]
+    if key in acc:
+        acc[key].append(curr)
+    else:
+        acc[key] = [curr]
+    return acc
 
 
 def extractUIDData(runData: dict):
@@ -98,9 +113,11 @@ def extractUIDData(runData: dict):
         filter(lambda x: x is not None, concatenate(list(runData.values())))
     )  # Ref: https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html
     output = concatenate([list(item["uid_data"].values()) for item in UIDValues])
-    sortedOutput = list(filter(filterUIDData, sorted(output, key=lambda x: x["block"], reverse=True))) # sort in descending order
-    groupedData = groupby(sortedOutput, key=lambda x: x["uid"])
-    uids = [list(group)[0] for _key, group in groupedData] # first element of every uid
+    sortedOutput = list(
+        filter(filterUIDData, sorted(output, key=lambda x: x["block"], reverse=True))
+    )  # sort in descending order
+    groupedData = reduce(reducer, sortedOutput, {})
+    uids = [group[0] for group in groupedData.values()]  # first element of every uid
     return uids
 
 
