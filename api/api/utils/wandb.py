@@ -98,12 +98,12 @@ def filterUID(item) -> bool:
     return output
 
 
-def reduceUID(acc, curr):
-    key = curr["uid"]
-    if key in acc:
-        acc[key].append(curr)
+def reducer(acc, curr, key):
+    item = curr[key]
+    if item in acc:
+        acc[item].append(curr)
     else:
-        acc[key] = [curr]
+        acc[item] = [curr]
     return acc
 
 
@@ -115,7 +115,7 @@ def extractUIDs(runData: dict):
     sortedUIDs = list(
         filter(filterUID, sorted(uids, key=lambda x: x["block"], reverse=True))
     )  # sort in descending order
-    groups = reduce(reduceUID, sortedUIDs, {})
+    groups = reduce(lambda acc, curr: reducer(acc, curr, "uid"), sortedUIDs, {})
     output = [group[0] for group in groups.values()]  # first element of every uid
     return output
 
@@ -130,19 +130,10 @@ def extractTime(runID: str) -> float:
     return parsedTime
 
 
-def reduceValidatorID(acc, curr):
-    key = curr["validatorID"]
-    if key in acc:
-        acc[key].append(curr)
-    else:
-        acc[key] = [curr]
-    return acc
-
-
 def filterRecentValidatorRun(runs: dict) -> dict:
-    runIDs = extractRunIDDetails(runs.keys())
+    runIDs = [{"validatorID":key,"timestamp":extractTime(key)} for key in runs.keys()]
     sortedRunIDs = sorted(runIDs, key=lambda x: x["timestamp"], reverse=True)
-    groups = reduce(reduceValidatorID, sortedRunIDs, {})
+    groups = reduce(lambda acc,curr:reducer(acc,curr,"validatorID"), sortedRunIDs, {})
     filteredKeys = [
         f"{value[0]['validatorID']}-{datetime.fromtimestamp(value[0]['timestamp']).strftime('%Y-%m-%d_%H-%M-%S')}"
         for value in groups.values()
