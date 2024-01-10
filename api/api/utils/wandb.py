@@ -120,24 +120,14 @@ def extractUIDs(runData: dict):
     return output
 
 
-def extractRunIDDetails(runIDs: list[str]) -> list[dict]:
-    runIDDetails = []
-    for runID in runIDs:
-        splittedValidatorID = runID.split(
-            "_"
-        )  # ["validator-id-year-month-date","hours-minutes-sec"]
-        validator, id, year, month, date = splittedValidatorID[0].split("-")
-        validatorID = f"{validator}-{id}"
-        timestamp = f"{date}-{month}-{year}_{splittedValidatorID[1]}"
-        runIDDetails.append(
-            {
-                "validatorID": validatorID,
-                "timestamp": datetime.strptime(
-                    timestamp, "%d-%m-%Y_%H-%M-%S"
-                ).timestamp(),
-            }
-        )
-    return runIDDetails
+def extractTime(runID: str) -> float:
+    splittedValidatorID = runID.split(
+        "_"
+    )  # ["validator-id-year-month-date","hours-minutes-sec"]
+    year, month, date = splittedValidatorID[0].split("-")[-3:]
+    timestamp = f"{date}-{month}-{year}_{splittedValidatorID[1]}"
+    parsedTime = datetime.strptime(timestamp, "%d-%m-%Y_%H-%M-%S").timestamp()
+    return parsedTime
 
 
 def reduceValidatorID(acc, curr):
