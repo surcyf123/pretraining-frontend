@@ -98,7 +98,7 @@ def filterUID(item) -> bool:
     return output
 
 
-def reducer(value) -> dict:
+def reducer(value: dict) -> dict:
     acc, curr, key = value["acc"], value["curr"], value["key"]
     item = curr[key]
     if item in acc:
@@ -135,11 +135,14 @@ def parseRunID(runID: str) -> dict:
     validatorID = f"{validator}-{id}"
     return {"timestamp": parsedTimestamp, "validatorID": validatorID}
 
+
 def filterRecentValidatorRun(runs: dict) -> dict:
     runIDs = [parseRunID(key) for key in runs.keys()]
     sortedRunIDs = sorted(runIDs, key=lambda x: x["timestamp"], reverse=True)
     groups = reduce(
-        lambda acc, curr: reducer(acc, curr, "validatorID"), sortedRunIDs, {}
+        lambda acc, curr: reducer({"acc": acc, "curr": curr, "key": "validatorID"}),
+        sortedRunIDs,
+        {},
     )
     joinValidatorID = (
         lambda value: f"{value['validatorID']}-{datetime.fromtimestamp(value['timestamp']).strftime('%Y-%m-%d_%H-%M-%S')}"
