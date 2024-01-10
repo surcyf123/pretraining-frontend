@@ -157,10 +157,7 @@ def filterRecentValidatorRun(runs: dict) -> dict:
         f"{value[0]['validatorID']}-{datetime.fromtimestamp(value[0]['timestamp']).strftime('%Y-%m-%d_%H-%M-%S')}"
         for value in groups.values()
     ]
-    filteredRuns={}
-    for key in filteredKeys:
-         filteredKeys[key]=runs[key]
-
+    filteredRuns = {key: runs[key] for key in filteredKeys}
     return filteredRuns
 
 
@@ -177,6 +174,6 @@ def fetchValidatorRuns(days: int) -> dict:
         },
     )
     originalFormatJsonData = extractOriginalFormatData(runs)
-    filteredRuns=filterRecentValidatorRun(originalFormatJsonData)
+    filteredRuns = filterRecentValidatorRun(originalFormatJsonData)
     updatedData = calculateBestAverageLoss(filteredRuns)
     return updatedData
