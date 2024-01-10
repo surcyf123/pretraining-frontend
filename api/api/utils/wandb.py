@@ -85,7 +85,7 @@ def transformValidatorRuns(runs: WandbApi.runs):
     return output
 
 
-def filterUID(item) -> bool:
+def isValidUIDItem(item) -> bool:
     output = True
     if item["block"] is None or isnan(item["block"]) or isinf(item["block"]):
         output = False
@@ -114,7 +114,7 @@ def extractUIDs(runData: dict):
     )  # Ref: https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html
     uids = concatenate([list(item["uid_data"].values()) for item in runs])
     sortedUIDs = list(
-        filter(filterUID, sorted(uids, key=lambda x: x["block"], reverse=True))
+        filter(isValidUIDItem, sorted(uids, key=lambda x: x["block"], reverse=True))
     )  # sort in descending order
     groups = reduce(
         lambda acc, curr: reducer({"acc": acc, "curr": curr, "key": "uid"}),
@@ -126,11 +126,11 @@ def extractUIDs(runData: dict):
 
 
 def parseRunID(runID: str) -> dict:
-    splittedRunID = runID.split(
+    segments = runID.split(
         "_"
     )  # ["validator-id-year-month-date","hours-minutes-sec"]
-    validator, id, year, month, date = splittedRunID[0].split("-")
-    timestamp = f"{date}-{month}-{year}_{splittedRunID[1]}"
+    validator, id, year, month, date = segments[0].split("-")
+    timestamp = f"{date}-{month}-{year}_{segments[1]}"
     parsedTimestamp = datetime.strptime(timestamp, "%d-%m-%Y_%H-%M-%S").timestamp()
     validatorID = f"{validator}-{id}"
     return {"timestamp": parsedTimestamp, "validatorID": validatorID}
