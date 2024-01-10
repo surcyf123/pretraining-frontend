@@ -126,13 +126,19 @@ def extractUIDs(runData: dict):
 
 
 def parseRunID(runID: str) -> dict:
-    segments = runID.split(
-        "_"
-    )  # ["validator-id-year-month-date","hours-minutes-sec"]
+    segments = runID.split("_")  # ["validator-id-year-month-date","hours-minutes-sec"]
     id, year, month, date = segments[0].split("-")[1:]
     timestamp = f"{date}-{month}-{year}-{segments[1]}"
     parsedTimestamp = datetime.strptime(timestamp, "%d-%m-%Y-%H-%M-%S").timestamp()
     return {"timestamp": parsedTimestamp, "validatorID": id}
+
+
+def createRunID(value: dict) -> str:
+    validatorID = f"validator-{value['validatorID']}"
+    formattedTimestamp = datetime.fromtimestamp(value["timestamp"]).strftime(
+        "%Y-%m-%d_%H-%M-%S"
+    )
+    return f"{validatorID}-{formattedTimestamp}"
 
 
 def filterRecentValidatorRun(runs: dict) -> dict:
@@ -143,10 +149,7 @@ def filterRecentValidatorRun(runs: dict) -> dict:
         sortedRunIDs,
         {},
     )
-    joinValidatorID = (
-        lambda value: f"validator-{value['validatorID']}-{datetime.fromtimestamp(value['timestamp']).strftime('%Y-%m-%d_%H-%M-%S')}"
-    )
-    filteredKeys = [joinValidatorID(value[0]) for value in groups.values()]
+    filteredKeys = [createRunID(value[0]) for value in groups.values()]
     filteredRuns = {key: runs[key] for key in filteredKeys}
     return filteredRuns
 
