@@ -69,9 +69,12 @@ export function BestLossChart({
   loading,
 }: BestLossChartProps): JSX.Element {
   const chartRef = useRef<HTMLDivElement>(null);
-
-  const processedData = useMemo(() => group(data, (d) => d.key), [data]);
-
+  const filteredData = useMemo(
+    () => data.filter((ele) => typeof ele[yAxis as keyof LineChartData] === "number"),
+    [data, yAxis],
+  );
+  const processedData = useMemo(() => group(filteredData, (d) => d.key), [filteredData]);
+  
   useEffect(() => {
     let chart: ECharts | undefined;
     let observer: ResizeObserver | undefined;
