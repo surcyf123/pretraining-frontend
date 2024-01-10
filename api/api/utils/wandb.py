@@ -132,8 +132,7 @@ def parseRunID(runID: str) -> dict:
     validator, id, year, month, date = segments[0].split("-")
     timestamp = f"{date}-{month}-{year}-{segments[1]}"
     parsedTimestamp = datetime.strptime(timestamp, "%d-%m-%Y-%H-%M-%S").timestamp()
-    validatorID = f"{validator}-{id}"
-    return {"timestamp": parsedTimestamp, "validatorID": validatorID}
+    return {"timestamp": parsedTimestamp, "validatorID": id}
 
 
 def fetchValidatorRuns(days: int) -> dict:
