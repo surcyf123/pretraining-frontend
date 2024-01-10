@@ -85,7 +85,7 @@ def transformValidatorRuns(runs: WandbApi.runs):
     return output
 
 
-def filterUID(item) -> bool:
+def isValidUIDItem(item) -> bool:
     output = True
     if item["block"] is None or isnan(item["block"]) or isinf(item["block"]):
         output = False
@@ -98,12 +98,13 @@ def filterUID(item) -> bool:
     return output
 
 
-def reduceUID(acc, curr):
-    key = curr["uid"]
-    if key in acc:
-        acc[key].append(curr)
+def reducer(value) -> dict:
+    acc, curr, key = value["acc"], value["curr"], value["key"]
+    item = curr[key]
+    if item in acc:
+        acc[item].append(curr)
     else:
-        acc[key] = [curr]
+        acc[item] = [curr]
     return acc
 
 
@@ -113,9 +114,13 @@ def extractUIDs(runData: dict):
     )  # Ref: https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html
     uids = concatenate([list(item["uid_data"].values()) for item in runs])
     sortedUIDs = list(
-        filter(filterUID, sorted(uids, key=lambda x: x["block"], reverse=True))
+        filter(isValidUIDItem, sorted(uids, key=lambda x: x["block"], reverse=True))
     )  # sort in descending order
-    groups = reduce(reduceUID, sortedUIDs, {})
+    groups = reduce(
+        lambda acc, curr: reducer({"acc": acc, "curr": curr, "key": "uid"}),
+        sortedUIDs,
+        {},
+    )
     output = [group[0] for group in groups.values()]  # first element of every uid
     return output
 
