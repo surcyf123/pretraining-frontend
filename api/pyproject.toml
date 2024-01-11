@@ -23,6 +23,7 @@ start = "api.main:start"
 serve = "api.main:serve"
 "cron:start" =   "cron.main:start"
 "cron:stop" = "cron.main:stop"
+"metagraph:fetch"="cron.main:fetchMetagraph"
 
 
 [tool.poetry.group.dev.dependencies]
