@@ -48,4 +48,4 @@ def fetchMetagraph():
             "stake": metagraph.S.tolist(),
             "validatorTrust": metagraph.Tv.tolist(),
         }
-        storeData(f"metagraphData-{netUID}.json", metagraphData)
+        storeData(f"metagraph-data-{netUID}.json", metagraphData)
