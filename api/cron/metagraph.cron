@@ -1,1 +1,1 @@
- */10 * * * * python3 /home/ec2-user/cronjobs/metagraph.py
+ */10 * * * * python3 /home/ec2-user/cron/metagraph.py
