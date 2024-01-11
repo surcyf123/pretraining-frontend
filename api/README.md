@@ -62,19 +62,3 @@ nohup poetry run serve &  # run poetry in deattached
 ```
 WANDB_API_KEY=<YOUR WANDB API KEY>
 ```
-
-## Scheduling cron jobs
-1. Connect to Ec2
-2. Install cronie
-```shell
-sudo yum install cronie
-```
-3. Verify installation
-```shell
-crontab
-```
-
-3. Schedule cronjob
-```shell
-crontab <Path to your cron file> 
-```
