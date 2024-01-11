@@ -17,6 +17,8 @@ wandb = "^0.16.1"
 python-dotenv = "^1.0.0"
 simplejson = "^3.19.2"
 numpy = "^1.26.3"
+python-crontab = "^3.0.0"
+croniter = "^2.0.1"
 
 [tool.poetry.scripts]
 start = "api.main:start"
