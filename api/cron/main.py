@@ -9,7 +9,7 @@ def start():
     job = cron.new(command="echo $(date +%s) >>cron.logs")
     job.minute.every(1)
     tab = CronTab(tabfile="metagraph.cron")
-    for result in tab.run_scheduler():
+    for _ in tab.run_scheduler():
         fetchMetagraph()
 
 
