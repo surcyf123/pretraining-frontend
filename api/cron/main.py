@@ -1,6 +1,7 @@
 import bittensor
 from .utils import dumpData
 
+
 def start():
     print("Starting cron job.")
     # TODO: add code to execute command "crontab metagraph.cron" to schedule cron job.
@@ -9,6 +10,7 @@ def start():
 def stop():
     print("Stopping cron job.")
     # TODO: add code to remove cron job.
+
 
 def fetchMetagraph():
     netUIDs = list(range(33))
