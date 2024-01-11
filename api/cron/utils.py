@@ -1,5 +1,4 @@
 from os import path, getcwd
-import json
 from simplejson import dump
 
 
