@@ -73,4 +73,4 @@ def fetchValidatorRuns():
         },
     )
     originalFormatJSON = extractOriginalFormatData(runs)
-    dumpData(f"validator-runs.json", originalFormatJSON)
+    dumpData("validator-runs.json", originalFormatJSON)
