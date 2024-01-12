@@ -80,7 +80,9 @@ def getSubnetLabels() -> dict:
 
 
 def getMetagraphData(netUID: int) -> dict:
-    metagraphFilePath = path.join(getcwd(), "data-bank", f"metagraph-data-{netUID}.json")
+    metagraphFilePath = path.join(
+        getcwd(), "data-bank", f"metagraph-data-{netUID}.json"
+    )
     file = open(metagraphFilePath)
     data = load(file)
     return data
