@@ -12,7 +12,7 @@ from .utils.metagraph import (
     calculateConsensus,
     getSubnetLabels,
     convertToFloat,
-    getMetagraphData,
+    loadMetagraphData
 )
 from .utils.wandb import (
     fetchValidatorRuns,
@@ -99,7 +99,7 @@ def validators():
 @app.get("/weights/{netuid}")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def weights(netuid: int = 0, threshold: int = 20000):
-    metagraphData = getMetagraphData(netuid)
+    metagraphData = loadMetagraphData(netuid)
     df = DataFrame(
         {
             "weights": metagraphData["weights"],
