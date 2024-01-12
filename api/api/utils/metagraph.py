@@ -91,5 +91,5 @@ def loadMetagraphData(netUID: int) -> dict:
     except FileNotFoundError:
         # Ref: https://fastapi.tiangolo.com/tutorial/handling-errors/?h=error#raise-an-httpexception-in-your-code
         raise HTTPException(
-            status_code=404, detail=f"Metagraph data with netuid {netUID} Not found."
+            status_code=404, detail=f"Metagraph data with netuid {netUID} not found."
         )
