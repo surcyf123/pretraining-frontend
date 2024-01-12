@@ -2,6 +2,8 @@ import bittensor
 from .utils import dumpData
 from crontab import CronTab
 from os import path, getcwd
+from time import sleep
+
 
 def start():
     print("Starting cron job.")
@@ -9,7 +11,10 @@ def start():
         tab=f"""*/10 * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
     )
     for _ in tab.run_scheduler():
-        fetchMetagraph()
+        try:
+            fetchMetagraph()
+        except:
+            sleep(20)
 
 
 def stop():
