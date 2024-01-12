@@ -117,7 +117,7 @@ def average_validator_trust(netuid: int = 0):
     metagraphData = loadMetagraphData(netuid)
     records = {
         "stake": metagraphData["neurons"]["stake"],
-        "validatorTrust": metagraphData["validatorTrust"]
+        "validatorTrust": metagraphData["validatorTrust"],
     }
     df = DataFrame(records)
     filtered_df = df[df["stake"] > 20000]
@@ -131,7 +131,8 @@ def vitals():
     subnetLabels = getSubnetLabels()
     metagraphData = loadMetagraphData(0)
     weights = FloatTensor(metagraphData["weights"])
-    normalizedStake = (FloatTensor(metagraphData["neurons"]["stake"]) / FloatTensor(metagraphData["neurons"]["stake"]).sum()).clone().float()
+    stake = FloatTensor(metagraphData["neurons"]["stake"])
+    normalizedStake = (stake / stake.sum()).clone().float()
     trust = calculateTrust(weights, normalizedStake)
     rank = calculateRank(weights, normalizedStake)
     consensus = calculateConsensus(trust)
