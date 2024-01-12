@@ -3,6 +3,7 @@ from .utils import dumpData
 from crontab import CronTab
 from os import path, getcwd
 
+
 def start():
     print("Starting cron job.")
     tab = CronTab(

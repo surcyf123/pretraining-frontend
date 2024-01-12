@@ -12,7 +12,7 @@ from .utils.metagraph import (
     calculateConsensus,
     getSubnetLabels,
     convertToFloat,
-    loadMetagraphData
+    loadMetagraphData,
 )
 from .utils.wandb import (
     fetchValidatorRuns,
