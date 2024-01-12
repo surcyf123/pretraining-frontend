@@ -90,6 +90,15 @@ export function Heatmap({
   useEffect(() => {
     if (chartRef.current !== null) {
       const chart = getInstanceByDom(chartRef.current);
+      const max =
+        data.length > 0
+          ? Math.max(
+              ...data.map((ele) => {
+                const value = ele[visualAxis];
+                return typeof value === "number" ? value : 0;
+              }),
+            )
+          : 1;
       const option: HeatMapOption = {
         color: schemeBrBG[11], // Ref: https://echarts.apache.org/en/option.html#color
         title: {
@@ -124,7 +133,7 @@ export function Heatmap({
         ],
         visualMap: {
           min: 0,
-          max: 1,
+          max,
           calculable: true,
           realtime: true,
           inRange: {
