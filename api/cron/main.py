@@ -14,7 +14,7 @@ def start():
         try:
             fetchMetagraph()
         except:
-            sleep(20)
+            sleep(20) // sleep for 20 seconds
 
 
 def stop():
