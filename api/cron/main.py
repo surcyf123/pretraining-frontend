@@ -7,7 +7,7 @@ from os import path, getcwd
 def start():
     print("Starting cron job.")
     tab = CronTab(
-        tab="""* * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> /home/ec2-user/cron/cron.logs"""
+        tab="""*/10 * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> /home/ec2-user/cron/cron.logs"""
     )
     for _ in tab.run_scheduler():
         fetchMetagraph()
