@@ -83,6 +83,6 @@ def loadMetagraphData(netUID: int) -> dict:
     metagraphFilePath = path.join(
         getcwd(), "data-bank", f"metagraph-data-{netUID}.json"
     )
-    file = open(metagraphFilePath)
-    data = load(file)
+    with open(metagraphFilePath, 'r') as file:
+        data = load(file)
     return data
