@@ -1,1 +1,2 @@
- */10 * * * * python3 /home/ec2-user/cron/metagraph.py
+* * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> /home/ec2-user/cron/cron.logs
+
