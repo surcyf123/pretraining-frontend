@@ -2,6 +2,7 @@ from torch import sigmoid, FloatTensor
 from typing import Union
 from os import path, getcwd
 from json import load
+from fastapi import HTTPException
 
 
 # Ref: https://docs.bittensor.com/emissions#trust
@@ -83,6 +84,11 @@ def loadMetagraphData(netUID: int) -> dict:
     metagraphFilePath = path.join(
         getcwd(), "data-bank", f"metagraph-data-{netUID}.json"
     )
-    with open(metagraphFilePath, "r") as file:
-        data = load(file)
-    return data
+    try:
+        with open(metagraphFilePath, "r") as file:
+            data = load(file)
+        return data
+    except FileNotFoundError:
+        raise HTTPException(
+            status_code=404, detail=f"Metagraph data with netuid {netUID} Not found"
+        )
