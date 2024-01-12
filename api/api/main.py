@@ -114,10 +114,10 @@ def bonds(netuid: int = 0):
 @app.get("/average-validator-trust/{netuid}")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def average_validator_trust(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
+    metagraphData = loadMetagraphData(netuid)
     records = {
-        "stake": metagraph.S.tolist(),
-        "validatorTrust": metagraph.Tv.tolist(),
+        "stake": metagraphData["neurons"]["stake"],
+        "validatorTrust": metagraphData["validatorTrust"]
     }
     df = DataFrame(records)
     filtered_df = df[df["stake"] > 20000]
