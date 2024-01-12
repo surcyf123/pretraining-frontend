@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import Dict
 from pandas import DataFrame, concat
 import uvicorn
-import bittensor
 from torch import FloatTensor
 from CacheToolsUtils import cachetools, cached
 from .utils.metagraph import (
