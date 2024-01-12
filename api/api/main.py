@@ -12,6 +12,7 @@ from .utils.metagraph import (
     calculateConsensus,
     getSubnetLabels,
     convertToFloat,
+    getMetagraphData,
 )
 from .utils.wandb import (
     fetchValidatorRuns,
@@ -97,15 +98,23 @@ def validators():
 
 @app.get("/weights/{netuid}")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
-def weights(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
-    weight_matrix = metagraph.W.tolist()
-    formatted_weight_matrix = [
-        {"validatorID": v_id, "weight": weight, "minerID": m_id}
-        for v_id, miners in enumerate(weight_matrix)
-        for m_id, weight in enumerate(miners)
+def weights(netuid: int = 0, threshold: int = 20000):
+    metagraphData = getMetagraphData(netuid)
+    df = DataFrame(
+        {
+            "weights": metagraphData["weights"],
+            "stake": metagraphData["neurons"]["stake"],
+            "uid": metagraphData["neurons"]["uid"],
+        }
+    )
+    filteredDataFrame = df[df["stake"] > threshold]
+    weightMatrixDetails = filteredDataFrame.to_dict(orient="records")
+    output = [
+        {"validatorID": weightInfo["uid"], "minerID": m_id, "weight": weight}
+        for weightInfo in weightMatrixDetails
+        for m_id, weight in enumerate(weightInfo["weights"])
     ]
-    return formatted_weight_matrix
+    return output
 
 
 @app.get("/bonds/{netuid}")
