@@ -67,16 +67,16 @@ def validators():
     delegates = get(
         "https://raw.githubusercontent.com/opentensor/bittensor-delegates/main/public/delegates.json"
     ).json()
-    metagraph = bittensor.metagraph(0, lite=False, network="finney", sync=True)
+    metagraphData = loadMetagraphData(0)
     records = {
-        "uid": metagraph.uids.tolist(),
-        "stake": metagraph.S.tolist(),
-        "hotkey": metagraph.hotkeys,
-        "coldkey": metagraph.coldkeys,
-        "address": metagraph.addresses,
+        "uid": metagraphData["neurons"]["uid"],
+        "stake": metagraphData["neurons"]["stake"],
+        "hotkey": metagraphData["neurons"]["hotkey"],
+        "coldkey": metagraphData["neurons"]["coldkey"],
+        "address": metagraphData["neurons"]["address"],
     }
     records_df = DataFrame(records)
-    weights_df = DataFrame(metagraph.W.tolist())
+    weights_df = DataFrame(metagraphData["weights"])
     df = concat([records_df, weights_df], axis=1)
     validatorData = df.to_dict(orient="records")  # transform data to array of records
     output = list(map(lambda x: {**x, **delegates.get(x["hotkey"], {})}, validatorData))
