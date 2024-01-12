@@ -108,11 +108,11 @@ def weights(netuid: int = 0, threshold: int = 20000):
         }
     )
     filteredDataFrame = df[df["stake"] > threshold]
-    weightMatrixDetails = filteredDataFrame.to_dict(orient="records")
+    records = filteredDataFrame.to_dict(orient="records")
     output = [
-        {"validatorID": weightInfo["uid"], "minerID": m_id, "weight": weight}
-        for weightInfo in weightMatrixDetails
-        for m_id, weight in enumerate(weightInfo["weights"])
+        {"validatorID": record["uid"], "minerID": m_id, "weight": weight}
+        for record in records
+        for m_id, weight in enumerate(record["weights"])
     ]
     return output
 
