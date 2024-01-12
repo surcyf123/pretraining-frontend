@@ -1,4 +1,4 @@
-## (Launching EC2 Instance)[https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-instance-wizard.html]
+## [Launching EC2 Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-instance-wizard.html)
 # Specifications:
 - Memory: 20GB
 - Image: Amazon Linux
