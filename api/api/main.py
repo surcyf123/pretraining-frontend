@@ -117,7 +117,7 @@ def average_validator_trust(netuid: int = 0):
     metagraphData = loadMetagraphData(netuid)
     records = {
         "stake": metagraphData["neurons"]["stake"],
-        "validatorTrust": metagraphData["validatorTrust"]
+        "validatorTrust": metagraphData["validatorTrust"],
     }
     df = DataFrame(records)
     filtered_df = df[df["stake"] > 20000]
