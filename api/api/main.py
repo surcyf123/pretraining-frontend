@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import Dict
 from pandas import DataFrame, concat
 import uvicorn
-import bittensor
+from torch import FloatTensor
 from CacheToolsUtils import cachetools, cached
 from .utils.metagraph import (
     calculateTrust,
@@ -129,9 +129,10 @@ def average_validator_trust(netuid: int = 0):
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def vitals():
     subnetLabels = getSubnetLabels()
-    metagraph = bittensor.metagraph(0, lite=False, network="finney", sync=True)
-    weights = metagraph.W.float()
-    normalizedStake = (metagraph.S / metagraph.S.sum()).clone().float()
+    metagraphData = loadMetagraphData(0)
+    weights = FloatTensor(metagraphData["weights"])
+    stake = FloatTensor(metagraphData["neurons"]["stake"])
+    normalizedStake = (stake / stake.sum()).clone().float()
     trust = calculateTrust(weights, normalizedStake)
     rank = calculateRank(weights, normalizedStake)
     consensus = calculateConsensus(trust)
