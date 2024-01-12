@@ -1,10 +1,16 @@
 import bittensor
 from .utils import dumpData
+from crontab import CronTab
+from os import path, getcwd
 
 
 def start():
     print("Starting cron job.")
-    # TODO: add code to execute command "crontab metagraph.cron" to schedule cron job.
+    tab = CronTab(
+        tab="""*/10 * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> /home/ec2-user/cron/cron.logs"""
+    )
+    for _ in tab.run_scheduler():
+        fetchMetagraph()
 
 
 def stop():
