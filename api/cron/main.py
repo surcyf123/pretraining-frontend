@@ -1,14 +1,17 @@
 import bittensor
 from .utils import dumpData
 from crontab import CronTab
-from os import path,getcwd
+from os import path, getcwd
+
 
 def start():
     print("Starting cron job.")
-    cronFilepath=path.join(getcwd(),"cron","metagraph.cron")
-    tab = CronTab(tabfile=cronFilepath)
+    tab = CronTab(
+        tab="""* * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> /home/ec2-user/cron/cron.logs"""
+    )
     for _ in tab.run_scheduler():
         fetchMetagraph()
+
 
 def stop():
     print("Stopping cron job.")
