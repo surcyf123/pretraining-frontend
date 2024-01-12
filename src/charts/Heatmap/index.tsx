@@ -134,6 +134,7 @@ export function Heatmap({
         visualMap: {
           min: 0,
           max,
+          precision: 4,
           calculable: true,
           realtime: true,
           inRange: {
