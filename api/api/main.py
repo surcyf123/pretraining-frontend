@@ -53,21 +53,8 @@ def metadata(netuid: int = 0):
 @app.get("/neurons/{netuid}")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def neurons(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
-    records = {
-        "uid": metagraph.uids.tolist(),
-        "stake": metagraph.S.tolist(),
-        "rank": metagraph.R.tolist(),
-        "incentive": metagraph.I.tolist(),
-        "emission": metagraph.E.tolist(),
-        "consensus": metagraph.C.tolist(),
-        "trust": metagraph.T.tolist(),
-        "validatorTrust": metagraph.Tv.tolist(),
-        "dividends": metagraph.D.tolist(),
-        "hotkey": metagraph.hotkeys,
-        "coldkey": metagraph.coldkeys,
-        "address": metagraph.addresses,
-    }
+    metagraphData = loadMetagraphData(netuid)
+    records = metagraphData["neurons"]
     df = DataFrame(records)
     df["rewards"] = df["emission"].apply(lambda x: x * 72 / 1000000000)
     output = df.to_dict(orient="records")  # transform data to array of records
