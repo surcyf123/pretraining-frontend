@@ -29,8 +29,8 @@ export function General(): JSX.Element {
           style={{ height: "50vh" }}
           theme={colorScheme === "auto" ? "dark" : colorScheme}
           data={taoCandlestick ?? []}
-          xAxis="time"
-          yAxis="data"
+          xAxis="Time"
+          yAxis="USD/τ"
           loading={isTaoCandlestick}
         />
       </Card>
