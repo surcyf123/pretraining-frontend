@@ -46,8 +46,8 @@ def root():
 @app.get("/metadata/{netuid}")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def metadata(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
-    return metagraph.metadata()
+    metagraphData = getMetagraphData(netuid)
+    return metagraphData["metadata"]
 
 
 @app.get("/neurons/{netuid}")
