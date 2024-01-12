@@ -46,7 +46,7 @@ def root():
 @app.get("/metadata/{netuid}")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def metadata(netuid: int = 0):
-    metagraphData = getMetagraphData(netuid)
+    metagraphData = loadMetagraphData(netuid)
     return metagraphData["metadata"]
 
 
