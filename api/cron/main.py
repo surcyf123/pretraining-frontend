@@ -9,6 +9,7 @@ def start():
     tab = CronTab(
         tab=f"""*/10 * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
     )
+    fetchMetagraph()
     for _ in tab.run_scheduler():
         try:
             fetchMetagraph()
