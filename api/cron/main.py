@@ -2,7 +2,6 @@ import bittensor
 from .utils import dumpData
 from crontab import CronTab
 from os import path, getcwd
-from time import sleep
 
 
 def start():
