@@ -1,5 +1,7 @@
 from torch import sigmoid, FloatTensor
 from typing import Union
+from os import path, getcwd
+from json import load
 
 
 # Ref: https://docs.bittensor.com/emissions#trust
@@ -75,3 +77,12 @@ def getSubnetLabels() -> dict:
         "31": "Game of Life",
         "32": "Roleplay",
     }
+
+
+def loadMetagraphData(netUID: int) -> dict:
+    metagraphFilePath = path.join(
+        getcwd(), "data-bank", f"metagraph-data-{netUID}.json"
+    )
+    with open(metagraphFilePath, 'r') as file:
+        data = load(file)
+    return data
