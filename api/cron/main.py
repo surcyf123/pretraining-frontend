@@ -5,7 +5,6 @@ from os import path, getcwd
 from time import sleep
 
 
-
 def start():
     print("Starting cron job.")
     tab = CronTab(
