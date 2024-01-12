@@ -9,7 +9,7 @@ export function Subnet(): JSX.Element {
   const { colorScheme } = useMantineColorScheme();
   const { data: heatmapData, isLoading: isHeatmapDataLoading } = useQuery({
     queryKey: ["heatmap", netuid],
-    queryFn: () => fetchHeatmapData(Number.parseInt(netuid ?? "0", 10)),
+    queryFn: () => fetchHeatmapData(Number.parseInt(netuid ?? "0", 10), 20000),
     refetchInterval: 10 * 60 * 1000,
   });
   return (

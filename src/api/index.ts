@@ -96,8 +96,8 @@ export async function fetchValidators(): Promise<Validator[]> {
   return validators;
 }
 
-export async function fetchHeatmapData(netUID: number): Promise<Record<string, number>[]> {
-  const rawResponse = await fetch(`${BaseURL}/weights/${netUID}`);
+export async function fetchHeatmapData(netUID: number, threshold: number): Promise<Record<string, number>[]> {
+  const rawResponse = await fetch(`${BaseURL}/weights/${netUID}?threshold=${threshold}`);
   const output = (await rawResponse.json()) as Record<string, number>[];
   return output;
 }

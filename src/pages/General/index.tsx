@@ -11,7 +11,7 @@ export function General(): JSX.Element {
   const { colorScheme } = useMantineColorScheme();
   const { data: heatmapData, isLoading: isHeatmapDataLoading } = useQuery({
     queryKey: ["heatmap"],
-    queryFn: () => fetchHeatmapData(0),
+    queryFn: () => fetchHeatmapData(0, 20000),
     refetchInterval: 10 * 60 * 1000,
   });
   const { data: taoCandlestick, isLoading: isTaoCandlestick } = useQuery({
