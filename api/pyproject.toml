@@ -18,7 +18,7 @@ python-dotenv = "^1.0.0"
 simplejson = "^3.19.2"
 numpy = "^1.26.3"
 python-crontab = "^3.0.0"
-croniter = "^2.0.1"
+croniter = "^2.0.1" # This package is needed with "python-crontab" module to run a crontab
 
 [tool.poetry.scripts]
 start = "api.main:start"
