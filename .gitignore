@@ -30,3 +30,4 @@ amplifytools.xcconfig
 
 __pycache__
 .env
+api/data-bank
