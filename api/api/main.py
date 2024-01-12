@@ -12,6 +12,7 @@ from .utils.metagraph import (
     calculateConsensus,
     getSubnetLabels,
     convertToFloat,
+    loadMetagraphData,
 )
 from .utils.wandb import (
     fetchValidatorRuns,
@@ -45,28 +46,15 @@ def root():
 @app.get("/metadata/{netuid}")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def metadata(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
-    return metagraph.metadata()
+    metagraphData = loadMetagraphData(netuid)
+    return metagraphData["metadata"]
 
 
 @app.get("/neurons/{netuid}")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def neurons(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
-    records = {
-        "uid": metagraph.uids.tolist(),
-        "stake": metagraph.S.tolist(),
-        "rank": metagraph.R.tolist(),
-        "incentive": metagraph.I.tolist(),
-        "emission": metagraph.E.tolist(),
-        "consensus": metagraph.C.tolist(),
-        "trust": metagraph.T.tolist(),
-        "validatorTrust": metagraph.Tv.tolist(),
-        "dividends": metagraph.D.tolist(),
-        "hotkey": metagraph.hotkeys,
-        "coldkey": metagraph.coldkeys,
-        "address": metagraph.addresses,
-    }
+    metagraphData = loadMetagraphData(netuid)
+    records = metagraphData["neurons"]
     df = DataFrame(records)
     df["rewards"] = df["emission"].apply(lambda x: x * 72 / 1000000000)
     output = df.to_dict(orient="records")  # transform data to array of records
@@ -79,16 +67,16 @@ def validators():
     delegates = get(
         "https://raw.githubusercontent.com/opentensor/bittensor-delegates/main/public/delegates.json"
     ).json()
-    metagraph = bittensor.metagraph(0, lite=False, network="finney", sync=True)
+    metagraphData = loadMetagraphData(0)
     records = {
-        "uid": metagraph.uids.tolist(),
-        "stake": metagraph.S.tolist(),
-        "hotkey": metagraph.hotkeys,
-        "coldkey": metagraph.coldkeys,
-        "address": metagraph.addresses,
+        "uid": metagraphData["neurons"]["uid"],
+        "stake": metagraphData["neurons"]["stake"],
+        "hotkey": metagraphData["neurons"]["hotkey"],
+        "coldkey": metagraphData["neurons"]["coldkey"],
+        "address": metagraphData["neurons"]["address"],
     }
     records_df = DataFrame(records)
-    weights_df = DataFrame(metagraph.W.tolist())
+    weights_df = DataFrame(metagraphData["weights"])
     df = concat([records_df, weights_df], axis=1)
     validatorData = df.to_dict(orient="records")  # transform data to array of records
     output = list(map(lambda x: {**x, **delegates.get(x["hotkey"], {})}, validatorData))
@@ -97,31 +85,39 @@ def validators():
 
 @app.get("/weights/{netuid}")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
-def weights(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
-    weight_matrix = metagraph.W.tolist()
-    formatted_weight_matrix = [
-        {"validatorID": v_id, "weight": weight, "minerID": m_id}
-        for v_id, miners in enumerate(weight_matrix)
-        for m_id, weight in enumerate(miners)
+def weights(netuid: int = 0, threshold: int = 20000):
+    metagraphData = loadMetagraphData(netuid)
+    df = DataFrame(
+        {
+            "weights": metagraphData["weights"],
+            "stake": metagraphData["neurons"]["stake"],
+            "uid": metagraphData["neurons"]["uid"],
+        }
+    )
+    filteredDataFrame = df[df["stake"] > threshold]
+    records = filteredDataFrame.to_dict(orient="records")
+    output = [
+        {"validatorID": record["uid"], "minerID": m_id, "weight": weight}
+        for record in records
+        for m_id, weight in enumerate(record["weights"])
     ]
-    return formatted_weight_matrix
+    return output
 
 
 @app.get("/bonds/{netuid}")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def bonds(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
-    return metagraph.B.tolist()
+    metagraphData = loadMetagraphData(netuid)
+    return metagraphData["bonds"]
 
 
 @app.get("/average-validator-trust/{netuid}")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def average_validator_trust(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
+    metagraphData = loadMetagraphData(netuid)
     records = {
-        "stake": metagraph.S.tolist(),
-        "validatorTrust": metagraph.Tv.tolist(),
+        "stake": metagraphData["neurons"]["stake"],
+        "validatorTrust": metagraphData["validatorTrust"]
     }
     df = DataFrame(records)
     filtered_df = df[df["stake"] > 20000]

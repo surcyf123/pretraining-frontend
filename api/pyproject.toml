@@ -9,7 +9,7 @@ readme = "README.md"
 python = "^3.11"
 fastapi = "0.99.1"
 uvicorn = {extras = ["standard"], version = "0.22.0"}
-bittensor = "^6.5.0"
+bittensor = "^6.6.0"
 pandas = "^2.1.4"
 cachetoolsutils = "^8.3"
 torch = "^2.1.2"
