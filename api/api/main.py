@@ -107,8 +107,8 @@ def weights(netuid: int = 0, threshold: int = 20000):
 @app.get("/bonds/{netuid}")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def bonds(netuid: int = 0):
-    metagraph = bittensor.metagraph(netuid, lite=False, network="finney", sync=True)
-    return metagraph.B.tolist()
+    metagraphData = loadMetagraphData(netuid)
+    return metagraphData["bonds"]
 
 
 @app.get("/average-validator-trust/{netuid}")
