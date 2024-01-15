@@ -150,6 +150,4 @@ def loadValidatorRuns(days: int) -> dict:
         return updatedRuns
     except FileNotFoundError:
         # Ref: https://fastapi.tiangolo.com/tutorial/handling-errors/?h=error#raise-an-httpexception-in-your-code
-        raise HTTPException(
-            status_code=404, detail="Validator runs not found."
-        )
+        raise HTTPException(status_code=404, detail="Validator runs not found.")
