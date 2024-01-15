@@ -1,5 +1,5 @@
 import bittensor
-from .utils import dumpData, extractOriginalFormatData
+from .utils import dumpData, formatRuns
 from crontab import CronTab
 from os import path, getcwd
 from wandb import login, Api
@@ -72,5 +72,5 @@ def fetchValidatorRuns() -> dict:
             "display_name": {"$regex": "^validator-(\d+)-(\d+)-(\d+)-(\d+)_.+$"},
         },
     )
-    originalFormatJsonData = extractOriginalFormatData(runs)
+    originalFormatJsonData = formatRuns(runs)
     dumpData("validator-runs.json", originalFormatJsonData)
