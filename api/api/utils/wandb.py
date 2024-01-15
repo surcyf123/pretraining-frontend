@@ -1,11 +1,12 @@
 from wandb import login, Api
 from pandas import Series, DataFrame
-from json import loads
+from json import loads, load
 from datetime import datetime, timedelta
 from math import nan, isnan, isinf
 from numpy import concatenate
 from functools import reduce
-
+from os import getcwd, path
+from fastapi import HTTPException
 
 login()
 WandbApi = Api()
@@ -178,3 +179,19 @@ def filterNDaysValidatorData(data: dict, days: int) -> dict:
             filter(lambda x: x["timestamp"] >= prevtimestamp, values)
         )
     return output
+
+
+def loadValidatorRuns(days: int) -> dict:
+    validatorRunsFilepath = path.join(getcwd(), "data-bank", "validator-runs.json")
+    try:
+        with open(validatorRunsFilepath, "r") as file:
+            data = load(file)
+            nDaysData = filterNDaysValidatorData(data, days)
+            filteredRuns = filterRecentValidatorRun(nDaysData)
+            updatedData = calculateBestAverageLoss(filteredRuns)
+        return updatedData
+    except FileNotFoundError:
+        # Ref: https://fastapi.tiangolo.com/tutorial/handling-errors/?h=error#raise-an-httpexception-in-your-code
+        raise HTTPException(
+            status_code=404, detail="Validator-runs.json File not found."
+        )
