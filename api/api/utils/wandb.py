@@ -1,17 +1,11 @@
-from wandb import login, Api
-from pandas import Series, DataFrame
-from json import loads, load
+from pandas import DataFrame
+from json import load
 from datetime import datetime, timedelta
 from math import nan, isnan, isinf
 from numpy import concatenate
 from functools import reduce
 from os import getcwd, path
 from fastapi import HTTPException
-
-login()
-WandbApi = Api()
-ProjectName = "pretraining-subnet"
-EntityName = "opentensor-dev"
 
 
 def smoothBestAverageLoss(data):
@@ -29,26 +23,6 @@ def smoothBestAverageLoss(data):
     )  # drop the index column
     output = df.to_dict(orient="records")
     return output
-
-
-def extractOriginalFormatData(runs: WandbApi.runs):
-    validatorRunData = {}
-    for run in runs:
-        runData = run.history()
-        if "original_format_json" in runData.columns:
-            originalFormatJsonData = runData["original_format_json"]
-            convertedData = []
-            if isinstance(originalFormatJsonData, Series):
-                targetList = originalFormatJsonData.to_list()
-                for ele in targetList:
-                    if isinstance(ele, str):
-                        convertedData.append(loads(ele))
-                    else:
-                        convertedData.append(ele)
-            else:
-                convertedData = originalFormatJsonData
-            validatorRunData[run.name] = convertedData
-    return validatorRunData
 
 
 def calculateBestAverageLoss(data: dict) -> dict:
@@ -69,7 +43,7 @@ def calculateBestAverageLoss(data: dict) -> dict:
     return output
 
 
-def transformValidatorRuns(runs: WandbApi.runs):
+def transformValidatorRuns(runs: dict):
     output = []
     for validatorID, validatorInfo in runs.items():
         for item in validatorInfo:
@@ -151,24 +125,6 @@ def filterLatestRuns(runs: dict) -> dict:
     filteredRunIDs = [createRunID(value[0]) for value in groups.values()]
     filteredRuns = {key: runs[key] for key in filteredRunIDs}
     return filteredRuns
-
-
-def fetchValidatorRuns(days: int) -> dict:
-    runs = WandbApi.runs(
-        f"{EntityName}/{ProjectName}",
-        filters={
-            "created_at": {
-                "$gte": (datetime.now() - timedelta(days=days)).strftime(
-                    "%Y-%m-%dT%H:%M:%S"
-                )  # fetch data for previous n days
-            },
-            "display_name": {"$regex": "^validator-(\d+)-(\d+)-(\d+)-(\d+)_.+$"},
-        },
-    )
-    originalFormatJsonData = extractOriginalFormatData(runs)
-    filteredRuns = filterLatestRuns(originalFormatJsonData)
-    updatedData = calculateBestAverageLoss(filteredRuns)
-    return updatedData
 
 
 def filterValidatorRuns(data: dict, days: int) -> dict:

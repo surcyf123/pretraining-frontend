@@ -14,7 +14,7 @@ from .utils.metagraph import (
     loadMetagraphData,
 )
 from .utils.wandb import (
-    fetchValidatorRuns,
+    loadValidatorRuns,
     transformValidatorRuns,
     smoothBestAverageLoss,
     extractUIDs,
@@ -196,7 +196,7 @@ def taoCandlestick():
 @app.get("/wandb/validator-runs/{days}")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def validatorRuns(days: int = 30):
-    runs = fetchValidatorRuns(days)
+    runs = loadValidatorRuns(days)
     uids = extractUIDs(runs)
     parsedRuns = loads(
         dumps(uids, indent=2, ignore_nan=True)
@@ -207,7 +207,7 @@ def validatorRuns(days: int = 30):
 @app.get("/wandb/line-chart/{days}")
 @cached(cache=cachetools.TTLCache(maxsize=33, ttl=10 * 60))
 def lineChartData(days: int = 30):
-    runs = fetchValidatorRuns(days)
+    runs = loadValidatorRuns(days)
     transformedData = transformValidatorRuns(runs)
     smoothedBestAverageLoss = smoothBestAverageLoss(transformedData)
     parsedRuns = loads(
