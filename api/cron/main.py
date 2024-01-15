@@ -1,5 +1,5 @@
 import bittensor
-from .utils import dumpData, formatRuns, filterLatestRuns
+from .utils import dumpData, formatRuns, filterLatestRuns, calculateBestAverageLoss
 from crontab import CronTab
 from os import path, getcwd
 from wandb import login, Api
@@ -74,4 +74,5 @@ def fetchValidatorRuns() -> dict:
     )
     formattedRuns = formatRuns(runs)
     recentRuns = filterLatestRuns(formattedRuns)
-    dumpData("validator-runs.json", recentRuns)
+    updatedRuns = calculateBestAverageLoss(recentRuns)
+    dumpData("validator-runs.json", updatedRuns)
