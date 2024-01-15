@@ -170,8 +170,7 @@ def fetchValidatorRuns(days: int) -> dict:
     return updatedData
 
 
-
-def filterNDaysValidatorData(data: dict, days: int):
+def filterNDaysValidatorData(data: dict, days: int) -> dict:
     output = {}
     prevtimestamp = (datetime.now() - timedelta(days=days)).timestamp()
     for validatorID, values in data.items():
