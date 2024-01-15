@@ -51,6 +51,7 @@ def reducer(value: dict) -> dict:
         acc[item] = [curr]
     return acc
 
+
 def filterLatestRuns(runs: dict) -> dict:
     parsedRunIDs = [parseRunID(key) for key in runs.keys()]
     sortedResults = sorted(parsedRunIDs, key=lambda x: x["timestamp"], reverse=True)
@@ -62,6 +63,7 @@ def filterLatestRuns(runs: dict) -> dict:
     filteredRunIDs = [createRunID(value[0]) for value in groups.values()]
     filteredRuns = {key: runs[key] for key in filteredRunIDs}
     return filteredRuns
+
 
 def formatRuns(runs):
     output = {}
