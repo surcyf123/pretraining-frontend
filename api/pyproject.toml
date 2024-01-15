@@ -23,7 +23,8 @@ croniter = "^2.0.1" # This package is needed with "python-crontab" module to run
 [tool.poetry.scripts]
 start = "api.main:start"
 serve = "api.main:serve"
-"cron:start" =   "cron.main:start"
+"cron:start:validator" =   "cron.main:startFetchingValidator"
+"cron:start:metagraph" =   "cron.main:startFetchingMetagraph"
 "cron:stop" = "cron.main:stop"
 
 
