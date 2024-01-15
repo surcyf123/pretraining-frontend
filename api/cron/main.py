@@ -35,7 +35,7 @@ def stop():
 def fetchMetagraph():
     netUIDs = list(range(33))
     for netUID in netUIDs:
-        metagraph = bittensor.metagraph(netUID, lite=False, network="finney", sync=True)
+        metagraph = bittensor.metagraph(netUID, lite=False, network="local", sync=True)
         metagraphData = {
             "metadata": metagraph.metadata(),
             "neurons": {
