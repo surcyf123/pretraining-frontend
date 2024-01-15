@@ -1,17 +1,11 @@
-from wandb import login, Api
-from pandas import Series, DataFrame
-from json import loads, load
+from pandas import DataFrame
+from json import load
 from datetime import datetime, timedelta
 from math import nan, isnan, isinf
 from numpy import concatenate
 from functools import reduce
 from os import getcwd, path
 from fastapi import HTTPException
-
-login()
-WandbApi = Api()
-ProjectName = "pretraining-subnet"
-EntityName = "opentensor-dev"
 
 
 def smoothBestAverageLoss(data):
