@@ -186,8 +186,8 @@ def loadValidatorRuns(days: int) -> dict:
     try:
         with open(validatorRunsFilepath, "r") as file:
             data = load(file)
-            nDaysData = filterNDaysValidatorData(data, days)
-            filteredRuns = filterRecentValidatorRun(nDaysData)
+            validatorRuns = filterValidatorRuns(data, days)
+            filteredRuns = filterRecentValidatorRun(validatorRuns)
             updatedData = calculateBestAverageLoss(filteredRuns)
         return updatedData
     except FileNotFoundError:
