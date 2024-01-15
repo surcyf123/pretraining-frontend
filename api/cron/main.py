@@ -1,7 +1,15 @@
 import bittensor
-from .utils import dumpData
+from .utils import dumpData, formatRuns
 from crontab import CronTab
 from os import path, getcwd
+from wandb import login, Api
+from datetime import datetime, timedelta
+
+
+login()
+WandbApi = Api()
+ProjectName = "pretraining-subnet"
+EntityName = "opentensor-dev"
 
 
 def start():
@@ -9,9 +17,11 @@ def start():
     tab = CronTab(
         tab=f"""*/10 * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
     )
+    fetchValidatorRuns()  # Fetch validator runs as soon as the cron job starts
     fetchMetagraph()  # Fetch metagraphs as soon as the cron job starts
     for _ in tab.run_scheduler():
         try:
+            fetchValidatorRuns()
             fetchMetagraph()
         except:
             pass
@@ -48,3 +58,19 @@ def fetchMetagraph():
             "validatorTrust": metagraph.Tv.tolist(),
         }
         dumpData(f"metagraph-data-{netUID}.json", metagraphData)
+
+
+def fetchValidatorRuns() -> dict:
+    runs = WandbApi.runs(
+        f"{EntityName}/{ProjectName}",
+        filters={
+            "created_at": {
+                "$gte": (datetime.now() - timedelta(days=30)).strftime(
+                    "%Y-%m-%dT%H:%M:%S"
+                )  # fetch data for previous n days
+            },
+            "display_name": {"$regex": "^validator-(\d+)-(\d+)-(\d+)-(\d+)_.+$"},
+        },
+    )
+    originalFormatJsonData = formatRuns(runs)
+    dumpData("validator-runs.json", originalFormatJsonData)
