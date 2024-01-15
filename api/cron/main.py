@@ -13,7 +13,7 @@ EntityName = "opentensor-dev"
 
 
 def startFetchingValidator():
-    print("Fetching validator data")
+    print("Fetching validator data ...")
     tab = CronTab(
         tab=f"""* * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
     )
@@ -26,7 +26,7 @@ def startFetchingValidator():
 
 
 def startFetchingMetagraph():
-    print("Fetching metagraph data.")
+    print("Fetching metagraph data ...")
     tab = CronTab(
         tab=f"""* * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
     )
