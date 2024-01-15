@@ -4,6 +4,7 @@ from pandas import Series
 from json import loads
 from math import isnan, isinf
 from datetime import datetime
+from functools import reduce
 
 
 def dumpData(filename: str, data: dict):
@@ -50,6 +51,17 @@ def reducer(value: dict) -> dict:
         acc[item] = [curr]
     return acc
 
+def filterLatestRuns(runs: dict) -> dict:
+    parsedRunIDs = [parseRunID(key) for key in runs.keys()]
+    sortedResults = sorted(parsedRunIDs, key=lambda x: x["timestamp"], reverse=True)
+    groups = reduce(
+        lambda acc, curr: reducer({"acc": acc, "curr": curr, "key": "validatorID"}),
+        sortedResults,
+        {},
+    )
+    filteredRunIDs = [createRunID(value[0]) for value in groups.values()]
+    filteredRuns = {key: runs[key] for key in filteredRunIDs}
+    return filteredRuns
 
 def formatRuns(runs):
     output = {}
