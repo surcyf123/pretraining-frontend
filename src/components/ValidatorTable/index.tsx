@@ -111,7 +111,7 @@ export function ValidatorTable(): JSX.Element {
         ),
         id: "Coldkey",
       }),
-      ...range(33).map((ele) => {
+      ...range(1, 33).map((ele) => {
         return columnHelper.accessor((row) => row[ele.toString()], {
           cell: (info) => {
             let value = info.getValue();
