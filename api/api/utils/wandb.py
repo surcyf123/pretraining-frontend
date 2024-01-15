@@ -1,11 +1,9 @@
 from wandb import login, Api
-from pandas import Series
+from pandas import Series, DataFrame
 from json import loads
 from datetime import datetime, timedelta
-from pandas import DataFrame
-from math import nan
+from math import nan, isnan, isinf
 from numpy import concatenate
-from math import isnan, isinf
 from functools import reduce
 
 
@@ -61,7 +59,7 @@ def calculateBestAverageLoss(data: dict) -> dict:
             averageLosses = []
             for uid in uids:
                 currentUIDData = uidData.get(str(uid), None)
-                if isinstance(currentUIDData, dict):
+                if isValidUIDItem(currentUIDData) == True:
                     averageLoss = currentUIDData.get("average_loss", None)
                     averageLosses.append(averageLoss)
             if len(averageLosses) > 0:
