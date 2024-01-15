@@ -15,7 +15,7 @@ EntityName = "opentensor-dev"
 def startFetchingValidator():
     print("Fetching validator data ...")
     tab = CronTab(
-        tab=f"""* * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
+        tab=f"""*/10 * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
     )
     fetchValidatorRuns()  # Fetch validator runs as soon as the cron job starts
     for _ in tab.run_scheduler():
@@ -28,7 +28,7 @@ def startFetchingValidator():
 def startFetchingMetagraph():
     print("Fetching metagraph data ...")
     tab = CronTab(
-        tab=f"""* * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
+        tab=f"""*/10 * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
     )
     fetchMetagraph()  # Fetch metagraphs as soon as the cron job starts
     for _ in tab.run_scheduler():
