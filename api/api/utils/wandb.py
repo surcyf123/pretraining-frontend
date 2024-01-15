@@ -114,7 +114,7 @@ def createRunID(value: dict) -> str:
     return f"{validatorID}-{formattedTimestamp}"
 
 
-def filterRecentValidatorRun(runs: dict) -> dict:
+def filterLatestRuns(runs: dict) -> dict:
     parsedRunIDs = [parseRunID(key) for key in runs.keys()]
     sortedResults = sorted(parsedRunIDs, key=lambda x: x["timestamp"], reverse=True)
     groups = reduce(
@@ -129,10 +129,10 @@ def filterRecentValidatorRun(runs: dict) -> dict:
 
 def filterNDaysValidatorData(data: dict, days: int) -> dict:
     output = {}
-    prevtimestamp = (datetime.now() - timedelta(days=days)).timestamp()
+    threshold = (datetime.now() - timedelta(days=days)).timestamp()
     for validatorID, values in data.items():
         output[validatorID] = list(
-            filter(lambda x: x["timestamp"] >= prevtimestamp, values)
+            filter(lambda x: x["timestamp"] >= threshold, values)
         )
     return output
 
@@ -141,13 +141,13 @@ def loadValidatorRuns(days: int) -> dict:
     validatorRunsFilepath = path.join(getcwd(), "data-bank", "validator-runs.json")
     try:
         with open(validatorRunsFilepath, "r") as file:
-            data = load(file)
-            nDaysData = filterNDaysValidatorData(data, days)
-            filteredRuns = filterRecentValidatorRun(nDaysData)
-            updatedData = calculateBestAverageLoss(filteredRuns)
-        return updatedData
+            validatorRuns = load(file)
+            filteredRuns = filterValidatorRuns(validatorRuns, days)
+            recentRuns = filterLatestRuns(filteredRuns)
+            updatedRuns = calculateBestAverageLoss(recentRuns)
+        return updatedRuns
     except FileNotFoundError:
         # Ref: https://fastapi.tiangolo.com/tutorial/handling-errors/?h=error#raise-an-httpexception-in-your-code
         raise HTTPException(
-            status_code=404, detail="Validator-runs.json File not found."
+            status_code=404, detail="Validator runs not found."
         )
