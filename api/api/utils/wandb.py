@@ -168,3 +168,13 @@ def fetchValidatorRuns(days: int) -> dict:
     filteredRuns = filterRecentValidatorRun(originalFormatJsonData)
     updatedData = calculateBestAverageLoss(filteredRuns)
     return updatedData
+
+
+def filterValidatorRuns(data: dict, days: int) -> dict:
+    output = {}
+    threshold= (datetime.now() - timedelta(days=days)).timestamp()
+    for validatorID, values in data.items():
+        output[validatorID] = list(
+            filter(lambda x: x["timestamp"] >= threshold, values)
+        )
+    return output
