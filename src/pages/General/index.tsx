@@ -44,7 +44,7 @@ export function General(): JSX.Element {
           title="Weight Matrix"
           style={{ height: "50vh" }}
           theme={colorScheme === "auto" ? "dark" : colorScheme}
-          data={heatmapData ?? []}
+          data={heatmapData?.filter((ele) => ele.minerID > 0) ?? []} // TODO: update this logic on backend.
           xAxis="minerID"
           yAxis="validatorID"
           visualAxis="weight"
