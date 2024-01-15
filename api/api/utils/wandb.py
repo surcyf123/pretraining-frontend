@@ -43,7 +43,7 @@ def calculateBestAverageLoss(data: dict) -> dict:
     return output
 
 
-def transformValidatorRuns(runs: WandbApi.runs):
+def transformValidatorRuns(runs: dict):
     output = []
     for validatorID, validatorInfo in runs.items():
         for item in validatorInfo:
