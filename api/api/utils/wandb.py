@@ -140,7 +140,7 @@ def createRunID(value: dict) -> str:
     return f"{validatorID}-{formattedTimestamp}"
 
 
-def filterRecentValidatorRun(runs: dict) -> dict:
+def filterLatestRuns(runs: dict) -> dict:
     parsedRunIDs = [parseRunID(key) for key in runs.keys()]
     sortedResults = sorted(parsedRunIDs, key=lambda x: x["timestamp"], reverse=True)
     groups = reduce(
@@ -166,7 +166,7 @@ def fetchValidatorRuns(days: int) -> dict:
         },
     )
     originalFormatJsonData = extractOriginalFormatData(runs)
-    filteredRuns = filterRecentValidatorRun(originalFormatJsonData)
+    filteredRuns = filterLatestRuns(originalFormatJsonData)
     updatedData = calculateBestAverageLoss(filteredRuns)
     return updatedData
 
@@ -185,13 +185,13 @@ def loadValidatorRuns(days: int) -> dict:
     validatorRunsFilepath = path.join(getcwd(), "data-bank", "validator-runs.json")
     try:
         with open(validatorRunsFilepath, "r") as file:
-            data = load(file)
-            validatorRuns = filterValidatorRuns(data, days)
-            filteredRuns = filterRecentValidatorRun(validatorRuns)
-            updatedData = calculateBestAverageLoss(filteredRuns)
-        return updatedData
+            validatorRuns = load(file)
+            filteredRuns = filterValidatorRuns(validatorRuns, days)
+            recentRuns = filterLatestRuns(filteredRuns)
+            updatedRuns = calculateBestAverageLoss(recentRuns)
+        return updatedRuns
     except FileNotFoundError:
         # Ref: https://fastapi.tiangolo.com/tutorial/handling-errors/?h=error#raise-an-httpexception-in-your-code
         raise HTTPException(
-            status_code=404, detail="Validator-runs.json File not found."
+            status_code=404, detail="Validator runs not found."
         )
