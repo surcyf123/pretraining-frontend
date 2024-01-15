@@ -28,4 +28,4 @@ def formatRuns(runs):
             else:
                 convertedData = originalFormatJsonData
             output[run.name] = convertedData
-    return validatorRunData
+    return output
