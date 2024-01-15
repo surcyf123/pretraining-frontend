@@ -86,9 +86,11 @@ def extractUIDs(runData: dict):
         filter(lambda x: x is not None, concatenate(list(runData.values())))
     )  # Ref: https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html
     uids = concatenate([list(item["uid_data"].values()) for item in runs])
-    filteredUIDs = list(filter(isValidUIDItem, uids))  
-    sortedUIDs = sorted(filteredUIDs, key=lambda x: x["block"], reverse=True) # sort in descending order
-    
+    filteredUIDs = list(filter(isValidUIDItem, uids))
+    sortedUIDs = sorted(
+        filteredUIDs, key=lambda x: x["block"], reverse=True
+    )  # sort in descending order
+
     groups = reduce(
         lambda acc, curr: reducer({"acc": acc, "curr": curr, "key": "uid"}),
         sortedUIDs,
