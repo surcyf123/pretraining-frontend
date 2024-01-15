@@ -73,4 +73,4 @@ def fetchValidatorRuns() -> dict:
         },
     )
     originalFormatJsonData = extractOriginalFormatData(runs)
-    dumpData("validator-runs", originalFormatJsonData)
+    dumpData("validator-runs.json", originalFormatJsonData)
