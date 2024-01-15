@@ -36,11 +36,6 @@ services:
     restart: unless-stopped
     ports:
       - "8000:8000"
-    command:
-      - /bin/bash
-      - -c
-      - |
-        nohup poetry run serve & \n
-        nohup poetry run cron:start \n
+
         
 
