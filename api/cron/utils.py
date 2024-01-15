@@ -13,7 +13,6 @@ def dumpData(filename: str, data: dict):
 def formatRuns(runs):
     output = {}
     for run in runs:
-        print(run.name)
         runData = run.history()
         if "original_format_json" in runData.columns:
             originalFormatJsonData = runData["original_format_json"]
