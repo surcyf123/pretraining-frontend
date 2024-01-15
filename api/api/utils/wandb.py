@@ -173,9 +173,9 @@ def fetchValidatorRuns(days: int) -> dict:
 
 def filterNDaysValidatorRun(data: dict, days: int):
     output = {}
-    timestamp = (datetime.now() - timedelta(days=days)).timestamp()
+    prevtimestamp = (datetime.now() - timedelta(days=days)).timestamp()
     for validatorID, values in data.items():
         output[validatorID] = list(
-            filter(lambda x: x["timestamp"] >= timestamp, values)
+            filter(lambda x: x["timestamp"] >= prevtimestamp, values)
         )
     return output
