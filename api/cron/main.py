@@ -17,7 +17,7 @@ def start():
     tab = CronTab(
         tab=f"""*/10 * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
     )
-    fetchValidatorRuns() # Fetch validator runs as soon as the cron job starts
+    fetchValidatorRuns()  # Fetch validator runs as soon as the cron job starts
     fetchMetagraph()  # Fetch metagraphs as soon as the cron job starts
     for _ in tab.run_scheduler():
         try:
@@ -73,4 +73,4 @@ def fetchValidatorRuns() -> dict:
         },
     )
     originalFormatJsonData = extractOriginalFormatData(runs)
-    dumpData("validator-runs",originalFormatJsonData)
+    dumpData("validator-runs", originalFormatJsonData)
