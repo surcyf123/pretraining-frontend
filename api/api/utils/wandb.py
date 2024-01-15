@@ -127,7 +127,7 @@ def filterLatestRuns(runs: dict) -> dict:
     return filteredRuns
 
 
-def filterNDaysValidatorData(data: dict, days: int) -> dict:
+def filterValidatorRuns(data: dict, days: int) -> dict:
     output = {}
     threshold = (datetime.now() - timedelta(days=days)).timestamp()
     for validatorID, values in data.items():
