@@ -10,8 +10,8 @@ def dumpData(filename: str, data: dict):
         dump(data, f, indent=2, ignore_nan=True)
 
 
-def extractOriginalFormatData(runs):
-    validatorRunData = {}
+def formatRuns(runs):
+    output = {}
     for run in runs:
         print(run.name)
         runData = run.history()
@@ -27,5 +27,5 @@ def extractOriginalFormatData(runs):
                         convertedData.append(ele)
             else:
                 convertedData = originalFormatJsonData
-            validatorRunData[run.name] = convertedData
+            output[run.name] = convertedData
     return validatorRunData
