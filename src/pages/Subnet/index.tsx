@@ -42,4 +42,3 @@ export function Subnet(): JSX.Element {
     </Stack>
   );
 }
- 
