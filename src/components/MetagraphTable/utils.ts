@@ -1,3 +1,3 @@
 export function calculateRewards(emission: number): number {
-  return (emission * 72) / 1000000000;
+  return (emission * 72) / 1;
 }
