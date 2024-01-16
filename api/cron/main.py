@@ -1,5 +1,11 @@
 import bittensor
-from .utils import dumpData, formatRuns, filterLatestRuns, calculateBestAverageLoss
+from .utils import (
+    dumpData,
+    formatRuns,
+    filterLatestRuns,
+    calculateBestAverageLoss,
+    fetchSubnetEmissions,
+)
 from crontab import CronTab
 from os import path, getcwd
 from wandb import login, Api
@@ -68,6 +74,8 @@ def fetchMetagraph():
             "stake": metagraph.S.tolist(),
             "validatorTrust": metagraph.Tv.tolist(),
         }
+        if netUID == 0:
+            metagraphData["subnetEmission"] = fetchSubnetEmissions()
         dumpData(f"metagraph-data-{netUID}.json", metagraphData)
 
 
