@@ -21,7 +21,7 @@ export function Subnet(): JSX.Element {
 
   return (
     <Stack>
-      <Card>
+      <Card shadow="md">
         <Heatmap
           title={`Subnet: ${netuid}`}
           style={{ height: "70vh" }}
