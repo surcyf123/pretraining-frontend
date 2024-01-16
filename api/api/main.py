@@ -131,7 +131,7 @@ def vitals():
     metagraphData = loadMetagraphData(0)
     df = DataFrame(
         {
-            "emission": metagraphData["netSubnetEmission"],
+            "emission": metagraphData["subnetEmission"],
             "netUID": subnetLabels.keys(),
             "label":subnetLabels.values()
         }
