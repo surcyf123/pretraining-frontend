@@ -75,7 +75,7 @@ def fetchMetagraph():
             "validatorTrust": metagraph.Tv.tolist(),
         }
         if netUID == 0:
-            metagraphData["netSubnetEmission"] = fetchSubnetEmissions()
+            metagraphData["subnetEmission"] = fetchSubnetEmissions()
         dumpData(f"metagraph-data-{netUID}.json", metagraphData)
 
 
