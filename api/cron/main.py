@@ -12,7 +12,7 @@ ProjectName = "pretraining-subnet"
 EntityName = "opentensor-dev"
 
 
-def startFetchingValidator():
+def startFetchingValidatorRuns():
     print("Fetching validator data ...")
     tab = CronTab(
         tab=f"""*/10 * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
