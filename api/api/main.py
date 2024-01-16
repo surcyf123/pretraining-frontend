@@ -136,7 +136,6 @@ def vitals():
     rank = calculateRank(weights, normalizedStake)
     consensus = calculateConsensus(trust)
     emission = calculateEmission(consensus, rank)
-
     df = DataFrame(
         {
             "emission": metagraphData["subnetEmission"],
