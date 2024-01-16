@@ -63,8 +63,8 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
 
   const [sorting, setSorting] = useState<SortingState>([
     {
-      desc: false,
-      id: "Rank",
+      desc: true,
+      id: "Stake",
     },
   ]);
 
@@ -75,53 +75,41 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
         cell: (info) => info.getValue(),
         id: "ID",
       }),
+      columnHelper.accessor((row) => row.stake, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Stake",
+      }),
       columnHelper.accessor((row) => row.rank, {
         cell: (info) => info.getValue(),
         id: "Rank",
-      }),
-      columnHelper.accessor((row) => row.incentive, {
-        cell: (info) => info.getValue().toFixed(4),
-        id: "Incentives",
-      }),
-      columnHelper.accessor((row) => row.emission, {
-        cell: (info) => info.getValue().toFixed(4),
-        id: "Emission",
-      }),
-      columnHelper.accessor((row) => row.consensus, {
-        cell: (info) => info.getValue().toFixed(4),
-        id: "Consensus",
-      }),
-      columnHelper.accessor((row) => row.trust, {
-        cell: (info) => info.getValue().toFixed(4),
-        id: "Trust",
       }),
       columnHelper.accessor((row) => row.validatorTrust, {
         cell: (info) => info.getValue().toFixed(4),
         id: "Validator Trust",
       }),
+      columnHelper.accessor((row) => row.trust, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Trust",
+      }),
+      columnHelper.accessor((row) => row.consensus, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Consensus",
+      }),
+      columnHelper.accessor((row) => row.incentive, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Incentives",
+      }),
       columnHelper.accessor((row) => row.dividends, {
         cell: (info) => info.getValue().toFixed(4),
         id: "Dividends",
       }),
+      columnHelper.accessor((row) => row.emission, {
+        cell: (info) => info.getValue().toFixed(4),
+        id: "Emission",
+      }),
       columnHelper.accessor((row) => row.address, {
         cell: (info) => info.getValue().split("/").at(-1),
         id: "Address",
-      }),
-      columnHelper.accessor((row) => row.stake, {
-        cell: (info) => info.getValue().toFixed(4),
-        id: "Stake",
-      }),
-      columnHelper.accessor((row) => row.emission, {
-        cell: (info) => calculateRewards(info.getValue()).toFixed(3),
-        id: "Daily Rewards",
-      }),
-      columnHelper.accessor((row) => row.emission, {
-        cell: (info) =>
-          (calculateRewards(info.getValue()) * (taoPrice?.price ?? 0)).toLocaleString(undefined, {
-            style: "currency",
-            currency: "USD",
-          }),
-        id: "Daily $",
       }),
       columnHelper.accessor((row) => row.hotkey, {
         // eslint-disable-next-line react/no-unstable-nested-components
@@ -156,6 +144,18 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
           </CopyButton>
         ),
         id: "Coldkey",
+      }),
+      columnHelper.accessor((row) => row.emission, {
+        cell: (info) => calculateRewards(info.getValue()).toFixed(3),
+        id: "Daily Rewards",
+      }),
+      columnHelper.accessor((row) => row.emission, {
+        cell: (info) =>
+          (calculateRewards(info.getValue()) * (taoPrice?.price ?? 0)).toLocaleString(undefined, {
+            style: "currency",
+            currency: "USD",
+          }),
+        id: "Daily $",
       }),
     ];
   }, [taoPrice?.price]);
