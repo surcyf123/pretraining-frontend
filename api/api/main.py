@@ -129,23 +129,13 @@ def average_validator_trust(netuid: int = 0):
 def vitals():
     subnetLabels = getSubnetLabels()
     metagraphData = loadMetagraphData(0)
-    weights = FloatTensor(metagraphData["weights"])
-    stake = FloatTensor(metagraphData["neurons"]["stake"])
-    normalizedStake = (stake / stake.sum()).clone().float()
-    trust = calculateTrust(weights, normalizedStake)
-    rank = calculateRank(weights, normalizedStake)
-    consensus = calculateConsensus(trust)
-    emission = calculateEmission(consensus, rank)
     df = DataFrame(
         {
-            "trust": trust.tolist(),
-            "rank": rank.tolist(),
-            "consensus": consensus.tolist(),
-            "emission": emission.tolist(),
+            "emission": metagraphData["netSubnetEmission"],
+            "netUID": subnetLabels.keys(),
+            "label":subnetLabels.values()
         }
     )
-    df["netUID"] = subnetLabels.keys()
-    df["label"] = subnetLabels.values()
     vitals = df.to_dict(orient="records")
     return vitals
 
