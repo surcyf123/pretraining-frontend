@@ -108,7 +108,5 @@ def formatRuns(runs):
 # Ref: https://github.com/opentensor/bittensor/blob/ddea119d4d7d87534bbebb24597d3660cab5d458/bittensor/commands/network.py#L213
 def fetchSubnetEmissions():
     subnets = subtensor(network="finney").get_all_subnets_info()
-    emissions = [
-        (subnet.emission_value / RAOPERTAO) for subnet in subnets
-    ]
+    emissions = [(subnet.emission_value / RAOPERTAO) for subnet in subnets]
     return emissions

@@ -1,5 +1,11 @@
 import bittensor
-from .utils import dumpData, formatRuns, filterLatestRuns, calculateBestAverageLoss
+from .utils import (
+    dumpData,
+    formatRuns,
+    filterLatestRuns,
+    calculateBestAverageLoss,
+    fetchSubnetEmissions,
+)
 from crontab import CronTab
 from os import path, getcwd
 from wandb import login, Api
@@ -17,11 +23,11 @@ def start():
     tab = CronTab(
         tab=f"""*/10 * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
     )
-    fetchValidatorRuns()  # Fetch validator runs as soon as the cron job starts
+    # fetchValidatorRuns()  # Fetch validator runs as soon as the cron job starts
     fetchMetagraph()  # Fetch metagraphs as soon as the cron job starts
     for _ in tab.run_scheduler():
         try:
-            fetchValidatorRuns()
+            # fetchValidatorRuns()
             fetchMetagraph()
         except:
             pass
@@ -57,6 +63,8 @@ def fetchMetagraph():
             "stake": metagraph.S.tolist(),
             "validatorTrust": metagraph.Tv.tolist(),
         }
+        if netUID == 0:
+            metagraphData["netSubnetEmission"] = fetchSubnetEmissions()
         dumpData(f"metagraph-data-{netUID}.json", metagraphData)
 
 
