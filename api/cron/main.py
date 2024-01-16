@@ -12,16 +12,27 @@ ProjectName = "pretraining-subnet"
 EntityName = "opentensor-dev"
 
 
-def start():
-    print("Starting cron job.")
+def startFetchingValidatorRuns():
+    print("Fetching validator data ...")
     tab = CronTab(
         tab=f"""*/10 * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
     )
     fetchValidatorRuns()  # Fetch validator runs as soon as the cron job starts
+    for _ in tab.run_scheduler():
+        try:
+            fetchMetagraph()
+        except:
+            pass
+
+
+def startFetchingMetagraph():
+    print("Fetching metagraph data ...")
+    tab = CronTab(
+        tab=f"""*/10 * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
+    )
     fetchMetagraph()  # Fetch metagraphs as soon as the cron job starts
     for _ in tab.run_scheduler():
         try:
-            fetchValidatorRuns()
             fetchMetagraph()
         except:
             pass
