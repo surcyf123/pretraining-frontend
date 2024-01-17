@@ -1,5 +1,3 @@
-import type { RankingInfo } from "@tanstack/match-sorter-utils";
-
 interface ResponsiveImageOutput {
   src: string;
   srcSet: string;
@@ -18,10 +16,4 @@ declare module "*.jpg" {
 declare module "*.png" {
   const value: ResponsiveImageOutput;
   export default value;
-}
-
-declare module "@tanstack/table-core" {
-  interface FilterMeta {
-    itemRank: RankingInfo;
-  }
 }
