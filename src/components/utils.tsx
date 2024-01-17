@@ -18,6 +18,7 @@ export function getSortingIcon(input: false | SortDirection): JSX.Element | unde
   return output;
 }
 
+// Ref: https://tanstack.com/table/v8/docs/examples/react/filters
 export const globalFilter: FilterFn<unknown> = (row, columnId, value, addMeta) => {
   let itemRank: RankingInfo | undefined;
   if (typeof value === "string") {
