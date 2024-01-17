@@ -1,8 +1,9 @@
-import { Card, Divider, Stack, Title, useMantineColorScheme } from "@mantine/core";
+import { Box, Card, Divider, Stack, Title, useMantineColorScheme } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { fetchHeatmapData, fetchTaoCandlestick } from "../../api";
 import { CandlestickChart } from "../../charts/CandlestickChart";
 import { Heatmap } from "../../charts/Heatmap";
+import { MemoizedTradingViewWidget } from "../../charts/TradingViewWidget";
 import { TaoStats } from "../../components/TaoStats";
 import { ValidatorTable } from "../../components/ValidatorTable";
 import { VitalsTable } from "../../components/VitalsTable";
@@ -23,6 +24,11 @@ export function General(): JSX.Element {
     <Stack>
       <TaoStats />
       <Divider />
+      <Card shadow="md">
+        <Box h="50vh">
+          <MemoizedTradingViewWidget />
+        </Box>
+      </Card>
       <Card shadow="md">
         <CandlestickChart
           title="Tao Prices"

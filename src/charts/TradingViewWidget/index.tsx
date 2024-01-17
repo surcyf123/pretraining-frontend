@@ -1,7 +1,9 @@
+import { useMantineColorScheme } from "@mantine/core";
 import { useEffect, useRef, memo } from "react";
 
 function TradingViewWidget(): JSX.Element {
   const container = useRef<HTMLDivElement | null>(null);
+  const { colorScheme } = useMantineColorScheme();
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -14,7 +16,7 @@ function TradingViewWidget(): JSX.Element {
           "symbol": "MEXC:TAOUSDT",
           "interval": "D",
           "timezone": "Etc/UTC",
-          "theme": "dark",
+          "theme": ${colorScheme === "auto" ? "dark" : colorScheme},
           "style": "2",
           "locale": "in",
           "enable_publishing": false,
@@ -22,7 +24,7 @@ function TradingViewWidget(): JSX.Element {
           "support_host": "https://www.tradingview.com"
         }`;
     container.current?.appendChild(script);
-  }, []);
+  }, [colorScheme]);
 
   return (
     <div
