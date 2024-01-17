@@ -44,34 +44,22 @@ export function Header({
           <AppShell.Navbar p="md">
             {NavLinks?.map(({ label, link, links }) =>
               Array.isArray(links) ? (
-                <Menu key={link} trigger="hover">
-                  <Menu.Target>
-                    <MantineNavLink
-                      component={NavLink}
-                      active={
-                        links.findIndex((linkItem) => linkItem.link === currentPathName) !== -1
-                      }
-                      to={link}
-                      label={<Text fw={500}>{label}</Text>}
-                      noWrap
-                      rightSection={<IconChevronDown size="1rem" />}
-                    />
-                  </Menu.Target>
-                  <Menu.Dropdown>
-                    <ScrollArea h="50vh">
-                      {links.map((item) => (
-                        <Menu.Item key={item.link}>
-                          <MantineNavLink
-                            component={NavLink}
-                            active={currentPathName === item.link}
-                            to={item.link}
-                            label={<Text>{item.label}</Text>}
-                          />
-                        </Menu.Item>
-                      ))}
-                    </ScrollArea>
-                  </Menu.Dropdown>
-                </Menu>
+                <MantineNavLink
+                  label={<Text fw={500}>{label}</Text>}
+                  noWrap
+                  rightSection={<IconChevronDown size="1rem" />}
+                >
+                  <ScrollArea h="100vh">
+                    {links.map((item) => (
+                      <MantineNavLink
+                        component={NavLink}
+                        active={currentPathName === item.link}
+                        to={item.link}
+                        label={<Text>{item.label}</Text>}
+                      />
+                    ))}
+                  </ScrollArea>
+                </MantineNavLink>
               ) : (
                 <MantineNavLink
                   key={link}
