@@ -10,6 +10,7 @@ import {
   CopyButton,
   Button,
   Box,
+  TextInput
 } from "@mantine/core";
 import { IconClipboardCheck, IconClipboardCopy } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
@@ -20,12 +21,13 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { fetchTaoPrice } from "../../api";
-import { getSortingIcon } from "../utils";
+import { getSortingIcon, globalFilter } from "../utils";
 import { calculateRewards } from "./utils";
-import type { SelectProps, PaginationProps } from "@mantine/core";
+import type { SelectProps, PaginationProps, TextInputProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 
 export interface NeuronDetails {
@@ -53,6 +55,7 @@ export interface MetagraphTableProps {
 }
 
 export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Element {
+  const [filter, setFilter] = useState("");
   const { data: taoPrice, isLoading: isTaoStatisticsLoading } = useQuery({
     queryKey: ["taoPrice"],
     queryFn: () => fetchTaoPrice(),
@@ -171,14 +174,17 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
   }, [taoPrice?.price]);
 
   const table = useReactTable({
-    state: { sorting, pagination: { pageIndex, pageSize } },
+    state: { sorting, pagination: { pageIndex, pageSize }, globalFilter: filter },
     data,
     columns,
+    globalFilterFn: globalFilter,
     onPaginationChange: setPagination,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onGlobalFilterChange: setFilter,
   });
 
   const handlePageSizeChange: SelectProps["onChange"] = (value) => {
@@ -192,12 +198,17 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
     table.setPageIndex(page - 1);
   };
 
+  const handleFilterInput: TextInputProps["onChange"] = (event) => {
+    setFilter(event.target.value);
+  };
+
   const paginatedRowStartIndex =
     table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1;
   const paginatedRowEndIndex = paginatedRowStartIndex + table.getRowModel().rows.length - 1;
 
   return (
     <Skeleton visible={(loading ?? false) || isTaoStatisticsLoading}>
+      <TextInput type="search" value={filter} onChange={handleFilterInput} label="Filter" />
       <Stack>
         <Box
           style={{
