@@ -83,6 +83,10 @@ export function StatisticsTable({
     table.setPageIndex(page - 1);
   };
 
+  const paginatedRowStartIndex =
+    table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1;
+  const paginatedRowEndIndex = paginatedRowStartIndex + table.getRowModel().rows.length - 1;
+
   return (
     <Skeleton visible={loading ?? false}>
       <Stack>
@@ -123,26 +127,29 @@ export function StatisticsTable({
             ))}
           </Table.Tbody>
         </Table>
-        <Group justify="flex-end">
-          <Pagination
-            value={table.getState().pagination.pageIndex + 1}
-            total={table.getPageCount()}
-            onChange={handlePageChange}
-          />
-          <Text>{`${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}</Text>
-          <Select
-            size="sm"
-            placeholder="Page size"
-            allowDeselect={false}
-            data={[
-              { value: "10", label: "Show 10" },
-              { value: "50", label: "Show 50" },
-              { value: "100", label: "Show 100" },
-            ]}
-            value={pageSize.toString()}
-            onChange={handlePageSizeChange}
-          />
-        </Group>
+        <Group justify="space-between">
+          <Text>{`Showing ${paginatedRowStartIndex} to ${paginatedRowEndIndex} of ${data.length} entries`}</Text>
+          <Group>
+            <Pagination
+              value={table.getState().pagination.pageIndex + 1}
+              total={table.getPageCount()}
+              onChange={handlePageChange}
+            />
+            <Text>{`${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}</Text>
+            <Select
+              size="sm"
+              placeholder="Page size"
+              allowDeselect={false}
+              data={[
+                { value: "10", label: "Show 10" },
+                { value: "50", label: "Show 50" },
+                { value: "100", label: "Show 100" },
+              ]}
+              value={pageSize.toString()}
+              onChange={handlePageSizeChange}
+            />
+          </Group>
+          </Group>
       </Stack>
     </Skeleton>
   );
