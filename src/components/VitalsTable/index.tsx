@@ -15,13 +15,14 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { fetchSubnetVitals } from "../../api";
-import { getSortingIcon } from "../utils";
+import { getSortingIcon, globalFilter } from "../utils";
 import type { Vitals } from "../../api";
 import type { SelectProps, PaginationProps, TextInputProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
@@ -78,14 +79,17 @@ export function VitalsTable(): JSX.Element {
   }, []);
 
   const table = useReactTable({
-    state: { sorting, pagination: { pageIndex, pageSize } },
+    state: { sorting, pagination: { pageIndex, pageSize }, globalFilter: filter },
     data: vitals ?? [],
     columns,
+    globalFilterFn: globalFilter,
     onPaginationChange: setPagination,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onGlobalFilterChange: setFilter,
   });
 
   const handlePageSizeChange: SelectProps["onChange"] = (value) => {
