@@ -32,7 +32,7 @@ export function VitalsTable(): JSX.Element {
     queryFn: fetchSubnetVitals,
     refetchInterval: 10 * 60 * 1000,
   });
-  const [filter,setFilter]=useState("")
+  const [filter, setFilter] = useState("");
 
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
