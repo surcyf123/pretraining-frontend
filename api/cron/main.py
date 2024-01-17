@@ -70,7 +70,6 @@ def fetchMetagraph():
                 "address": metagraph.addresses,
                 "active": metagraph.active.tolist(),
                 "updated": metagraph.last_update.tolist(),
-                
             },
             "weights": metagraph.W.tolist(),
             "bonds": metagraph.B.tolist(),
