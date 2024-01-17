@@ -1,4 +1,14 @@
-import { ActionIcon, Group, Pagination, Select, Skeleton, Stack, Table, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Group,
+  Pagination,
+  Select,
+  Skeleton,
+  Stack,
+  Table,
+  Text,
+  TextInput,
+} from "@mantine/core";
 import {
   createColumnHelper,
   flexRender,
@@ -6,11 +16,12 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
-import { getSortingIcon } from "../utils";
+import { getSortingIcon, globalFilter } from "../utils";
 import type { UIDDetails } from "../../utils";
-import type { PaginationProps, SelectProps } from "@mantine/core";
+import type { PaginationProps, SelectProps, TextInputProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 
 export function StatisticsTable({
@@ -20,6 +31,8 @@ export function StatisticsTable({
   data: UIDDetails[];
   loading?: boolean;
 }): JSX.Element {
+  const [filter, setFilter] = useState("");
+
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<UIDDetails>();
     return [
@@ -64,12 +77,15 @@ export function StatisticsTable({
   const table = useReactTable({
     data,
     columns,
-    state: { sorting, pagination: { pageIndex, pageSize } },
+    state: { sorting, pagination: { pageIndex, pageSize }, globalFilter: filter },
+    globalFilterFn: globalFilter,
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onGlobalFilterChange: setFilter,
   });
 
   const handlePageSizeChange: SelectProps["onChange"] = (value) => {
@@ -83,12 +99,17 @@ export function StatisticsTable({
     table.setPageIndex(page - 1);
   };
 
+  const handleFilterInput: TextInputProps["onChange"] = (event) => {
+    setFilter(event.target.value);
+  };
+
   const paginatedRowStartIndex =
     table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1;
   const paginatedRowEndIndex = paginatedRowStartIndex + table.getRowModel().rows.length - 1;
 
   return (
     <Skeleton visible={loading ?? false}>
+      <TextInput type="search" value={filter} onChange={handleFilterInput} label="Filter" />
       <Stack>
         <Table>
           <Table.Thead>
