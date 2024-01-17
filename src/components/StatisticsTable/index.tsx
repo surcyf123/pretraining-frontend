@@ -149,7 +149,7 @@ export function StatisticsTable({
               onChange={handlePageSizeChange}
             />
           </Group>
-          </Group>
+        </Group>
       </Stack>
     </Skeleton>
   );
