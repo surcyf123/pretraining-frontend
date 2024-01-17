@@ -56,6 +56,7 @@ export function Header({
                         active={currentPathName === item.link}
                         to={item.link}
                         label={<Text>{item.label}</Text>}
+                        onClick={toggleNavbar}
                       />
                     ))}
                   </ScrollArea>
