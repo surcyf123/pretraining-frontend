@@ -22,9 +22,7 @@ export const globalFilter: FilterFn<unknown> = (row, columnId, value, addMeta) =
   let itemRank: RankingInfo | undefined;
   if (typeof value === "string") {
     itemRank = rankItem(row.getValue(columnId), value);
-    addMeta({
-      itemRank,
-    });
+    addMeta({ itemRank });
   }
   return itemRank?.passed ?? false;
 };
