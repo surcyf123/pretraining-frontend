@@ -8,6 +8,7 @@ import {
   Skeleton,
   ActionIcon,
   Box,
+  TextInput,
 } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -22,7 +23,7 @@ import { useMemo, useState } from "react";
 import { fetchSubnetVitals } from "../../api";
 import { getSortingIcon } from "../utils";
 import type { Vitals } from "../../api";
-import type { SelectProps, PaginationProps } from "@mantine/core";
+import type { SelectProps, PaginationProps, TextInputProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 
 export function VitalsTable(): JSX.Element {
@@ -31,6 +32,7 @@ export function VitalsTable(): JSX.Element {
     queryFn: fetchSubnetVitals,
     refetchInterval: 10 * 60 * 1000,
   });
+  const [filter, setFilter] = useState("");
 
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -97,12 +99,17 @@ export function VitalsTable(): JSX.Element {
     table.setPageIndex(page - 1);
   };
 
+  const handleFilterInput: TextInputProps["onChange"] = (event) => {
+    setFilter(event.target.value);
+  };
+
   const paginatedRowStartIndex =
     table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1;
   const paginatedRowEndIndex = paginatedRowStartIndex + table.getRowModel().rows.length - 1;
 
   return (
     <Skeleton visible={isLoading}>
+      <TextInput type="search" value={filter} onChange={handleFilterInput} label="Filter" />
       <Stack>
         <Box
           style={{
