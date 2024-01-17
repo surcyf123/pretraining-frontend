@@ -11,6 +11,7 @@ import {
   Button,
   Box,
   Anchor,
+  TextInput,
 } from "@mantine/core";
 import { IconClipboardCheck, IconClipboardCopy } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
@@ -18,6 +19,7 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
@@ -25,9 +27,9 @@ import {
 import { range } from "d3-array";
 import { useMemo, useState } from "react";
 import { fetchValidators } from "../../api";
-import { getSortingIcon } from "../utils";
+import { getSortingIcon, globalFilter } from "../utils";
 import type { Validator } from "../../api";
-import type { SelectProps, PaginationProps } from "@mantine/core";
+import type { SelectProps, PaginationProps, TextInputProps } from "@mantine/core";
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 
 export function ValidatorTable(): JSX.Element {
@@ -36,6 +38,7 @@ export function ValidatorTable(): JSX.Element {
     queryFn: fetchValidators,
     refetchInterval: 10 * 60 * 1000,
   });
+  const [filter, setFilter] = useState("");
 
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -130,14 +133,17 @@ export function ValidatorTable(): JSX.Element {
   }, []);
 
   const table = useReactTable({
-    state: { sorting, pagination: { pageIndex, pageSize } },
+    state: { sorting, pagination: { pageIndex, pageSize }, globalFilter: filter },
     data: validators ?? [],
     columns,
+    globalFilterFn: globalFilter,
     onPaginationChange: setPagination,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onGlobalFilterChange: setFilter,
   });
 
   const handlePageSizeChange: SelectProps["onChange"] = (value) => {
@@ -151,12 +157,17 @@ export function ValidatorTable(): JSX.Element {
     table.setPageIndex(page - 1);
   };
 
+  const handleFilterInput: TextInputProps["onChange"] = (event) => {
+    setFilter(event.target.value);
+  };
+
   const paginatedRowStartIndex =
     table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1;
   const paginatedRowEndIndex = paginatedRowStartIndex + table.getRowModel().rows.length - 1;
 
   return (
     <Skeleton visible={isLoading}>
+      <TextInput type="search" value={filter} onChange={handleFilterInput} label="Filter" />
       <Stack>
         <Box
           style={{
