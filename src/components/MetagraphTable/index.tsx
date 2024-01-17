@@ -208,7 +208,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
 
   return (
     <Skeleton visible={(loading ?? false) || isTaoStatisticsLoading}>
-      <TextInput type="search" value={filter} onChange={handleFilterInput} label="Filter" />
+      <TextInput type="search" value={filter} onChange={handleFilterInput} label="Search entries" />
       <Stack>
         <Box
           style={{

@@ -109,7 +109,7 @@ export function StatisticsTable({
 
   return (
     <Skeleton visible={loading ?? false}>
-      <TextInput type="search" value={filter} onChange={handleFilterInput} label="Filter" />
+      <TextInput type="search" value={filter} onChange={handleFilterInput} label="Search entries" />
       <Stack>
         <Table>
           <Table.Thead>
