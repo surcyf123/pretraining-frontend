@@ -241,7 +241,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
         <Group justify="space-between">
           <Text>{`Showing ${table.getState().pagination.pageIndex * pageSize + 1} to
            ${pageSize * (table.getState().pagination.pageIndex + 1)} of 
-           ${data.length}`}</Text>
+           ${data.length} entries`}</Text>
           <Group justify="flex-end">
             <Pagination
               value={table.getState().pagination.pageIndex + 1}
