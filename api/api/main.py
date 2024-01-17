@@ -140,7 +140,7 @@ def vitals():
         {
             "emission": metagraphData["subnetEmission"],
             "netUID": subnetLabels.keys(),
-            "label":subnetLabels.values(),
+            "label": subnetLabels.values(),
             "trust": trust.tolist(),
             "rank": rank.tolist(),
             "consensus": consensus.tolist(),
