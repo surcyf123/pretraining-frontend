@@ -10,7 +10,7 @@ import {
   CopyButton,
   Button,
   Box,
-  TextInput
+  TextInput,
 } from "@mantine/core";
 import { IconClipboardCheck, IconClipboardCopy } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
