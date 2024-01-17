@@ -1,5 +1,7 @@
 import { IconArrowDown, IconArrowUp } from "@tabler/icons-react";
-import type { SortDirection } from "@tanstack/react-table";
+import { rankItem } from "@tanstack/match-sorter-utils";
+import type { RankingInfo } from "@tanstack/match-sorter-utils";
+import type { FilterFn, SortDirection } from "@tanstack/react-table";
 
 export function getSortingIcon(input: false | SortDirection): JSX.Element | undefined {
   let output: JSX.Element | undefined;
@@ -15,3 +17,13 @@ export function getSortingIcon(input: false | SortDirection): JSX.Element | unde
   }
   return output;
 }
+
+// Ref: https://tanstack.com/table/v8/docs/examples/react/filters
+export const globalFilter: FilterFn<unknown> = (row, columnId, value, addMeta) => {
+  let itemRank: RankingInfo | undefined;
+  if (typeof value === "string") {
+    itemRank = rankItem(row.getValue(columnId), value);
+    addMeta({ itemRank });
+  }
+  return itemRank?.passed ?? false;
+};
