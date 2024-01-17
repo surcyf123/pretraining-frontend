@@ -43,6 +43,8 @@ export interface NeuronDetails {
   address: string;
   bonds: number[];
   weight: number[];
+  active: number[];
+  updated: number[];
 }
 
 export interface MetagraphTableProps {
@@ -110,6 +112,14 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
       columnHelper.accessor((row) => row.address, {
         cell: (info) => info.getValue().split("/").at(-1),
         id: "Address",
+      }),
+      columnHelper.accessor((row) => row.active, {
+        cell: (info) => info.getValue(),
+        id: "Active",
+      }),
+      columnHelper.accessor((row) => row.updated, {
+        cell: (info) => info.getValue(),
+        id: "Updated",
       }),
       columnHelper.accessor((row) => row.hotkey, {
         // eslint-disable-next-line react/no-unstable-nested-components
