@@ -192,10 +192,9 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
     table.setPageIndex(page - 1);
   };
 
-  const startIndex =
+  const paginatedRowStartIndex =
     table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1;
-  const endIndex = startIndex + table.getRowModel().rows.length - 1;
-  const totalEntries = data.length;
+  const paginatedRowEndIndex = paginatedRowStartIndex + table.getRowModel().rows.length - 1;
 
   return (
     <Skeleton visible={(loading ?? false) || isTaoStatisticsLoading}>
@@ -244,7 +243,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
           </Table>
         </Box>
         <Group justify="space-between">
-          <Text>{`Showing ${startIndex} to ${endIndex} of ${totalEntries} entries`}</Text>
+          <Text>{`Showing ${paginatedRowStartIndex} to ${paginatedRowEndIndex} of ${data.length} entries`}</Text>
           <Group>
             <Pagination
               value={table.getState().pagination.pageIndex + 1}
