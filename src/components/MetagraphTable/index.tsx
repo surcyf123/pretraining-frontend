@@ -242,7 +242,7 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
           <Text>{`Showing ${table.getState().pagination.pageIndex * pageSize + 1} to
            ${pageSize * (table.getState().pagination.pageIndex + 1)} of 
            ${data.length} entries`}</Text>
-          <Group justify="flex-end">
+          <Group>
             <Pagination
               value={table.getState().pagination.pageIndex + 1}
               total={table.getPageCount()}
