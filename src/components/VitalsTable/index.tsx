@@ -109,7 +109,7 @@ export function VitalsTable(): JSX.Element {
 
   return (
     <Skeleton visible={isLoading}>
-      <TextInput value={filter} onChange={handleFilterInput} label="Filter" />
+      <TextInput type="search" value={filter} onChange={handleFilterInput} label="Filter" />
       <Stack>
         <Box
           style={{
