@@ -192,6 +192,11 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
     table.setPageIndex(page - 1);
   };
 
+  const startIndex =
+    table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1;
+  const endIndex = startIndex + table.getRowModel().rows.length - 1;
+  const totalEntries = data.length;
+
   return (
     <Skeleton visible={(loading ?? false) || isTaoStatisticsLoading}>
       <Stack>
@@ -238,25 +243,28 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
             </Table.Tbody>
           </Table>
         </Box>
-        <Group justify="flex-end">
-          <Pagination
-            value={table.getState().pagination.pageIndex + 1}
-            total={table.getPageCount()}
-            onChange={handlePageChange}
-          />
-          <Text>{`${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}</Text>
-          <Select
-            size="sm"
-            placeholder="Page size"
-            allowDeselect={false}
-            data={[
-              { value: "10", label: "Show 10" },
-              { value: "50", label: "Show 50" },
-              { value: "100", label: "Show 100" },
-            ]}
-            value={pageSize.toString()}
-            onChange={handlePageSizeChange}
-          />
+        <Group justify="space-between">
+          <Text>{`Showing ${startIndex} to ${endIndex} of ${totalEntries} entries`}</Text>
+          <Group>
+            <Pagination
+              value={table.getState().pagination.pageIndex + 1}
+              total={table.getPageCount()}
+              onChange={handlePageChange}
+            />
+            <Text>{`${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}</Text>
+            <Select
+              size="sm"
+              placeholder="Page size"
+              allowDeselect={false}
+              data={[
+                { value: "10", label: "Show 10" },
+                { value: "50", label: "Show 50" },
+                { value: "100", label: "Show 100" },
+              ]}
+              value={pageSize.toString()}
+              onChange={handlePageSizeChange}
+            />
+          </Group>
         </Group>
       </Stack>
     </Skeleton>
