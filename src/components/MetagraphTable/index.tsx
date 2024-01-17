@@ -238,25 +238,30 @@ export function MetagraphTable({ data, loading }: MetagraphTableProps): JSX.Elem
             </Table.Tbody>
           </Table>
         </Box>
-        <Group justify="flex-end">
-          <Pagination
-            value={table.getState().pagination.pageIndex + 1}
-            total={table.getPageCount()}
-            onChange={handlePageChange}
-          />
-          <Text>{`${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}</Text>
-          <Select
-            size="sm"
-            placeholder="Page size"
-            allowDeselect={false}
-            data={[
-              { value: "10", label: "Show 10" },
-              { value: "50", label: "Show 50" },
-              { value: "100", label: "Show 100" },
-            ]}
-            value={pageSize.toString()}
-            onChange={handlePageSizeChange}
-          />
+        <Group justify="space-between">
+          <Text>{`Showing ${table.getState().pagination.pageIndex * pageSize + 1} to
+           ${pageSize * (table.getState().pagination.pageIndex + 1)} of 
+           ${data.length}`}</Text>
+          <Group justify="flex-end">
+            <Pagination
+              value={table.getState().pagination.pageIndex + 1}
+              total={table.getPageCount()}
+              onChange={handlePageChange}
+            />
+            <Text>{`${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}</Text>
+            <Select
+              size="sm"
+              placeholder="Page size"
+              allowDeselect={false}
+              data={[
+                { value: "10", label: "Show 10" },
+                { value: "50", label: "Show 50" },
+                { value: "100", label: "Show 100" },
+              ]}
+              value={pageSize.toString()}
+              onChange={handlePageSizeChange}
+            />
+          </Group>
         </Group>
       </Stack>
     </Skeleton>
