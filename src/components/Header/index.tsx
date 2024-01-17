@@ -70,6 +70,7 @@ export function Header({
                   label={<Text fw={500}>{label}</Text>}
                   noWrap
                   title={`Go to ${label}`}
+                  onClick={toggleNavbar}
                 />
               ),
             )}
