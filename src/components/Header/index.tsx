@@ -40,7 +40,6 @@ export function Header({
     <AppShell.Header p="xs">
       <Group justify="space-between" align="center">
         <Image {...Logo} h={30} alt="Openpretrain logo" />
-        {/* TODO: add nav bar */}
         {isMobile === true ? (
           <AppShell.Navbar p="md">
             {NavLinks?.map(({ label, link, links }) =>
