@@ -32,6 +32,7 @@ export function Header({
   const location = useLocation();
   const currentPathName = location.pathname;
   const { authStatus, signOut } = useAuthenticator((context) => [context.authStatus]);
+  
   return (
     <AppShell.Header p="xs">
       <Group justify="space-between" align="center">
