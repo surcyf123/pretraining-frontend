@@ -20,7 +20,7 @@ export const Template: StoryObj<typeof Header> = {
           onToggleColorScheme={() => {}}
           colorScheme={darkMode === true ? "dark" : "light"}
           isNavbarOpened={isNavbarOpened}
-          toggleNavbar={toggleNavbar}
+          onToggleNavbar={toggleNavbar}
         />
       </AppShell>
     );

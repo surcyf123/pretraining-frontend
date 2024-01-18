@@ -37,7 +37,7 @@ export function App() {
           colorScheme={colorScheme}
           onToggleColorScheme={toggleColorScheme}
           isNavbarOpened={isNavbarOpened}
-          toggleNavbar={toggleNavbar}
+          onToggleNavbar={toggleNavbar}
           isMobile={isMobile}
         />
         <AppShell.Main>

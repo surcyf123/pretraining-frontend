@@ -20,7 +20,7 @@ export interface HeaderProps {
   colorScheme: MantineColorScheme;
   onToggleColorScheme: () => void;
   isNavbarOpened: boolean;
-  toggleNavbar: () => void;
+  onToggleNavbar: () => void;
   isMobile?: boolean;
 }
 
@@ -28,7 +28,7 @@ export function Header({
   colorScheme,
   onToggleColorScheme,
   isNavbarOpened,
-  toggleNavbar,
+  onToggleNavbar,
   isMobile,
 }: HeaderProps): JSX.Element {
   const location = useLocation();
@@ -58,7 +58,7 @@ export function Header({
                         active={currentPathName === item.link}
                         to={item.link}
                         label={<Text>{item.label}</Text>}
-                        onClick={toggleNavbar}
+                        onClick={onToggleNavbar}
                       />
                     ))}
                   </ScrollArea>
@@ -72,7 +72,7 @@ export function Header({
                   label={<Text fw={500}>{label}</Text>}
                   noWrap
                   title={`Go to ${label}`}
-                  onClick={toggleNavbar}
+                  onClick={onToggleNavbar}
                 />
               ),
             )}
@@ -128,7 +128,7 @@ export function Header({
             {colorScheme === "dark" ? <IconSun /> : <IconMoonStars />}
           </ActionIcon>
           {/* Ref: https://mantine.dev/app-shell/?e=BasicAppShell&s=code */}
-          <Burger opened={isNavbarOpened} onClick={toggleNavbar} hiddenFrom="md" size="sm" />
+          <Burger opened={isNavbarOpened} onClick={onToggleNavbar} hiddenFrom="md" size="sm" />
           {authStatus === "authenticated" ? (
             <ActionIcon onClick={signOut} variant="default">
               <IconLogout />
