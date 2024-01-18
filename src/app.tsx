@@ -26,7 +26,7 @@ export function App() {
           colorScheme={colorScheme}
           onToggleColorScheme={toggleColorScheme}
           isNavbarOpened={isNavbarOpened}
-          toggleNavbar={toggleNavbar}
+          onToggleNavbar={toggleNavbar}
         />
         <AppShell.Main>
           <QueryClientProvider client={ReactQueryClient}>
