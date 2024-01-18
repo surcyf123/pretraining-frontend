@@ -16,6 +16,7 @@ export function App() {
   const [isNavbarOpened, { toggle: toggleNavbar }] = useDisclosure();
   const { breakpoints } = useMantineTheme();
   const isMobile = useMediaQuery(`(max-width:${breakpoints.md})`);
+
   return (
     // Ref: https://ui.docs.amplify.aws/react/connected-components/authenticator/advanced
     <Authenticator.Provider>
@@ -37,6 +38,7 @@ export function App() {
           onToggleColorScheme={toggleColorScheme}
           isNavbarOpened={isNavbarOpened}
           toggleNavbar={toggleNavbar}
+          isMobile={isMobile}
         />
         <AppShell.Main>
           <QueryClientProvider client={ReactQueryClient}>
