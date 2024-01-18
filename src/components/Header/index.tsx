@@ -92,6 +92,7 @@ export function Header({
           <ActionIcon onClick={onToggleColorScheme} variant="default">
             {colorScheme === "dark" ? <IconSun /> : <IconMoonStars />}
           </ActionIcon>
+          {/* Ref: https://mantine.dev/app-shell/?e=BasicAppShell&s=code */}
           <Burger opened={isNavbarOpened} onClick={toggleNavbar} hiddenFrom="md" size="sm" />
           {authStatus === "authenticated" ? (
             <ActionIcon onClick={signOut} variant="default">
