@@ -1,4 +1,4 @@
-import { Card, Stack, useMantineColorScheme, Group, Loader, Divider } from "@mantine/core";
+import { Card, Stack, useMantineColorScheme, Loader, Divider, Grid } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import {
@@ -140,44 +140,50 @@ export function Dashboard() {
         />
       </Card>
 
-      <Group grow>
-        <Card shadow="md">
-          <CategoricalBarChart
-            data={recentUIDs ?? []}
-            style={{ height: "30vh" }}
-            theme={colorScheme === "auto" ? "dark" : colorScheme}
-            xAxis="uid"
-            yAxis="weight"
-            xAxisTitle="UID"
-            yAxisTitle="Weight"
-            loading={isRecentUIDsLoading}
-          />
-        </Card>
-        <Card shadow="md">
-          <CategoricalBarChart
-            data={recentUIDs ?? []}
-            style={{ height: "30vh" }}
-            theme={colorScheme === "auto" ? "dark" : colorScheme}
-            xAxis="uid"
-            yAxis="win_rate"
-            xAxisTitle="UID"
-            yAxisTitle="Win Rate"
-            loading={isRecentUIDsLoading}
-          />
-        </Card>
-        <Card shadow="md">
-          <CategoricalBarChart
-            data={recentUIDs ?? []}
-            style={{ height: "30vh" }}
-            theme={colorScheme === "auto" ? "dark" : colorScheme}
-            xAxis="uid"
-            yAxis="average_loss"
-            xAxisTitle="UID"
-            yAxisTitle="Loss"
-            loading={isRecentUIDsLoading}
-          />
-        </Card>
-      </Group>
+      <Grid>
+        <Grid.Col span={{ base: 12, md: 4 }}>
+          <Card shadow="md">
+            <CategoricalBarChart
+              data={recentUIDs ?? []}
+              style={{ height: "30vh" }}
+              theme={colorScheme === "auto" ? "dark" : colorScheme}
+              xAxis="uid"
+              yAxis="weight"
+              xAxisTitle="UID"
+              yAxisTitle="Weight"
+              loading={isRecentUIDsLoading}
+            />
+          </Card>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, md: 4 }}>
+          <Card shadow="md">
+            <CategoricalBarChart
+              data={recentUIDs ?? []}
+              style={{ height: "30vh" }}
+              theme={colorScheme === "auto" ? "dark" : colorScheme}
+              xAxis="uid"
+              yAxis="win_rate"
+              xAxisTitle="UID"
+              yAxisTitle="Win Rate"
+              loading={isRecentUIDsLoading}
+            />
+          </Card>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, md: 4 }}>
+          <Card shadow="md">
+            <CategoricalBarChart
+              data={recentUIDs ?? []}
+              style={{ height: "30vh" }}
+              theme={colorScheme === "auto" ? "dark" : colorScheme}
+              xAxis="uid"
+              yAxis="average_loss"
+              xAxisTitle="UID"
+              yAxisTitle="Loss"
+              loading={isRecentUIDsLoading}
+            />
+          </Card>
+        </Grid.Col>
+      </Grid>
       <Card shadow="md">
         <StatisticsTable data={recentUIDs ?? []} loading={isRecentUIDsLoading} />
       </Card>
