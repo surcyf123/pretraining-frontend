@@ -9,9 +9,7 @@ import {
   Text,
   ScrollArea,
   Burger,
-  useMantineTheme,
 } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
 import { IconChevronDown, IconLogout, IconMoonStars, IconSun } from "@tabler/icons-react";
 import { NavLink, useLocation } from "react-router-dom";
 import Logo from "./logo.png";
@@ -23,6 +21,7 @@ export interface HeaderProps {
   onToggleColorScheme: () => void;
   isNavbarOpened: boolean;
   onToggleNavbar: () => void;
+  isMobile?: boolean;
 }
 
 export function Header({
@@ -30,18 +29,16 @@ export function Header({
   onToggleColorScheme,
   isNavbarOpened,
   onToggleNavbar,
+  isMobile,
 }: HeaderProps): JSX.Element {
   const location = useLocation();
   const currentPathName = location.pathname;
   const { authStatus, signOut } = useAuthenticator((context) => [context.authStatus]);
-  const { breakpoints } = useMantineTheme();
-  const isMobile = useMediaQuery(`(max-width:${breakpoints.md})`);
 
   return (
     <AppShell.Header p="xs">
       <Group justify="space-between" align="center">
         <Image {...Logo} h={30} alt="Openpretrain logo" />
-        {/* TODO: add navbar */}
         {isMobile === true ? null : (
           <Group wrap="nowrap">
             {NavLinks?.map(({ label, link, links }) =>
