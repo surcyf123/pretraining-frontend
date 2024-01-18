@@ -1,6 +1,19 @@
-import { Anchor, Code, Container, List, Pill, Stack, Text, Title } from "@mantine/core";
+import {
+  Anchor,
+  Code,
+  Container,
+  List,
+  Pill,
+  Stack,
+  Text,
+  Title,
+  useMantineTheme,
+} from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 
 export function Home(): JSX.Element {
+  const { breakpoints } = useMantineTheme();
+  const isMobile = useMediaQuery(`(max-width: ${breakpoints.md})`);
   return (
     <Container>
       <Stack gap="xl">
@@ -245,7 +258,7 @@ btcli --help
             </Stack>
           </List.Item>
           <List.Item>
-            <Stack>
+            <Stack w={isMobile === true ? "80vw" : "auto"}>
               <Text>(Optional) Run a Subtensor instance:</Text>
               <Text>
                 Your node will run better if you are connecting to a local Bittensor chain
@@ -264,7 +277,7 @@ docker compose up --detach
             </Stack>
           </List.Item>
           <List.Item>
-            <Stack>
+            <Stack w={isMobile === true ? "80vw" : "auto"}>
               <Text>Create your Bittensor wallet.</Text>
               <Text>
                 Each miners and validator requires a Bittensor coldkey and hotkey pair. To create a
@@ -289,7 +302,7 @@ wallet = bt.wallet().create_if_non_existent()
             </Stack>
           </List.Item>
           <List.Item>
-            <Stack>
+            <Stack w={isMobile === true ? "80vw" : "auto"}>
               <Text>Register your wallet to Subnet 9</Text>
               <Text>
                 Miner and validator wallets must be registered to the subnet 9 mechanism before they
