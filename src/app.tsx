@@ -7,6 +7,7 @@ import { Outlet } from "react-router-dom";
 import config from "./amplifyconfiguration.json"; // amplify v6 Ref: https://docs.amplify.aws/javascript/build-a-backend/auth/set-up-auth/
 import { Header } from "./components/Header";
 import "@mantine/core/styles.css"; // Ref: https://mantine.dev/changelog/7-0-0/#global-styles
+import { Navbar } from "./components/Navbar";
 
 Amplify.configure(config);
 const ReactQueryClient = new QueryClient();
@@ -33,6 +34,7 @@ export function App() {
             : undefined
         }
       >
+        {isMobile === true ? <Navbar onToggleNavbar={toggleNavbar} /> : null}
         <Header
           colorScheme={colorScheme}
           onToggleColorScheme={toggleColorScheme}
