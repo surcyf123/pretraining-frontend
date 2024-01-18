@@ -35,13 +35,49 @@ export function Header({
   const currentPathName = location.pathname;
   const { authStatus, signOut } = useAuthenticator((context) => [context.authStatus]);
   const { breakpoints } = useMantineTheme();
-  const isMobile = useMediaQuery(`(max-width:${breakpoints.sm})`);
+  const isMobile = useMediaQuery(`(max-width:${breakpoints.md})`);
   return (
     <AppShell.Header p="xs">
       <Group justify="space-between" align="center">
         <Image {...Logo} h={30} alt="Openpretrain logo" />
         {/* TODO: add nav bar */}
-        {isMobile === true ? null : (
+        {isMobile === true ? (
+          <AppShell.Navbar p="md">
+            {NavLinks?.map(({ label, link, links }) =>
+              Array.isArray(links) ? (
+                <MantineNavLink
+                  label={<Text fw={500}>{label}</Text>}
+                  noWrap
+                  rightSection={<IconChevronDown size="1rem" />}
+                >
+                  <ScrollArea h="50vh">
+                    {links.map((item) => (
+                      <MantineNavLink
+                        key={item.link}
+                        component={NavLink}
+                        active={currentPathName === item.link}
+                        to={item.link}
+                        label={<Text>{item.label}</Text>}
+                        onClick={toggleNavbar}
+                      />
+                    ))}
+                  </ScrollArea>
+                </MantineNavLink>
+              ) : (
+                <MantineNavLink
+                  key={link}
+                  component={NavLink}
+                  active={currentPathName === link}
+                  to={link}
+                  label={<Text fw={500}>{label}</Text>}
+                  noWrap
+                  title={`Go to ${label}`}
+                  onClick={toggleNavbar}
+                />
+              ),
+            )}
+          </AppShell.Navbar>
+        ) : (
           <Group wrap="nowrap">
             {NavLinks?.map(({ label, link, links }) =>
               Array.isArray(links) ? (
@@ -91,7 +127,7 @@ export function Header({
           <ActionIcon onClick={onToggleColorScheme} variant="default">
             {colorScheme === "dark" ? <IconSun /> : <IconMoonStars />}
           </ActionIcon>
-          <Burger opened={isNavbarOpened} onClick={toggleNavbar} hiddenFrom="sm" size="sm" />
+          <Burger opened={isNavbarOpened} onClick={toggleNavbar} hiddenFrom="md" size="sm" />
           {authStatus === "authenticated" ? (
             <ActionIcon onClick={signOut} variant="default">
               <IconLogout />
