@@ -8,6 +8,7 @@ import {
   Menu,
   Text,
   ScrollArea,
+  Burger,
 } from "@mantine/core";
 import { IconChevronDown, IconLogout, IconMoonStars, IconSun } from "@tabler/icons-react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -18,9 +19,16 @@ import type { MantineColorScheme } from "@mantine/core";
 export interface HeaderProps {
   colorScheme: MantineColorScheme;
   onToggleColorScheme: () => void;
+  isNavbarOpened: boolean;
+  onToggleNavbar: () => void;
 }
 
-export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.Element {
+export function Header({
+  colorScheme,
+  onToggleColorScheme,
+  isNavbarOpened,
+  onToggleNavbar,
+}: HeaderProps): JSX.Element {
   const location = useLocation();
   const currentPathName = location.pathname;
   const { authStatus, signOut } = useAuthenticator((context) => [context.authStatus]);
@@ -75,6 +83,8 @@ export function Header({ colorScheme, onToggleColorScheme }: HeaderProps): JSX.E
           <ActionIcon onClick={onToggleColorScheme} variant="default">
             {colorScheme === "dark" ? <IconSun /> : <IconMoonStars />}
           </ActionIcon>
+          {/* Ref: https://mantine.dev/app-shell/?e=BasicAppShell&s=code */}
+          <Burger opened={isNavbarOpened} onClick={onToggleNavbar} hiddenFrom="md" size="sm" />
           {authStatus === "authenticated" ? (
             <ActionIcon onClick={signOut} variant="default">
               <IconLogout />
