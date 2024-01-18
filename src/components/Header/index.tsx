@@ -41,9 +41,11 @@ export function Header({
       <Group justify="space-between" align="center">
         <Image {...Logo} h={30} alt="Openpretrain logo" />
         {isMobile === true ? (
+          // Ref: https://mantine.dev/app-shell/?e=BasicAppShell&s=code
           <AppShell.Navbar p="md">
             {NavLinks?.map(({ label, link, links }) =>
               Array.isArray(links) ? (
+                // Ref: https://mantine.dev/core/nav-link/#nested-navlinks
                 <MantineNavLink
                   label={<Text fw={500}>{label}</Text>}
                   noWrap
