@@ -5,7 +5,7 @@ from json import loads
 from math import isnan, isinf
 from datetime import datetime
 from functools import reduce
-from bittensor import subtensor
+from bittensor import subtensor, DelegateInfo
 from bittensor.utils import RAOPERTAO
 
 
@@ -110,3 +110,29 @@ def fetchSubnetEmissions():
     subnets = subtensor(network="finney").get_all_subnets_info()
     emissions = [(subnet.emission_value / RAOPERTAO) for subnet in subnets]
     return emissions
+
+
+def formatDelegate(input: DelegateInfo) -> dict[str, any]:
+    return {
+        "owner": input.owner_ss58,
+        "registrations": input.registrations,
+        "hotkey": input.hotkey_ss58,
+        "take": input.take,
+        "nominators": [
+            {"nominator": id, "rao": balance.rao, "tao": balance.tao}
+            for [id, balance] in input.nominators
+        ],
+        "validatorPermits": input.validator_permits,
+        "totalDailyReturn": {
+            "rao": input.total_daily_return.rao,
+            "tao": input.total_daily_return.tao,
+        },
+        "totalStake": {
+            "rao": input.total_stake.rao,
+            "tao": input.total_stake.tao,
+        },
+        "returnPer1000": {
+            "rao": input.return_per_1000.rao,
+            "tao": input.return_per_1000.tao,
+        },
+    }

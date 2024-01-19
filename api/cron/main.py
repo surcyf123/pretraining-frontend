@@ -2,6 +2,7 @@ import bittensor
 from .utils import (
     dumpData,
     formatRuns,
+    formatDelegate,
     filterLatestRuns,
     calculateBestAverageLoss,
     fetchSubnetEmissions,
@@ -20,7 +21,10 @@ EntityName = "opentensor-dev"
 
 def fetchDelegates():
     delegates = bittensor.subtensor().get_delegates()
-    dumpData("delegates.json", delegates)
+    output = []
+    for delegate in delegates:
+        output.append(formatDelegate(delegate))
+    dumpData("delegates.json", output)
 
 
 def fetchMetagraphs():
