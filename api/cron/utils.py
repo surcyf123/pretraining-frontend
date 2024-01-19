@@ -119,20 +119,11 @@ def formatDelegate(input: DelegateInfo) -> dict[str, any]:
         "hotkey": input.hotkey_ss58,
         "take": input.take,
         "nominators": [
-            {"nominator": id, "rao": balance.rao, "tao": balance.tao}
+            {"nominator": id, "balance": balance.tao}
             for [id, balance] in input.nominators
         ],
         "validatorPermits": input.validator_permits,
-        "totalDailyReturn": {
-            "rao": input.total_daily_return.rao,
-            "tao": input.total_daily_return.tao,
-        },
-        "totalStake": {
-            "rao": input.total_stake.rao,
-            "tao": input.total_stake.tao,
-        },
-        "returnPer1000": {
-            "rao": input.return_per_1000.rao,
-            "tao": input.return_per_1000.tao,
-        },
+        "totalDailyReturn": input.total_daily_return.tao,
+        "totalStake": input.total_stake.tao,
+        "returnPer1000": input.return_per_1000.tao,
     }
