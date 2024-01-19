@@ -254,7 +254,7 @@ btcli --help
                 running miners/validators. To install and run a local subtensor node follow the
                 commands below with Docker and Docker-Compose previously installed.
               </Text>
-              <Code block>
+              <Code>
                 {`
 git clone https://github.com/opentensor/subtensor.git
 cd subtensor
@@ -272,7 +272,7 @@ docker compose up --detach
                 terminal. Make sure to save the mnemonic for both keys and store them in a safe
                 place.
               </Text>
-              <Code block>
+              <Code>
                 {`
 # to create your miner/validator cold + hotkey keys.
 btcli w create --wallet.name ... --wallet.hotkey ... 
@@ -280,7 +280,7 @@ btcli w list # to view your created keys.
                 `}
               </Code>
               <Text>Or in python</Text>
-              <Code block>
+              <Code>
                 {`
 import bittensor as bt
 wallet = bt.wallet().create_if_non_existent()
@@ -299,7 +299,7 @@ wallet = bt.wallet().create_if_non_existent()
                 TAO message const [t,t] on Discord for a faucet to try things out, please don{`'`}t
                 scam me.
               </Text>
-              <Code block>
+              <Code>
                 {`
 # register your cold and associated hotkey to netuid 9 using recycle.
 btcli s register --wallet.name ... --wallet.hotkey ... --netuid 9       
@@ -310,7 +310,7 @@ btcli s register --wallet.name ... --wallet.hotkey ... --netuid 9
                 into the network. You can registed your wallet using a POW using the following
                 command:
               </Text>
-              <Code block>
+              <Code>
                 {`
 # register your cold and associated hotkey to netuid 9 using POW
 btcli s pow_register --wallet.name ... --wallet.hotkey ... --netuid 9 
