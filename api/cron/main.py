@@ -18,38 +18,12 @@ ProjectName = "pretraining-subnet"
 EntityName = "opentensor-dev"
 
 
-def startFetchingValidatorRuns():
-    print("Fetching validator data ...")
-    tab = CronTab(
-        tab=f"""*/10 * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
-    )
-    fetchValidatorRuns()  # Fetch validator runs as soon as the cron job starts
-    for _ in tab.run_scheduler():
-        try:
-            fetchMetagraph()
-        except:
-            pass
+def fetchDelegates():
+    delegates = bittensor.subtensor().get_delegates()
+    dumpData("delegates.json", delegates)
 
 
-def startFetchingMetagraph():
-    print("Fetching metagraph data ...")
-    tab = CronTab(
-        tab=f"""*/10 * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
-    )
-    fetchMetagraph()  # Fetch metagraphs as soon as the cron job starts
-    for _ in tab.run_scheduler():
-        try:
-            fetchMetagraph()
-        except:
-            pass
-
-
-def stop():
-    print("Stopping cron job.")
-    # TODO: add code to remove cron job.
-
-
-def fetchMetagraph():
+def fetchMetagraphs():
     netUIDs = list(range(33))
     for netUID in netUIDs:
         metagraph = bittensor.metagraph(netUID, lite=False, network="finney", sync=True)
@@ -97,3 +71,47 @@ def fetchValidatorRuns() -> dict:
     recentRuns = filterLatestRuns(formattedRuns)
     updatedRuns = calculateBestAverageLoss(recentRuns)
     dumpData("validator-runs.json", updatedRuns)
+
+
+def startFetchingValidatorRuns():
+    print("Fetching validator data ...")
+    tab = CronTab(
+        tab=f"""*/10 * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
+    )
+    fetchValidatorRuns()  # Fetch validator runs as soon as the cron job starts
+    for _ in tab.run_scheduler():
+        try:
+            fetchMetagraph()
+        except:
+            pass
+
+
+def startFetchingDelegates():
+    print("Fetching delegates data ...")
+    tab = CronTab(
+        tab=f"""*/10 * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
+    )
+    fetchDelegates()  # Fetch metagraphs as soon as the cron job starts
+    for _ in tab.run_scheduler():
+        try:
+            fetchDelegates()
+        except:
+            pass
+
+
+def startFetchingMetagraphs():
+    print("Fetching metagraph data ...")
+    tab = CronTab(
+        tab=f"""*/10 * * * * echo "$(date +\%Y-\%m-\%d_\%H:\%M:\%S)" >> {path.join(getcwd(),"cron","cron.logs")}"""
+    )
+    fetchMetagraphs()  # Fetch metagraphs as soon as the cron job starts
+    for _ in tab.run_scheduler():
+        try:
+            fetchMetagraphs()
+        except:
+            pass
+
+
+def stop():
+    print("Stopping cron job.")
+    # TODO: add code to remove cron job.
